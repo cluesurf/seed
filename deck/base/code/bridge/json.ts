@@ -75,11 +75,33 @@ export function readsAsMark(value: string): boolean {
 }
 
 /**
+ * Whether a plain form admits an object, by the discriminant it declares.
+ *
+ * A form that is one kind of a family declares its kind as a one-option `pick` on the
+ * union key (`form`), the way every `content_*` form does. Such a form admits only an
+ * object carrying that kind. A form with no such pick admits any object: it is not one
+ * of several, so there is nothing to tell apart. This is what lets an `any` of plain
+ * forms pick its arm: without it the first arm answered for every object, and a `walk`
+ * under a grid lifted as a `content_heading` and was refused as `not one of heading`.
+ */
+function admits(form: Form, json: { [name: string]: Json }): boolean {
+  const key = form.key ?? UNION_KEY
+  const property = form.properties.find(p => p.name === key)
+  const picks = property?.constraints.filter(c => c.kind === 'pick') ?? []
+  if (!picks.length) {
+    return true
+  }
+  const tag = json[key]
+  return typeof tag === 'string' && picks.some(c => c.options.includes(tag))
+}
+
+/**
  * The form a JSON object is an instance of, given what its slot declares.
  *
- * A plain form is the answer. A union form is answered by its arm, picked by the
- * discriminant the object carries. An `any` is answered by the first record arm that
- * answers. Nothing else answers, and the object lifts as `object`.
+ * A plain form is the answer when it admits the object. A union form is answered by
+ * its arm, picked by the discriminant the object carries. An `any` is answered by the
+ * first record arm that admits the object. Nothing else answers, and the object lifts
+ * as `object`.
  */
 function formOf(
   json: { [name: string]: Json },
@@ -95,7 +117,7 @@ function formOf(
       return undefined
     }
     if (!form.arms) {
-      return form
+      return admits(form, json) ? form : undefined
     }
     const tag = json[form.key ?? UNION_KEY]
     return typeof tag === 'string' ? armOf(role, form, tag) : undefined

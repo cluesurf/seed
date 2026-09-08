@@ -87,6 +87,71 @@ describe('the law', () => {
   })
 })
 
+describe('an any of plain forms', () => {
+  // The content catalogue's slots are `any` lists of PLAIN node forms, each declaring
+  // its kind as a one-option pick on `form`. The arm has to be picked by that kind:
+  // the first plain arm answered for every object, so a `walk` under a grid lifted as
+  // a `content_heading` and the role refused the page as `not one of heading`.
+  const role = roleBase([
+    form('content_heading', [
+      property('form', { base: 'text' }, { constraints: [hold('pick', { options: ['heading'] })] }),
+      property('level', { base: 'integer' }),
+    ]),
+    form('content_walk', [
+      property('form', { base: 'text' }, { constraints: [hold('pick', { options: ['walk'] })] }),
+      property('item', { base: 'text' }),
+    ]),
+    form('content_grid', [
+      property('form', { base: 'text' }, { constraints: [hold('pick', { options: ['grid'] })] }),
+      property(
+        'children',
+        { any: [{ record: 'content_heading' }, { record: 'content_walk' }] },
+        { collection: 'list' },
+      ),
+    ]),
+    form('plain', [property('name', { base: 'text' })]),
+  ])
+
+  it('picks the arm whose kind the object carries, whatever the order', () => {
+    const v = liftJson(
+      { form: 'grid', children: [{ form: 'walk', item: 'entry' }, { form: 'heading', level: 2 }] },
+      { like: { record: 'content_grid' }, role },
+    )
+    expect(v.kind).toBe('record')
+    if (v.kind === 'record') {
+      const children = v.record.fields.get('children')
+      expect(children?.kind).toBe('collection')
+      if (children?.kind === 'collection') {
+        const types = children.items.map(item =>
+          item.value.kind === 'record' ? item.value.record.type : item.value.kind,
+        )
+        expect(types).toEqual(['content_walk', 'content_heading'])
+      }
+    }
+  })
+
+  it('lifts an object no arm admits as object, and the role then refuses it', () => {
+    const v = liftJson(
+      { form: 'grid', children: [{ form: 'nonsense' }] },
+      { like: { record: 'content_grid' }, role },
+    )
+    if (v.kind === 'record') {
+      const children = v.record.fields.get('children')
+      if (children?.kind === 'collection') {
+        const first = children.items[0]!.value
+        expect(first.kind === 'record' && first.record.type).toBe(OBJECT)
+      }
+      const problems = validateRecord(v.record, role.forms.get('content_grid')!, { role })
+      expect(problems.some(one => one.field === 'children')).toBe(true)
+    }
+  })
+
+  it('a form with no kind of its own admits any object', () => {
+    const v = liftJson({ name: 'x' }, { like: { record: 'plain' }, role })
+    expect(v.kind === 'record' && v.record.type).toBe('plain')
+  })
+})
+
 describe('numbers and null', () => {
   it('keeps a whole number whole and a fraction as a decimal, and both come back as numbers', () => {
     expect(liftJson(20)).toEqual(integer(20))

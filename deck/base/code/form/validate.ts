@@ -50,9 +50,12 @@ function baseKindMatches(base: string, value: Value): boolean {
  * the value is known to be the right kind of thing at all.
  *
  * A `null` fits every like, because presence is `need`'s question and not the type's.
- * A record under a plain form fits whatever its `type` says, which is what every
- * existing role relied on; under a union form its `type` must be an arm, because that
- * is what the union exists to say.
+ * A record under a plain form fits when its `type` IS that form; under a union form its
+ * `type` must be an arm, because that is what the union exists to say. A record lifted
+ * with no form in hand (`object`) fits neither, and that is the refusal a repository
+ * whose forms arrived after its data is meant to get. Until 2026-09-08 a plain form
+ * fitted any record whatever its type, so an `any` of plain forms was answered by its
+ * first arm for every value and a `walk` was checked as a heading.
  */
 function fits(like: Like, value: Value, role: RoleBase | undefined): boolean {
   if (value.kind === 'null') {
@@ -69,7 +72,10 @@ function fits(like: Like, value: Value, role: RoleBase | undefined): boolean {
       return false
     }
     const form = role?.forms.get(like.record)
-    return form?.arms ? form.arms.includes(value.record.type) : true
+    if (form?.arms) {
+      return form.arms.includes(value.record.type)
+    }
+    return value.record.type === like.record
   }
   return like.any.some(arm => fits(arm, value, role))
 }
