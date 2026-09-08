@@ -67,6 +67,9 @@ mod cask {
     // the app's own read-only files. Linux: `<app>/bin/<name>` sits beside `<app>/resources`. Windows:
     // `<app>/<name>.exe` beside `<app>/resources`. `term make` lays both out this way
     pub fn bundle_path() -> String {
+        if trace() {
+            eprintln!("cask: bundle path asked");
+        }
         let exe = std::env::current_exe().unwrap_or_default();
         let directory = exe.parent().map(|p| p.to_path_buf()).unwrap_or_default();
         let beside = directory.join("resources");
@@ -287,7 +290,7 @@ mod cask {
         use std::task::{Context, Poll, Wake, Waker};
         use webview2_com::Microsoft::Web::WebView2::Win32::*;
         use webview2_com::*;
-        use windows::core::{w, HSTRING, PCWSTR, PWSTR};
+        use windows::core::{w, Interface, HSTRING, PCWSTR, PWSTR};
         use windows::Win32::Foundation::{E_FAIL, HWND, LPARAM, LRESULT, RECT, WPARAM};
         use windows::Win32::Storage::FileSystem::FILE_ATTRIBUTE_NORMAL;
         use windows::Win32::System::Com::{CoInitializeEx, CoTaskMemFree, COINIT_APARTMENTTHREADED, STGM_CREATE, STGM_WRITE};
@@ -385,8 +388,14 @@ mod cask {
         }
 
         pub fn open_window(title: String, width: i64, height: i64) -> CaskWindow {
+            if trace() {
+                eprintln!("cask: opening the window");
+            }
             unsafe {
                 let _ = CoInitializeEx(None, COINIT_APARTMENTTHREADED);
+                if trace() {
+                    eprintln!("cask: COM initialised");
+                }
                 let instance = GetModuleHandleW(None).expect("cask: the module handle");
                 let class_name = w!("TermCaskWindow");
                 let class = WNDCLASSW {
@@ -414,6 +423,9 @@ mod cask {
                     None,
                 )
                 .expect("cask: the window");
+                if trace() {
+                    eprintln!("cask: window created");
+                }
                 let handle = CaskWindow(Rc::new(Inner {
                     hwnd,
                     controller: RefCell::new(None),
@@ -436,12 +448,24 @@ mod cask {
                 let hwnd = self.0.hwnd;
                 let environment_done = CreateCoreWebView2EnvironmentCompletedHandler::create(Box::new(
                     move |result, environment| {
+                        if let Err(error) = &result {
+                            eprintln!("cask: the WebView2 environment failed: {}", error);
+                        }
                         result?;
+                        if trace() {
+                            eprintln!("cask: WebView2 environment ready");
+                        }
                         let environment = environment.ok_or_else(|| windows::core::Error::from(E_FAIL))?;
                         let handle = handle.clone();
                         let controller_done = CreateCoreWebView2ControllerCompletedHandler::create(Box::new(
                             move |result, controller| {
+                                if let Err(error) = &result {
+                                    eprintln!("cask: the WebView2 controller failed: {}", error);
+                                }
                                 result?;
+                                if trace() {
+                                    eprintln!("cask: WebView2 controller ready");
+                                }
                                 let controller = controller.ok_or_else(|| windows::core::Error::from(E_FAIL))?;
                                 unsafe {
                                     let webview = controller.CoreWebView2()?;
@@ -468,6 +492,9 @@ mod cask {
                                     let loaded = handle.clone();
                                     webview.add_NavigationCompleted(
                                         &NavigationCompletedEventHandler::create(Box::new(move |_, _| {
+                                            if trace() {
+                                                eprintln!("cask: navigation completed");
+                                            }
                                             let ready = loaded.0.ready.borrow().clone();
                                             if let Some(ready) = ready {
                                                 ready();
@@ -493,10 +520,15 @@ mod cask {
                     .ok()
                     .and_then(|exe| exe.file_stem().map(|stem| stem.to_string_lossy().to_string()))
                     .unwrap_or_else(|| "TermCask".to_string());
-                let data = HSTRING::from(super::data_path(name));
+                let data_directory = super::data_path(name);
+                if trace() {
+                    eprintln!("cask: creating the WebView2 environment, user data in {}", data_directory);
+                }
+                let data = HSTRING::from(data_directory);
                 unsafe {
-                    CreateCoreWebView2EnvironmentWithOptions(PCWSTR::null(), &data, None, &environment_done)
-                        .expect("cask: the WebView2 runtime. Is Microsoft Edge WebView2 installed?");
+                    if let Err(error) = CreateCoreWebView2EnvironmentWithOptions(PCWSTR::null(), &data, None, &environment_done) {
+                        eprintln!("cask: the WebView2 runtime could not start: {}. Is Microsoft Edge WebView2 installed?", error);
+                    }
                 }
             }
 
@@ -515,11 +547,37 @@ mod cask {
                 let load = self.0.pending.borrow_mut().take();
                 if let (Some(load), Some(webview)) = (load, self.0.webview.borrow().as_ref()) {
                     let url = match load {
-                        Load::Bundle(path) => format!("file:///{}/index.html", path.replace('\\', "/")),
+                        // a bundle is served from a virtual host mapped to its parent directory, never from
+                        // `file://`: Chromium gives a file page an opaque origin and refuses its module scripts
+                        Load::Bundle(path) => {
+                            let bundle = std::path::PathBuf::from(&path);
+                            let folder = bundle.parent().map(|p| p.to_path_buf()).unwrap_or_else(|| bundle.clone());
+                            let leaf = bundle.file_name().map(|n| n.to_string_lossy().to_string()).unwrap_or_default();
+                            unsafe {
+                                match webview.cast::<ICoreWebView2_3>() {
+                                    Ok(mapped) => {
+                                        if let Err(error) = mapped.SetVirtualHostNameToFolderMapping(
+                                            w!("term.cask"),
+                                            &HSTRING::from(folder.to_string_lossy().to_string()),
+                                            COREWEBVIEW2_HOST_RESOURCE_ACCESS_KIND_ALLOW,
+                                        ) {
+                                            eprintln!("cask: the bundle could not be mapped to a host: {}", error);
+                                        }
+                                    }
+                                    Err(error) => eprintln!("cask: this WebView2 has no virtual host mapping: {}", error),
+                                }
+                            }
+                            format!("https://term.cask/{}/index.html", leaf)
+                        }
                         Load::Url(url) => url,
                     };
+                    if trace() {
+                        eprintln!("cask: navigating to {}", url);
+                    }
                     unsafe {
-                        let _ = webview.Navigate(&HSTRING::from(url));
+                        if let Err(error) = webview.Navigate(&HSTRING::from(url)) {
+                            eprintln!("cask: navigation failed: {}", error);
+                        }
                     }
                 }
                 let queued: Vec<String> = std::mem::take(&mut *self.0.queued.borrow_mut());
@@ -649,6 +707,9 @@ mod cask {
                 .build()
                 .expect("cask: the tokio runtime could not start");
             let _entered = runtime.enter();
+            if trace() {
+                eprintln!("cask: running the message loop");
+            }
             unsafe {
                 let mut message = MSG::default();
                 while GetMessageW(&mut message, None, 0, 0).as_bool() {

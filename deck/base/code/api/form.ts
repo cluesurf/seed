@@ -28,6 +28,10 @@ export type FormVersion = {
   properties: Array<Property>
   // when this version was registered, for ordering and for reporting a pin point
   time: number
+  // a UNION form: the arms a record under it may be, and the discriminant property that
+  // picks one. Absent on an ordinary form. See `Form.arms` in form/form.ts.
+  arms?: Array<string>
+  key?: string
 }
 
 export type Break = {
@@ -68,9 +72,16 @@ export type FormStore = {
   putForm(form: FormVersion): Promise<void>
 }
 
-/** Names are used in paths and column names, so the same rule as a slug applies. */
+/**
+ * Names are used in paths and column names, so the same rule as a slug applies.
+ *
+ * Underscore is allowed. A form is named for what its records are, and the platform
+ * names those in snake_case everywhere (`content_heading`, `language_symbol`), with the
+ * kebab spelling reserved for the one place a name becomes a URL segment. Until
+ * 2026-09-07 this refused `_`, which refused every form the platform would register.
+ */
 export function checkFormName(name: string): FormFault | undefined {
-  return /^[a-z][a-z0-9-]{0,62}$/.test(name)
+  return /^[a-z][a-z0-9_-]{0,62}$/.test(name)
     ? undefined
     : { fault: 'bad-name', name }
 }
@@ -112,6 +123,9 @@ export async function registerForm(
     // proceed despite breaks. The breaks still come back in the answer: forcing a change
     // does not mean nobody needs to hear about it.
     force?: boolean
+    // a union form's arms and discriminant, see FormVersion
+    arms?: Array<string>
+    key?: string
   },
 ): Promise<FormAnswer<Registration>> {
   const bad = checkFormName(input.name)
@@ -165,6 +179,8 @@ export async function registerForm(
     version: (previous?.version ?? 0) + 1,
     properties: input.properties,
     time: input.time,
+    ...(input.arms === undefined ? {} : { arms: input.arms }),
+    ...(input.key === undefined ? {} : { key: input.key }),
   }
 
   await store.putForm(form)

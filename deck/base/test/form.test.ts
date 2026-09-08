@@ -76,8 +76,11 @@ describe('validation', () => {
     expect(diags.some(d => d.severity === 'want')).toBe(true)
   })
 
-  it('flags an unresolved reference across a dataset', () => {
-    const role = roleBase([wordForm])
+  it('flags an unresolved reference across a dataset, when the role holds the target form', () => {
+    // The role holds `language`, so a `language` reference is expected to resolve here. A
+    // reference to a form the role does NOT hold points into another repository and is
+    // that repository's fact; test/form-union.test.ts covers that side.
+    const role = roleBase([wordForm, form('language', [])])
     const ds = datasetOf([
       record({
         type: 'word',

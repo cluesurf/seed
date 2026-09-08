@@ -1266,10 +1266,20 @@ export function emitRust(
         const used = new Set<string>()
         usedNames(node.body, used)
 
-        const handleClones = [...cellVars]
-          .filter(name => used.has(name))
+        // every other captured local too: a `move` closure takes the outer binding with it, and the enclosing body
+        // may read it again after the closure is built (`on-message(made, handler)` then `load-bundle(made, ...)`).
+        // Every value here is Clone, and a handle clone shares the same thing
+        const paramNames = new Set(node.params.map(p => p.name))
+        const captured = [...used].filter(name => localNames.has(name) && !paramNames.has(name) && !cellVars.has(name))
+        const handleClones = [...[...cellVars].filter(name => used.has(name)), ...captured]
           .map(name => `let ${vname(name)} = ${vname(name)}.clone();`)
           .join(' ')
+
+        // an async body is a second `move` (the async block) inside the `Fn`: an `Fn` may not give its captures
+        // away, so each one is cloned again inside the closure before the block takes it
+        const innerClones = node.async
+          ? [...[...cellVars].filter(name => used.has(name)), ...captured].map(name => `let ${vname(name)} = ${vname(name)}.clone();`).join(' ')
+          : ''
 
         cellVars = previousCells
         assignedVars = previousAssignedInClosure
@@ -1278,7 +1288,7 @@ export function emitRust(
         // caller `.await`s (Rust closures can't themselves be `async`). The `let`/parameter type annotation supplies
         // the `Pin<Box<dyn Future>>` return so the concrete async block coerces to the boxed trait object.
         const boxed = node.async
-          ? `std::rc::Rc::new(move |${params}| std::boxed::Box::pin(async move { ${body} }))`
+          ? `std::rc::Rc::new(move |${params}| { ${innerClones} std::boxed::Box::pin(async move { ${body} }) })`
           : `std::rc::Rc::new(move |${params}| { ${body} })`
 
         return handleClones ? `{ ${handleClones} ${boxed} }` : boxed

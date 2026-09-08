@@ -15,11 +15,16 @@ export type MergePolicy = 'concurrent' | 'pick' | 'multi' | 'counter'
 export type Severity = 'hold' | 'want'
 
 // The type of a property. A base scalar, a reference to another form, a nested
-// record of a form, or a collection of one of those.
+// record of a form, one of several of those, or a collection of one of them.
+//
+// `any` is a union: the value fits when any arm fits. A schema written for JSON
+// needs it constantly (a slot that takes a string, a number, or a node), and a form
+// without it has to widen such a property to text and lose the check.
 export type Like =
   | { base: 'text' | 'integer' | 'decimal' | 'boolean' | 'date' | 'uuid' }
   | { ref: string }
   | { record: string }
+  | { any: Array<Like> }
 
 // The closed, declarative constraint set. Each is checkable without running code.
 export type Constraint =
@@ -53,6 +58,14 @@ export type Form = {
   properties: Array<Property>
   // the package tier of this form's records; absent means `data`
   tier?: FormTier
+  // A UNION FORM: a record under `{ record: <this form> }` is an instance of one of
+  // these forms rather than of this one, and this form declares no properties of its
+  // own. `key` names the discriminant, the property every arm declares with a
+  // one-option `pick`, and it is what picks the arm when a value is lifted from data.
+  // Without a union form a slot accepting sixty node kinds would carry a sixty-name
+  // `any` at every place it appears.
+  arms?: Array<string>
+  key?: string
 }
 
 // A per-pattern text-diff rule: which files to diff at which granularity.
@@ -130,6 +143,56 @@ export function form(
     f.tier = opts.tier
   }
   return f
+}
+
+/** The default discriminant of a union form, the key a JSON node names its kind under. */
+export const UNION_KEY = 'form'
+
+/**
+ * A union form: no properties, only the names of its arms.
+ *
+ * `key` defaults to `form`, which is what a JSON content node carries its kind under.
+ * Each arm is expected to declare that property with a one-option `pick`, so the arm a
+ * value belongs to is readable off the value.
+ */
+export function union(
+  name: string,
+  arms: Array<string>,
+  opts?: { key?: string; tier?: FormTier },
+): Form {
+  const f: Form = { name, properties: [], arms, key: opts?.key ?? UNION_KEY }
+  if (opts?.tier !== undefined) {
+    f.tier = opts.tier
+  }
+  return f
+}
+
+/** The arm of a union form a discriminant value names, or nothing. */
+export function armOf(
+  role: RoleBase,
+  form: Form,
+  tag: string,
+): Form | undefined {
+  const key = form.key ?? UNION_KEY
+
+  for (const name of form.arms ?? []) {
+    const arm = role.forms.get(name)
+
+    if (!arm) {
+      continue
+    }
+
+    const property = arm.properties.find(p => p.name === key)
+    const picks = property?.constraints.some(
+      c => c.kind === 'pick' && c.options.includes(tag),
+    )
+
+    if (picks) {
+      return arm
+    }
+  }
+
+  return undefined
 }
 
 /** A form's package tier, defaulting to `data` (queried remotely, not cloned on install). */

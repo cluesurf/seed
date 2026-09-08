@@ -6,7 +6,7 @@
   "type": "module",
   "main": "./host/index.js",
   "scripts": {
-    "make": "rm -rf host && tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
+    "make": "rm -rf host && tsc -p tsconfig.build.json && tsc-alias -p tsconfig.alias.json",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint \"code/**/*.ts\" \"test/**/*.ts\"",

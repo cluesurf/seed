@@ -7,6 +7,7 @@
 // See note/library/base/design/projection-schema.md.
 
 import type { Value } from '@term/base/code/base/type'
+import { lowerJson } from '@term/base/code/bridge/json'
 import { quote } from '@term/base/code/project/ddl'
 import type { Write } from '@term/base/code/project/write'
 
@@ -51,39 +52,12 @@ export function toParam(value: Value | undefined, asArray = false): unknown {
       return value.hash
     case 'collection':
     case 'record':
-      // a container has no column type of its own, so it lands in a `json` column
-      return JSON.stringify(toPlain(value))
-  }
-}
-
-/** A value as plain data, for a json column. */
-function toPlain(value: Value): unknown {
-  switch (value.kind) {
-    case 'integer':
-      return value.value.toString()
-    case 'null':
-      return null
-    case 'ref':
-      return { ref: value.target }
-    case 'blob':
-      return { blob: value.hash }
-    case 'collection':
-      return value.items.map(item =>
-        item.key === undefined
-          ? toPlain(item.value)
-          : { key: item.key, value: toPlain(item.value) },
-      )
-    case 'record': {
-      const out: Record<string, unknown> = { type: value.record.type }
-
-      for (const [field, inner] of value.record.fields) {
-        out[field] = toPlain(inner)
-      }
-
-      return out
-    }
-    default:
-      return value.value
+      // a container has no column type of its own, so it lands in a `json` column, as
+      // the JSON it was lifted from. Until 2026-09-07 this wrote `{ type, ...fields }`
+      // and integers as strings, and a page body came back out of the projection as
+      // something the page's own checker refused. `lowerJson` is the inverse of the
+      // lifter, and the law between them is a test.
+      return JSON.stringify(lowerJson(value))
   }
 }
 

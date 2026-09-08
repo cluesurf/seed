@@ -428,6 +428,24 @@ async function makeRustCask({
 
   if (exe) {
     copyFileSync(exe, bundle.exe)
+
+    if (target === 'windows') {
+      // the WebView2 loader is a DLL the executable links dynamically; cargo leaves it in the build directory and
+      // Windows refuses to start the app without it beside the executable, silently
+      const arch = process.arch === 'arm64' ? 'arm64' : 'x64'
+      const build = path.join(project, 'target/release/build')
+      const loader = existsSync(build)
+        ? readdirSync(build)
+            .filter(name => name.startsWith('webview2-com-sys-'))
+            .map(name => path.join(build, name, 'out', arch, 'WebView2Loader.dll'))
+            .find(file => existsSync(file))
+        : undefined
+
+      if (loader) {
+        copyFileSync(loader, path.join(bundle.app, 'WebView2Loader.dll'))
+      }
+    }
+
     logGood(`${path.relative(root, bundle.app)}`)
   } else {
     console.log(fade(`  the cargo project is at ${path.relative(root, project)}; this is not a ${target} box, so the executable is built there`))

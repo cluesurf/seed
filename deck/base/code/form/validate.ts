@@ -2,7 +2,7 @@ import type { RecordNode, Value } from '@term/base/code/base/type'
 import { isMark } from '@term/base/code/base/mark'
 import { canonicalizeValue } from '@term/base/code/canon/canonicalize'
 import type { Dataset } from '@term/base/code/diff/change'
-import type { Constraint, Form, Property, RoleBase, Severity } from '@term/base/code/form/form'
+import type { Constraint, Form, Like, Property, RoleBase, Severity } from '@term/base/code/form/form'
 
 // Validation runs the built-in checks and the form constraints. A `hold` violation
 // is an error (blocks a commit); a `want` violation is a warning. Validation is a
@@ -42,6 +42,81 @@ function baseKindMatches(base: string, value: Value): boolean {
     default:
       return false
   }
+}
+
+/**
+ * Whether a value is of a like's kind. The shape question only: a `ref` that does not
+ * resolve and a nested record with a bad field are reported by the checks below, once
+ * the value is known to be the right kind of thing at all.
+ *
+ * A `null` fits every like, because presence is `need`'s question and not the type's.
+ * A record under a plain form fits whatever its `type` says, which is what every
+ * existing role relied on; under a union form its `type` must be an arm, because that
+ * is what the union exists to say.
+ */
+function fits(like: Like, value: Value, role: RoleBase | undefined): boolean {
+  if (value.kind === 'null') {
+    return true
+  }
+  if ('base' in like) {
+    return baseKindMatches(like.base, value)
+  }
+  if ('ref' in like) {
+    return value.kind === 'ref'
+  }
+  if ('record' in like) {
+    if (value.kind !== 'record') {
+      return false
+    }
+    const form = role?.forms.get(like.record)
+    return form?.arms ? form.arms.includes(value.record.type) : true
+  }
+  return like.any.some(arm => fits(arm, value, role))
+}
+
+/** A like as the words a diagnostic names it by. */
+function describe(like: Like): string {
+  if ('base' in like) {
+    return like.base
+  }
+  if ('ref' in like) {
+    return `ref ${like.ref}`
+  }
+  if ('record' in like) {
+    return `record ${like.record}`
+  }
+  return `one of ${like.any.map(describe).join(', ')}`
+}
+
+/**
+ * The form a nested record is validated against, or nothing when the like does not
+ * name one it fits. Resolves a union to the arm the record's type names, and an `any`
+ * to the first record arm that fits.
+ */
+function nestedForm(
+  like: Like,
+  record: RecordNode,
+  role: RoleBase,
+): Form | undefined {
+  if ('record' in like) {
+    const form = role.forms.get(like.record)
+    if (!form) {
+      return undefined
+    }
+    if (!form.arms) {
+      return form
+    }
+    return form.arms.includes(record.type) ? role.forms.get(record.type) : undefined
+  }
+  if ('any' in like) {
+    for (const arm of like.any) {
+      const found = nestedForm(arm, record, role)
+      if (found && fits(arm, { kind: 'record', record }, role)) {
+        return found
+      }
+    }
+  }
+  return undefined
 }
 
 function spanValue(value: Value): number | undefined {
@@ -125,18 +200,34 @@ function checkProperty(
     return out
   }
 
-  // type conformance for scalar/ref
-  if ('base' in p.like && !p.collection) {
-    if (value.kind !== 'null' && !baseKindMatches(p.like.base, value)) {
+  // type conformance: the value, or every member of a collection, is of the like's kind
+  if (!p.collection) {
+    if (!fits(p.like, value, ctx.role)) {
       out.push({
         severity: 'hold',
         mark: node.mark,
         field: p.name,
-        message: `expected ${p.like.base}, got ${value.kind}`,
+        message: `expected ${describe(p.like)}, got ${value.kind === 'record' ? `record ${value.record.type}` : value.kind}`,
+      })
+    }
+  } else if (value.kind === 'collection') {
+    const wrong = value.items.find(it => !fits(p.like, it.value, ctx.role))
+    if (wrong) {
+      out.push({
+        severity: 'hold',
+        mark: node.mark,
+        field: p.name,
+        message: `collection member: expected ${describe(p.like)}, got ${wrong.value.kind === 'record' ? `record ${wrong.value.record.type}` : wrong.value.kind}`,
       })
     }
   }
-  if ('ref' in p.like && !p.collection && value.kind === 'ref' && ctx.dataset) {
+  // A reference resolves within the dataset, and only when the form it points at is one
+  // this role holds. A `ref` to a form the role does not hold points into ANOTHER
+  // repository (a page's `workspace__id`, a word's `language__id`), and whether it
+  // resolves is that repository's fact. One repository per form is the design, so most
+  // references cross, and refusing every one of them would refuse every record.
+  const held = ctx.role === undefined || ('ref' in p.like && ctx.role.forms.has(p.like.ref))
+  if ('ref' in p.like && !p.collection && value.kind === 'ref' && ctx.dataset && held) {
     if (!ctx.dataset.has(value.target)) {
       out.push({
         severity: 'hold',
@@ -173,25 +264,39 @@ function checkProperty(
     }
   }
 
-  // recurse into nested records and record collections, validating each against
-  // its declared form
-  if ('record' in p.like && ctx.role) {
-    const nestedForm = ctx.role.forms.get(p.like.record)
-    if (nestedForm) {
-      const nestedCtx = { dataset: ctx.dataset, role: ctx.role }
-      if (!p.collection && value.kind === 'record') {
-        out.push(...validateRecord(value.record, nestedForm, nestedCtx))
-      } else if (p.collection && value.kind === 'collection') {
-        for (const it of value.items) {
-          if (it.value.kind === 'record') {
-            out.push(...validateRecord(it.value.record, nestedForm, nestedCtx))
-          }
+  // recurse into nested records and record collections, validating each against the
+  // form it resolves to: the named form, the union arm its type names, or the `any`
+  // arm it fits. A record that resolves to nothing was already reported above.
+  if (ctx.role && ('record' in p.like || 'any' in p.like)) {
+    const role = ctx.role
+    const nestedCtx = { dataset: ctx.dataset, role }
+    const check = (record: RecordNode): void => {
+      const form = nestedForm(p.like, record, role)
+      if (form) {
+        out.push(...validateRecord(record, form, nestedCtx))
+      }
+    }
+    if (!p.collection && value.kind === 'record') {
+      check(value.record)
+    } else if (p.collection && value.kind === 'collection') {
+      for (const it of value.items) {
+        if (it.value.kind === 'record') {
+          check(it.value.record)
         }
       }
     }
   }
 
   return out
+}
+
+/**
+ * The form a top-level record is validated against: its own, or when its type names a
+ * union, nothing, because a record is an instance of an arm and never of the union.
+ */
+function formFor(role: RoleBase, node: RecordNode): Form | undefined {
+  const form = role.forms.get(node.type)
+  return form && !form.arms ? form : undefined
 }
 
 // Validate one record against its form.
@@ -228,7 +333,7 @@ export function validateDataset(
   const seen = new Map<string, Set<string>>() // form.field -> canonical values
 
   for (const node of dataset.values()) {
-    const form = role.forms.get(node.type)
+    const form = formFor(role, node)
     if (!form) {
       out.push({
         severity: 'hold',

@@ -40,7 +40,7 @@ export type { Change, Dataset } from '@term/base/code/diff/change'
 export { emptyDataset, datasetOf } from '@term/base/code/diff/change'
 export { diffDataset, diffRecord } from '@term/base/code/diff/diff'
 export { diffValues } from '@term/base/code/diff/value-diff'
-export type { ValueDiff } from '@term/base/code/diff/value-diff'
+export type { ValueDiff, CollectionMember } from '@term/base/code/diff/value-diff'
 export { diffSemantic, summarizeSemantic } from '@term/base/code/diff/semantic'
 export type { SemanticChange } from '@term/base/code/diff/semantic'
 export { applyChanges } from '@term/base/code/patch/patch'
@@ -62,7 +62,7 @@ export type {
   Severity,
   RoleBase,
 } from '@term/base/code/form/form'
-export { form, property, hold, want, roleBase } from '@term/base/code/form/form'
+export { form, property, hold, want, roleBase, union, armOf, UNION_KEY } from '@term/base/code/form/form'
 export type { Diagnostic } from '@term/base/code/form/validate'
 export { validateRecord, validateDataset, errors } from '@term/base/code/form/validate'
 export { validateReferences } from '@term/base/code/form/references'
@@ -289,6 +289,10 @@ export {
   recordsFrom,
 } from '@term/base/code/bridge/from-data'
 export type { Lifted, MarkSource, Row } from '@term/base/code/bridge/from-data'
+
+// JSON as base values, both ways, losing nothing
+export { liftJson, lowerJson, readsAsMark, OBJECT, ID } from '@term/base/code/bridge/json'
+export type { Json, LiftTake } from '@term/base/code/bridge/json'
 
 // Working out a projection's schema from the records themselves
 export {

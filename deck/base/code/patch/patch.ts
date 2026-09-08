@@ -36,9 +36,22 @@ export function applyChanges(
   const out: Dataset = new Map(base)
   for (const change of changes) {
     switch (change.type) {
-      case 'record.add':
-        out.set(change.mark, change.value)
+      case 'record.add': {
+        // A DATASET ENTRY CARRIES ITS KEY AS ITS MARK. The change names the mark and the
+        // node is the record, and a caller building the node from a database row can
+        // leave the node's own `mark` out, which is what mesh's `addRecord` did. The
+        // node then sat in the dataset under its mark with no mark on it, and the role
+        // refused it with `instance of a base form must have a mark`, on every page
+        // commit, the first time a repository with registered forms was written to. The
+        // invariant is this module's, so it is held here rather than at every caller.
+        out.set(
+          change.mark,
+          change.value.mark === change.mark
+            ? change.value
+            : { ...cloneRecord(change.value), mark: change.mark },
+        )
         break
+      }
       case 'record.remove':
         out.delete(change.mark)
         break

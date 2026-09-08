@@ -72,18 +72,20 @@ form handler-data
 
 # a trie node: static children (segment -> node), an optional `:param` child, an optional catch-all child, and the
 # per-method handlers registered exactly at this node. The children name the form itself: a native backend needs
-# the element of every container written, since a child left to inference is emitted as a placeholder type
+# the element of every container written, since a child left to inference is emitted as a placeholder type. The
+# two optional children are lists of at most one node rather than a `maybe`: a form holding a `maybe` of itself
+# has no size on Rust (the enum carries the node inline), and a list is a handle on every backend
 form node
   link static
     like hash
       like text
       like node
   link param
-    like maybe
+    like list
       like node
   link param-name, like text
   link wildcard
-    like maybe
+    like list
       like node
   link wildcard-name, like text
   link handlers
@@ -102,10 +104,10 @@ task empty-node
       bind static
         make find
       bind param
-        make none
+        make list
       bind param-name, text <>
       bind wildcard
-        make none
+        make list
       bind wildcard-name, text <>
       bind handlers
         make find
@@ -141,18 +143,37 @@ task param-name-of
     hook miss
       send back, read bare
 
-# ensure a maybe child node exists, returning it (creating an empty node when absent)
+# the optional child node, or an empty node when the slot holds none
 task child-or-empty
   take slot
-    like maybe
+    like list
       like node
   like node
-  fork case, read slot
-    case some
-      send back, read slot/value
-    case none
+  fork test
+    hook test
+      call is-above
+        call count
+          read slot
+        code 0
+    hook hold
       send back
-        call empty-node
+        call get
+          read slot
+          code 0
+  send back
+    call empty-node
+
+# a slot holding one node
+task one-child
+  take child, like node
+  like list
+    like node
+  save slot
+    make list
+  call push
+    bind list, read slot
+    bind item, read child
+  send back, read slot
 
 # insert one route into the trie, recording each param/catch-all slot by index. Answers the node with the route
 # in it rather than mutating the one it was given: a form is a value on Swift and Rust, so a node changed in place
@@ -248,8 +269,8 @@ task insert-route
           read handle
           read specs
       save node/wildcard
-        make some
-          bind value, read child
+        call one-child
+          read child
       save node/wildcard-name
         call param-name-of
           read segment
@@ -281,8 +302,8 @@ task insert-route
           read handle
           read specs
       save node/param
-        make some
-          bind value, read child
+        call one-child
+          read child
       save node/param-name
         call param-name-of
           read segment
@@ -381,13 +402,18 @@ task find-node
         case none
           code 0
       # 2. :param child (narrowing works on a variable subject, so bind the maybe first)
-      save param-child
-        read node/param
-      fork case, read param-child
-        case some
+      fork test
+        hook test
+          call is-above
+            call count
+              read node/param
+            code 0
+        hook hold
           save via
             call find-node
-              read param-child/value
+              call get
+                read node/param
+                code 0
               read method
               read segments
               read next
@@ -396,22 +422,22 @@ task find-node
               send back, read via
             case none
               code 0
-        case none
-          code 0
       # 3. catch-all (least specific): consumes the remaining path
-      save wild-child
-        read node/wildcard
-      fork case, read wild-child
-        case some
-          # re-type the catch-all child to a node so `get` dispatches on its (map) handlers
+      fork test
+        hook test
+          call is-above
+            call count
+              read node/wildcard
+            code 0
+        hook hold
           host wild-node, like node
-            read wild-child/value
+            call get
+              read node/wildcard
+              code 0
           send back
             call get
               read wild-node/handlers
               read method
-        case none
-          code 0
       # nothing matched at this node
       send back
         make none
