@@ -79,9 +79,22 @@ export function resolveRegistry(input: {
     return input.scopeRegistries[scope]
   }
 
+  // a nested scope routes by its root space when the full path is not listed
+  const root = rootScope(scope)
+
+  if (root && root !== scope && input.scopeRegistries?.[root]) {
+    return input.scopeRegistries[root]
+  }
+
   return input.registry
 }
 
+// The scope is the SPACE PATH, which nests: `@cluesurf/@wordsurf/@alice/x` is the
+// repository `x` in the space `@cluesurf/@wordsurf/@alice`. Every leading `@` segment
+// belongs to the scope and the first bare segment starts the base, so the two-layer
+// `@scope/name` is the depth-one case and parses as it always did. The scope is what
+// routes to a registry (`resolveRegistry`), and it routes by its FIRST segment, the root
+// space, so `@cluesurf/@wordsurf/...` goes where `@cluesurf` goes.
 export function parseScope(input: { name: string }): {
   scope: string
   base: string
@@ -90,14 +103,22 @@ export function parseScope(input: { name: string }): {
     return { scope: '', base: input.name }
   }
 
-  const slashIndex = input.name.indexOf('/')
+  const parts = input.name.split('/')
+  let at = 0
 
-  if (slashIndex === -1) {
-    return { scope: input.name, base: '' }
+  while (at < parts.length && parts[at]!.startsWith('@')) {
+    at += 1
   }
 
   return {
-    scope: input.name.slice(0, slashIndex),
-    base: input.name.slice(slashIndex + 1),
+    scope: parts.slice(0, at).join('/'),
+    base: parts.slice(at).join('/'),
   }
+}
+
+/** The root space of a scope, the segment a registry is chosen by: `@cluesurf` of `@cluesurf/@wordsurf`. */
+export function rootScope(scope: string): string {
+  const slash = scope.indexOf('/')
+
+  return slash === -1 ? scope : scope.slice(0, slash)
 }
