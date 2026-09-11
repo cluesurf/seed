@@ -65,6 +65,8 @@ load ../tool/base
   find read-file
   find here
   find show-size
+  find text-of
+  find add
 
 task wash
   note async
@@ -151,19 +153,14 @@ task wash
                     bind list, read kept
                     bind item, read one/name
                 hook miss
+                  # THE WHOLE ROW, not just the name. The write pass
+                  # below needs the note to rebuild from, and nothing is
+                  # written during this walk: classifying and writing
+                  # are separate so the plan can be printed BEFORE a
+                  # single secret is touched.
                   call push
                     bind list, read moved
-                    bind item, read one/name
-                  fork test
-                    hook test
-                      read commit
-                    hook hold
-                      call bitwarden-mark
-                        bind body, read it/token
-                        bind team, read it/root/team
-                        bind name, read one/name
-                        bind mind, read want
-                        wait true
+                    bind item, read one
 
   call show-line
     call join-text
@@ -179,14 +176,78 @@ task wash
           read moved
         text < to rewrite>
 
-  walk list, read moved
-    hook next
-      take site, name one
+  # THE WRITE PASS, and the only place anything is written.
+  #
+  # A LINE PER SECRET, AS IT LANDS. The first version wrote all of them
+  # inside the walk above and printed nothing until every one was done,
+  # so a run that took nine minutes was indistinguishable from one that
+  # had hung. It is two provider calls per secret across hundreds of
+  # them, and the retry deliberately sits out the rate limit, so silence
+  # is the one thing this must not do.
+  fork test
+    hook test
+      read commit
+    hook hold
+      call show-line
+        text <>
+      call show-line
+        text <The provider rate limits at about sixty writes, so this waits it out.>
+      call show-line
+        text <A killed run loses nothing: re-running reports what is left.>
+      call show-line
+        text <>
+
+      save done, code 0
+
+      walk list, read moved
+        hook next
+          take site, name one
+
+          call bitwarden-mark
+            bind body, read it/token
+            bind team, read it/root/team
+            bind name, read one/name
+            bind mind
+              call note-make
+                call note-zones
+                  read one/note
+            wait true
+
+          save done
+            call add
+              read done
+              code 1
+
+          call show-line
+            call join-text
+              make list
+                text <  >
+                call text-of
+                  read done
+                text </>
+                call show-size
+                  read moved
+                text <  >
+                read one/name
+
+      call show-line
+        text <>
       call show-line
         call join-text
           make list
-            text <  >
-            read one
+            call text-of
+              read done
+            text < notes rewritten>
+
+    hook miss
+      walk list, read moved
+        hook next
+          take site, name one
+          call show-line
+            call join-text
+              make list
+                text <  >
+                read one/name
 
   # THE TWO PILES THIS WILL NOT TOUCH, named out loud. A migration that
   # silently skipped them would read as complete while leaving the thing
