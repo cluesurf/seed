@@ -291,6 +291,12 @@ absent === false ? ok('mark on a missing name is not an error') : no('mark inven
 // BITWARDEN 429s AT ABOUT SIXTY WRITES, and `term zone wash --commit`
 // makes two calls per secret across nine hundred of them. Without the
 // backoff it dies a minute in with the migration half done.
+// THE REAL ONE IS A 503, not a 429. `term zone wash --commit` wrote 63
+// notes against the live provider and then died on
+// `503 Service Unavailable`, which is the same "about sixty writes" the
+// zone guide records as the rate limit. A version of this test that
+// only threw 429 passed while the one status that actually happens went
+// through as fatal.
 let refusals = 2
 const realUpdate = fake.BitwardenClient.prototype.secrets
 
@@ -301,7 +307,9 @@ fake.BitwardenClient.prototype.secrets = function () {
   inner.update = async (...args: any[]) => {
     if (refusals > 0) {
       refusals -= 1
-      throw new Error('429 Too Many Requests')
+      throw new Error(
+        'Received error message from server: [503 Service Unavailable] ',
+      )
     }
 
     return update(...args)

@@ -85,20 +85,30 @@ const vault = (() => {
   }
 
   /**
-   * Retry through the provider's rate limit, and nothing else.
+   * What is worth trying again, and what is an answer.
    *
-   * BITWARDEN 429s AT ABOUT SIXTY WRITES, which is exactly when a
-   * migration is running and never when one write is. `term zone wash
-   * --commit` makes two calls per secret across nine hundred of them,
-   * so without this it dies a minute in, part done.
+   * THE RATE LIMIT ARRIVES AS `503 Service Unavailable`, NOT `429`.
+   * Measured, not assumed: `term zone wash --commit` wrote 63 notes and
+   * then died on a 503, which is the same "about sixty writes" the zone
+   * guide records. A first version of this matched `429` and rate-limit
+   * wording only, so the one status the provider actually sends went
+   * straight through as fatal.
    *
-   * Only a rate limit is retried. A refused credential, a missing
-   * secret or a malformed request are answers, and retrying them six
-   * times turns a clear failure into a slow one.
+   * The 5xx family and the transient socket failures are here for the
+   * same reason: across nine hundred secrets, two calls each, something
+   * blips. A migration that dies on one blip is a migration nobody can
+   * finish.
+   *
+   * A refused credential, a missing secret and a malformed request are
+   * NOT here. Retrying an answer ten times turns a clear failure into a
+   * slow one.
    */
 
+  const AGAIN =
+    /\b(429|500|502|503|504)\b|rate.?limit|too many|service unavailable|temporarily|timed? ?out|ECONNRESET|ETIMEDOUT|EPIPE|socket hang up/i
+
   const patient = async <T>(what: () => Promise<T>): Promise<T> => {
-    let wait = 500
+    let wait = 1000
 
     for (let at = 1; ; at += 1) {
       try {
@@ -106,12 +116,15 @@ const vault = (() => {
       } catch (e: any) {
         const why = String(e?.message ?? e)
 
-        if (at >= 7 || !/429|rate.?limit|too many/i.test(why)) {
+        if (at >= 10 || !AGAIN.test(why)) {
           throw e
         }
 
         await new Promise(rest => setTimeout(rest, wait))
-        wait *= 2
+
+        // Capped, because the point is to outlast a rate limit window,
+        // not to sleep for eight minutes on the last attempt.
+        wait = Math.min(wait * 2, 30000)
       }
     }
   }
