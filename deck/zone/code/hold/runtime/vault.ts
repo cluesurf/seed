@@ -84,6 +84,38 @@ const vault = (() => {
     return all.data.find((one: any) => one.key === name)
   }
 
+  /**
+   * Retry through the provider's rate limit, and nothing else.
+   *
+   * BITWARDEN 429s AT ABOUT SIXTY WRITES, which is exactly when a
+   * migration is running and never when one write is. `term zone wash
+   * --commit` makes two calls per secret across nine hundred of them,
+   * so without this it dies a minute in, part done.
+   *
+   * Only a rate limit is retried. A refused credential, a missing
+   * secret or a malformed request are answers, and retrying them six
+   * times turns a clear failure into a slow one.
+   */
+
+  const patient = async <T>(what: () => Promise<T>): Promise<T> => {
+    let wait = 500
+
+    for (let at = 1; ; at += 1) {
+      try {
+        return await what()
+      } catch (e: any) {
+        const why = String(e?.message ?? e)
+
+        if (at >= 7 || !/429|rate.?limit|too many/i.test(why)) {
+          throw e
+        }
+
+        await new Promise(rest => setTimeout(rest, wait))
+        wait *= 2
+      }
+    }
+  }
+
   return {
     // The note already stored against one name, empty when there is no
     // such secret.
@@ -176,7 +208,7 @@ const vault = (() => {
         return false
       }
 
-      const full: any = await client.secrets().get(already.id)
+      const full: any = await patient(() => client.secrets().get(already.id))
       const value = String(full?.value ?? already.value ?? '')
 
       // THE PROJECTS ARE CARRIED THROUGH. `update` replaces them the
@@ -186,9 +218,9 @@ const vault = (() => {
         String(full?.projectId ?? already.projectId ?? ''),
       ].filter(Boolean)
 
-      await client
-        .secrets()
-        .update(org, already.id, name, value, note, holds)
+      await patient(() =>
+        client.secrets().update(org, already.id, name, value, note, holds),
+      )
 
       return true
     },

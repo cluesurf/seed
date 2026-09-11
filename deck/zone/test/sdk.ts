@@ -286,6 +286,57 @@ after?.projectId === 'p-base'
 const absent = await vault.mark('tok', 'org', 'not-there', 'x')
 absent === false ? ok('mark on a missing name is not an error') : no('mark invented one')
 
+// 9. a rate limit is waited out, and nothing else is
+//
+// BITWARDEN 429s AT ABOUT SIXTY WRITES, and `term zone wash --commit`
+// makes two calls per secret across nine hundred of them. Without the
+// backoff it dies a minute in with the migration half done.
+let refusals = 2
+const realUpdate = fake.BitwardenClient.prototype.secrets
+
+fake.BitwardenClient.prototype.secrets = function () {
+  const inner = realUpdate.call(this)
+  const update = inner.update
+
+  inner.update = async (...args: any[]) => {
+    if (refusals > 0) {
+      refusals -= 1
+      throw new Error('429 Too Many Requests')
+    }
+
+    return update(...args)
+  }
+
+  return inner
+}
+
+secrets.push({ id: 's-d', key: 'delta', value: 'DDD', note: 'zone: mesh', projectId: 'p-base' })
+
+const waited = await vault.mark('tok', 'org', 'delta', 'list zone, <mesh>')
+
+waited && refusals === 0
+  ? ok('mark waits out a rate limit and then writes')
+  : no(`mark gave up: waited=${waited} refusals left=${refusals}`)
+
+secrets.find(o => o.key === 'delta')?.note === 'list zone, <mesh>'
+  ? ok('and the write landed after the wait')
+  : no('the retry did not actually write')
+
+// A CREDENTIAL FAILURE IS AN ANSWER, not something to retry six times.
+// Retrying it turns a clear refusal into a slow one.
+refusals = 99
+let gaveUp = false
+
+try {
+  await vault.mark('tok', 'org', 'delta', 'x')
+} catch {
+  gaveUp = true
+}
+
+gaveUp ? ok('a persistent failure still gives up') : no('it retried forever')
+
+fake.BitwardenClient.prototype.secrets = realUpdate
+
 console.log('')
 console.log(fail === 0 ? '  every sdk check passed' : `  ${fail} failed`)
 process.exit(fail === 0 ? 0 : 1)
