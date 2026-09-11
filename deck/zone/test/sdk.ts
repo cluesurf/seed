@@ -46,14 +46,15 @@ const fake = {
 
     secrets() {
       return {
-        // METADATA ONLY, no value. That is the real SDK's shape and it
-        // is what lets `notes` and the read path pick rows before any
-        // value is fetched, so the fake must not hand one over here.
+        // METADATA ONLY, AND NO NOTE. That is the real SDK's shape: the
+        // note comes back on the fetch, not the listing. The fake used
+        // to hand one over here, which made a `notes` that read the
+        // listing alone look correct while returning every note empty
+        // against the real provider.
         list: async () => ({
           data: secrets.map(one => ({
             id: one.id,
             key: one.key,
-            note: one.note ?? '',
             projectId: one.projectId ?? '',
           })),
         }),
@@ -231,12 +232,33 @@ listed.find(o => o.name === 'beta')?.note === 'zone: mesh'
   ? ok('notes carries the note')
   : no('notes lost the note')
 
-// THE REPORT MUST NOT HOLD VALUES. `term zone trim` without `--commit`
-// reads every note in the organization, and if that pulled values too
-// it would be a report that briefly holds every secret we own.
-JSON.stringify(listed).includes('AAA') || JSON.stringify(listed).includes('BBB')
-  ? no('notes leaked a value')
-  : ok('notes carries no value')
+// THE NOTE MUST SURVIVE THE ROUND TRIP. `list` does NOT carry notes in
+// this SDK, only the fetch does, and a version of `notes` that read the
+// listing alone returned every note empty. `term zone wash` then
+// reported all 878 secrets as naming no zone, which reads as a
+// migration with nothing left to do rather than one that saw nothing.
+// Added, not replacing: the `mark` checks below need `beta` to exist.
+secrets.push({
+  id: 's-c',
+  key: 'gamma',
+  value: 'CCC',
+  note: 'list zone, <land>',
+  projectId: 'p-base',
+})
+
+const fetched = await vault.notes('tok', 'org')
+const gamma = fetched.find(one => one.name === 'gamma')
+
+gamma?.note === 'list zone, <land>'
+  ? ok('notes reads a note the listing does not carry')
+  : no(`notes lost a fetch-only note: ${JSON.stringify(gamma?.note)}`)
+
+// It returns names and notes and nothing else. Values cross the
+// function because the fetch is the only thing that carries the note,
+// but none of them come back out.
+JSON.stringify(fetched).includes('CCC')
+  ? no('notes returned a value')
+  : ok('notes returns no value')
 
 // 8. `mark` rewrites the note and leaves the value byte for byte
 const marked = await vault.mark('tok', 'org', 'beta', 'list zone, <mesh>')

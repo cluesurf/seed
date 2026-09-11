@@ -358,7 +358,7 @@ bind mine-deck
 #   from: mesh/.env
 #
 # It survives for exactly one reason: a note written before the migration
-# still has to resolve, so `note-zones` falls back to it. `term zone trim
+# still has to resolve, so `note-zones` falls back to it. `term zone wash
 # --commit` rewrites every stored note, and when none is left in this shape
 # this goes with it.
 #

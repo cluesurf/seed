@@ -9,7 +9,7 @@
 // typed extra lines into.
 //
 // It also holds the TRANSITION. A note written in the retired
-// `zone: a, b` shape still has to resolve until `term zone trim` has
+// `zone: a, b` shape still has to resolve until `term zone wash` has
 // rewritten them all, and the day that stops working is the day every
 // shared secret reads as missing from one of its two declarations.
 
@@ -17,7 +17,7 @@
 // import of ../host/**. See test/shim.ts.
 import './shim'
 
-const { noteZones, noteHas, noteMake, noteAdd } = await import(
+const { noteZones, noteHas, noteMake, noteAdd, notePlain } = await import(
   '../host/code/tool/note'
 )
 
@@ -108,7 +108,7 @@ check('adding to an empty note', noteZones(noteAdd('', 'cluesurf')), [
 
 console.log('\nthe retired shape still resolves')
 
-// Until `term zone trim --commit` has rewritten every stored note.
+// Until `term zone wash --commit` has rewritten every stored note.
 check('one zone, old shape', noteZones('zone: cluesurf'), ['cluesurf'])
 
 check('two zones, old shape', noteZones('zone: cluesurf, mesh'), [
@@ -125,13 +125,50 @@ check(
 check('old shape membership', noteHas('zone: cluesurf, mesh', 'mesh'), true)
 
 // MIGRATING ONE NOTE IS `noteAdd` ON IT. Reading the old shape and
-// writing the new one is the whole of what `term zone trim` does per
+// writing the new one is the whole of what `term zone wash` does per
 // secret, so it is proven here rather than only in the command.
 check(
   'old shape migrates to new',
   noteAdd('zone: cluesurf, mesh\nfrom: mesh/.env', 'cluesurf'),
   'list zone, <cluesurf>, <mesh>',
 )
+
+console.log('\nwhat may be rewritten, and what may not')
+
+// THE GUARD BETWEEN A MIGRATION AND SOMEBODY'S WRITING. `note-make`
+// emits one line, so rewriting a note with it drops everything else.
+// That is right for the four machine-written lines and wrong for
+// anything a person typed.
+check('a new-shape note', notePlain('list zone, <cluesurf>'), true)
+check('an old-shape note', notePlain('zone: cluesurf, mesh'), true)
+
+// `env` and `from` are machine fields this migration exists to DROP. A
+// version that counted them as writing reported 870 of 878 notes as
+// untouchable, so the migration could not have moved anything.
+check(
+  'the retired machine fields',
+  notePlain('zone: cluesurf\nenv: ARCJET_KEY\nfrom: mesh/.env'),
+  true,
+)
+
+check(
+  'a line somebody wrote',
+  notePlain('zone: cluesurf\nservice: Google Cloud Platform'),
+  false,
+)
+
+check(
+  'a sentence somebody wrote',
+  notePlain('zone: cluesurf\nrotate this before March'),
+  false,
+)
+
+check('prose alone', notePlain('the oauth client for sign-in'), false)
+
+// An empty note has no line that is not machine-written, so it passes
+// this guard. It is stopped by the OTHER one: naming no zone at all.
+check('empty', notePlain(''), true)
+check('and empty names no zone', noteZones(''), [])
 
 console.log('\nnotes a person typed in')
 

@@ -61,7 +61,7 @@ load ./base
 #
 # Reads the `host` form through the compiler, and falls back to the
 # retired `zone: a, b` line for a note written before the migration.
-# The fallback is TRANSITIONAL: `term zone trim --commit` rewrites every
+# The fallback is TRANSITIONAL: `term zone wash --commit` rewrites every
 # stored note, and once no note is left in the old shape the fallback
 # and `note-field` go with it.
 task note-zones
@@ -194,8 +194,38 @@ task note-add
     call note-make
       read zones
 
+# Whether every line of a note was written by a machine.
+#
+# THE GUARD ON REWRITING. `note-make` emits one line, so replacing a note
+# with it keeps the zones and DROPS everything else. That is right for
+# the machine-written lines and wrong for anything else: a note where
+# somebody typed `service: Google Cloud Platform`, or a sentence about
+# when to rotate the value, would lose the one part a machine did not
+# put there.
+#
+# So `wash` only rewrites where this says yes, and reports the rest for
+# a person. A migration that eats somebody's writing to tidy a format is
+# not a migration anybody wants run twice.
+task note-plain
+  take note, like text
+  like boolean
+
+  walk list
+    call note-lines
+      read note
+    hook next
+      take site, name one
+      fork test
+        hook test
+          call is-made-line
+            read one
+        hook miss
+          send back, false
+
+  send back, true
+
 # THE RETIRED SHAPE, read so a note written before the migration still
-# resolves. Goes when `term zone trim` has rewritten them all.
+# resolves. Goes when `term zone wash` has rewritten them all.
 task old-zones
   take note, like text
   like list
@@ -228,6 +258,37 @@ task old-zones
 
   send back
     read out
+
+# The note's non-empty lines.
+bind note-lines
+  take note, like text
+  like list
+  case node
+    text <String($note || "").split(/\\r?\\n/).map(function (one) \{ return one.trim() \}).filter(Boolean)>
+
+# Whether one line was written by a MACHINE, and may therefore be
+# rewritten or dropped.
+#
+# Four lines qualify, and only four:
+#
+#   list zone, <a>, <b>   the current zone line
+#   zone: a, b            the retired zone line
+#   env: ARCJET_KEY       retired, written by the loader, read by nothing
+#   from: mesh/.env       retired, written by the loader, read by nothing
+#
+# `env` and `from` belong here because DROPPING THEM IS THE POINT. A
+# first version counted them as a person's writing, so `term zone wash`
+# reported 870 of 878 notes as untouchable and the migration could not
+# have moved anything. They are machine fields naming a `.env` file that
+# is being deleted.
+#
+# Anything else on a note is somebody's, and `note-plain` refuses to
+# rewrite a note that carries one.
+bind is-made-line
+  take line, like text
+  like boolean
+  case node
+    text </^list\\s+zone\\b/.test($line) || /^(zone|env|from)\\s*:/.test($line)>
 
 # Split a comma list and trim each part.
 #

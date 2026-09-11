@@ -62,6 +62,35 @@ count=$(printf '%s\n' "$real" | wc -l | tr -d ' ')
 [ -z "$missing" ] && ok "the help lists all $count commands" \
   || no "not listed in the help:$missing"
 
+printf '\n=== every task the console binds is actually exported ===\n'
+# THE CHECK ABOVE CANNOT SEE THIS, and a broken command proved it.
+#
+# A `task <name>` line in the console names the implementation the
+# dispatcher looks up at RUN TIME. Names in Term are package-global, so a
+# task whose name collides with one already in the closure is renamed by
+# the compiler to dodge the clash: `trim` collided with the stdlib's
+# `trim` and came out as `trim11`. The build is clean, the help is
+# correct, and `term zone trim` dies with `task "trim" is not exported by
+# the program`.
+#
+# Nothing else here catches that. `<command> --help` prints usage
+# WITHOUT resolving the task, and the "is real" test only fails on the
+# words `unknown` or `not a command`, which that error does not contain.
+# So every check passed on a command that could not run at all.
+#
+# Static, against the built output, because the alternative is running
+# each command for real and most of them write something.
+for t in $(awk '/^[[:space:]]*task [a-z]/ { print $2 }' "$ZONE/code/line/base.tree" | sort -u); do
+  camel=$(printf '%s' "$t" | awk -F- '{ printf "%s", $1; for (i = 2; i <= NF; i++) printf "%s%s", toupper(substr($i, 1, 1)), substr($i, 2) }')
+
+  # The open paren matters: it is what tells `wash` from `wash11`.
+  if grep -rqE "^export (async )?function ${camel}\(" "$ZONE/host/code"; then
+    ok "$t is exported"
+  else
+    no "$t is NOT exported. The compiler probably renamed it to dodge a name already in the closure, so the dispatcher will not find it"
+  fi
+done
+
 printf '\n=== every command says the same thing when there is no declaration ===\n'
 # Six commands reach this check and used to say four different things: some
 # named the directory and offered `zone lift`, some named it and offered

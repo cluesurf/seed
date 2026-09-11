@@ -105,23 +105,50 @@ const vault = (() => {
       return String(already?.note ?? '')
     },
 
-    // Every secret's NAME AND NOTE, and nothing else.
+    // Every secret's NAME AND NOTE.
     //
-    // METADATA ONLY. `list` does not carry values, so this sees which
-    // notes need rewriting without any value being fetched, printed or
-    // held. That is what makes `term zone trim` safe to run as a
-    // report.
+    // THE NOTE DOES NOT COME BACK ON `list` IN THIS SDK. It comes back
+    // on the fetch, which is why `all` above merges the two and takes
+    // whichever carries one. A first version of this read `list` alone
+    // and every note came back empty, so `term zone wash` reported all
+    // 878 secrets as naming no zone: a migration that had done nothing,
+    // reporting nothing left to do.
+    //
+    // So it fetches, which means values cross this function. They are
+    // dropped on the next line and never returned, but the honest
+    // statement is that this HOLDS them briefly, exactly as
+    // `term zone read` does. It is not a value-free operation and the
+    // comment that said so was wrong.
     notes: async (
       token: string,
       org: string,
     ): Promise<Array<{ name: string; note: string }>> => {
       const client = await open(token)
-      const all = await client.secrets().list(org)
+      const listed = await client.secrets().list(org)
+      const rows = listed?.data ?? []
 
-      return (all?.data ?? []).map((one: any) => ({
-        name: String(one.key ?? ''),
-        note: String(one.note ?? ''),
-      }))
+      if (rows.length === 0) {
+        return []
+      }
+
+      const got = await client
+        .secrets()
+        .getByIds(rows.map((one: any) => one.id))
+
+      const byId = new Map<string, any>()
+
+      for (const one of rows) {
+        byId.set(String(one.id), one)
+      }
+
+      return (got?.data ?? []).map((one: any) => {
+        const meta = byId.get(String(one.id)) ?? {}
+
+        return {
+          name: String(one.key ?? meta.key ?? ''),
+          note: String(one.note ?? meta.note ?? ''),
+        }
+      })
     },
 
     // Replace one secret's NOTE, leaving its value exactly as it was.
@@ -133,7 +160,7 @@ const vault = (() => {
     // lets it go. One at a time, never printed, never logged, never
     // passed to a child, and never held alongside another.
     //
-    // A secret that is not there is not an error. `trim` walks what the
+    // A secret that is not there is not an error. `wash` walks what the
     // provider listed, and a name removed between the listing and the
     // write is a race, not a fault.
     mark: async (

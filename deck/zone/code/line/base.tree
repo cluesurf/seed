@@ -68,8 +68,8 @@ load ../work/deep
 load ../work/send
   find post
 
-load ../work/trim
-  find trim
+load ../work/wash
+  find wash
 
 load ../work/toss
   find toss
@@ -201,12 +201,12 @@ hook save
   task keep-zone
 
 # Rewrite stored notes into the current shape
-hook trim
+hook wash
   # actually write. Without it this reports only
   take commit
     like boolean
     bind code false
-  task trim
+  task wash
 
 # Fetch from the provider and fill the local cache
 hook read
