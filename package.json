@@ -23,7 +23,7 @@
     "@hono/node-server": "^2.0.5",
     "chalk": "^5.4.1",
     "esbuild": "^0.28.1",
-    "hono": "^4.12.27",
+    "hono": "^4.13.5",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
@@ -38,7 +38,7 @@
     "tsc-alias": "^1.8.17",
     "typescript": "^5.9.3",
     "vite": "^7.3.5",
-    "vitest": "^4.1.9",
+    "vitest": "^4.1.11",
     "z3-solver": "^4.16.0"
   },
   "types": "./host/line.d.ts",
