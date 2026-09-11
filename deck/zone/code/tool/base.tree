@@ -238,11 +238,25 @@ bind put-secret
 # everywhere. Raw mode is restored in a `finally`, so a Ctrl-C cannot leave
 # the terminal mute. Ctrl-C exits 130 the way a shell would, and backspace
 # works, because a prompt that cannot be corrected gets pasted into instead.
+# Read one secret from the terminal with echo off.
+#
+# THE `EAGAIN` RETRY IS LOAD-BEARING, not defensive noise. Constructing
+# `tty.ReadStream(fd)` is what gives us raw mode, and it also puts that
+# fd into NON-BLOCKING mode. `fs.readSync` on a non-blocking fd does not
+# wait for a byte, it throws `EAGAIN` immediately, and it throws on the
+# FIRST read because a person has not typed yet. So the prompt printed
+# and then the command died with an unhandled `EAGAIN: resource
+# temporarily unavailable` before anybody could type a character.
+#
+# Retrying with a 10ms synchronous sleep restores the blocking read this
+# always meant to be. `Atomics.wait` is the sleep because this function
+# has to stay SYNCHRONOUS: it returns text, and every caller reads it
+# as a value rather than awaiting it.
 bind ask-secret
   take word, like text
   like text
   case node
-    text <(function () \{ var fs = require("node:fs"), tty = require("node:tty"), fd; try \{ fd = fs.openSync("/dev/tty", "r+") \} catch (e) \{ return "" \} var rs, raw = false; try \{ fs.writeSync(fd, $word); rs = new tty.ReadStream(fd); if (rs.isTTY) \{ rs.setRawMode(true); raw = true \} var out = "", one = Buffer.alloc(1); for (;;) \{ var n = fs.readSync(fd, one, 0, 1, null); if (n === 0) \{ break \} var c = one.toString("utf8"); if (c === "\\n" || c === "\\r") \{ break \} if (c === "\\u0003") \{ if (raw) \{ rs.setRawMode(false) \} fs.writeSync(fd, "\\n"); process.exit(130) \} if (c === "\\u007f" || c === "\\b") \{ out = out.slice(0, -1); continue \} out += c \} fs.writeSync(fd, "\\n"); return out \} finally \{ try \{ if (raw) \{ rs.setRawMode(false) \} \} catch (e) \{\} try \{ if (rs) \{ rs.destroy() \} \} catch (e) \{\} try \{ fs.closeSync(fd) \} catch (e) \{\} \} \})()>
+    text <(function () \{ var fs = require("node:fs"), tty = require("node:tty"), fd; try \{ fd = fs.openSync("/dev/tty", "r+") \} catch (e) \{ return "" \} var rs, raw = false; try \{ fs.writeSync(fd, $word); rs = new tty.ReadStream(fd); if (rs.isTTY) \{ rs.setRawMode(true); raw = true \} var out = "", one = Buffer.alloc(1), idle = new Int32Array(new SharedArrayBuffer(4)); for (;;) \{ var n; try \{ n = fs.readSync(fd, one, 0, 1, null) \} catch (e) \{ if (e && e.code === "EAGAIN") \{ Atomics.wait(idle, 0, 0, 10); continue \} throw e \} if (n === 0) \{ break \} var c = one.toString("utf8"); if (c === "\\n" || c === "\\r") \{ break \} if (c === "\\u0003") \{ if (raw) \{ rs.setRawMode(false) \} fs.writeSync(fd, "\\n"); process.exit(130) \} if (c === "\\u007f" || c === "\\b") \{ out = out.slice(0, -1); continue \} out += c \} fs.writeSync(fd, "\\n"); return out \} finally \{ try \{ if (raw) \{ rs.setRawMode(false) \} \} catch (e) \{\} try \{ if (rs) \{ rs.destroy() \} \} catch (e) \{\} try \{ fs.closeSync(fd) \} catch (e) \{\} \} \})()>
 
 # This machine's name. Detected rather than asked: a person setting up a
 # laptop knows its name and typing it again is a question that answers
