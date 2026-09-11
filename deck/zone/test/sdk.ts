@@ -18,7 +18,13 @@ type Call = { what: string; args: unknown[] }
 
 const calls: Call[] = []
 let projects = [{ id: 'p-base', name: 'base' }]
-let secrets: Array<{ id: string; key: string; value: string }> = []
+let secrets: Array<{
+  id: string
+  key: string
+  value: string
+  note?: string
+  projectId?: string
+}> = []
 
 const fake = {
   BitwardenClient: class {
@@ -40,22 +46,31 @@ const fake = {
 
     secrets() {
       return {
+        // METADATA ONLY, no value. That is the real SDK's shape and it
+        // is what lets `notes` and the read path pick rows before any
+        // value is fetched, so the fake must not hand one over here.
         list: async () => ({
-          data: secrets.map(one => ({ id: one.id, key: one.key })),
+          data: secrets.map(one => ({
+            id: one.id,
+            key: one.key,
+            note: one.note ?? '',
+            projectId: one.projectId ?? '',
+          })),
         }),
         getByIds: async (ids: string[]) => ({
           data: secrets.filter(one => ids.includes(one.id)),
         }),
+        get: async (id: string) => secrets.find(one => one.id === id),
         create: async (org: string, key: string, value: string, note: string, ids: string[]) => {
           calls.push({ what: 'create', args: [org, key, value, note, ids] })
-          const made = { id: `s-${secrets.length}`, key, value }
+          const made = { id: `s-${secrets.length}`, key, value, note, projectId: ids[0] }
           secrets.push(made)
           return made
         },
         update: async (org: string, id: string, key: string, value: string, note: string, ids: string[]) => {
           calls.push({ what: 'update', args: [org, id, key, value, note, ids] })
           const at = secrets.findIndex(one => one.id === id)
-          secrets[at] = { id, key, value }
+          secrets[at] = { id, key, value, note, projectId: ids[0] }
           return secrets[at]
         },
         delete: async (ids: string[]) => {
@@ -82,12 +97,36 @@ import { transformSync } from 'esbuild'
 const source = readFileSync('code/hold/runtime/vault.ts', 'utf8')
 const js = transformSync(source, { loader: 'ts', format: 'cjs' }).code
 const vault = new Function('require', `${js}; return vault`)(need) as {
-  put: (t: string, o: string, p: string, n: string, v: string) => Promise<string>
+  put: (
+    t: string,
+    o: string,
+    bank: string,
+    note: string,
+    n: string,
+    v: string,
+  ) => Promise<string>
   drop: (t: string, o: string, p: string, n: string) => Promise<boolean>
   one: (t: string, o: string, n: string) => Promise<string>
+  note: (t: string, o: string, n: string) => Promise<string>
+  notes: (t: string, o: string) => Promise<Array<{ name: string; note: string }>>
+  mark: (t: string, o: string, n: string, note: string) => Promise<boolean>
 }
 
-const put = (a: any) => vault.put(a.token, a.organizationId, a.path, a.name, a.value)
+// `bank` is the PROJECT NAME to file under, and `note` is the finished
+// note. Neither is the zone path any more: `put` used to take the path
+// alone and look a project up by it, which is `project` mode's rule
+// applied unconditionally, so on a `note` mode declaration it halted
+// with "No project called <zone>" and the only per-name write in the
+// system was unusable.
+const put = (a: any) =>
+  vault.put(
+    a.token,
+    a.organizationId,
+    a.bank ?? a.path,
+    a.note ?? '',
+    a.name,
+    a.value,
+  )
 const drop = (a: any) => vault.drop(a.token, a.organizationId, a.path, a.name)
 const one = (a: any) => vault.one(a.token, a.organizationId, a.name)
 
@@ -98,9 +137,11 @@ const no = (w: string) => { console.log(`  FAIL  ${w}`); fail += 1 }
 
 const SECRET = 'the-actual-secret-value'
 
-// 1. a new name is created, in the right project
+const NOTE = 'list zone, <cluesurf>'
+
+// 1. a new name is created, in the right project, with its note
 const first = await put({
-  token: 'tok', organizationId: 'org', path: 'base',
+  token: 'tok', organizationId: 'org', bank: 'base', note: NOTE,
   name: 'database-url', value: SECRET,
 })
 
@@ -109,17 +150,30 @@ first === 'made' ? ok('a new name is created') : no(`got ${first}`)
 const made = calls.find(c => c.what === 'create')
 made?.args[2] === SECRET ? ok('the value is passed as an argument') : no('value not passed')
 made?.args[4] && (made.args[4] as string[])[0] === 'p-base'
-  ? ok('into the project the zone names')
+  ? ok('into the project it was told')
   : no('wrong project')
 
-// 2. an existing name is updated, not duplicated
+// THE NOTE IS WRITTEN. `put` used to pass `''` here, which in `note`
+// mode files a secret with nothing saying which zone owns it: present
+// at the provider and invisible to every reader, which is worse than
+// either outcome alone.
+made?.args[3] === NOTE
+  ? ok('the note is written with it')
+  : no(`note was ${JSON.stringify(made?.args[3])}`)
+
+// 2. an existing name is updated, not duplicated, and keeps its note
 const again = await put({
-  token: 'tok', organizationId: 'org', path: 'base',
+  token: 'tok', organizationId: 'org', bank: 'base', note: NOTE,
   name: 'database-url', value: 'a-new-value',
 })
 
 again === 'grew' ? ok('an existing name is updated') : no(`got ${again}`)
 secrets.length === 1 ? ok('and not duplicated') : no(`${secrets.length} secrets exist`)
+
+const grew = calls.find(c => c.what === 'update')
+grew?.args[4] === NOTE
+  ? ok('an update carries the note too')
+  : no(`update note was ${JSON.stringify(grew?.args[4])}`)
 
 // 3. the value never appears anywhere but that one argument
 const everywhere = JSON.stringify(
@@ -141,7 +195,7 @@ const exit = process.exit
 }
 
 try {
-  await put({ token: 'tok', organizationId: 'org', path: 'nowhere', name: 'x', value: 'y' })
+  await put({ token: 'tok', organizationId: 'org', bank: 'nowhere', name: 'x', value: 'y' })
 } catch {
   // the fake exit throws
 }
@@ -163,6 +217,52 @@ secrets.length === 1 && secrets[0]?.key === 'other'
 // 6. reading one name back
 const got = await one({ token: 'tok', organizationId: 'org', name: 'other' })
 got === 'keep' ? ok('one name reads back') : no(`read ${got}`)
+
+// 7. `notes` lists names and notes, and NO VALUES
+secrets = [
+  { id: 's-a', key: 'alpha', value: 'AAA', note: 'list zone, <cluesurf>', projectId: 'p-base' },
+  { id: 's-b', key: 'beta', value: 'BBB', note: 'zone: mesh', projectId: 'p-base' },
+]
+
+const listed = await vault.notes('tok', 'org')
+
+listed.length === 2 ? ok('notes lists every secret') : no(`listed ${listed.length}`)
+listed.find(o => o.name === 'beta')?.note === 'zone: mesh'
+  ? ok('notes carries the note')
+  : no('notes lost the note')
+
+// THE REPORT MUST NOT HOLD VALUES. `term zone trim` without `--commit`
+// reads every note in the organization, and if that pulled values too
+// it would be a report that briefly holds every secret we own.
+JSON.stringify(listed).includes('AAA') || JSON.stringify(listed).includes('BBB')
+  ? no('notes leaked a value')
+  : ok('notes carries no value')
+
+// 8. `mark` rewrites the note and leaves the value byte for byte
+const marked = await vault.mark('tok', 'org', 'beta', 'list zone, <mesh>')
+
+marked ? ok('mark reports what it changed') : no('mark said nothing changed')
+
+const after = secrets.find(o => o.key === 'beta')
+
+after?.note === 'list zone, <mesh>'
+  ? ok('mark rewrote the note')
+  : no(`note is ${JSON.stringify(after?.note)}`)
+
+// THE VALUE SURVIVES. `update` replaces the whole secret, so a `mark`
+// that did not read the value first would erase it.
+after?.value === 'BBB'
+  ? ok('mark left the value untouched')
+  : no(`value became ${JSON.stringify(after?.value)}`)
+
+// AND SO DOES THE PROJECT. `update` replaces those too, so passing none
+// would unfile the secret and hide it from every reader.
+after?.projectId === 'p-base'
+  ? ok('mark left the project untouched')
+  : no(`project became ${JSON.stringify(after?.projectId)}`)
+
+const absent = await vault.mark('tok', 'org', 'not-there', 'x')
+absent === false ? ok('mark on a missing name is not an error') : no('mark invented one')
 
 console.log('')
 console.log(fail === 0 ? '  every sdk check passed' : `  ${fail} failed`)

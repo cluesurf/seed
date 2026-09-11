@@ -1,13 +1,21 @@
 #!/usr/bin/env bash
 # Every zone suite, in one command.
 #
-#   bash test/all.sh          from this package
-#   pnpm zone:test            from the monorepo base
+#   bash test/all.sh                 from this package
+#   pnpm zone:test                   from the monorepo base
+#   pnpm zone:test --only note       one suite, while iterating
+#   pnpm zone:test --list            name the suites and stop
+#
+# `--only` takes a substring and matches suite names, the same way
+# `pnpm term:test --only` does. It exists because the alternative is
+# what everybody actually does instead: a throwaway shell script that
+# cd's into the package and runs one file, written again every time.
 #
 # Ordered cheapest first, so a broken build fails in seconds rather than
 # after two minutes of shell harnesses.
 #
 #   tree     the language-level tests, run by the Term test runner
+#   note     the secret note: written as `host` data, read by the compiler
 #   seal     sealing and opening, including refusal on a tampered value
 #   cache    the on-disk cache shape and its warm-read budget
 #   sdk      the provider write path, against a fake SDK
@@ -25,9 +33,35 @@ TERM_HOST="$ZONE/../../host/line.js"
 
 cd "$ZONE" || exit 1
 
+ONLY=""
+LIST=""
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --only) ONLY="${2:-}"; shift 2 ;;
+    --list) LIST=1; shift ;;
+    *) shift ;;
+  esac
+done
+
+NAMES="tree/base tree/read tree/zone note seal cache sdk help fresh load e2e"
+
+if [ -n "$LIST" ]; then
+  for n in $NAMES; do echo "$n"; done
+  exit 0
+fi
+
 FAILED=""
+RAN=0
 run(){
   local name="$1"; shift
+
+  # `--only` is a SUBSTRING, so `--only tree` runs all three tree suites
+  # and `--only note` runs the one.
+  if [ -n "$ONLY" ] && [ "${name#*$ONLY}" = "$name" ]; then
+    return 0
+  fi
+
+  RAN=$((RAN + 1))
   printf '\n\033[1m── %s\033[0m\n' "$name"
   if "$@"; then
     printf '   \033[32mpassed\033[0m\n'
@@ -44,6 +78,7 @@ echo "  built"
 for t in base read zone; do
   run "tree/$t" node "$TERM_HOST" test "test/$t.tree"
 done
+run note  pnpm exec tsx test/note.ts
 run seal  pnpm exec tsx test/seal.ts
 run cache pnpm exec tsx test/cache.ts
 run sdk   pnpm exec tsx test/sdk.ts
@@ -56,4 +91,18 @@ if [ -n "$FAILED" ]; then
   printf '\n\033[31mfailed:%s\033[0m\n' "$FAILED"
   exit 1
 fi
-printf '\n\033[32mevery zone suite passed\033[0m\n'
+
+# A FILTER THAT MATCHES NOTHING MUST NOT READ AS SUCCESS. `--only nope`
+# running zero suites and printing "passed" is the shape of gate that
+# gets believed while checking nothing.
+if [ "$RAN" -eq 0 ]; then
+  printf '\n\033[31mno suite matched --only %s\033[0m\n' "$ONLY"
+  printf 'Run `bash test/all.sh --list` to see the names.\n'
+  exit 1
+fi
+
+if [ -n "$ONLY" ]; then
+  printf '\n\033[32m%s zone suite(s) passed\033[0m\n' "$RAN"
+else
+  printf '\n\033[32mevery zone suite passed\033[0m\n'
+fi

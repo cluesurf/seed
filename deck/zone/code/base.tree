@@ -158,4 +158,15 @@ form leaf
   link head, like text
   link term, list text
   link code, like text
+  # EVERY `<...>` on the line, in order. `code` is only the FIRST.
+  #
+  # The flattener has always produced this and the form did not declare
+  # it, so anything reading a multi-value line through `code` alone kept
+  # one value and dropped the rest, silently. That is the exact bug the
+  # comment at the top of `tool/read.tree` exists to remember: zone's
+  # hand-rolled reader kept one `<...>` per line, so `time <made>,
+  # <toss>` parsed as a cache with no fetch time. The parser was fixed
+  # and this field was never added, which left the same truncation one
+  # `list zone, <a>, <b>` away from happening again.
+  link more, list text
   link leaf, list leaf

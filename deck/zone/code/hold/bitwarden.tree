@@ -174,12 +174,47 @@ bind do-bitwarden-put
   note async
   take body, like text
   take team, like text
-  take path, like text
+  take bank, like text
+  take mind, like text
   take name, like text
   take code, like text
   like text
   case node
-    text <vault.put($body, $team, $path, $name, $code)>
+    text <vault.put($body, $team, $bank, $mind, $name, $code)>
+
+# The note already stored against one name. Empty when there is none.
+#
+# Read so the caller can ADD to it rather than replace it, with the note
+# readers in `code/tool/base.tree`. A note can name several zones, and
+# rewriting it to the one being filed under drops the others.
+bind do-bitwarden-note
+  note async
+  take body, like text
+  take team, like text
+  take name, like text
+  like text
+  case node
+    text <vault.note($body, $team, $name)>
+
+# Every secret's name and note. METADATA ONLY: no value is fetched.
+bind do-bitwarden-notes
+  note async
+  take body, like text
+  take team, like text
+  like list
+  case node
+    text <vault.notes($body, $team)>
+
+# Replace one secret's note, leaving its value exactly as it was.
+bind do-bitwarden-mark
+  note async
+  take body, like text
+  take team, like text
+  take name, like text
+  take mind, like text
+  like boolean
+  case node
+    text <vault.mark($body, $team, $name, $mind)>
 
 # Remove one secret. True if it was there.
 bind do-bitwarden-drop
@@ -207,7 +242,8 @@ task bitwarden-put
   note async
   take body, like text
   take team, like text
-  take path, like text
+  take bank, like text
+  take mind, like text
   take name, like text
   take code, like text
   like text
@@ -215,9 +251,49 @@ task bitwarden-put
     call do-bitwarden-put
       bind body, read body
       bind team, read team
-      bind path, read path
+      bind bank, read bank
+      bind mind, read mind
       bind name, read name
       bind code, read code
+      wait true
+
+task bitwarden-note
+  note async
+  take body, like text
+  take team, like text
+  take name, like text
+  like text
+  send back
+    call do-bitwarden-note
+      bind body, read body
+      bind team, read team
+      bind name, read name
+      wait true
+
+task bitwarden-notes
+  note async
+  take body, like text
+  take team, like text
+  like list
+  send back
+    call do-bitwarden-notes
+      bind body, read body
+      bind team, read team
+      wait true
+
+task bitwarden-mark
+  note async
+  take body, like text
+  take team, like text
+  take name, like text
+  take mind, like text
+  like boolean
+  send back
+    call do-bitwarden-mark
+      bind body, read body
+      bind team, read team
+      bind name, read name
+      bind mind, read mind
       wait true
 
 task bitwarden-drop

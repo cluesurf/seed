@@ -85,24 +85,127 @@ const vault = (() => {
   }
 
   return {
+    // The note already stored against one name, empty when there is no
+    // such secret.
+    //
+    // NOTHING HERE READS THE NOTE'S STRUCTURE. The note format has one
+    // set of readers, `note-value` / `note-lists` / `note-with` in
+    // `code/tool/base.tree`, and the caller composes with those. A
+    // second reader in here would be a second implementation of the
+    // grammar, which disagrees with the first eventually and does it
+    // silently.
+    note: async (
+      token: string,
+      org: string,
+      name: string,
+    ): Promise<string> => {
+      const client = await open(token)
+      const already = await named(client, org, name)
+
+      return String(already?.note ?? '')
+    },
+
+    // Every secret's NAME AND NOTE, and nothing else.
+    //
+    // METADATA ONLY. `list` does not carry values, so this sees which
+    // notes need rewriting without any value being fetched, printed or
+    // held. That is what makes `term zone trim` safe to run as a
+    // report.
+    notes: async (
+      token: string,
+      org: string,
+    ): Promise<Array<{ name: string; note: string }>> => {
+      const client = await open(token)
+      const all = await client.secrets().list(org)
+
+      return (all?.data ?? []).map((one: any) => ({
+        name: String(one.key ?? ''),
+        note: String(one.note ?? ''),
+      }))
+    },
+
+    // Replace one secret's NOTE, leaving its value exactly as it was.
+    //
+    // THE VALUE HAS TO BE READ TO WRITE THE NOTE, and that is the
+    // provider's shape, not a choice here: `secrets().update` replaces
+    // the whole secret, so the value must be supplied or it is erased.
+    // So this fetches ONE value, writes the identical bytes back, and
+    // lets it go. One at a time, never printed, never logged, never
+    // passed to a child, and never held alongside another.
+    //
+    // A secret that is not there is not an error. `trim` walks what the
+    // provider listed, and a name removed between the listing and the
+    // write is a race, not a fault.
+    mark: async (
+      token: string,
+      org: string,
+      name: string,
+      note: string,
+    ): Promise<boolean> => {
+      const client = await open(token)
+      const already = await named(client, org, name)
+
+      if (!already) {
+        return false
+      }
+
+      const full: any = await client.secrets().get(already.id)
+      const value = String(full?.value ?? already.value ?? '')
+
+      // THE PROJECTS ARE CARRIED THROUGH. `update` replaces them the
+      // same way it replaces the value, so passing none would unfile
+      // the secret from its project and hide it from every reader.
+      const holds = [
+        String(full?.projectId ?? already.projectId ?? ''),
+      ].filter(Boolean)
+
+      await client
+        .secrets()
+        .update(org, already.id, name, value, note, holds)
+
+      return true
+    },
+
     // Write one secret: created if the name is new, updated if not.
     //
     // `value` is a function argument the whole way down. It is never
     // formatted into a string, never logged, never passed to a child.
+    //
+    // THE MODE DECIDES WHERE IT GOES, and both have to work, exactly as
+    // they do on the read side. `bank` is the project NAME to file
+    // under: the zone path in `project` mode, the one declared project
+    // in `note` mode. `zone` is the path that goes on the note.
+    //
+    // This used to take the zone path alone and look up a project by
+    // it, which is `project` mode's rule applied unconditionally. In
+    // `note` mode that project does not exist, so `term zone save
+    // --name <x>` died with "No project called <zone> at the provider"
+    // and the ONLY per-name write in the system was unusable. It went
+    // unnoticed because every value so far was written by the migration
+    // loader, which is mode-aware and is going away.
+    //
+    // The note is the other half, and arrives already composed. Writing
+    // `''` here, as this did, would file a secret in `note` mode with
+    // nothing saying which zone owns it, leaving it present at the
+    // provider and invisible to every reader, which is worse than
+    // either outcome alone.
     put: async (
       token: string,
       org: string,
-      path: string,
+      bank: string,
+      note: string,
       name: string,
       value: string,
     ): Promise<string> => {
       const client = await open(token)
-      const project = await projectOf(client, org, path)
+      const project = await projectOf(client, org, bank)
 
       if (!project) {
         process.stderr.write(
-          `No project called ${path} at the provider.\n\n` +
-            'Run `term zone save --commit` to create a project per zone first.\n',
+          `No project called ${bank} at the provider.\n\n` +
+            'In `note` mode that is the one project the declaration names\n' +
+            'on its `base` block. In `project` mode it is one project per\n' +
+            'zone, and `term zone save --commit` creates them.\n',
         )
         process.exit(1)
       }
@@ -112,12 +215,12 @@ const vault = (() => {
       if (already) {
         await client
           .secrets()
-          .update(org, already.id, name, value, '', [project])
+          .update(org, already.id, name, value, note, [project])
 
         return 'grew'
       }
 
-      await client.secrets().create(org, name, value, '', [project])
+      await client.secrets().create(org, name, value, note, [project])
 
       return 'made'
     },

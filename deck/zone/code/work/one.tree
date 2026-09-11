@@ -65,8 +65,12 @@ load ./load
 
 load ../hold/bitwarden
   find bitwarden-put
+  find bitwarden-note
   find bitwarden-drop
   find bitwarden-one
+
+load ../tool/note
+  find note-add
 
 load ../tool/base
   find join-text
@@ -303,11 +307,53 @@ task put-one
         call halt
           text <Nothing was typed, so nothing was written.>
 
+  # WHICH PROJECT THE VALUE IS FILED IN, by mode, the same rule the
+  # read path follows.
+  #
+  # In `note` mode there is ONE project, named on the declaration's
+  # `base` block, and the zone is recorded in the secret's note. In
+  # `project` mode there is one project per zone and its name IS the
+  # zone path.
+  #
+  # Filing by the zone path unconditionally is what made this command
+  # unusable on every `note` mode declaration: the lookup found no
+  # project called `cluesurf` and halted, so there was no way to write
+  # one secret by name at all.
+  save bank
+    read home
+  fork test
+    hook test
+      call is-note
+        read it/root
+    hook hold
+      save bank
+        read it/root/bank
+
+  # THE NOTE IS ADDED TO, NEVER REPLACED.
+  #
+  # One stored value can belong to several zones, and rewriting the note
+  # to the single zone being filed under drops the others, so every name
+  # shared that way reads as missing on the next `term zone read` from
+  # the other root.
+  #
+  # `note-add` in `tool/note.tree` is the ONE place that knows the note
+  # format. Nothing here reads or writes its shape.
+  save mind
+    call note-add
+      bind note
+        call bitwarden-note
+          bind body, read it/token
+          bind team, read it/root/team
+          bind name, read name
+          wait true
+      bind want, read home
+
   save what
     call bitwarden-put
       bind body, read it/token
       bind team, read it/root/team
-      bind path, read home
+      bind bank, read bank
+      bind mind, read mind
       bind name, read name
       bind code, read body
       wait true

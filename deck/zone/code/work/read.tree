@@ -82,6 +82,9 @@ load ../hold/base
 load ./load
   find spot-cache
 
+load ../tool/note
+  find note-has
+
 load ../tool/base
   find join-text
   find join-line
@@ -153,9 +156,8 @@ task holds-for
               take site, name got
               fork test
                 hook test
-                  call note-lists
+                  call note-has
                     bind note, read got/note
-                    bind name, text <zone>
                     bind want, read path
                 hook hold
                   call push
