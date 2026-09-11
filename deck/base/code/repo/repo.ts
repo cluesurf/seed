@@ -20,6 +20,7 @@ import type { RoleBase } from '@term/base/code/form/form'
 import { errors as holdErrors, validateDataset, type Diagnostic } from '@term/base/code/form/validate'
 import { mergeDataset, type Conflict, type MergeOptions } from '@term/base/code/merge/merge'
 import { policyResolver } from '@term/base/code/merge/policy'
+import { convertDataset, type Conversion } from '@term/base/code/form/convert'
 import { autoMark } from '@term/base/code/form/automark'
 import { AccessPolicy, authorizeCommit } from '@term/base/code/access/policy'
 import { isPrunable, type ChunkStore } from '@term/base/code/store/chunk-store'
@@ -204,6 +205,70 @@ export class Repository {
     return this.role ? { policy: policyResolver(this.role) } : {}
   }
 
+  /**
+   * MERGE-TIME CONVERSION. A branch that is behind a form holds records that were right
+   * when they were written and that the newest version refuses. Rather than fail the
+   * merge, every record the role refuses is put through its form's stored conversions in
+   * order (`RoleBase.conversions`, oldest first) and checked again; only what still does
+   * not fit blocks. A record the role accepts is never touched, so a branch that is not
+   * behind pays nothing and changes nothing. The moves are the ones the registration
+   * carried (`api/form.ts` `convert`), so what converts at merge is what converted the
+   * branch that was registered against, and nothing a merge invents.
+   *
+   * Answers the dataset to write and whether it still blocks. The converted records show
+   * up in the merge commit's change set like any other change it made.
+   */
+  private converge(merged: Dataset): { dataset: Dataset; blocked: boolean } {
+    const check = this.validate(merged)
+
+    if (!check.blocked || !this.role?.conversions?.size) {
+      return { dataset: merged, blocked: check.blocked }
+    }
+
+    // the refused records, by form, that a stored conversion could bring forward
+    const behind = new Map<string, Dataset>()
+
+    for (const diagnostic of holdErrors(check.diagnostics)) {
+      const record = diagnostic.mark === undefined ? undefined : merged.get(diagnostic.mark)
+
+      if (!record || record.mark === undefined || !this.role.conversions.has(record.type)) {
+        continue
+      }
+
+      const held = behind.get(record.type) ?? new Map()
+
+      held.set(record.mark, record)
+      behind.set(record.type, held)
+    }
+
+    if (!behind.size) {
+      return { dataset: merged, blocked: true }
+    }
+
+    let dataset = merged
+
+    for (const [form, records] of behind) {
+      const properties = this.role.forms.get(form)?.properties ?? []
+      let subset: Dataset = records
+
+      for (const conversion of this.role.conversions.get(form) ?? []) {
+        const { changes } = convertDataset({
+          dataset: subset,
+          form,
+          properties,
+          convert: conversion as Conversion,
+        })
+
+        if (changes.length) {
+          subset = applyChanges(subset, changes)
+          dataset = applyChanges(dataset, changes)
+        }
+      }
+    }
+
+    return { dataset, blocked: this.validate(dataset).blocked }
+  }
+
   // Build the new record-tree root from the parent, so only changed records are
   // canonicalized and hashed rather than the whole dataset.
   //
@@ -352,19 +417,20 @@ export class Repository {
       // head advanced under us: three-way merge our change onto the new head
       const newHead = this.head(branch)!
       const theirs = this.checkout(newHead)
-      const { merged, conflicts } = mergeDataset(base, desired, theirs, this.mergeOpts())
+      const { merged: raw, conflicts } = mergeDataset(base, desired, theirs, this.mergeOpts())
       if (conflicts.length > 0) {
         return { ok: false, conflicts }
       }
       // validate the merged result: a merge can create an invariant violation (e.g. two
-      // branches introduce the same unique value) that neither side had on its own
-      const postMerge = this.validate(merged)
-      if (postMerge.blocked) {
-        return { ok: false, diagnostics: postMerge.diagnostics }
+      // branches introduce the same unique value) that neither side had on its own. A
+      // record behind its form is brought forward first (`converge`).
+      const merged = this.converge(raw)
+      if (merged.blocked) {
+        return { ok: false, diagnostics: this.validate(merged.dataset).diagnostics }
       }
       head = newHead
       base = theirs
-      desired = merged
+      desired = merged.dataset
     }
     return { ok: false, diagnostics: check.diagnostics }
   }
@@ -692,11 +758,13 @@ export class Repository {
       const baseDS = baseCommit ? this.checkout(baseCommit) : emptyDataset()
       const targetDS = this.checkout(th)
       const sourceDS = this.checkout(sh)
-      const { merged, conflicts } = mergeDataset(baseDS, targetDS, sourceDS, this.mergeOpts())
+      const { merged: raw, conflicts } = mergeDataset(baseDS, targetDS, sourceDS, this.mergeOpts())
       if (conflicts.length > 0) {
         return { ok: false, conflicts }
       }
-      if (this.validate(merged).blocked) {
+      // a branch behind a form converts here, by the moves its versions carry
+      const { dataset: merged, blocked } = this.converge(raw)
+      if (blocked) {
         return { ok: false, conflicts: [] } // merge would violate an invariant
       }
       const root = writeDataset(merged, this.chunks)
@@ -987,11 +1055,13 @@ export class Repository {
       const baseDS = baseCommit ? this.checkout(baseCommit) : emptyDataset()
       const localDS = this.checkout(localHead)
       const remoteDS = this.checkout(remoteHead)
-      const { merged, conflicts } = mergeDataset(baseDS, localDS, remoteDS, this.mergeOpts())
+      const { merged: raw, conflicts } = mergeDataset(baseDS, localDS, remoteDS, this.mergeOpts())
       if (conflicts.length > 0) {
         return { ok: false, status: 'conflict', conflicts: conflicts.length }
       }
-      if (this.validate(merged).blocked) {
+      // a remote behind a form converts here, by the moves its versions carry
+      const { dataset: merged, blocked } = this.converge(raw)
+      if (blocked) {
         return { ok: false, status: 'conflict', conflicts: 0 } // merge violates an invariant
       }
       const root = writeDataset(merged, this.chunks)

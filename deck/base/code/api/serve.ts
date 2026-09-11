@@ -30,6 +30,8 @@ import * as control from '@term/base/code/api/control'
 import type { ControlStore, Visibility } from '@term/base/code/api/control'
 import * as forms from '@term/base/code/api/form'
 import type { FormStore } from '@term/base/code/api/form'
+import * as scope from '@term/base/code/api/scope'
+import type { FormStores } from '@term/base/code/api/scope'
 import type { Contract } from '@term/base/code/project/contract'
 import { walkArchive } from '@term/base/code/api/export'
 import { walkZip } from '@term/base/code/api/zip'
@@ -115,6 +117,11 @@ export type ServeOptions = {
   open(input: Located & { repository: string; session: Session }): Promise<Repository | undefined>
   control?: ControlStore
   forms?: FormStore
+  // The forms declared at SPACES, keyed by workspace id in the `repository` slot. With
+  // `control` and `forms` it turns on the chain: a repository's `/forms` lists what it
+  // inherits, a space answers `/forms` and `/forms/register!`, and a name declared once
+  // per chain is enforced at both levels (`code/api/scope.ts`).
+  spaceForms?: FormStore
   // Authorize a schema (form) WRITE against a repository, before register! runs. A form
   // registration can force a breaking schema change, so it is a privileged write and must
   // be authorized against the repository the caller named — authentication alone is not
@@ -321,11 +328,31 @@ export function serveApi(options: ServeOptions): http.Server {
       if (options.forms) {
         const handled = await serveForms({
           store: options.forms,
+          ...(options.control && options.spaceForms
+            ? { scope: { control: options.control, stores: { repositories: options.forms, spaces: options.spaceForms } } }
+            : {}),
           contracts: options.contracts,
           authorizeForm: options.authorizeForm,
           request,
           response,
           path,
+          method,
+          session,
+        })
+
+        if (handled) {
+          return
+        }
+      }
+
+      // ── forms on a space ──────────────────────────────────────────────────
+      if (options.control && options.forms && options.spaceForms && located && located.repository === undefined) {
+        const handled = await serveSpaceForms({
+          scope: { control: options.control, stores: { repositories: options.forms, spaces: options.spaceForms } },
+          contracts: options.contracts,
+          request,
+          response,
+          located,
           method,
           session,
         })
@@ -861,8 +888,12 @@ async function serveControl(input: {
   return false
 }
 
+/** The scope seams, when a host binds space forms beside repository forms. */
+type Scope = { control: ControlStore; stores: FormStores }
+
 async function serveForms(input: {
   store: FormStore
+  scope?: Scope
   contracts?: (repository: string) => Promise<Array<Contract>>
   authorizeForm?: (input: {
     repository: string
@@ -889,6 +920,18 @@ async function serveForms(input: {
   const list = match('/repositories/:repository/forms', path)
 
   if (list && method === 'GET') {
+    // with the chain bound, the answer is what the repository is validated against:
+    // its own forms and the ones it inherits, each saying where it was declared
+    if (input.scope) {
+      send(
+        response,
+        200,
+        await scope.repositoryForms({ ...input.scope, repository: list.repository! }),
+      )
+
+      return true
+    }
+
     return answer(await forms.listForms(store, list.repository!))
   }
 
@@ -913,16 +956,33 @@ async function serveForms(input: {
     }
 
     const data = await body(input.request)
+    const name = String(data.name ?? '')
+
+    // a name an ancestor space declares is inherited here, never redeclared
+    if (input.scope) {
+      const against = await scope.declarationsAgainstRepository({
+        ...input.scope,
+        repository,
+        name,
+      })
+
+      if (against.length) {
+        send(response, 409, { fault: 'declared', name, where: against })
+        return true
+      }
+    }
 
     return answer(
       await forms.registerForm(store, {
         repository,
-        name: String(data.name ?? ''),
+        name,
         properties: (data.properties ?? []) as never,
         contracts: input.contracts ? await input.contracts(repository) : [],
         derivation: data.derivation as never,
         time: Number(data.time ?? Date.now()),
         force: data.force === true,
+        ...(Array.isArray(data.arms) ? { arms: data.arms as Array<string> } : {}),
+        ...(typeof data.key === 'string' ? { key: data.key } : {}),
       }),
     )
   }
@@ -947,6 +1007,80 @@ async function serveForms(input: {
         name: one.form!,
       }),
     )
+  }
+
+  return false
+}
+
+/**
+ * Forms beneath a SPACE: what it declares and inherits, and declaring one there for
+ * every repository beneath. Registering needs `manage` on the space, because a space
+ * form changes what every repository beneath validates against.
+ */
+async function serveSpaceForms(input: {
+  scope: Scope
+  contracts?: (repository: string) => Promise<Array<Contract>>
+  request: http.IncomingMessage
+  response: http.ServerResponse
+  located: Located
+  method: string
+  session: Session
+}): Promise<boolean> {
+  const { response, located, method, session } = input
+  const rest = tail(located.rest)
+
+  if (rest !== '/forms' && rest !== '/forms/register!') {
+    return false
+  }
+
+  const found = await control.readWorkspace(input.scope.control, workspaceRef(located))
+
+  if (!found.ok) {
+    send(response, control.controlStatus(found), found)
+    return true
+  }
+
+  const workspace = found.value.id
+
+  if (rest === '/forms' && method === 'GET') {
+    send(response, 200, await scope.spaceForms({ ...input.scope, workspace }))
+    return true
+  }
+
+  if (rest === '/forms/register!' && method === 'POST') {
+    if (!session.user) {
+      send(response, 401, { fault: 'unauthenticated', action: 'register form' })
+      return true
+    }
+
+    if (!(await control.mayAct(input.scope.control, session.user, 'workspace', workspace))) {
+      send(response, 403, { fault: 'forbidden', action: 'register form' })
+      return true
+    }
+
+    const data = await body(input.request)
+    const name = String(data.name ?? '')
+    const against = await scope.declarationsAgainstSpace({ ...input.scope, workspace, name })
+
+    if (against.length) {
+      send(response, 409, { fault: 'declared', name, where: against })
+      return true
+    }
+
+    const result = await forms.registerForm(input.scope.stores.spaces, {
+      repository: workspace,
+      name,
+      properties: (data.properties ?? []) as never,
+      contracts: input.contracts ? await input.contracts(workspace) : [],
+      derivation: data.derivation as never,
+      time: Number(data.time ?? Date.now()),
+      force: data.force === true,
+      ...(Array.isArray(data.arms) ? { arms: data.arms as Array<string> } : {}),
+      ...(typeof data.key === 'string' ? { key: data.key } : {}),
+    })
+
+    send(response, forms.formStatus(result), result.ok ? result.value : result)
+    return true
   }
 
   return false

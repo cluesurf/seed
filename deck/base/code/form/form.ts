@@ -81,12 +81,24 @@ export type FileConfig = {
   diff?: Array<FileRule>
 }
 
+// The moves that brought a form's records from one version to the next, keyed by the
+// property each produces. The vocabulary is `form/convert.ts`; stated structurally here
+// so the schema module depends on nothing above it.
+export type FormConversion = Record<string, Record<string, unknown>>
+
 // A `role base` registration: the set of forms that are versioned base schemas, plus
 // optional file-handling rules. A form is unmodified to become a base form; membership
 // here is what marks it.
+//
+// `conversions` are the stored moves of every version of each form, oldest first. A
+// branch that is BEHIND a form (its records fit an older version) converts when it
+// merges: a record the newest version refuses is put through the moves in order and
+// checked again, so a merge does not fail on records that were right when they were
+// written. See note/library/base/design/record-conversion.md.
 export type RoleBase = {
   forms: Map<string, Form>
   files?: FileConfig
+  conversions?: Map<string, Array<FormConversion>>
 }
 
 export function roleBase(
