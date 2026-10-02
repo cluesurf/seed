@@ -17,7 +17,7 @@
 
 ## Introduction
 
-seed.tree is a machine-checked library of mathematics, written in Term
+Seed is a machine-checked library of mathematics, written in Term
 `.tree` code.
 
 Every structure here is defined as a concrete object and every theorem
@@ -160,7 +160,7 @@ runnable, and the modern branches argue over how equality should behave.
 
 ### Why we chose what we did
 
-seed.tree exists to serve a system, Term, that compiles and runs real
+Seed exists to serve a system, Term, that compiles and runs real
 programs, and to model physics (the vibe substrate) where computation is
 the subject itself. So we need a foundation that is:
 
@@ -230,7 +230,7 @@ variant, which must be rejected, so the proofs are not vacuous.
 
 The result reads like ordinary code, checks like a proof assistant, and
 (because Term compiles to many targets) can run anywhere. That is the
-power and the future of seed.tree: one readable library, mechanically
+power and the future of Seed: one readable library, mechanically
 certain, growing toward all of mathematics and the physics built on it.
 
 ### How this differs from the math you were taught
@@ -240,7 +240,7 @@ Arithmetic gives answers, algebra solves for `x`, calculus finds a
 derivative. Even proofs, when they appear, are written as informal prose
 for a human reader to be convinced by.
 
-seed.tree is a different activity (the same one as Lean, Agda, Idris,
+Seed is a different activity (the same one as Lean, Agda, Idris,
 Coq, and Isabelle). It is closer to building with code than to solving
 for an answer, and it rests on three ideas, more general than numbers:
 
@@ -273,7 +273,7 @@ data.
 
 ### Formal verification, and why foundations are essential
 
-seed.tree is one point in a much larger field: formal verification, the
+Seed is one point in a much larger field: formal verification, the
 science of proving software and mathematics correct rather than just
 hoping they are. The field is a spectrum, from cheap-and-partial to
 expensive-and-total.
@@ -290,7 +290,7 @@ expensive-and-total.
 Underneath, three philosophies: search (SAT, SMT, fuzzing, model
 checking find a bug or a witness), approximate (types, abstract
 interpretation compute a safe summary), and prove (Coq, Lean, Agda, and
-seed.tree construct a certificate that holds for _every_ case). The
+Seed construct a certificate that holds for _every_ case). The
 advanced tools converge downward onto SMT and SAT engines.
 
 How proving is done in practice is interactive theorem proving: a person
@@ -298,7 +298,7 @@ states a theorem and builds the proof, while the machine checks each
 step, usually live in an editor over the Language Server Protocol or at
 a terminal, so a red underline appears the instant a step is wrong. Some
 steps are discharged by automated search (an SMT call, a decision
-procedure); the rest are guided by the human. seed.tree sits firmly on
+procedure); the rest are guided by the human. Seed sits firmly on
 the prove side: it is a type-checker, every `rule` is a machine-checked
 proof, and the same Term tooling that gives editor feedback for code
 gives it for proofs.
@@ -317,13 +317,13 @@ A model checker, an SMT solver, a proof assistant each rest on a small
 formal core whose own rules must be sound, or the whole tower certifies
 nothing. The foundation is the bedrock. It is what makes "the machine
 checked it" mean "it is true" rather than "it passed the tests we
-wrote." seed.tree builds on a foundation chosen to be sound,
+wrote." Seed builds on a foundation chosen to be sound,
 computational, and small precisely so that everything checked on top of
 it inherits that certainty, all the way up to the physics models.
 
 ### Standard foundations, and why we chose differently
 
-Each historical foundation solved a problem and left one. seed.tree sits
+Each historical foundation solved a problem and left one. Seed sits
 at the end of this line, taking the computational, typed, resource-aware
 branch.
 
@@ -338,7 +338,7 @@ branch.
 | Calculus of Constructions / CIC (Coq)         | 1980s       | very powerful, but impredicative `Prop` and heavy machinery                                   |
 | Homotopy Type Theory / Univalent Foundations  | 2000s-2010s | beautiful, but univalence was a non-computing axiom                                           |
 | Cubical type theory                           | 2010s       | makes univalence compute, at the cost of large, intricate machinery                           |
-| Quantitative + Observational TT (our base)    | 2010s-2020s | usage-aware and equality-computing, the branch seed.tree builds on                            |
+| Quantitative + Observational TT (our base)    | 2010s-2020s | usage-aware and equality-computing, the branch Seed builds on                            |
 
 The old line trades away either typing (set theory), computation
 (formalism, axiomatic univalence), or simplicity (cubical). Our kernel
