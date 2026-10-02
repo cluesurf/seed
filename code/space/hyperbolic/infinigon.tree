@@ -1,4 +1,4 @@
-load @term/form/code/space/hyperbolic/horosphere
+load @term/seed/code/space/hyperbolic/horosphere
   find horosphere
 
 # The infinigon (or apeirogon), the strangest tile: a regular polygon with infinitely many sides, inscribed not in a

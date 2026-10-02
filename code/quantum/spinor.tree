@@ -5,7 +5,7 @@
 # and minus one squared is plus one, so 4 pi returns. Here it is modeled on the sign a spinor carries: a 2 pi turn flips
 # the sign, two of them return, and a 2 pi turn is genuinely NOT the identity (the spinor sign distinguishes them).
 
-load @term/form/code/atom/sign
+load @term/seed/code/atom/sign
   find sign
   find flip-sign
   find positive

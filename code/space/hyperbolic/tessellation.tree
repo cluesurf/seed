@@ -20,7 +20,7 @@
 # its raw side counts. Second, the structural layer: a `classify` lookup over an enum of tilings, with `flip` swapping a
 # symbol for its dual, and `fold` proving duality and the flip-involution for every member at once.
 
-load @term/form/code/atom/flag
+load @term/seed/code/atom/flag
   find flag
 
 # The three geometries a regular tiling can inhabit, by the sign of (p - 2)(q - 2) - 4.

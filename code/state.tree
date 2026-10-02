@@ -1,4 +1,4 @@
-load @term/form/code/structure/set
+load @term/seed/code/structure/set
   find set
 
 # A state: a complete description of a system at one moment, a point in the space of all the system's possibilities. A

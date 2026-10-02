@@ -1,4 +1,4 @@
-load @term/form/code/structure/space/vector
+load @term/seed/code/structure/space/vector
   find vector-space
 
 # A tensor space: the space of tensors of a fixed rank over a vector space, built by the tensor product, the home of

@@ -1,4 +1,4 @@
-load @term/form/code/type/term
+load @term/seed/code/type/term
   find term
 
 # An independent variable: a variable that may be set freely, the input side of a function, the x that determines y. The

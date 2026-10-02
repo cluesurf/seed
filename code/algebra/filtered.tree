@@ -1,4 +1,4 @@
-load @term/form/code/structure/ring
+load @term/seed/code/structure/ring
   find ring
 
 # A filtered algebra: an algebra with an increasing chain of subspaces whose products respect the chain (degree at most

@@ -1,17 +1,600 @@
-load @term/form/code/vibe/dock
-  find dock
+# The knit, the law of motion, on one LINE of one dock: its two slots (the first copies along +r in the stream, the
+# second along -r) and the line's store trit. Every piece of the rule that acts inside a dock acts line by line, so a
+# line is the unit its laws are proved on. Three pieces are modeled exactly:
+#
+#   the contact   a FULL line (both slots hold vibes) turns as -1, which exchanges its two slots. Two like vibes
+#                 exchanged are the same tones, but identical fermions pick up the exchange sign: the BOUNCE carries
+#                 phase -1 and the PASS keeps the slots with phase +1. A line with fewer than two vibes is untouched
+#                 (a lone vibe goes straight through).
+#   the store     a line holding a love and a fear with nothing stored, and a calm line storing that sign, trade
+#                 places: (s, -s, calm) <-> (calm, calm, s). This is how the vacuum makes and unmakes pairs.
+#   the pair map  the rule's earliest collision, a fixed permutation of the nine states of a line's two slots: like
+#                 pairs and the calm pair's 3-cycle partners move, the rest are fixed or swapped, charge kept.
+#
+# For each piece this file proves: it is REVERSIBLE (an involution, or with an explicit inverse), it CONSERVES the
+# line's charge (loves minus fears), its content, its momentum (the occupancy of the first slot minus the second) and
+# its energy (vibes plus twice the stored ones), and it COMMUTES WITH CHARGE CONJUGATION C. The stream that carries the
+# slots between docks, and the line law it gives, are in vibe/line.
 
-# The knit, the law of motion, the sixth base element. Each beat it has two steps. Collide, the two tones meeting head on in each line rearrange by a fixed permutation. Then stream, each site hands its tone one dock onward to the matching site of its neighbor. The knit is the unique local reversible rule symmetric under the full symmetry of the cell, forced not chosen.
-form knit
-  link dock, like dock
+load @term/seed/code/atom/flag
+  find flag
 
-# The knit, proof-checked by `seed test`: the law of motion, two steps each beat, collide then stream, 2 = 1 + 1. The
-# claim that the knit is REVERSIBLE is proved in `code/vibe/tone`: the collide step on a line is an involution
-# (`collide-is-reversible`, collide twice returns the original), built from the tone mirror being order two, so the law
-# can run either way locally and the arrow comes only from the wake's one-way growth, not from the motion.
-hold knit-has-two-steps-beat
-  call is-equal
-    code 2
-    call add
-      code 1
-      code 1
+load @term/seed/code/atom/sign
+  find sign
+  find flip-sign
+
+load @term/seed/code/vibe/law
+  find involution
+  find bijection
+  find conserves
+  find commutes
+
+load @term/seed/code/vibe/tone
+  find tone
+  find tone-conjugate
+  find is-vibe
+  find same-tone
+  find balance
+  find balance-shift
+  find total-of-three
+
+form dock-line
+  case slots
+    link first, like tone
+    link second, like tone
+    link store, like tone
+
+task dock-line-of
+  take first, like tone
+  take second, like tone
+  take store, like tone
+  like dock-line
+  send back
+    make slots
+      bind first
+        read first
+      bind second
+        read second
+      bind store
+        read store
+
+task line-first
+  take l, like dock-line
+  like tone
+  fork case, read l
+    case slots
+      send back
+        read first
+
+task line-second
+  take l, like dock-line
+  like tone
+  fork case, read l
+    case slots
+      send back
+        read second
+
+task line-store
+  take l, like dock-line
+  like tone
+  fork case, read l
+    case slots
+      send back
+        read store
+
+# C on a line: every tone conjugated, the store too.
+task conjugate-line
+  take l, like dock-line
+  like dock-line
+  send back
+    call dock-line-of
+      call tone-conjugate
+        call line-first
+          read l
+      call tone-conjugate
+        call line-second
+          read l
+      call tone-conjugate
+        call line-store
+          read l
+
+# THE MEASURES. Charge: loves minus fears in the two slots (a stored pair is neutral).
+task line-charge
+  take l, like dock-line
+  like balance
+  send back
+    call balance-shift
+      call balance-shift
+        make even
+        call line-first
+          read l
+      call line-second
+        read l
+
+# love for a vibe, calm for calm.
+task occupancy
+  take t, like tone
+  like tone
+  fork case, call is-vibe, read t
+    case yes
+      send back
+        make love
+    case no
+      send back
+        make calm
+
+# Content: how many vibes are in the slots.
+task line-content
+  take l, like dock-line
+  like balance
+  send back
+    call balance-shift
+      call balance-shift
+        make even
+        call occupancy
+          call line-first
+            read l
+      call occupancy
+        call line-second
+          read l
+
+# Momentum: the first slot's occupancy minus the second's, the direction the line's vibes stream.
+task line-momentum
+  take l, like dock-line
+  like balance
+  send back
+    call balance-shift
+      call balance-shift
+        make even
+        call occupancy
+          call line-first
+            read l
+      call tone-conjugate
+        call occupancy
+          call line-second
+            read l
+
+# Energy: the vibes in the slots plus two for a stored pair.
+task line-energy
+  take l, like dock-line
+  like balance
+  send back
+    call balance-shift
+      call total-of-three
+        call occupancy
+          call line-first
+            read l
+        call occupancy
+          call line-second
+            read l
+        call occupancy
+          call line-store
+            read l
+      call occupancy
+        call line-store
+          read l
+
+# THE CONTACT. Is the line full: both slots hold vibes.
+task is-full
+  take l, like dock-line
+  like flag
+  fork case, call is-vibe, call line-first, read l
+    case yes
+      send back
+        call is-vibe
+          call line-second
+            read l
+    case no
+      send back
+        make no
+
+# The tones after the contact: a full line exchanges its slots, any other line is kept.
+task contact
+  take l, like dock-line
+  like dock-line
+  fork case, call is-full, read l
+    case yes
+      send back
+        call dock-line-of
+          call line-second
+            read l
+          call line-first
+            read l
+          call line-store
+            read l
+    case no
+      send back
+        read l
+
+# positive for yes, negative for no.
+task sign-of-flag
+  take a, like flag
+  like sign
+  fork case, read a
+    case yes
+      send back
+        make positive
+    case no
+      send back
+        make negative
+
+form contact-kind
+  case bounce
+  case pass
+
+# The phase the contact gives the state: the bounce is -1 on a full line, the pass is +1 on a full line of two like
+# vibes and -1 on a love and a fear (where exchanging them is a real exchange of different vibes). An unfull line
+# keeps +1.
+task contact-phase
+  take k, like contact-kind
+  take l, like dock-line
+  like sign
+  fork case, call is-full, read l
+    case no
+      send back
+        make positive
+    case yes
+      fork case, read k
+        case bounce
+          send back
+            make negative
+        case pass
+          send back
+            call sign-of-flag
+              call same-tone
+                call line-first
+                  read l
+                call line-second
+                  read l
+
+# THE CONTACT IS REVERSIBLE: an involution on the line's tones.
+fuse involution, contact, dock-line, contact
+
+# IT CONSERVES CHARGE, CONTENT, ENERGY AND THE STORE.
+fuse conserves, contact, dock-line, contact, line-charge
+fuse conserves, contact, dock-line, contact, line-content
+fuse conserves, contact, dock-line, contact, line-energy
+fuse conserves, contact, dock-line, contact, line-store
+
+# IT COMMUTES WITH C.
+fuse commutes, contact-and-conjugation, dock-line, contact, conjugate-line
+
+# ON TWO LIKE VIBES THE PASS AND THE BOUNCE DIFFER ONLY IN PHASE: the contact moves no tone (exchanging equal tones),
+# the pass gives +1 and the bounce -1.
+rule two-like-vibes-keep-their-tones-under-the-contact
+  mark t, like tone
+  mark s, like tone
+  show hold
+    call is-equal
+      call contact
+        call dock-line-of
+          read t
+          read t
+          read s
+      call dock-line-of
+        read t
+        read t
+        read s
+  fold t, s
+
+rule the-pass-gives-two-like-vibes-phase-plus-one
+  mark t, like tone
+  mark s, like tone
+  have vibe
+    call is-equal
+      call is-vibe
+        read t
+      make yes
+  show hold
+    call is-equal
+      call contact-phase
+        make pass
+        call dock-line-of
+          read t
+          read t
+          read s
+      make positive
+  fold t, s
+
+rule the-bounce-gives-two-like-vibes-phase-minus-one
+  mark t, like tone
+  mark s, like tone
+  have vibe
+    call is-equal
+      call is-vibe
+        read t
+      make yes
+  show hold
+    call is-equal
+      call contact-phase
+        make bounce
+        call dock-line-of
+          read t
+          read t
+          read s
+      make negative
+  fold t, s
+
+# A LONE VIBE GOES STRAIGHT THROUGH: a line with one vibe is unchanged, phase +1.
+rule a-lone-vibe-is-untouched-by-the-contact
+  mark t, like tone
+  mark s, like tone
+  show hold
+    call is-equal
+      call contact
+        call dock-line-of
+          read t
+          make calm
+          read s
+      call dock-line-of
+        read t
+        make calm
+        read s
+  fold t, s
+
+# THE STORE. Does the line hold a love-fear pair in its slots (the second the conjugate of a vibe in the first).
+task holds-a-pair
+  take l, like dock-line
+  like flag
+  fork case, call is-vibe, call line-first, read l
+    case yes
+      send back
+        call same-tone
+          call line-second
+            read l
+          call tone-conjugate
+            call line-first
+              read l
+    case no
+      send back
+        make no
+
+# Are both slots calm.
+task slots-are-calm
+  take l, like dock-line
+  like flag
+  fork case, call is-vibe, call line-first, read l
+    case yes
+      send back
+        make no
+    case no
+      fork case, call is-vibe, call line-second, read l
+        case yes
+          send back
+            make no
+        case no
+          send back
+            make yes
+
+# Unmake: a pair with nothing stored becomes a calm line storing the first slot's sign.
+task unmake-pair
+  take here, like flag
+  take l, like dock-line
+  like dock-line
+  fork case, read here
+    case yes
+      send back
+        call dock-line-of
+          make calm
+          make calm
+          call line-first
+            read l
+    case no
+      send back
+        read l
+
+# Make: a calm line storing s becomes (s, -s) with nothing stored.
+task make-pair
+  take here, like flag
+  take l, like dock-line
+  like dock-line
+  fork case, read here
+    case yes
+      send back
+        call dock-line-of
+          call line-store
+            read l
+          call tone-conjugate
+            call line-store
+              read l
+          make calm
+    case no
+      send back
+        read l
+
+task store-move
+  take l, like dock-line
+  like dock-line
+  fork case, call line-store, read l
+    case calm
+      send back
+        call unmake-pair
+          call holds-a-pair
+            read l
+          read l
+    case love
+      send back
+        call make-pair
+          call slots-are-calm
+            read l
+          read l
+    case fear
+      send back
+        call make-pair
+          call slots-are-calm
+            read l
+          read l
+
+# THE STORE IS REVERSIBLE.
+fuse involution, store-move, dock-line, store-move
+
+# IT CONSERVES CHARGE, MOMENTUM AND ENERGY (it makes and unmakes neutral, motionless pairs).
+fuse conserves, store-move, dock-line, store-move, line-charge
+fuse conserves, store-move, dock-line, store-move, line-momentum
+fuse conserves, store-move, dock-line, store-move, line-energy
+
+# IT COMMUTES WITH C.
+fuse commutes, store-and-conjugation, dock-line, store-move, conjugate-line
+
+# THE CONTACT KEEPS MOMENTUM ONLY UP TO SIGN: exchanging the slots of a full line keeps both occupied, so momentum 0
+# stays 0, and every line it moves is full. So it conserves momentum too.
+fuse conserves, contact, dock-line, contact, line-momentum
+
+# THE EARLIEST PAIR COLLISION, on the two slots: like pairs fixed, (s, calm) and (calm, s) swapped, and the neutral
+# 3-cycle (calm, calm) -> (love, fear) -> (fear, love) -> (calm, calm).
+task pair-collide
+  take l, like dock-line
+  like dock-line
+  fork case, read l
+    case slots
+      fork case, read first
+        case calm
+          fork case, read second
+            case calm
+              send back
+                call dock-line-of
+                  make love
+                  make fear
+                  read store
+            case love
+              send back
+                call dock-line-of
+                  make love
+                  make calm
+                  read store
+            case fear
+              send back
+                call dock-line-of
+                  make fear
+                  make calm
+                  read store
+        case love
+          fork case, read second
+            case calm
+              send back
+                call dock-line-of
+                  make calm
+                  make love
+                  read store
+            case love
+              send back
+                read l
+            case fear
+              send back
+                call dock-line-of
+                  make fear
+                  make love
+                  read store
+        case fear
+          fork case, read second
+            case calm
+              send back
+                call dock-line-of
+                  make calm
+                  make fear
+                  read store
+            case love
+              send back
+                call dock-line-of
+                  make calm
+                  make calm
+                  read store
+            case fear
+              send back
+                read l
+
+# Its inverse runs the 3-cycle backward.
+task pair-uncollide
+  take l, like dock-line
+  like dock-line
+  fork case, read l
+    case slots
+      fork case, read first
+        case calm
+          fork case, read second
+            case calm
+              send back
+                call dock-line-of
+                  make fear
+                  make love
+                  read store
+            case love
+              send back
+                call dock-line-of
+                  make love
+                  make calm
+                  read store
+            case fear
+              send back
+                call dock-line-of
+                  make fear
+                  make calm
+                  read store
+        case love
+          fork case, read second
+            case calm
+              send back
+                call dock-line-of
+                  make calm
+                  make love
+                  read store
+            case love
+              send back
+                read l
+            case fear
+              send back
+                call dock-line-of
+                  make calm
+                  make calm
+                  read store
+        case fear
+          fork case, read second
+            case calm
+              send back
+                call dock-line-of
+                  make calm
+                  make fear
+                  read store
+            case love
+              send back
+                call dock-line-of
+                  make love
+                  make fear
+                  read store
+            case fear
+              send back
+                read l
+
+fuse bijection, pair-collide, dock-line, pair-collide, pair-uncollide
+fuse conserves, pair-collide, dock-line, pair-collide, line-charge
+
+# C REVERSES IT: conjugating the pair collision gives its inverse, C P C = P^-1, because C runs the neutral 3-cycle
+# (calm, calm) -> (love, fear) -> (fear, love) backward. The earliest rule was not C-symmetric, only CP-like.
+rule conjugation-reverses-the-pair-collision
+  mark l, like dock-line
+  show hold
+    call is-equal
+      call conjugate-line
+        call pair-collide
+          call conjugate-line
+            read l
+      call pair-uncollide
+        read l
+  fold l
+
+# ITS NEUTRAL 3-CYCLE IS NOT AN INVOLUTION: applying it twice to the calm pair gives (fear, love), not (calm, calm).
+# Reversibility needs the explicit inverse, not self-inverse pieces.
+rule the-pair-collision-is-not-an-involution
+  show hold
+    call is-equal
+      call pair-collide
+        call pair-collide
+          call dock-line-of
+            make calm
+            make calm
+            make calm
+      call dock-line-of
+        make fear
+        make love
+        make calm
+  calm hold

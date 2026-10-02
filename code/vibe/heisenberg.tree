@@ -1,0 +1,257 @@
+# The qutrit Weyl-Heisenberg group, the 27 operators w^c X^a Z^b that move a role: X shifts |x> to |x + 1>, Z multiplies
+# |x> by w^x, and they fail to commute by a phase, Z X = w X Z. An element is a PHASE (the power of w, a tone) and a
+# PLACE (a point of the role grid, vibe/role). Moving Z^b past X^a' costs w^(b a'), so in the symmetric gauge
+# D(u) = w^(u_shift u_clock / 2) X^u_shift Z^u_clock the product is D(u) D(v) = w^(-[u, v] / 2) D(u + v). Modulo three,
+# -1/2 = -2 = +1, so
+#
+#   (c, u)(c', v) = (c + c' + [u, v], u + v),
+#
+# and the symplectic form of the grid IS the group's twist. This file proves it is a group, that the commutator of any
+# two elements is the central phase w^(-[u, v]) (Z X = w X Z is one instance), that every element cubes to the identity,
+# that the phases are central, and that forgetting the phase is a homomorphism onto the grid whose kernel is the three
+# phases: 27 = 3 x 9.
+
+load @term/seed/code/atom/flag
+  find flag
+  find both
+
+load @term/seed/code/vibe/law
+  find associative
+  find identity
+  find inverse
+  find homomorphism
+
+load @term/seed/code/vibe/tone
+  find tone
+  find tone-sum
+  find tone-product
+  find tone-conjugate
+  find same-tone
+
+load @term/seed/code/vibe/role
+  find role
+  find role-of
+  find role-sum
+  find role-negate
+  find role-zero
+  find wedge
+  find same-role
+
+form weyl
+  case operator
+    link phase, like tone
+    link place, like role
+
+task weyl-of
+  take phase, like tone
+  take place, like role
+  like weyl
+  send back
+    make operator
+      bind phase
+        read phase
+      bind place
+        read place
+
+task weyl-phase
+  take g, like weyl
+  like tone
+  fork case, read g
+    case operator
+      send back
+        read phase
+
+task weyl-place
+  take g, like weyl
+  like role
+  fork case, read g
+    case operator
+      send back
+        read place
+
+# The product: phases add, places add, and the places' symplectic form twists the phase.
+task weyl-product
+  take g, like weyl
+  take k, like weyl
+  like weyl
+  send back
+    call weyl-of
+      call tone-sum
+        call tone-sum
+          call weyl-phase
+            read g
+          call weyl-phase
+            read k
+        call wedge
+          call weyl-place
+            read g
+          call weyl-place
+            read k
+      call role-sum
+        call weyl-place
+          read g
+        call weyl-place
+          read k
+
+# The inverse: negate both. [u, -u] = 0, so no twist is left over.
+task weyl-inverse
+  take g, like weyl
+  like weyl
+  send back
+    call weyl-of
+      call tone-conjugate
+        call weyl-phase
+          read g
+      call role-negate
+        call weyl-place
+          read g
+
+task weyl-unit
+  like weyl
+  send back
+    call weyl-of
+      make calm
+      call role-zero
+
+# A pure phase w^t, the identity operator times w^t.
+task scalar
+  take t, like tone
+  like weyl
+  send back
+    call weyl-of
+      read t
+      call role-zero
+
+# THE 27 OPERATORS FORM A GROUP.
+fuse associative, weyl-product, weyl, weyl-product
+fuse identity, weyl-product, weyl, weyl-product, weyl-unit
+fuse inverse, weyl-product, weyl, weyl-product, weyl-inverse, weyl-unit
+
+# FORGETTING THE PHASE IS A HOMOMORPHISM ONTO THE GRID: place (g k) = place g + place k. Its kernel is the three
+# phases, so the group is a central extension of Z3 x Z3 by Z3, of order 3 x 9 = 27.
+fuse homomorphism, weyl-place, weyl, weyl-place, weyl-product, role-sum
+
+# THE COMMUTATOR IS THE SYMPLECTIC FORM: g k = w^(-[u, v]) k g, for every g = (c, u) and k = (c', v). The twist is
+# [u, v] in one order and [v, u] = -[u, v] in the other, and the difference 2 [u, v] is -[u, v] modulo three.
+rule the-commutator-is-the-symplectic-form
+  mark g, like weyl
+  mark k, like weyl
+  show hold
+    call is-equal
+      call weyl-product
+        read g
+        read k
+      call weyl-product
+        call scalar
+          call tone-conjugate
+            call wedge
+              call weyl-place
+                read g
+              call weyl-place
+                read k
+        call weyl-product
+          read k
+          read g
+  fold g, k
+
+# Z X = w X Z: with X = D(1, 0) and Z = D(0, 1), [Z, X] = -1, so Z X is X Z times w (love).
+rule clock-and-shift-differ-by-a-third-of-a-turn
+  show hold
+    call is-equal
+      call weyl-phase
+        call weyl-product
+          call weyl-of
+            make calm
+            call role-of
+              make calm
+              make love
+          call weyl-of
+            make calm
+            call role-of
+              make love
+              make calm
+      call tone-sum
+        make love
+        call weyl-phase
+          call weyl-product
+            call weyl-of
+              make calm
+              call role-of
+                make love
+                make calm
+            call weyl-of
+              make calm
+              call role-of
+                make calm
+                make love
+  calm hold
+
+# THE PHASES ARE CENTRAL: a pure phase commutes with every operator.
+rule a-phase-commutes-with-every-operator
+  mark t, like tone
+  mark g, like weyl
+  show hold
+    call is-equal
+      call weyl-product
+        call scalar
+          read t
+        read g
+      call weyl-product
+        read g
+        call scalar
+          read t
+  fold t, g
+
+# EXPONENT THREE: every operator cubed is the identity, g g g = 1 (3 c + h([u, u] + [2u, u]) = 0, 3 u = 0).
+rule every-operator-cubes-to-the-identity
+  mark g, like weyl
+  show hold
+    call is-equal
+      call weyl-product
+        call weyl-product
+          read g
+          read g
+        read g
+      call weyl-unit
+  fold g
+
+# Equality of operators, as a flag.
+task same-phase-and-place
+  take g, like weyl
+  take k, like weyl
+  like flag
+  send back
+    call both
+      call same-tone
+        call weyl-phase
+          read g
+        call weyl-phase
+          read k
+      call same-role
+        call weyl-place
+          read g
+        call weyl-place
+          read k
+
+# ONLY THE PHASES ARE CENTRAL: an operator with a nonzero place fails to commute with some operator, namely the one at
+# the quarter-turned place, where the commutator phase [u, perp u] is a vibe.
+rule two-operators-commute-exactly-when-their-places-pair-to-calm
+  mark g, like weyl
+  mark k, like weyl
+  show hold
+    call is-equal
+      call same-phase-and-place
+        call weyl-product
+          read g
+          read k
+        call weyl-product
+          read k
+          read g
+      call same-tone
+        call wedge
+          call weyl-place
+            read g
+          call weyl-place
+            read k
+        make calm
+  fold g, k

@@ -1,0 +1,134 @@
+# NEGATIVE CONTROL for vibe/eisenstein. Expected refusals: 5.
+
+load @term/seed/code/vibe/eisenstein
+  find omega-real
+  find omega-part
+  find eisenstein-norm
+  find residue
+
+# the Gaussian w part, ad + bc: what the product would be if w^2 = -1 instead of -1 - w
+task gaussian-part
+  take a, like integer
+  take b, like integer
+  take c, like integer
+  take d, like integer
+  like integer
+  send back
+    call add
+      call multiply
+        read a
+        read d
+      call multiply
+        read b
+        read c
+
+# an indefinite form, a^2 - 3ab + b^2
+task indefinite
+  take a, like integer
+  take b, like integer
+  like integer
+  send back
+    call add
+      call subtract
+        call multiply
+          read a
+          read a
+        call multiply
+          code 3
+          call multiply
+            read a
+            read b
+      call multiply
+        read b
+        read b
+
+# 1. the Eisenstein norm is NOT multiplicative for the Gaussian product
+rule control-norm-with-gaussian-part
+  mark a, like integer
+  mark b, like integer
+  mark c, like integer
+  mark d, like integer
+  show hold
+    call is-equal
+      call eisenstein-norm
+        call omega-real
+          read a
+          read b
+          read c
+          read d
+        call gaussian-part
+          read a
+          read b
+          read c
+          read d
+      call multiply
+        call eisenstein-norm
+          read a
+          read b
+        call eisenstein-norm
+          read c
+          read d
+
+# 2. an indefinite form is not non-negative
+rule control-indefinite-is-not-non-negative
+  mark a, like integer
+  mark b, like integer
+  show hold
+    call is-minimum
+      call indefinite
+        read a
+        read b
+      code 0
+
+# 3. the residue law with the wrong sign
+rule control-residue-wrong-sign
+  mark a, like integer
+  mark b, like integer
+  mark c, like integer
+  mark d, like integer
+  show hold
+    call is-equal
+      call residue
+        call omega-real
+          read a
+          read b
+          read c
+          read d
+        call omega-part
+          read a
+          read b
+          read c
+          read d
+      call add
+        call multiply
+          call residue
+            read a
+            read b
+          call residue
+            read c
+            read d
+        call multiply
+          code 3
+          call multiply
+            read b
+            read d
+
+# 4. three plus w does not have norm eight
+rule control-norm-of-three-plus-omega
+  show hold
+    call is-equal
+      call eisenstein-norm
+        code 3
+        code 1
+      code 8
+
+# 5. w squared is not -1 (that is i, not w)
+rule control-omega-squared-is-not-minus-one-part
+  show hold
+    call is-equal
+      call omega-part
+        code 0
+        code 1
+        code 0
+        code 1
+      code 0

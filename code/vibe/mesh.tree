@@ -1,40 +1,158 @@
-# The mesh, the fifth base element: the whole of space, one growing hyperbolic honeycomb of identical 24-cell docks joined
-# face to face. The mesh is an UNDIRECTED graph whose directions and their opposites are the `way` of `vibe/site` (where
-# the antipode is proved an involution and fixed-point-free, so every edge is two-way and the sites pair into lines). This
-# file adds the mesh-scale facts: it is 24-regular (each dock meets twenty-four neighbors), and it grows HYPERBOLICALLY,
-# each shell strictly larger than the last, room opening faster than flat space, the growth that gives feeling room to
-# branch. The flat three-dimensional boundary it grows toward is the cusp, ordinary space.
+# The mesh, the space of docks. In the model it is the hyperbolic honeycomb {3,4,3,4}, whose geometry (vibe/honeycomb)
+# and growth (vibe/warp, shells 1, 24, 456, 8376, ... by the root of a cubic) are proved elsewhere. In the experiments it
+# is a flat periodic box of the D4 LATTICE, the integer 4-vectors with an even coordinate sum: the same 24 directions
+# per dock, finite and exact. This file proves what makes the box a faithful stand-in at the level of one step:
+#
+#   every slot (vibe/dock) has an even coordinate sum, so a step along a slot keeps a site in the D4 lattice;
+#   no slot is zero, and the opposite of a slot is a slot (vibe/dock), so every dock has 24 neighbours and the
+#   neighbour relation is symmetric: an undirected 24-regular graph;
+#   the coordinate sum of a slot is -2, 0 or 2: one step moves a site's height (its coordinate sum) by at most two.
 
-load @term/form/code/vibe/site
-  find way
-  find opposite
+load @term/seed/code/atom/flag
+  find flag
+  find either
+  find implies
+  find not-flag
 
-# THE EDGE IS TWO-WAY (the mesh is undirected), stated on the imported direction: stepping out along a way and back along
-# its opposite returns. The opposite of the opposite is the original (proved as the involution in vibe/site); here it is
-# restated for a direction of the mesh, sharing the one `way` type rather than redefining it.
-rule mesh-edge-returns
-  mark w, like way
+load @term/seed/code/vibe/tone
+  find tone
+  find balance
+  find balance-shift
+  find total-of-three
+
+load @term/seed/code/vibe/dock
+  find tetrad
+  find tetrad-first
+  find tetrad-second
+  find tetrad-third
+  find tetrad-fourth
+  find is-slot
+  find same-tetrad
+  find tetrad-of
+
+# The sum of a tetrad's four entries.
+task coordinate-sum
+  take v, like tetrad
+  like balance
+  send back
+    call balance-shift
+      call total-of-three
+        call tetrad-first
+          read v
+        call tetrad-second
+          read v
+        call tetrad-third
+          read v
+      call tetrad-fourth
+        read v
+
+task is-even-sum
+  take n, like balance
+  like flag
+  fork case, read n
+    case minus-four
+      send back
+        make yes
+    case minus-three
+      send back
+        make no
+    case minus-two
+      send back
+        make yes
+    case minus-one
+      send back
+        make no
+    case even
+      send back
+        make yes
+    case plus-one
+      send back
+        make no
+    case plus-two
+      send back
+        make yes
+    case plus-three
+      send back
+        make no
+    case plus-four
+      send back
+        make yes
+
+# EVERY SLOT HAS AN EVEN COORDINATE SUM, so stepping along it keeps a site in the D4 lattice.
+rule every-slot-is-a-step-of-the-d4-lattice
+  mark v, like tetrad
   show hold
     call is-equal
-      call opposite
-        call opposite
-          read w
-      read w
-  fold w
+      call implies
+        call is-slot
+          read v
+        call is-even-sum
+          call coordinate-sum
+            read v
+      make yes
+  fold v
 
-# HYPERBOLIC GROWTH: the shells of the {3,4,3,4} mesh, counted outward from a seed dock, are 1, 24, 456, 8376, each
-# strictly larger than the last, room opening faster than any flat lattice (where shells grow only polynomially).
-hold shell-zero-below-shell-one
-  call is-below
-    code 1
-    code 24
+# NO SLOT IS THE ZERO STEP, so all 24 neighbours of a dock are other docks.
+rule no-slot-is-the-zero-step
+  mark v, like tetrad
+  show hold
+    call is-equal
+      call implies
+        call is-slot
+          read v
+        call not-flag
+          call same-tetrad
+            read v
+            call tetrad-of
+              make calm
+              make calm
+              make calm
+              make calm
+      make yes
+  fold v
 
-hold shell-one-below-shell-two
-  call is-below
-    code 24
-    code 456
+# A STEP CHANGES THE HEIGHT BY -2, 0 OR +2: the coordinate sum of a slot is never odd and never beyond 2.
+task is-small-even
+  take n, like balance
+  like flag
+  fork case, read n
+    case minus-four
+      send back
+        make no
+    case minus-three
+      send back
+        make no
+    case minus-two
+      send back
+        make yes
+    case minus-one
+      send back
+        make no
+    case even
+      send back
+        make yes
+    case plus-one
+      send back
+        make no
+    case plus-two
+      send back
+        make yes
+    case plus-three
+      send back
+        make no
+    case plus-four
+      send back
+        make no
 
-hold shell-two-below-shell-three
-  call is-below
-    code 456
-    code 8376
+rule a-step-changes-the-height-by-at-most-two
+  mark v, like tetrad
+  show hold
+    call is-equal
+      call implies
+        call is-slot
+          read v
+        call is-small-even
+          call coordinate-sum
+            read v
+      make yes
+  fold v

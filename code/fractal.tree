@@ -1,4 +1,4 @@
-load @term/form/code/space/metric
+load @term/seed/code/space/metric
   find metric-space
 
 # A fractal: a shape with detail at every scale, self-similar so that zooming in reveals copies of the whole, with a

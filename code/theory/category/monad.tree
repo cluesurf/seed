@@ -1,4 +1,4 @@
-load @term/form/code/theory/category/functor
+load @term/seed/code/theory/category/functor
   find functor
 
 # A monad: a functor from a category to itself with a unit and a multiplication, the categorical pattern for wrapping

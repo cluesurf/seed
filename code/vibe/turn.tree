@@ -1,0 +1,755 @@
+# The turns of the role grid: the 2 x 2 matrices over F3 with determinant 1, SL(2, 3). They are the linear moves that
+# keep the grid's symplectic form, so they are the Clifford group's action on a qutrit's Weyl operators with the phases
+# forgotten. Three structures of the theory turn out to be one group of 24:
+#
+#   the dock's 24 slots, read as Hurwitz units          2T            (vibe/hurwitz)
+#   the grid moves that keep the symplectic form        SL(2, 3)      (this file)
+#   the links' Clifford group modulo the grid shifts    Sp(2, 3) = SL(2, 3)
+#
+# This file PROVES the first two the same group. It writes down the images of i, j and w, extends them to a map
+# rho : 2T -> SL(2, 3) along q w^t -> rho(q) rho(w)^t, and proves rho a homomorphism into the determinant-1 matrices,
+# injective, and onto them (an explicit inverse is checked on every matrix of determinant 1), so SL(2, 3) has exactly
+# 24 elements and is 2T. It proves the matrix laws the Clifford group rests on: the determinant is multiplicative,
+# composition is the composition of the grid moves, and [M u, M v] = det M [u, v], so a determinant-1 matrix keeps the
+# form. Last it builds the CLIFFORD ACTION on the 27 Weyl operators: a turn M sends (c, u) to (c, M u), a grid shift
+# by t sends (c, u) to (c + [t, u], u), and both are proved automorphisms of the Weyl-Heisenberg group. Together they
+# are ASL(2, 3) = Z3^2 x| SL(2, 3), the 9 x 24 = 216 Clifford moves of one qutrit modulo phase.
+
+load @term/seed/code/atom/flag
+  find flag
+  find both
+  find either
+  find implies
+
+load @term/seed/code/atom/sign
+  find sign
+
+load @term/seed/code/vibe/law
+  find homomorphism
+
+load @term/seed/code/vibe/tone
+  find tone
+  find tone-sum
+  find tone-product
+  find tone-difference
+  find tone-conjugate
+  find same-tone
+
+load @term/seed/code/vibe/role
+  find role
+  find role-of
+  find role-shift
+  find role-clock
+  find wedge
+
+load @term/seed/code/vibe/heisenberg
+  find weyl
+  find weyl-of
+  find weyl-phase
+  find weyl-place
+  find weyl-product
+
+load @term/seed/code/vibe/hurwitz
+  find hurwitz-axis
+  find q8
+  find q8-of
+  find q8-sign
+  find q8-axis
+  find hurwitz-element
+  find hurwitz-of
+  find hurwitz-core
+  find hurwitz-turn
+  find hurwitz-product
+  find same-hurwitz
+
+# A 2 x 2 matrix (a b ; c d) over F3.
+form turn-matrix
+  case grid
+    link a, like tone
+    link b, like tone
+    link c, like tone
+    link d, like tone
+
+task matrix-of
+  take a, like tone
+  take b, like tone
+  take c, like tone
+  take d, like tone
+  like turn-matrix
+  send back
+    make grid
+      bind a
+        read a
+      bind b
+        read b
+      bind c
+        read c
+      bind d
+        read d
+
+# The four entries.
+task entry-a
+  take m, like turn-matrix
+  like tone
+  fork case, read m
+    case grid
+      send back
+        read a
+
+task entry-b
+  take m, like turn-matrix
+  like tone
+  fork case, read m
+    case grid
+      send back
+        read b
+
+task entry-c
+  take m, like turn-matrix
+  like tone
+  fork case, read m
+    case grid
+      send back
+        read c
+
+task entry-d
+  take m, like turn-matrix
+  like tone
+  fork case, read m
+    case grid
+      send back
+        read d
+
+# x y + z w, one entry of a product.
+task row-times-column
+  take x, like tone
+  take y, like tone
+  take z, like tone
+  take w, like tone
+  like tone
+  send back
+    call tone-sum
+      call tone-product
+        read x
+        read y
+      call tone-product
+        read z
+        read w
+
+task turn-compose
+  take m, like turn-matrix
+  take n, like turn-matrix
+  like turn-matrix
+  send back
+    call matrix-of
+      call row-times-column
+        call entry-a
+          read m
+        call entry-a
+          read n
+        call entry-b
+          read m
+        call entry-c
+          read n
+      call row-times-column
+        call entry-a
+          read m
+        call entry-b
+          read n
+        call entry-b
+          read m
+        call entry-d
+          read n
+      call row-times-column
+        call entry-c
+          read m
+        call entry-a
+          read n
+        call entry-d
+          read m
+        call entry-c
+          read n
+      call row-times-column
+        call entry-c
+          read m
+        call entry-b
+          read n
+        call entry-d
+          read m
+        call entry-d
+          read n
+
+task determinant
+  take m, like turn-matrix
+  like tone
+  send back
+    call tone-difference
+      call tone-product
+        call entry-a
+          read m
+        call entry-d
+          read m
+      call tone-product
+        call entry-b
+          read m
+        call entry-c
+          read m
+
+# (a b ; c d) acting on the column (shift, clock).
+task apply-turn
+  take m, like turn-matrix
+  take u, like role
+  like role
+  send back
+    call role-of
+      call row-times-column
+        call entry-a
+          read m
+        call role-shift
+          read u
+        call entry-b
+          read m
+        call role-clock
+          read u
+      call row-times-column
+        call entry-c
+          read m
+        call role-shift
+          read u
+        call entry-d
+          read m
+        call role-clock
+          read u
+
+task same-matrix
+  take m, like turn-matrix
+  take n, like turn-matrix
+  like flag
+  send back
+    call both
+      call both
+        call same-tone
+          call entry-a
+            read m
+          call entry-a
+            read n
+        call same-tone
+          call entry-b
+            read m
+          call entry-b
+            read n
+      call both
+        call same-tone
+          call entry-c
+            read m
+          call entry-c
+            read n
+        call same-tone
+          call entry-d
+            read m
+          call entry-d
+            read n
+
+# THE DETERMINANT IS MULTIPLICATIVE: det (m n) = det m det n.
+rule the-determinant-is-multiplicative
+  mark m, like turn-matrix
+  mark n, like turn-matrix
+  show hold
+    call is-equal
+      call determinant
+        call turn-compose
+          read m
+          read n
+      call tone-product
+        call determinant
+          read m
+        call determinant
+          read n
+  fold m, n
+
+# COMPOSITION IS THE COMPOSITION OF MOVES: (m n) u = m (n u). Since a matrix is fixed by where it sends (1, 0) and
+# (0, 1), this is also what makes composition associative.
+rule a-product-of-turns-moves-the-grid-as-one-move-after-the-other
+  mark m, like turn-matrix
+  mark n, like turn-matrix
+  mark u, like role
+  show hold
+    call is-equal
+      call apply-turn
+        call turn-compose
+          read m
+          read n
+        read u
+      call apply-turn
+        read m
+        call apply-turn
+          read n
+          read u
+  fold m, n, u
+
+# A TURN SCALES THE FORM BY ITS DETERMINANT: [m u, m v] = det m [u, v]. A determinant-1 turn keeps the form, and these
+# are exactly the symplectic moves of the grid.
+rule a-turn-scales-the-wedge-by-its-determinant
+  mark m, like turn-matrix
+  mark u, like role
+  mark v, like role
+  show hold
+    call is-equal
+      call wedge
+        call apply-turn
+          read m
+          read u
+        call apply-turn
+          read m
+          read v
+      call tone-product
+        call determinant
+          read m
+        call wedge
+          read u
+          read v
+  fold m, u, v
+
+# THE ISOMORPHISM 2T -> SL(2, 3). i -> (0 1 ; -1 0), j -> (1 1 ; 1 -1), so k = i j -> (1 -1 ; -1 -1), and
+# w -> (-1 -1 ; 1 0). These satisfy i^2 = j^2 = -1, i j = -j i, w^3 = 1 and w i w^-1 = k, w j w^-1 = i, w k w^-1 = j,
+# which is all the semidirect product asks.
+task axis-matrix
+  take a, like hurwitz-axis
+  like turn-matrix
+  fork case, read a
+    case real-axis
+      send back
+        call matrix-of
+          make love
+          make calm
+          make calm
+          make love
+    case i-axis
+      send back
+        call matrix-of
+          make calm
+          make love
+          make fear
+          make calm
+    case j-axis
+      send back
+        call matrix-of
+          make love
+          make love
+          make love
+          make fear
+    case k-axis
+      send back
+        call matrix-of
+          make love
+          make fear
+          make fear
+          make fear
+
+task sign-matrix
+  take s, like sign
+  take m, like turn-matrix
+  like turn-matrix
+  fork case, read s
+    case positive
+      send back
+        read m
+    case negative
+      send back
+        call matrix-of
+          call tone-conjugate
+            call entry-a
+              read m
+          call tone-conjugate
+            call entry-b
+              read m
+          call tone-conjugate
+            call entry-c
+              read m
+          call tone-conjugate
+            call entry-d
+              read m
+
+task omega-matrix
+  like turn-matrix
+  send back
+    call matrix-of
+      make fear
+      make fear
+      make love
+      make calm
+
+task omega-matrix-power
+  take t, like tone
+  like turn-matrix
+  fork case, read t
+    case calm
+      send back
+        call matrix-of
+          make love
+          make calm
+          make calm
+          make love
+    case love
+      send back
+        call omega-matrix
+    case fear
+      send back
+        call turn-compose
+          call omega-matrix
+          call omega-matrix
+
+# rho (q w^t) = rho(q) rho(w)^t.
+task rho
+  take g, like hurwitz-element
+  like turn-matrix
+  send back
+    call turn-compose
+      call sign-matrix
+        call q8-sign
+          call hurwitz-core
+            read g
+        call axis-matrix
+          call q8-axis
+            call hurwitz-core
+              read g
+      call omega-matrix-power
+        call hurwitz-turn
+          read g
+
+# RHO IS A HOMOMORPHISM: rho (g h) = rho g rho h, over all 576 pairs.
+fuse homomorphism, rho, hurwitz-element, rho, hurwitz-product, turn-compose
+
+# INTO SL(2, 3): every image has determinant 1.
+rule every-image-has-determinant-one
+  mark g, like hurwitz-element
+  show hold
+    call is-equal
+      call determinant
+        call rho
+          read g
+      make love
+  fold g
+
+# INJECTIVE: distinct units have distinct matrices.
+rule rho-is-injective
+  mark g, like hurwitz-element
+  mark h, like hurwitz-element
+  have same
+    call is-equal
+      call same-matrix
+        call rho
+          read g
+        call rho
+          read h
+      make yes
+  show hold
+    call is-equal
+      call same-hurwitz
+        read g
+        read h
+      make yes
+  fold g, h
+
+# AND ONTO: an explicit inverse. The turn of a matrix is the t for which m rho(w)^-t lies in the image of Q8, and the
+# Q8 element is read off by comparison with the eight images.
+task q8-image-of
+  take m, like turn-matrix
+  like flag
+  send back
+    call either
+      call either
+        call either
+          call same-matrix
+            read m
+            call sign-matrix
+              make positive
+              call axis-matrix
+                make real-axis
+          call same-matrix
+            read m
+            call sign-matrix
+              make negative
+              call axis-matrix
+                make real-axis
+        call either
+          call same-matrix
+            read m
+            call sign-matrix
+              make positive
+              call axis-matrix
+                make i-axis
+          call same-matrix
+            read m
+            call sign-matrix
+              make negative
+              call axis-matrix
+                make i-axis
+      call either
+        call either
+          call same-matrix
+            read m
+            call sign-matrix
+              make positive
+              call axis-matrix
+                make j-axis
+          call same-matrix
+            read m
+            call sign-matrix
+              make negative
+              call axis-matrix
+                make j-axis
+        call either
+          call same-matrix
+            read m
+            call sign-matrix
+              make positive
+              call axis-matrix
+                make k-axis
+          call same-matrix
+            read m
+            call sign-matrix
+              make negative
+              call axis-matrix
+                make k-axis
+
+# The sign of the leading nonzero entry: love is +, fear is -.
+task sign-of-tone
+  take t, like tone
+  like sign
+  fork case, read t
+    case love
+      send back
+        make positive
+    case calm
+      send back
+        make positive
+    case fear
+      send back
+        make negative
+
+# Read a Q8 element off its matrix. The eight images are +-(1 0 ; 0 1), +-(0 1 ; -1 0), +-(1 1 ; 1 -1) and
+# +-(1 -1 ; -1 -1): b = 0 is the real axis, a = 0 is i, a = b is j, a = -b is k, and the sign is the sign of a (of b
+# on the i axis).
+task q8-of-matrix
+  take m, like turn-matrix
+  like q8
+  fork case, read m
+    case grid
+      fork case, read b
+        case calm
+          send back
+            call q8-of
+              call sign-of-tone
+                read a
+              make real-axis
+        case love
+          fork case, read a
+            case calm
+              send back
+                call q8-of
+                  make positive
+                  make i-axis
+            case love
+              send back
+                call q8-of
+                  make positive
+                  make j-axis
+            case fear
+              send back
+                call q8-of
+                  make negative
+                  make k-axis
+        case fear
+          fork case, read a
+            case calm
+              send back
+                call q8-of
+                  make negative
+                  make i-axis
+            case love
+              send back
+                call q8-of
+                  make positive
+                  make k-axis
+            case fear
+              send back
+                call q8-of
+                  make negative
+                  make j-axis
+
+# calm if the matrix is in the Q8 image, love if it is after one turn back, fear otherwise.
+task turn-from-flags
+  take here, like flag
+  take back-one, like flag
+  like tone
+  fork case, read here
+    case yes
+      send back
+        make calm
+    case no
+      fork case, read back-one
+        case yes
+          send back
+            make love
+        case no
+          send back
+            make fear
+
+task turn-of-matrix
+  take m, like turn-matrix
+  like tone
+  send back
+    call turn-from-flags
+      call q8-image-of
+        read m
+      call q8-image-of
+        call turn-compose
+          read m
+          call omega-matrix-power
+            make fear
+
+# The unit whose image is m: if m is a Q8 image it is that element with no turn; if m w^-1 is, that element turned
+# once; otherwise m w^-2 = m w is, and it is turned twice.
+task unrho-by-cases
+  take here, like flag
+  take back-one, like flag
+  take m, like turn-matrix
+  like hurwitz-element
+  fork case, read here
+    case yes
+      send back
+        call hurwitz-of
+          call q8-of-matrix
+            read m
+          make calm
+    case no
+      fork case, read back-one
+        case yes
+          send back
+            call hurwitz-of
+              call q8-of-matrix
+                call turn-compose
+                  read m
+                  call omega-matrix-power
+                    make fear
+              make love
+        case no
+          send back
+            call hurwitz-of
+              call q8-of-matrix
+                call turn-compose
+                  read m
+                  call omega-matrix
+              make fear
+
+task unrho
+  take m, like turn-matrix
+  like hurwitz-element
+  send back
+    call unrho-by-cases
+      call q8-image-of
+        read m
+      call q8-image-of
+        call turn-compose
+          read m
+          call omega-matrix-power
+            make fear
+      read m
+
+# EVERY DETERMINANT-1 MATRIX IS AN IMAGE: for all 81 matrices, det m = 1 implies rho (unrho m) = m. With injectivity,
+# SL(2, 3) has exactly the 24 elements of 2T and rho is an isomorphism.
+rule every-determinant-one-matrix-is-an-image
+  mark m, like turn-matrix
+  show hold
+    call is-equal
+      call implies
+        call same-tone
+          call determinant
+            read m
+          make love
+        call same-matrix
+          call rho
+            call unrho
+              read m
+          read m
+      make yes
+  fold m
+
+# THE CLIFFORD ACTION ON THE WEYL OPERATORS. A turn moves the place and keeps the phase.
+task turn-weyl
+  take m, like turn-matrix
+  take g, like weyl
+  like weyl
+  send back
+    call weyl-of
+      call weyl-phase
+        read g
+      call apply-turn
+        read m
+        call weyl-place
+          read g
+
+# A grid shift by t: conjugating by the operator at t multiplies the operator at u by w^[t, u].
+task shift-weyl
+  take t, like role
+  take g, like weyl
+  like weyl
+  send back
+    call weyl-of
+      call tone-sum
+        call weyl-phase
+          read g
+        call wedge
+          read t
+          call weyl-place
+            read g
+      call weyl-place
+        read g
+
+# A DETERMINANT-1 TURN IS AN AUTOMORPHISM OF THE WEYL-HEISENBERG GROUP.
+rule a-symplectic-turn-is-an-automorphism
+  mark m, like turn-matrix
+  mark g, like weyl
+  mark h, like weyl
+  have unimodular
+    call is-equal
+      call determinant
+        read m
+      make love
+  show hold
+    call is-equal
+      call turn-weyl
+        read m
+        call weyl-product
+          read g
+          read h
+      call weyl-product
+        call turn-weyl
+          read m
+          read g
+        call turn-weyl
+          read m
+          read h
+  fold m, g, h
+
+# A GRID SHIFT IS AN AUTOMORPHISM, for every shift t.
+rule a-grid-shift-is-an-automorphism
+  mark t, like role
+  mark g, like weyl
+  mark h, like weyl
+  show hold
+    call is-equal
+      call shift-weyl
+        read t
+        call weyl-product
+          read g
+          read h
+      call weyl-product
+        call shift-weyl
+          read t
+          read g
+        call shift-weyl
+          read t
+          read h
+  fold t, g, h

@@ -10,7 +10,7 @@
 # positive system, and proves the laws that make them a root system: the antipode is an involution, it preserves length so
 # the long and short orbits are each closed, every root or its antipode is positive, and both orbits are non-empty.
 
-load @term/form/code/atom/flag
+load @term/seed/code/atom/flag
   find flag
   find either
 

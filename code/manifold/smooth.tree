@@ -1,4 +1,4 @@
-load @term/form/code/structure/manifold
+load @term/seed/code/structure/manifold
   find manifold
 
 # A smooth manifold: a manifold whose charts overlap by infinitely differentiable maps, so calculus works everywhere on

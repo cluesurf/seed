@@ -15,11 +15,11 @@
 # meson quark+antiquark are colorless). su(3) is the rank-two algebra whose root system is A2 (cite `algebra/lie/root-a2`),
 # and it is the strong factor SU(3) of the Standard Model gauge group SU(3) x SU(2) x U(1).
 
-load @term/form/code/atom/sign
+load @term/seed/code/atom/sign
   find sign
   find flip-sign
 
-load @term/form/code/atom/flag
+load @term/seed/code/atom/flag
   find flag
   find both
 

@@ -1,4 +1,4 @@
-load @term/form/code/type/term
+load @term/seed/code/type/term
   find term
 
 # The automatic verification layer, refinement types backed by decision procedures. A refinement type is a base type

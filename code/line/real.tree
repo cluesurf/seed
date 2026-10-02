@@ -1,4 +1,4 @@
-load @term/form/code/structure/field
+load @term/seed/code/structure/field
   find field
 
 # The real line: the continuum, the complete ordered field, the geometric image of the reals as an unbroken line. It is

@@ -1,0 +1,177 @@
+# NEGATIVE CONTROL: hurwitz, turn, dock, hopf. Every rule here must be refused.
+
+load @term/seed/code/atom/flag
+  find flag
+  find implies
+  find not-flag
+
+load @term/seed/code/vibe/tone
+  find tone
+  find tone-sum
+  find tone-product
+  find same-tone
+
+load @term/seed/code/vibe/hurwitz
+  find hurwitz-element
+  find hurwitz-unit
+  find hurwitz-product
+  find hurwitz-turn
+  find is-plus-or-minus-one
+  find unit-i
+  find unit-omega
+  find same-hurwitz
+  find q8-axis
+  find hurwitz-core
+
+load @term/seed/code/vibe/turn
+  find turn-matrix
+  find entry-a
+  find entry-b
+  find entry-c
+  find entry-d
+  find turn-compose
+  find rho
+  find same-matrix
+
+load @term/seed/code/vibe/dock
+  find tetrad
+  find is-slot
+  find dot
+  find frame-of
+  find is-odd-dot
+  find triality
+  find unit-slot
+
+load @term/seed/code/vibe/hopf
+  find hopf
+  find axis-of-frame
+
+# 2T is not commutative
+rule control-hurwitz-product-commutes
+  mark g, like hurwitz-element
+  mark h, like hurwitz-element
+  show hold
+    call is-equal
+      call hurwitz-product
+        read g
+        read h
+      call hurwitz-product
+        read h
+        read g
+  fold g, h
+
+# every unit cubed is the identity (false: i cubed is -i)
+rule control-every-unit-cubes-to-one
+  mark g, like hurwitz-element
+  show hold
+    call is-equal
+      call hurwitz-product
+        call hurwitz-product
+          read g
+          read g
+        read g
+      call hurwitz-unit
+  fold g
+
+# the permanent ad + bc is not multiplicative
+task permanent
+  take m, like turn-matrix
+  like tone
+  send back
+    call tone-sum
+      call tone-product
+        call entry-a
+          read m
+        call entry-d
+          read m
+      call tone-product
+        call entry-b
+          read m
+        call entry-c
+          read m
+
+rule control-the-permanent-is-multiplicative
+  mark m, like turn-matrix
+  mark n, like turn-matrix
+  show hold
+    call is-equal
+      call permanent
+        call turn-compose
+          read m
+          read n
+      call tone-product
+        call permanent
+          read m
+        call permanent
+          read n
+  fold m, n
+
+# slots of the same frame meet at odd products (the negation of the frame theorem)
+rule control-same-frame-means-odd
+  mark v, like tetrad
+  mark w, like tetrad
+  have v-slot
+    call is-equal
+      call is-slot
+        read v
+      make yes
+  have w-slot
+    call is-equal
+      call is-slot
+        read w
+      make yes
+  show hold
+    call is-equal
+      call is-odd-dot
+        call dot
+          read v
+          read w
+      call same-tone
+        call frame-of
+          read v
+        call frame-of
+          read w
+  fold v, w
+
+# triality is not an involution
+rule control-triality-is-an-involution
+  mark v, like tetrad
+  have slot
+    call is-equal
+      call is-slot
+        read v
+      make yes
+  show hold
+    call is-equal
+      call triality
+        call triality
+          read v
+      read v
+  fold v
+
+# the Hopf map is not constant along w
+rule control-hopf-is-constant-along-omega
+  mark g, like hurwitz-element
+  show hold
+    call is-equal
+      call hopf
+        call hurwitz-product
+          read g
+          call unit-omega
+      call hopf
+        read g
+  fold g
+
+# rho with the frames read the wrong way round is not the slot's frame
+rule control-turn-is-not-the-frame-shifted
+  mark g, like hurwitz-element
+  show hold
+    call is-equal
+      call frame-of
+        call unit-slot
+          read g
+      call tone-sum
+        make love
+        call hurwitz-turn
+          read g
+  fold g

@@ -1,4 +1,4 @@
-load @term/form/code/theory/lattice
+load @term/seed/code/theory/lattice
   find lattice
 
 # A Boolean algebra: a lattice with a top and bottom and a complement for every element, the algebra of classical truth

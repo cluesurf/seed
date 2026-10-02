@@ -13,7 +13,7 @@
 # CONSTRUCTS the basis states and the projection result, COMPUTES the two projectors, and PROVES idempotence,
 # orthogonality, and completeness by induction over the basis state.
 
-load @term/form/code/atom/flag
+load @term/seed/code/atom/flag
   find flag
 
 # The two computational-basis states of one qubit, the zero state and the one state. These are the outcomes a basis

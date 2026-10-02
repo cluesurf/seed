@@ -1,4 +1,4 @@
-load @term/form/code/number/real
+load @term/seed/code/number/real
   find real
 
 # The irrational numbers, the reals that are not fractions, the gaps the rationals fail to fill. The square root of two,

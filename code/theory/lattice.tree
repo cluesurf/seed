@@ -1,7 +1,7 @@
-load @term/form/code/structure/set
+load @term/seed/code/structure/set
   find set
 
-load @term/form/code/structure/function/binary
+load @term/seed/code/structure/function/binary
   find binary-function
 
 # A lattice: a partially ordered set in which every pair of elements has a least upper bound (a join) and a greatest

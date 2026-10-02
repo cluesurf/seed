@@ -1,4 +1,4 @@
-load @term/form/code/structure/set
+load @term/seed/code/structure/set
   find set
 
 # A unary function: a function of one argument, the simplest arity. Negation, conjugation, and the successor are unary.

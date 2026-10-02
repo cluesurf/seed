@@ -22,7 +22,7 @@
 # gives the rectified count, two patterns of the same group give different counts (the rectification / truncation
 # relationship), and the all-unringed marking yields a single point.
 
-load @term/form/code/atom/flag
+load @term/seed/code/atom/flag
   find flag
   find both
   find either

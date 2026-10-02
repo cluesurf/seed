@@ -21,7 +21,7 @@
 # a constructed patch. Two layers are checked: the arithmetic layer (Euler, defect, angle) with the kernel's built-in
 # integer arithmetic, and the structural layer (the edge cycle and the vertex patch) with `fold`.
 
-load @term/form/code/atom/flag
+load @term/seed/code/atom/flag
   find flag
 
 # THE CELL. The twelve pentagonal faces of the regular dodecahedron, named so the structural proofs can range over the

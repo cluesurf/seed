@@ -1,4 +1,4 @@
-load @term/form/code/algebra/boolean
+load @term/seed/code/algebra/boolean
   find boolean-algebra
 
 # A logical connective: an operator that builds a compound proposition from simpler ones, and, or, not, implies, if-and-

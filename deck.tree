@@ -1,7 +1,7 @@
 
-deck @term/form
-  head <The Seed Math Definition Library>
-  mark <0.0.2>
+deck @term/seed
+  head <The math library: machine-checked definitions and proofs>
+  mark <1.0.0>
   sort tool
   lock mit
   site <https://github.com/cluesurf/form.tree>

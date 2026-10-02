@@ -1,34 +1,109 @@
-load @term/form/code/vibe/mesh
-  find mesh
+# Vibe theory's mathematics, machine-checked. The substrate is a hyperbolic mesh of docks, each dock 24 slots of one
+# tone each, updated by one reversible integer rule. Every structure that description names is modeled in code/vibe
+# and proved to have the properties the theory uses:
+#
+#   law          the law kit: one template per algebraic or dynamical law, one line per law at each structure
+#   tone         the tone is the field F3; charge conjugation is negation; balanced ternary adds exactly
+#   lean         the order fear < calm < love, reversed by conjugation, not compatible with the residue sum
+#   eisenstein   Z[w]: ring laws, w^3 = 1, the norm, reduction to F3, the primes 2, 3, 7, the units
+#   coin         the coin and the meeting: exact unitarity, eigenvalues, determinant w, the top speed 1/2
+#   role         the qutrit phase space Z3 x Z3, its symplectic form, the 12 stabilizer lines of AG(2, 3)
+#   heisenberg   the 27 Weyl operators: group laws, Z X = w X Z, exponent 3, the center
+#   hurwitz      2T = Q8 x| Z3, the 24 Hurwitz units, checked against the quaternions
+#   turn         SL(2, 3) is 2T, by an explicit isomorphism; the Clifford action on the Weyl operators
+#   dock         the 24 slots as tetrads: lines, frames, W(D4), W(F4), triality, and the slots ARE the units
+#   design       the slots are a spherical 5-design and not a 6-design; the husk's moments
+#   honeycomb    Gram determinants: {3,4,3} spherical, {4,3,4} flat, {3,4,3,4} hyperbolic
+#   warp         the cone-type matrix, its cubic, the shells, the warp factor in (18.278, 18.279)
+#   growth       Margenstern's Fibonacci splitting of {7,3}
+#   forced-dock-24-cell   the shells (1 + 2x)^4 of the tetrads, the 24-cell as the two-vibe shell
+#   knit         the contact (bounce and pass), the store, the earliest pair map: reversible and conserving
+#   line         a ring of docks under the knit: the line law, reversibility, C and time reversal, motion at speed 1
+#   mesh         the D4 lattice as the mesh's flat stand-in
+#   clifford     Cl(4) on blades; the volume element and the split of Cl+(4)
+#   boost        velocity addition as hyperbolic numbers; the interval, light stays light
+#   hopf         the dock's Hopf fibration: six circles of four over an octahedron
+#   beat, wake   time as a count with its one-way order; the mesh's one-way growth
+#   site         the four sign choices of a slot within its pair of axes, paired by the opposite
+#
+# The theorems below hold across modules, so they check that the layers agree with each other: the frame a slot sits
+# in (read off its coordinates in vibe/dock) is the axis its Hopf circle lies over (read off the group in vibe/hopf),
+# and the full turn -1 of the dock is the opposite slot and the matrix -I of the grid.
 
-load @term/form/code/vibe/dock
-  find dock
-
-load @term/form/code/vibe/site
-  find site
-
-load @term/form/code/vibe/tone
+load @term/seed/code/vibe/tone
   find tone
 
-load @term/form/code/vibe/lean
-  find lean
+load @term/seed/code/vibe/hurwitz
+  find hurwitz-element
+  find hurwitz-core
+  find q8-axis
+  find minus-one-unit
+  find hurwitz-product
 
-load @term/form/code/vibe/knit
-  find knit
+load @term/seed/code/vibe/dock
+  find unit-slot
+  find frame-of
+  find opposite
+  find same-tetrad
 
-load @term/form/code/vibe/wake
-  find wake
+load @term/seed/code/vibe/hopf
+  find hopf
+  find axis-of-frame
 
-load @term/form/code/vibe/beat
-  find beat
+load @term/seed/code/vibe/turn
+  find rho
+  find matrix-of
 
-# The base of Vibe Theory: the eight elements that make up the whole model, and nothing else. Three give the where, the mesh and its docks and their sites. Two give the what, the tone and its lean. Two give the how, the knit that moves the state and the wake that grows the space. One gives the when, the beat. The keystone is the pinch-point. Reversibility caps the dimension at eight from above, the one-substance demand fixes it at eight from below, the octonions are forced, their rotation gives four-dimensional spacetime and the 24-cell, and the 24-cell is the dock. The base is forced from one premise.
-form vibe
-  link mesh, like mesh
-  link docks, like list, like dock
-  link sites, like list, like site
-  link tone, like tone
-  link lean, like lean
-  link knit, like knit
-  link wake, like wake
-  link beat, like beat
+load @term/seed/code/atom/flag
+  find flag
+
+# THE FRAME OF A SLOT IS THE AXIS OF ITS HOPF CIRCLE: the coordinate pair a slot occupies decides which pair of
+# octahedron corners its circle lies over.
+rule the-frame-of-a-slot-is-the-axis-of-its-hopf-circle
+  mark g, like hurwitz-element
+  show hold
+    call is-equal
+      call q8-axis
+        call hurwitz-core
+          call hopf
+            read g
+      call axis-of-frame
+        call frame-of
+          call unit-slot
+            read g
+  fold g
+
+# One, as (-1)(-1).
+task hurwitz-of-one
+  like hurwitz-element
+  send back
+    call hurwitz-product
+      call minus-one-unit
+      call minus-one-unit
+
+# THE FULL TURN -1 IS THE OPPOSITE SLOT: the slot of -1 is the opposite of the slot of 1.
+rule the-full-turn-is-the-opposite-slot
+  show hold
+    call is-equal
+      call same-tetrad
+        call unit-slot
+          call minus-one-unit
+        call opposite
+          call unit-slot
+            call hurwitz-of-one
+      make yes
+  calm hold
+
+# AND THE MATRIX -I OF THE GRID: rho(-1) = -I, the central element of SL(2, 3), which acts on the role grid as the
+# point reflection u -> -u.
+rule the-full-turn-is-minus-the-identity-on-the-grid
+  show hold
+    call is-equal
+      call rho
+        call minus-one-unit
+      call matrix-of
+        make fear
+        make calm
+        make calm
+        make fear
+  calm hold

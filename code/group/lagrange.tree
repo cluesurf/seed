@@ -14,7 +14,7 @@
 # Therefore the subgroup order two DIVIDES the group order six. The divisibility is stated here as a CONSEQUENCE of the
 # constructed equal-size coset partition, with the partition itself proved by the kernel, not as a bare arithmetic fact.
 
-load @term/form/code/atom/flag
+load @term/seed/code/atom/flag
   find flag
   find both
 

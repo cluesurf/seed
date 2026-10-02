@@ -1,4 +1,4 @@
-load @term/form/code/structure/ring
+load @term/seed/code/structure/ring
   find ring
 
 # The Connes-Kreimer algebra: the Hopf algebra of rooted trees that organizes the renormalization of quantum field

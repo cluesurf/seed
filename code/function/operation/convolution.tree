@@ -1,4 +1,4 @@
-load @term/form/code/structure/function/binary
+load @term/seed/code/structure/function/binary
   find binary-function
 
 # Convolution: the operation that blends two functions by sliding one across the other and accumulating the overlap, the

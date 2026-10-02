@@ -1,4 +1,4 @@
-load @term/form/code/structure/space/vector
+load @term/seed/code/structure/space/vector
   find vector-space
 
 # A phase space: the space of all states of a mechanical system, each point fixing both the positions and the momenta,

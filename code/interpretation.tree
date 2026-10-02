@@ -1,4 +1,4 @@
-load @term/form/code/structure/set
+load @term/seed/code/structure/set
   find set
 
 # An interpretation: an assignment of meaning to a formal language, sending its symbols to elements, functions, and

@@ -1,4 +1,4 @@
-load @term/form/code/structure/manifold
+load @term/seed/code/structure/manifold
   find manifold
 
 # A fibration: a space that is locally a product of a base and a fiber, a way of bundling a copy of the fiber over each

@@ -1,0 +1,69 @@
+# NEGATIVE CONTROL for vibe/law: every template instantiated with an operation that breaks its law. Each rule here
+# must be REFUSED. Expected refusals: 17 (associative 1, commutative 1, identity 2, inverse 2, distributive 2,
+# involution 1, bijection 2, homomorphism 1, conserves 1, commutes 1, action 2, order 1 for antisymmetry only).
+
+load @term/seed/code/atom/flag
+  find flag
+  find either
+
+load @term/seed/code/vibe/law
+  find associative
+  find commutative
+  find identity
+  find inverse
+  find distributive
+  find involution
+  find bijection
+  find homomorphism
+  find conserves
+  find commutes
+  find action
+  find order
+
+load @term/seed/code/vibe/tone
+  find tone
+  find tone-row
+  find tone-entry
+  find tone-sum
+  find tone-product
+  find tone-difference
+  find tone-conjugate
+  find calm-tone
+  find love-tone
+  find is-vibe
+
+# fear -> calm -> love -> fear, adding love
+task rotate-tone
+  take a, like tone
+  like tone
+  fork case, read a
+    fuse tone-entry, fear, calm
+    fuse tone-entry, calm, love
+    fuse tone-entry, love, fear
+
+task keep-tone
+  take a, like tone
+  like tone
+  send back
+    read a
+
+# always yes: reflexive, transitive and total, but not antisymmetric
+task always
+  take a, like tone
+  take b, like tone
+  like flag
+  send back
+    make yes
+
+fuse associative, control-difference, tone, tone-difference
+fuse commutative, control-difference, tone, tone-difference
+fuse identity, control-sum-love, tone, tone-sum, love-tone
+fuse inverse, control-sum-keep, tone, tone-sum, keep-tone, calm-tone
+fuse distributive, control-sum-over-product, tone, tone-sum, tone-product
+fuse involution, control-rotate, tone, rotate-tone
+fuse bijection, control-rotate-twice, tone, rotate-tone, rotate-tone
+fuse homomorphism, control-rotate, tone, rotate-tone, tone-sum, tone-sum
+fuse conserves, control-rotate, tone, rotate-tone, is-vibe
+fuse commutes, control-rotate-conjugate, tone, rotate-tone, tone-conjugate
+fuse action, control-product-on-sum, tone, tone, tone-product, tone-sum, calm-tone
+fuse order, control-always, tone, always

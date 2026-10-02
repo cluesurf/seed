@@ -1,4 +1,4 @@
-load @term/form/code/structure/space/vector
+load @term/seed/code/structure/space/vector
   find vector-space
 
 # A simplex: the simplest polytope in each dimension, the convex hull of one more point than the dimension, a point, a

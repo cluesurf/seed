@@ -1,0 +1,233 @@
+# How a hyperbolic tiling grows, in the smallest case the program starts from: Margenstern's splitting of the heptagrid
+# {7,3}. Around one heptagon the plane splits into 7 sectors, and each sector is a FIBONACCI TREE: every tile is
+# white or black, a white tile has three children (black, white, white) and a black tile two (black, white). So a level
+# with w white and b black tiles has
+#
+#   w' = 2 w + b white and b' = w + b black,    the matrix (2 1 ; 1 1), trace 3 and determinant 1.
+#
+# This file proves, for all integers: Cayley-Hamilton for that matrix, so every level count obeys
+# t(n + 2) = 3 t(n + 1) - t(n), whose growth rate is the larger root phi^2 = 2.618... of x^2 - 3 x + 1; the step sends
+# a pair of consecutive Fibonacci numbers (F(m+1), F(m)) to (F(m+3), F(m+2)), so the levels count the odd-indexed
+# Fibonacci numbers 1, 3, 8, 21, 55; and the heptagrid's layers 7, 21, 56, 147, 385 are 7 times them. The {3,4,3,4}
+# mesh does the same with three cone types and grows by the root of a cubic instead (vibe/warp).
+
+task white-after
+  take w, like integer
+  take b, like integer
+  like integer
+  send back
+    call add
+      call multiply
+        code 2
+        read w
+      read b
+
+task black-after
+  take w, like integer
+  take b, like integer
+  like integer
+  send back
+    call add
+      read w
+      read b
+
+task level-total
+  take w, like integer
+  take b, like integer
+  like integer
+  send back
+    call add
+      read w
+      read b
+
+# The level total two steps on, and one step on.
+task total-after-one
+  take w, like integer
+  take b, like integer
+  like integer
+  send back
+    call level-total
+      call white-after
+        read w
+        read b
+      call black-after
+        read w
+        read b
+
+task total-after-two
+  take w, like integer
+  take b, like integer
+  like integer
+  send back
+    call total-after-one
+      call white-after
+        read w
+        read b
+      call black-after
+        read w
+        read b
+
+# THE CHARACTERISTIC POLYNOMIAL of (2 1 ; 1 1) is x^2 - 3x + 1: (x - 2)(x - 1) - 1.
+rule the-splitting-matrix-has-characteristic-polynomial-x-squared-minus-three-x-plus-one
+  mark x, like integer
+  show hold
+    call is-equal
+      call subtract
+        call multiply
+          call subtract
+            read x
+            code 2
+          call subtract
+            read x
+            code 1
+        code 1
+      call add
+        call subtract
+          call multiply
+            read x
+            read x
+          call multiply
+            code 3
+            read x
+        code 1
+
+# EVERY LEVEL OBEYS t(n + 2) = 3 t(n + 1) - t(n), whatever the mix of white and black.
+rule every-level-obeys-the-splitting-recurrence
+  mark w, like integer
+  mark b, like integer
+  show hold
+    call is-equal
+      call total-after-two
+        read w
+        read b
+      call subtract
+        call multiply
+          code 3
+          call total-after-one
+            read w
+            read b
+        call level-total
+          read w
+          read b
+
+# THE STEP ADVANCES FIBONACCI PAIRS BY TWO: for four consecutive Fibonacci numbers f0, f1, f2 = f1 + f0,
+# f3 = f2 + f1, the step sends (w, b) = (f1, f0) to (f3, f2).
+rule the-step-advances-a-fibonacci-pair-by-two-white
+  mark f0, like integer
+  mark f1, like integer
+  mark f2, like integer
+  mark f3, like integer
+  have second
+    call is-equal
+      read f2
+      call add
+        read f1
+        read f0
+  have third
+    call is-equal
+      read f3
+      call add
+        read f2
+        read f1
+  show hold
+    call is-equal
+      call white-after
+        read f1
+        read f0
+      read f3
+
+rule the-step-advances-a-fibonacci-pair-by-two-black
+  mark f0, like integer
+  mark f1, like integer
+  mark f2, like integer
+  have second
+    call is-equal
+      read f2
+      call add
+        read f1
+        read f0
+  show hold
+    call is-equal
+      call black-after
+        read f1
+        read f0
+      read f2
+
+# THE LEVELS FROM ONE WHITE ROOT: 1, 3, 8, 21, 55.
+rule the-first-level-has-three-tiles
+  show hold
+    call is-equal
+      call total-after-one
+        code 1
+        code 0
+      code 3
+
+rule the-second-level-has-eight-tiles
+  show hold
+    call is-equal
+      call total-after-two
+        code 1
+        code 0
+      code 8
+
+rule the-third-level-has-twenty-one-tiles
+  show hold
+    call is-equal
+      call total-after-one
+        call white-after
+          call white-after
+            code 1
+            code 0
+          call black-after
+            code 1
+            code 0
+        call black-after
+          call white-after
+            code 1
+            code 0
+          call black-after
+            code 1
+            code 0
+      code 21
+
+rule the-fourth-level-has-fifty-five-tiles
+  show hold
+    call is-equal
+      call total-after-two
+        call white-after
+          call white-after
+            code 1
+            code 0
+          call black-after
+            code 1
+            code 0
+        call black-after
+          call white-after
+            code 1
+            code 0
+          call black-after
+            code 1
+            code 0
+      code 55
+
+# THE HEPTAGRID: seven sectors, so its layers are 7 times the levels, 7, 21, 56, 147, 385, and they obey the same
+# recurrence: 3 x 56 - 21 = 147 and 3 x 147 - 56 = 385.
+rule the-heptagrid-layers-obey-the-recurrence
+  show hold
+    call is-equal
+      call subtract
+        call multiply
+          code 3
+          call multiply
+            code 7
+            call total-after-two
+              code 1
+              code 0
+        call multiply
+          code 7
+          call total-after-one
+            code 1
+            code 0
+      call multiply
+        code 7
+        code 21

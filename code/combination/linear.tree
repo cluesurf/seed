@@ -1,4 +1,4 @@
-load @term/form/code/structure/space/vector
+load @term/seed/code/structure/space/vector
   find vector-space
 
 # A linear combination: a sum of vectors each scaled by a scalar, the basic operation of a vector space, from which span,

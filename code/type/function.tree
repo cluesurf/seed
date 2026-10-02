@@ -1,7 +1,7 @@
-load @term/form/code/type/term
+load @term/seed/code/type/term
   find term
 
-load @term/form/code/type/multiplicity
+load @term/seed/code/type/multiplicity
   find multiplicity
 
 # The dependent function type, the pi type, the one way the theory forms a type that depends on a value, and the most

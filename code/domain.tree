@@ -1,4 +1,4 @@
-load @term/form/code/structure/set
+load @term/seed/code/structure/set
   find set
 
 # A domain: the set of inputs a function accepts, the things it is defined on, paired with the codomain of possible

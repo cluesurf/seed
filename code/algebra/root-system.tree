@@ -1,4 +1,4 @@
-load @term/form/code/structure/set
+load @term/seed/code/structure/set
   find set
 
 # A root system, a finite set of vectors closed under the reflections in the hyperplanes perpendicular to them, with each reflection of one root differing from another by an integer multiple. Root systems classify the simple Lie algebras and the regular symmetric structures. The one that carries Vibe Theory is the root system of the rotation algebra of eight-dimensional space, whose rank is four and whose roots are the twenty-four vertices of the 24-cell.

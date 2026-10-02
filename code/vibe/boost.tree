@@ -1,0 +1,257 @@
+# Boosts, the Lorentz symmetry the husk must read off the mesh. In one space dimension a boost by velocity v = n / d
+# (light speed 1) is the matrix (d n ; n d) up to scale, a HYPERBOLIC NUMBER d + n j with j^2 = +1. Composing two
+# boosts multiplies them:
+#
+#   (d1 + n1 j)(d2 + n2 j) = (d1 d2 + n1 n2) + (n1 d2 + n2 d1) j,   so  v1 (+) v2 = (v1 + v2) / (1 + v1 v2),
+#
+# Einstein's velocity addition. This file proves, for all integers: composition is commutative and associative, the
+# interval t^2 - x^2 is multiplied by d^2 - n^2 (so a unit-interval boost keeps it exactly: Lorentz invariance), the
+# product of two boosts' intervals is the interval of the composite (rapidities add, because d^2 - n^2 is
+# multiplicative), a boost and its reverse compose to rest, and light (n = d) composed with any boost is still light:
+# the speed of light is the same in every frame.
+#
+# On the mesh the stream moves exactly one dock per beat (vibe/line), the light cone; no integer boost other than the
+# identity maps the grid to itself (d^2 - n^2 = 1 forces n = 0), which is why the husk must recover Lorentz symmetry
+# at long wavelength rather than inherit it.
+
+task boost-time
+  take d1, like integer
+  take n1, like integer
+  take d2, like integer
+  take n2, like integer
+  like integer
+  send back
+    call add
+      call multiply
+        read d1
+        read d2
+      call multiply
+        read n1
+        read n2
+
+task boost-space
+  take d1, like integer
+  take n1, like integer
+  take d2, like integer
+  take n2, like integer
+  like integer
+  send back
+    call add
+      call multiply
+        read n1
+        read d2
+      call multiply
+        read n2
+        read d1
+
+task interval
+  take t, like integer
+  take x, like integer
+  like integer
+  send back
+    call subtract
+      call multiply
+        read t
+        read t
+      call multiply
+        read x
+        read x
+
+# COMPOSITION IS COMMUTATIVE (in one dimension) AND ASSOCIATIVE.
+rule boosts-commute-time
+  mark d1, like integer
+  mark n1, like integer
+  mark d2, like integer
+  mark n2, like integer
+  show hold
+    call is-equal
+      call boost-time
+        read d1
+        read n1
+        read d2
+        read n2
+      call boost-time
+        read d2
+        read n2
+        read d1
+        read n1
+
+rule boosts-commute-space
+  mark d1, like integer
+  mark n1, like integer
+  mark d2, like integer
+  mark n2, like integer
+  show hold
+    call is-equal
+      call boost-space
+        read d1
+        read n1
+        read d2
+        read n2
+      call boost-space
+        read d2
+        read n2
+        read d1
+        read n1
+
+rule boosts-associate-time
+  mark d1, like integer
+  mark n1, like integer
+  mark d2, like integer
+  mark n2, like integer
+  mark d3, like integer
+  mark n3, like integer
+  show hold
+    call is-equal
+      call boost-time
+        call boost-time
+          read d1
+          read n1
+          read d2
+          read n2
+        call boost-space
+          read d1
+          read n1
+          read d2
+          read n2
+        read d3
+        read n3
+      call boost-time
+        read d1
+        read n1
+        call boost-time
+          read d2
+          read n2
+          read d3
+          read n3
+        call boost-space
+          read d2
+          read n2
+          read d3
+          read n3
+
+rule boosts-associate-space
+  mark d1, like integer
+  mark n1, like integer
+  mark d2, like integer
+  mark n2, like integer
+  mark d3, like integer
+  mark n3, like integer
+  show hold
+    call is-equal
+      call boost-space
+        call boost-time
+          read d1
+          read n1
+          read d2
+          read n2
+        call boost-space
+          read d1
+          read n1
+          read d2
+          read n2
+        read d3
+        read n3
+      call boost-space
+        read d1
+        read n1
+        call boost-time
+          read d2
+          read n2
+          read d3
+          read n3
+        call boost-space
+          read d2
+          read n2
+          read d3
+          read n3
+
+# THE INTERVAL IS SCALED BY THE BOOST'S OWN INTERVAL: boosting the event (t, x) by (d, n) gives an event whose interval
+# is (d^2 - n^2)(t^2 - x^2). A boost with d^2 - n^2 = 1 keeps every interval: Lorentz invariance.
+rule a-boost-scales-the-interval
+  mark d, like integer
+  mark n, like integer
+  mark t, like integer
+  mark x, like integer
+  show hold
+    call is-equal
+      call interval
+        call boost-time
+          read d
+          read n
+          read t
+          read x
+        call boost-space
+          read d
+          read n
+          read t
+          read x
+      call multiply
+        call interval
+          read d
+          read n
+        call interval
+          read t
+          read x
+
+# A unit boost keeps the interval exactly.
+rule a-unit-boost-keeps-the-interval
+  mark d, like integer
+  mark n, like integer
+  mark t, like integer
+  mark x, like integer
+  have unit
+    call is-equal
+      call interval
+        read d
+        read n
+      code 1
+  show hold
+    call is-equal
+      call interval
+        call boost-time
+          read d
+          read n
+          read t
+          read x
+        call boost-space
+          read d
+          read n
+          read t
+          read x
+      call interval
+        read t
+        read x
+
+# A BOOST AND ITS REVERSE COMPOSE TO REST: (d, n)(d, -n) has no space part.
+rule a-boost-and-its-reverse-compose-to-rest
+  mark d, like integer
+  mark n, like integer
+  show hold
+    call is-equal
+      call boost-space
+        read d
+        read n
+        read d
+        call subtract
+          code 0
+          read n
+      code 0
+
+# LIGHT STAYS LIGHT: a light ray (n = d) boosted by any (d2, n2) has equal time and space parts, speed 1 in every frame.
+rule light-stays-light
+  mark c, like integer
+  mark d, like integer
+  mark n, like integer
+  show hold
+    call is-equal
+      call boost-time
+        read c
+        read c
+        read d
+        read n
+      call boost-space
+        read c
+        read c
+        read d
+        read n

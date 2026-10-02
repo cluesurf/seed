@@ -20,7 +20,7 @@
 # membership condition with its parity laws, and the kissing number two hundred forty splits as one hundred twelve plus one
 # hundred twenty-eight, the two minimal-vector families with honestly labeled counts.
 
-load @term/form/code/atom/flag
+load @term/seed/code/atom/flag
   find flag
   find both
   find either

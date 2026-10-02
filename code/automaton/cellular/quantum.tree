@@ -1,4 +1,4 @@
-load @term/form/code/automaton/cellular
+load @term/seed/code/automaton/cellular
   find cellular-automaton
 
 # A quantum cellular automaton: a cellular automaton whose cells carry quantum states and whose local update is unitary,

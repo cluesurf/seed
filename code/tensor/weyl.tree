@@ -1,4 +1,4 @@
-load @term/form/code/tensor
+load @term/seed/code/tensor
   find tensor
 
 # The Weyl tensor: the part of the curvature that remains after the trace (the Ricci) parts are removed, the curvature

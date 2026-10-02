@@ -1,4 +1,4 @@
-load @term/form/code/structure/set
+load @term/seed/code/structure/set
   find set
 
 # The ternary heptagrid, the regular tiling {7, 3}, regular heptagons three to a vertex. It grows even faster than the

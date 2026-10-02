@@ -17,7 +17,7 @@
 # both the white 3-node and the black 2-node (exactly one child of each is the continuator, over EVERY parent address),
 # and that the no-two-adjacent-ones validity test accepts a legal address and rejects an illegal one.
 
-load @term/form/code/atom/flag
+load @term/seed/code/atom/flag
   find flag
   find both
 

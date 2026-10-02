@@ -1,4 +1,4 @@
-load @term/form/code/structure/space/vector
+load @term/seed/code/structure/space/vector
   find vector-space
 
 # A parabola: the conic of points equidistant from a focus and a directrix, the curve of a thrown stone and of y equal

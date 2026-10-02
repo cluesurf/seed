@@ -1,4 +1,4 @@
-load @term/form/code/structure/set
+load @term/seed/code/structure/set
   find set
 
 # Modal logic: logic with operators for necessity and possibility, true not just here but across a space of possible

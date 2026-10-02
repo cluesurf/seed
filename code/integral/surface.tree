@@ -1,4 +1,4 @@
-load @term/form/code/manifold/riemannian
+load @term/seed/code/manifold/riemannian
   find riemannian-manifold
 
 # A surface integral: the total of a quantity spread over a curved surface, summing a field across area, the

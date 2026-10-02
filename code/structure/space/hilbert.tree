@@ -1,4 +1,4 @@
-load @term/form/code/structure/space/inner-product
+load @term/seed/code/structure/space/inner-product
   find inner-product-space
 
 # A Hilbert space: an inner-product space that is complete, so every sequence whose terms grow arbitrarily close

@@ -1,4 +1,4 @@
-load @term/form/code/structure/set
+load @term/seed/code/structure/set
   find set
 
 # The multiplicity, the single mechanism that unifies proof erasure, the linear interaction-net substrate, and unique

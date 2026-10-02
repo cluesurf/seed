@@ -1,5 +1,13 @@
+export type SetForm =
+  | { form: "opaque" }
+
+export interface BinaryFunction {
+  domain: SetForm
+  codomain: SetForm
+}
+
 export interface Field {
-  set: Set
+  set: SetForm
   add: BinaryFunction
   multiply: BinaryFunction
 }

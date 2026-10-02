@@ -1,4 +1,4 @@
-load @term/form/code/number/rational
+load @term/seed/code/number/rational
   find rational
 
 # A ratio: the comparison of two quantities by division, one number as a multiple of another, the seed of the rational

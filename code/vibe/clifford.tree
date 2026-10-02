@@ -1,0 +1,469 @@
+# The Clifford algebra Cl(4) of the dock's four directions, with e_i e_i = +1 and e_i e_j = -e_j e_i for i != j. Its
+# basis is the 16 blades e_A, one per subset A of {1, 2, 3, 4} (grades 1, 4, 6, 4, 1, counted in
+# vibe/forced-dock-24-cell), and the product of two blades is the blade of the symmetric difference, with the sign of
+# the reordering it takes to sort them:
+#
+#   e_A e_B = (-1)^s e_(A xor B),    s = the number of pairs i in A, j in B with i > j.
+#
+# This file defines a signed blade as a sign and four occupancy bits and the product by that rule, and PROVES that the
+# product is associative with unit 1 (so the rule really is an algebra, Cl(4)), that the generators square to 1 and
+# anticommute, that the blade of grade k squares to (-1)^(k(k-1)/2), and the facts the vibe register uses:
+#
+#   the volume element e1234 squares to +1, commutes with the even blades and anticommutes with the odd ones;
+#   the even blades are closed under the product, so Cl+(4) = 1 + 6 + 1 = 8 is a subalgebra;
+#   J, right multiplication by the volume element, is an involution that pairs 1 with e1234 and each bivector with its
+#   complement (e12 with e34, e13 with e24, e14 with e23), so (1 +- J)/2 split Cl+(4) into two quaternion halves.
+
+load @term/seed/code/atom/flag
+  find flag
+  find both
+  find either
+  find not-flag
+
+load @term/seed/code/atom/sign
+  find sign
+  find flip-sign
+
+load @term/seed/code/vibe/law
+  find associative
+  find identity
+
+form cl4-blade
+  case signed-blade
+    link sign, like sign
+    link e1, like flag
+    link e2, like flag
+    link e3, like flag
+    link e4, like flag
+
+task blade-of
+  take sign, like sign
+  take e1, like flag
+  take e2, like flag
+  take e3, like flag
+  take e4, like flag
+  like cl4-blade
+  send back
+    make signed-blade
+      bind sign
+        read sign
+      bind e1
+        read e1
+      bind e2
+        read e2
+      bind e3
+        read e3
+      bind e4
+        read e4
+
+task blade-sign
+  take x, like cl4-blade
+  like sign
+  fork case, read x
+    case signed-blade
+      send back
+        read sign
+
+task bit-one
+  take x, like cl4-blade
+  like flag
+  fork case, read x
+    case signed-blade
+      send back
+        read e1
+
+task bit-two
+  take x, like cl4-blade
+  like flag
+  fork case, read x
+    case signed-blade
+      send back
+        read e2
+
+task bit-three
+  take x, like cl4-blade
+  like flag
+  fork case, read x
+    case signed-blade
+      send back
+        read e3
+
+task bit-four
+  take x, like cl4-blade
+  like flag
+  fork case, read x
+    case signed-blade
+      send back
+        read e4
+
+task differ
+  take a, like flag
+  take b, like flag
+  like flag
+  fork case, read a
+    case yes
+      send back
+        call not-flag
+          read b
+    case no
+      send back
+        read b
+
+task sign-times
+  take a, like sign
+  take b, like sign
+  like sign
+  fork case, read a
+    case positive
+      send back
+        read b
+    case negative
+      send back
+        call flip-sign
+          read b
+
+task sign-if
+  take odd, like flag
+  take s, like sign
+  like sign
+  fork case, read odd
+    case yes
+      send back
+        call flip-sign
+          read s
+    case no
+      send back
+        read s
+
+# The parity of the reordering: the pairs (i in A, j in B, i > j) are (2,1), (3,1), (4,1), (3,2), (4,2), (4,3).
+task crossing
+  take x, like cl4-blade
+  take y, like cl4-blade
+  like flag
+  send back
+    call differ
+      call differ
+        call differ
+          call both
+            call bit-two
+              read x
+            call bit-one
+              read y
+          call both
+            call bit-three
+              read x
+            call bit-one
+              read y
+        call differ
+          call both
+            call bit-four
+              read x
+            call bit-one
+              read y
+          call both
+            call bit-three
+              read x
+            call bit-two
+              read y
+      call differ
+        call both
+          call bit-four
+            read x
+          call bit-two
+            read y
+        call both
+          call bit-four
+            read x
+          call bit-three
+            read y
+
+task blade-product
+  take x, like cl4-blade
+  take y, like cl4-blade
+  like cl4-blade
+  send back
+    call blade-of
+      call sign-if
+        call crossing
+          read x
+          read y
+        call sign-times
+          call blade-sign
+            read x
+          call blade-sign
+            read y
+      call differ
+        call bit-one
+          read x
+        call bit-one
+          read y
+      call differ
+        call bit-two
+          read x
+        call bit-two
+          read y
+      call differ
+        call bit-three
+          read x
+        call bit-three
+          read y
+      call differ
+        call bit-four
+          read x
+        call bit-four
+          read y
+
+task scalar-one
+  like cl4-blade
+  send back
+    call blade-of
+      make positive
+      make no
+      make no
+      make no
+      make no
+
+task volume
+  like cl4-blade
+  send back
+    call blade-of
+      make positive
+      make yes
+      make yes
+      make yes
+      make yes
+
+task negate-blade
+  take x, like cl4-blade
+  like cl4-blade
+  send back
+    call blade-of
+      call flip-sign
+        call blade-sign
+          read x
+      call bit-one
+        read x
+      call bit-two
+        read x
+      call bit-three
+        read x
+      call bit-four
+        read x
+
+# The parity of a blade's grade.
+task odd-grade
+  take x, like cl4-blade
+  like flag
+  send back
+    call differ
+      call differ
+        call bit-one
+          read x
+        call bit-two
+          read x
+      call differ
+        call bit-three
+          read x
+        call bit-four
+          read x
+
+# THE PRODUCT IS AN ALGEBRA: associative, with unit 1, on all 32 signed blades.
+fuse associative, blade-product, cl4-blade, blade-product
+fuse identity, blade-product, cl4-blade, blade-product, scalar-one
+
+# EVERY BLADE SQUARES TO PLUS OR MINUS ONE: e_A e_A = (-1)^(k(k-1)/2) for grade k, a scalar. Stated as: the square of a
+# blade has no bits left.
+rule every-blade-squares-to-a-scalar
+  mark x, like cl4-blade
+  show hold
+    call is-equal
+      call either
+        call either
+          call bit-one
+            call blade-product
+              read x
+              read x
+          call bit-two
+            call blade-product
+              read x
+              read x
+        call either
+          call bit-three
+            call blade-product
+              read x
+              read x
+          call bit-four
+            call blade-product
+              read x
+              read x
+      make no
+  fold x
+
+# THE GENERATORS ANTICOMMUTE: e1 e2 = -e2 e1 (and the same for every pair, by the symmetry of the sign rule).
+rule e-one-and-e-two-anticommute
+  show hold
+    call is-equal
+      call blade-product
+        call blade-of
+          make positive
+          make yes
+          make no
+          make no
+          make no
+        call blade-of
+          make positive
+          make no
+          make yes
+          make no
+          make no
+      call negate-blade
+        call blade-product
+          call blade-of
+            make positive
+            make no
+            make yes
+            make no
+            make no
+          call blade-of
+            make positive
+            make yes
+            make no
+            make no
+            make no
+  calm hold
+
+# A BIVECTOR SQUARES TO -1: e12 e12 = -1, which is why each half of Cl+(4) is the quaternions.
+rule a-bivector-squares-to-minus-one
+  show hold
+    call is-equal
+      call blade-product
+        call blade-of
+          make positive
+          make yes
+          make yes
+          make no
+          make no
+        call blade-of
+          make positive
+          make yes
+          make yes
+          make no
+          make no
+      call negate-blade
+        call scalar-one
+  calm hold
+
+# THE VOLUME ELEMENT SQUARES TO +1 in signature (4, 0).
+rule the-volume-element-squares-to-one
+  show hold
+    call is-equal
+      call blade-product
+        call volume
+        call volume
+      call scalar-one
+  calm hold
+
+# IT COMMUTES WITH THE EVEN BLADES AND ANTICOMMUTES WITH THE ODD: vol x = (-1)^grade x vol.
+rule the-volume-element-commutes-with-even-and-anticommutes-with-odd
+  mark x, like cl4-blade
+  show hold
+    call is-equal
+      call blade-product
+        call volume
+        read x
+      call blade-of
+        call sign-if
+          call odd-grade
+            read x
+          call blade-sign
+            call blade-product
+              read x
+              call volume
+        call bit-one
+          call blade-product
+            read x
+            call volume
+        call bit-two
+          call blade-product
+            read x
+            call volume
+        call bit-three
+          call blade-product
+            read x
+            call volume
+        call bit-four
+          call blade-product
+            read x
+            call volume
+  fold x
+
+# THE EVEN BLADES ARE CLOSED: the grade parity of a product is the sum of the grade parities, so even times even is
+# even and Cl+(4) is a subalgebra.
+rule grade-parity-adds-under-the-product
+  mark x, like cl4-blade
+  mark y, like cl4-blade
+  show hold
+    call is-equal
+      call odd-grade
+        call blade-product
+          read x
+          read y
+      call differ
+        call odd-grade
+          read x
+        call odd-grade
+          read y
+  fold x, y
+
+# J, RIGHT MULTIPLICATION BY THE VOLUME ELEMENT, IS AN INVOLUTION, and it sends each blade to the complementary blade.
+task right-volume
+  take x, like cl4-blade
+  like cl4-blade
+  send back
+    call blade-product
+      read x
+      call volume
+
+rule right-volume-is-an-involution
+  mark x, like cl4-blade
+  show hold
+    call is-equal
+      call right-volume
+        call right-volume
+          read x
+      read x
+  fold x
+
+rule right-volume-complements-every-bit
+  mark x, like cl4-blade
+  show hold
+    call is-equal
+      call both
+        call both
+          call differ
+            call bit-one
+              call right-volume
+                read x
+            call bit-one
+              read x
+          call differ
+            call bit-two
+              call right-volume
+                read x
+            call bit-two
+              read x
+        call both
+          call differ
+            call bit-three
+              call right-volume
+                read x
+            call bit-three
+              read x
+          call differ
+            call bit-four
+              call right-volume
+                read x
+            call bit-four
+              read x
+      make yes
+  fold x

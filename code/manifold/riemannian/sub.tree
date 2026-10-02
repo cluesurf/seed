@@ -1,4 +1,4 @@
-load @term/form/code/manifold/riemannian
+load @term/seed/code/manifold/riemannian
   find riemannian-manifold
 
 # A sub-Riemannian manifold: a manifold where motion is allowed only along certain directions at each point (a

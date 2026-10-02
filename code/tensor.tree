@@ -1,4 +1,4 @@
-load @term/form/code/structure/space/vector
+load @term/seed/code/structure/space/vector
   find vector-space
 
 # A tensor: a multilinear object on a vector space, a machine that eats vectors and covectors and returns a scalar,

@@ -1,4 +1,4 @@
-load @term/form/code/structure/set
+load @term/seed/code/structure/set
   find set
 
 # An edge: a connection between two vertices, the link of a graph, the one-dimensional cell of a polytope. The 24-cell

@@ -1,4 +1,4 @@
-load @term/form/code/structure/field
+load @term/seed/code/structure/field
   find field
 
 # The multiplicative group of a field: the nonzero elements of a field under multiplication, always an abelian group,

@@ -1,4 +1,4 @@
-load @term/form/code/structure/field
+load @term/seed/code/structure/field
   find field
 
 # A field extension: a larger field containing a smaller one, the way the complex numbers extend the reals by adjoining

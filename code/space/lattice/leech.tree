@@ -16,7 +16,7 @@
 # the finite Golay-weight combinatorics that underlies all of it: the allowed weights, their self-dual symmetry under
 # complementation, the involution that pairing is, and the minimum-nonzero-weight-eight fact that forces rootlessness.
 
-load @term/form/code/atom/flag
+load @term/seed/code/atom/flag
   find flag
 
 # The five allowed weights of a binary Golay codeword: zero, eight, twelve, sixteen, and the full twenty-four. NO other

@@ -1,4 +1,4 @@
-load @term/form/code/group/homomorphism
+load @term/seed/code/group/homomorphism
   find group-homomorphism
 
 # A forgetful group homomorphism: a homomorphism that drops structure, mapping a richer group onto a coarser one. The

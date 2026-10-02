@@ -1,176 +1,65 @@
-# The lean, the second base element: the order on the tone, low below middle below high. The order turns a tone into a
-# signed charge and gives creation a direction, outward from the resting middle toward the two poles. It is the same
-# one-way order the integers carry, the source of the arrow of time.
+# The lean, the order on the tone: fear below calm below love. The field F3 (vibe/tone) has no order compatible with its
+# addition, so the lean is extra structure, not something the residues carry: it is what reads a tone as a SIGNED value
+# (-1 < 0 < +1) and gives creation its direction outward from calm toward the two poles.
 #
-# This file does not assert a single instance like "0 is below 2". It DEFINES the order as a function on the three signed
-# ranks and PROVES the four laws that make it a total order, plus the law unique to the lean: that flipping a tone's sign
-# REVERSES the order. Every theorem is universally quantified over the actual rank type and checked by induction. The
-# ranks are kept local because cross-file casing on an imported inductive type is not yet supported, so the order's proof
-# must live where its constructors do; this is the lean's own statement of the same order tone carries.
+# This file defines the order as a comparison and proves it is a total order (reflexive, antisymmetric, transitive,
+# total), that charge conjugation REVERSES it, and that the residue addition does NOT respect it, so a signed count of
+# vibes must be an integer (vibe/tone `balance`) and never a residue.
 
-load @term/form/code/atom/flag
+load @term/seed/code/atom/flag
   find flag
   find either
 
-# A pole, one of the three signed ranks the lean orders: the negative value below the neutral below the positive.
-form pole
-  case negative
-  case neutral
-  case positive
+load @term/seed/code/vibe/law
+  find order
+  find involution
 
-# TEMPLATE: one row of the order table. For a fixed first rank `row`, give the result against each second rank
-# (negative, neutral, positive). One definition replaces the three near-identical `fork case, read b` blocks.
-tree below-row
-  take row
-  take at-negative
-  take at-neutral
-  take at-positive
+load @term/seed/code/vibe/tone
+  find tone
+  find tone-row
+  find tone-sum
+  find tone-conjugate
 
-  hook fuse
-    case {row}
-      fork case, read b
-        case negative
-          send back
-            make {at-negative}
-        case neutral
-          send back
-            make {at-neutral}
-        case positive
-          send back
-            make {at-positive}
-
-# below a b is yes when a sits no higher than b in the lean: negative below neutral below positive. The whole order
-# table reads as three rows: negative is below everything, neutral is below itself and positive, positive below only
-# itself.
-task below
-  take a, like pole
-  take b, like pole
+# at-most a b is yes when a sits no higher than b: fear < calm < love.
+task at-most
+  take a, like tone
+  take b, like tone
   like flag
   fork case, read a
-    fuse below-row, negative, yes, yes, yes
-    fuse below-row, neutral, no, yes, yes
-    fuse below-row, positive, no, no, yes
+    fuse tone-row, fear, yes, yes, yes
+    fuse tone-row, calm, no, yes, yes
+    fuse tone-row, love, no, no, yes
 
-# TEMPLATE: one entry of a single-valued map on poles, `from` sent to `to`. Replaces every `case .. / send back / make ..`
-# block with one line per entry.
-tree map-pole
-  take from
-  take to
+fuse order, lean, tone, at-most
 
-  hook fuse
-    case {from}
-      send back
-        make {to}
-
-# Sign negation: the lean read backward. It flips positive and negative and fixes the resting neutral.
-task flip
-  take a, like pole
-  like pole
-  fork case, read a
-    fuse map-pole, negative, positive
-    fuse map-pole, neutral, neutral
-    fuse map-pole, positive, negative
-
-# REFLEXIVE: every rank sits no higher than itself, below a a = yes.
-rule below-is-reflexive
-  mark a, like pole
+# C REVERSES THE ORDER: a <= b exactly when C b <= C a. Conjugation is antitone, so the two poles are mirror images
+# about calm.
+rule conjugation-reverses-the-lean
+  mark a, like tone
+  mark b, like tone
   show hold
     call is-equal
-      call below
-        read a
-        read a
-      make yes
-  fold a
-
-# ANTISYMMETRIC: if a is below b and b is below a, then a = b. The order has no two-way ties except equality.
-rule below-is-antisymmetric
-  mark a, like pole
-  mark b, like pole
-  have hab
-    call is-equal
-      call below
+      call at-most
         read a
         read b
-      make yes
-  have hba
-    call is-equal
-      call below
-        read b
-        read a
-      make yes
-  show hold
-    call is-equal
-      read a
-      read b
-  fold a, b
-
-# TRANSITIVE: if a is below b and b is below c, then a is below c. The order carries through the middle.
-rule below-is-transitive
-  mark a, like pole
-  mark b, like pole
-  mark c, like pole
-  have hab
-    call is-equal
-      call below
-        read a
-        read b
-      make yes
-  have hbc
-    call is-equal
-      call below
-        read b
-        read c
-      make yes
-  show hold
-    call is-equal
-      call below
-        read a
-        read c
-      make yes
-  fold a, b, c
-
-# TOTAL: any two ranks are comparable, either a is below b or b is below a. With the three laws above, the lean is a
-# genuine total order, not merely a partial one.
-rule below-is-total
-  mark a, like pole
-  mark b, like pole
-  show hold
-    call is-equal
-      call either
-        call below
-          read a
+      call at-most
+        call tone-conjugate
           read b
-        call below
-          read b
-          read a
-      make yes
-  fold a, b
-
-# The law unique to the lean: sign negation is ANTITONE, it reverses the order. below a b = below (flip b) (flip a), for
-# every pair of ranks. Flipping the sign of both sides turns "a no higher than b" into "flip-b no higher than flip-a".
-# This is what it means for the lean to give charge a direction: reversing the sign reverses the sense of the order.
-rule flip-reverses-the-order
-  mark a, like pole
-  mark b, like pole
-  show hold
-    call is-equal
-      call below
-        read a
-        read b
-      call below
-        call flip
-          read b
-        call flip
+        call tone-conjugate
           read a
   fold a, b
 
-# Sign negation is its own inverse: flip (flip a) = a. The lean read backward twice is the lean again.
-rule flip-is-an-involution
-  mark a, like pole
+# THE RESIDUE SUM IGNORES THE LEAN: calm <= love, yet calm + love = love is NOT at most love + love = fear. Adding the
+# same tone to both sides can reverse the order, so the lean is not an order of the field.
+rule the-residue-sum-breaks-the-lean
   show hold
     call is-equal
-      call flip
-        call flip
-          read a
-      read a
-  fold a
+      call at-most
+        call tone-sum
+          make calm
+          make love
+        call tone-sum
+          make love
+          make love
+      make no
+  calm hold

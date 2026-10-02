@@ -5,7 +5,7 @@
 # of so(4) as a pair of su(2) elements and reuses the proven su(2) bracket componentwise, so the bracket is the direct
 # sum. It then PROVES the defining law: a pure left rotation and a pure right rotation always commute.
 
-load @term/form/code/algebra/lie/su2
+load @term/seed/code/algebra/lie/su2
   find elem
   find bracket
 

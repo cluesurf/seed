@@ -1,4 +1,4 @@
-load @term/form/code/operator/differential/vector
+load @term/seed/code/operator/differential/vector
   find vector-differential-operator
 
 # The del operator: the vector of partial derivatives, written as an upside-down triangle, the single symbol from which

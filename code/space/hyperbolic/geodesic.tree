@@ -1,4 +1,4 @@
-load @term/form/code/structure/manifold
+load @term/seed/code/structure/manifold
   find manifold
 
 # Geodesics in hyperbolic space, the straight lines of the curved geometry, the shortest paths and the paths of no

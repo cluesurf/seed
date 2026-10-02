@@ -1,7 +1,7 @@
-load @term/form/code/group
+load @term/seed/code/group
   find group
 
-load @term/form/code/structure/manifold
+load @term/seed/code/structure/manifold
   find manifold
 
 # A Lie group: a group that is also a smooth manifold, with the multiplication and inversion smooth, so it carries both

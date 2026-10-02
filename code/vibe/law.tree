@@ -1,0 +1,395 @@
+# The law kit: one template per algebraic or dynamical law, so a structure states each law it obeys in one line and the
+# kernel proves it by exhaustive case analysis over the carrier.
+#
+#   fuse associative, tone-sum, tone, tone-sum
+#
+# emits the rule `tone-sum-is-associative`, stated for every value of the carrier and closed by `fold`. The first
+# argument names the rules, the second is the carrier type, the rest are the operations the law is about. A carrier is
+# any FINITE type: a flat enumeration (`tone`), or a record of finite fields (a pair of tones, a matrix of tones), whose
+# fields `fold` splits down to closed values. A law about an infinite type (the beat count, a list) is proved by
+# induction instead and is written out where that type lives.
+#
+# Templates cannot expand other templates, so a structure is the list of its laws at the use site: a group is
+# `associative` + `identity` + `inverse`, a ring adds a second operation with `distributive`. Reading those lines IS
+# reading the definition of the structure.
+#
+# A law that is false for the operations given does not compile. The negative control for every template is
+# control/vibe/law-control.tree, which instantiates each one with an operation that breaks it; `sh control/run.sh`
+# checks that all 17 are refused.
+
+# (a b) c = a (b c).
+tree associative
+  take name
+  take kind
+  take op
+
+  hook fuse
+    rule {name}-is-associative
+      mark a, like {kind}
+      mark b, like {kind}
+      mark c, like {kind}
+      show hold
+        call is-equal
+          call {op}
+            call {op}
+              read a
+              read b
+            read c
+          call {op}
+            read a
+            call {op}
+              read b
+              read c
+      fold a, b, c
+
+# a b = b a.
+tree commutative
+  take name
+  take kind
+  take op
+
+  hook fuse
+    rule {name}-is-commutative
+      mark a, like {kind}
+      mark b, like {kind}
+      show hold
+        call is-equal
+          call {op}
+            read a
+            read b
+          call {op}
+            read b
+            read a
+      fold a, b
+
+# e a = a = a e, for the value the zero-argument task `unit` returns.
+tree identity
+  take name
+  take kind
+  take op
+  take unit
+
+  hook fuse
+    rule {name}-has-a-left-identity
+      mark a, like {kind}
+      show hold
+        call is-equal
+          call {op}
+            call {unit}
+            read a
+          read a
+      fold a
+
+    rule {name}-has-a-right-identity
+      mark a, like {kind}
+      show hold
+        call is-equal
+          call {op}
+            read a
+            call {unit}
+          read a
+      fold a
+
+# a' a = e = a a', with a' = inverse a.
+tree inverse
+  take name
+  take kind
+  take op
+  take inverse
+  take unit
+
+  hook fuse
+    rule {name}-has-a-left-inverse
+      mark a, like {kind}
+      show hold
+        call is-equal
+          call {op}
+            call {inverse}
+              read a
+            read a
+          call {unit}
+      fold a
+
+    rule {name}-has-a-right-inverse
+      mark a, like {kind}
+      show hold
+        call is-equal
+          call {op}
+            read a
+            call {inverse}
+              read a
+          call {unit}
+      fold a
+
+# a (b + c) = a b + a c and (a + b) c = a c + b c.
+tree distributive
+  take name
+  take kind
+  take times
+  take plus
+
+  hook fuse
+    rule {name}-distributes-on-the-left
+      mark a, like {kind}
+      mark b, like {kind}
+      mark c, like {kind}
+      show hold
+        call is-equal
+          call {times}
+            read a
+            call {plus}
+              read b
+              read c
+          call {plus}
+            call {times}
+              read a
+              read b
+            call {times}
+              read a
+              read c
+      fold a, b, c
+
+    rule {name}-distributes-on-the-right
+      mark a, like {kind}
+      mark b, like {kind}
+      mark c, like {kind}
+      show hold
+        call is-equal
+          call {times}
+            call {plus}
+              read a
+              read b
+            read c
+          call {plus}
+            call {times}
+              read a
+              read c
+            call {times}
+              read b
+              read c
+      fold a, b, c
+
+# map (map a) = a.
+tree involution
+  take name
+  take kind
+  take map
+
+  hook fuse
+    rule {name}-is-an-involution
+      mark a, like {kind}
+      show hold
+        call is-equal
+          call {map}
+            call {map}
+              read a
+          read a
+      fold a
+
+# backward undoes forward and forward undoes backward: the two maps are inverse bijections of the carrier.
+tree bijection
+  take name
+  take kind
+  take forward
+  take backward
+
+  hook fuse
+    rule {name}-backward-undoes-forward
+      mark a, like {kind}
+      show hold
+        call is-equal
+          call {backward}
+            call {forward}
+              read a
+          read a
+      fold a
+
+    rule {name}-forward-undoes-backward
+      mark a, like {kind}
+      show hold
+        call is-equal
+          call {forward}
+            call {backward}
+              read a
+          read a
+      fold a
+
+# map (a op b) = map a target b ... target (map a) (map b): map carries one operation to the other.
+tree homomorphism
+  take name
+  take kind
+  take map
+  take op
+  take target
+
+  hook fuse
+    rule {name}-is-a-homomorphism
+      mark a, like {kind}
+      mark b, like {kind}
+      show hold
+        call is-equal
+          call {map}
+            call {op}
+              read a
+              read b
+          call {target}
+            call {map}
+              read a
+            call {map}
+              read b
+      fold a, b
+
+# measure (step a) = measure a: the step conserves the measure.
+tree conserves
+  take name
+  take kind
+  take step
+  take measure
+
+  hook fuse
+    rule {name}-conserves-{measure}
+      mark a, like {kind}
+      show hold
+        call is-equal
+          call {measure}
+            call {step}
+              read a
+          call {measure}
+            read a
+      fold a
+
+# f (g a) = g (f a): the two maps commute.
+tree commutes
+  take name
+  take kind
+  take f
+  take g
+
+  hook fuse
+    rule {name}-commutes
+      mark a, like {kind}
+      show hold
+        call is-equal
+          call {f}
+            call {g}
+              read a
+          call {g}
+            call {f}
+              read a
+      fold a
+
+# A group acting on a set: act (g h) x = act g (act h x), and the identity acts trivially.
+tree action
+  take name
+  take group
+  take point
+  take act
+  take op
+  take unit
+
+  hook fuse
+    rule {name}-is-compatible
+      mark g, like {group}
+      mark h, like {group}
+      mark x, like {point}
+      show hold
+        call is-equal
+          call {act}
+            call {op}
+              read g
+              read h
+            read x
+          call {act}
+            read g
+            call {act}
+              read h
+              read x
+      fold g, h, x
+
+    rule {name}-identity-acts-trivially
+      mark x, like {point}
+      show hold
+        call is-equal
+          call {act}
+            call {unit}
+            read x
+          read x
+      fold x
+
+# A total order given as a yes/no comparison `at-most`: reflexive, antisymmetric, transitive and total. The use site
+# must have `yes` and `either` from atom/flag in scope.
+tree order
+  take name
+  take kind
+  take at-most
+
+  hook fuse
+    rule {name}-is-reflexive
+      mark a, like {kind}
+      show hold
+        call is-equal
+          call {at-most}
+            read a
+            read a
+          make yes
+      fold a
+
+    rule {name}-is-antisymmetric
+      mark a, like {kind}
+      mark b, like {kind}
+      have forward
+        call is-equal
+          call {at-most}
+            read a
+            read b
+          make yes
+      have backward
+        call is-equal
+          call {at-most}
+            read b
+            read a
+          make yes
+      show hold
+        call is-equal
+          read a
+          read b
+      fold a, b
+
+    rule {name}-is-transitive
+      mark a, like {kind}
+      mark b, like {kind}
+      mark c, like {kind}
+      have first
+        call is-equal
+          call {at-most}
+            read a
+            read b
+          make yes
+      have second
+        call is-equal
+          call {at-most}
+            read b
+            read c
+          make yes
+      show hold
+        call is-equal
+          call {at-most}
+            read a
+            read c
+          make yes
+      fold a, b, c
+
+    rule {name}-is-total
+      mark a, like {kind}
+      mark b, like {kind}
+      show hold
+        call is-equal
+          call either
+            call {at-most}
+              read a
+              read b
+            call {at-most}
+              read b
+              read a
+          make yes
+      fold a, b

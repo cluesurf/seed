@@ -1,4 +1,4 @@
-load @term/form/code/type/self
+load @term/seed/code/type/self
   find self-type
 
 # The natural numbers, the first counting structure, encoded as a self type carrying its induction principle, in the

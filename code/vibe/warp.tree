@@ -1,66 +1,598 @@
-# The warp factor, the growth rate of the {3,4,3,4} bulk, pinned EXACTLY as a cubic surd. The cells of the honeycomb fall
-# into three CONE TYPES by back-degree (one, two, or three neighbours in the previous shell), and the cone-type transfer
-# matrix [[15,11,9],[4,4,3],[0,1,2]] has characteristic polynomial lambda^3 - 21 lambda^2 + 51 lambda - 23, whose largest
-# root 18.278707774... is the warp factor, degree THREE and irreducible (no rational root). The shell counts obey the
-# companion recurrence s(n) = 21 s(n-1) - 51 s(n-2) + 23 s(n-3), checked here on the measured counts by native integer
-# evaluation, so the growth rate is a determined algebraic number, not a fitted decimal. The transfer matrix is read from
-# a single build to shell four, so this is memory-optimal, no fifty-million-cell shell six enumeration is needed.
+# The warp factor, the growth rate of the {3,4,3,4} mesh, DERIVED from the cone types of its cells. Counted outward from
+# one dock, every cell of a shell has one, two or three neighbours in the shell before it (its cone type A, B or C), and
+# the counts of each type in the next shell are a fixed linear function of this one:
+#
+#         ( 15  11   9 )
+#     M = (  4   4   3 )       v(n + 1) = M v(n),   v(1) = (24, 0, 0)
+#         (  0   1   2 )
+#
+# This file defines M as three integer tasks and PROVES, for all integers: its characteristic polynomial is
+# x^3 - 21 x^2 + 51 x - 23 (expanding det(x I - M) by Sarrus' rule, defined generically); Cayley-Hamilton holds,
+# M^3 - 21 M^2 + 51 M - 23 = 0 on every vector, so EVERY shell total obeys s(n) = 21 s(n-1) - 51 s(n-2) + 23 s(n-3);
+# the seed (24, 0, 0) gives shells 24, 456, 8376, 153192, 2800344 and predicts 51187080 with no enumeration; with the
+# one-cell shell 1 in front, the shells are the series of (1 + z)^3 / (1 - 21 z + 51 z^2 - 23 z^3). Then, about the
+# cubic: it has no rational root (none of +-1, +-23, the only candidates, is a root), so it is irreducible over Q; it
+# changes sign in (0, 1), (2, 3) and (18, 19), so its three roots are real; and the largest lies in (18.278, 18.279).
+# The warp factor is an algebraic integer of degree three, not a fitted decimal.
 
-# The characteristic-polynomial trace is 21, the diagonal sum 15 + 4 + 2 of the transfer matrix.
-hold warp-transfer-trace-is-twenty-one
-  call is-equal
-    code 21
+# Row i of M applied to (x, y, z).
+task transfer-a
+  take x, like integer
+  take y, like integer
+  take z, like integer
+  like integer
+  send back
     call add
-      code 15
       call add
-        code 4
+        call multiply
+          code 15
+          read x
+        call multiply
+          code 11
+          read y
+      call multiply
+        code 9
+        read z
+
+task transfer-b
+  take x, like integer
+  take y, like integer
+  take z, like integer
+  like integer
+  send back
+    call add
+      call add
+        call multiply
+          code 4
+          read x
+        call multiply
+          code 4
+          read y
+      call multiply
+        code 3
+        read z
+
+task transfer-c
+  take x, like integer
+  take y, like integer
+  take z, like integer
+  like integer
+  send back
+    call add
+      call multiply
+        code 1
+        read y
+      call multiply
         code 2
+        read z
 
-# Shell four satisfies the recurrence: 153192 = 21 * 8376 - 51 * 456 + 23 * 24.
-hold warp-recurrence-reproduces-shell-four
-  call is-equal
-    code 153192
+task shell-total
+  take x, like integer
+  take y, like integer
+  take z, like integer
+  like integer
+  send back
     call add
-      call subtract
+      call add
+        read x
+        read y
+      read z
+
+# The determinant of a 3 x 3 matrix by Sarrus' rule, rows (a b c), (d e f), (g h i).
+task determinant-three
+  take a, like integer
+  take b, like integer
+  take c, like integer
+  take d, like integer
+  take e, like integer
+  take f, like integer
+  take g, like integer
+  take h, like integer
+  take i, like integer
+  like integer
+  send back
+    call subtract
+      call add
+        call add
+          call multiply
+            read a
+            call multiply
+              read e
+              read i
+          call multiply
+            read b
+            call multiply
+              read f
+              read g
         call multiply
-          code 21
-          code 8376
+          read c
+          call multiply
+            read d
+            read h
+      call add
+        call add
+          call multiply
+            read c
+            call multiply
+              read e
+              read g
+          call multiply
+            read b
+            call multiply
+              read d
+              read i
+        call multiply
+          read a
+          call multiply
+            read f
+            read h
+
+task warp-polynomial
+  take x, like integer
+  like integer
+  send back
+    call subtract
+      call add
+        call subtract
+          call multiply
+            read x
+            call multiply
+              read x
+              read x
+          call multiply
+            code 21
+            call multiply
+              read x
+              read x
         call multiply
           code 51
-          code 456
-      call multiply
-        code 23
+          read x
+      code 23
+
+# THE CHARACTERISTIC POLYNOMIAL: det(x I - M) = x^3 - 21 x^2 + 51 x - 23, for every x.
+rule the-characteristic-polynomial-of-the-transfer-matrix
+  mark x, like integer
+  show hold
+    call is-equal
+      call determinant-three
+        call subtract
+          read x
+          code 15
+        code -11
+        code -9
+        code -4
+        call subtract
+          read x
+          code 4
+        code -3
+        code 0
+        code -1
+        call subtract
+          read x
+          code 2
+      call warp-polynomial
+        read x
+
+# M^2 and M^3 applied to (x, y, z), each coordinate a task, so the recurrence is stated once.
+task square-a
+  take x, like integer
+  take y, like integer
+  take z, like integer
+  like integer
+  send back
+    call transfer-a
+      call transfer-a
+        read x
+        read y
+        read z
+      call transfer-b
+        read x
+        read y
+        read z
+      call transfer-c
+        read x
+        read y
+        read z
+
+task square-b
+  take x, like integer
+  take y, like integer
+  take z, like integer
+  like integer
+  send back
+    call transfer-b
+      call transfer-a
+        read x
+        read y
+        read z
+      call transfer-b
+        read x
+        read y
+        read z
+      call transfer-c
+        read x
+        read y
+        read z
+
+task square-c
+  take x, like integer
+  take y, like integer
+  take z, like integer
+  like integer
+  send back
+    call transfer-c
+      call transfer-a
+        read x
+        read y
+        read z
+      call transfer-b
+        read x
+        read y
+        read z
+      call transfer-c
+        read x
+        read y
+        read z
+
+# The total of M^k v for k = 1, 2, 3.
+task total-one
+  take x, like integer
+  take y, like integer
+  take z, like integer
+  like integer
+  send back
+    call shell-total
+      call transfer-a
+        read x
+        read y
+        read z
+      call transfer-b
+        read x
+        read y
+        read z
+      call transfer-c
+        read x
+        read y
+        read z
+
+task total-two
+  take x, like integer
+  take y, like integer
+  take z, like integer
+  like integer
+  send back
+    call shell-total
+      call square-a
+        read x
+        read y
+        read z
+      call square-b
+        read x
+        read y
+        read z
+      call square-c
+        read x
+        read y
+        read z
+
+task total-three
+  take x, like integer
+  take y, like integer
+  take z, like integer
+  like integer
+  send back
+    call total-one
+      call square-a
+        read x
+        read y
+        read z
+      call square-b
+        read x
+        read y
+        read z
+      call square-c
+        read x
+        read y
+        read z
+
+# CAYLEY-HAMILTON: M^3 v = 21 M^2 v - 51 M v + 23 v for every integer vector v, coordinate by coordinate.
+tree cayley-hamilton
+  take name
+  take row
+  take entry
+
+  hook fuse
+    rule {name}
+      mark x, like integer
+      mark y, like integer
+      mark z, like integer
+      show hold
+        call is-equal
+          call transfer-{row}
+            call square-a
+              read x
+              read y
+              read z
+            call square-b
+              read x
+              read y
+              read z
+            call square-c
+              read x
+              read y
+              read z
+          call add
+            call subtract
+              call multiply
+                code 21
+                call square-{row}
+                  read x
+                  read y
+                  read z
+              call multiply
+                code 51
+                call transfer-{row}
+                  read x
+                  read y
+                  read z
+            call multiply
+              code 23
+              read {entry}
+
+fuse cayley-hamilton, the-transfer-matrix-satisfies-its-cubic-first-row, a, x
+fuse cayley-hamilton, the-transfer-matrix-satisfies-its-cubic-second-row, b, y
+fuse cayley-hamilton, the-transfer-matrix-satisfies-its-cubic-third-row, c, z
+
+# EVERY SHELL TOTAL OBEYS THE RECURRENCE: for any type vector v, total(M^3 v) = 21 total(M^2 v) - 51 total(M v)
+# + 23 total(v). Applied at v = v(n - 3) it is s(n) = 21 s(n-1) - 51 s(n-2) + 23 s(n-3).
+rule every-shell-obeys-the-warp-recurrence
+  mark x, like integer
+  mark y, like integer
+  mark z, like integer
+  show hold
+    call is-equal
+      call total-three
+        read x
+        read y
+        read z
+      call add
+        call subtract
+          call multiply
+            code 21
+            call total-two
+              read x
+              read y
+              read z
+          call multiply
+            code 51
+            call total-one
+              read x
+              read y
+              read z
+        call multiply
+          code 23
+          call shell-total
+            read x
+            read y
+            read z
+
+# THE SHELLS FROM ONE DOCK. Shell one is the seed's 24 neighbours, all of type A.
+rule shell-two-is-four-hundred-fifty-six
+  show hold
+    call is-equal
+      call total-one
         code 24
+        code 0
+        code 0
+      code 456
 
-# Shell five satisfies the recurrence: 2800344 = 21 * 153192 - 51 * 8376 + 23 * 456. The exact check of the cubic, on a
-# shell count measured by a separate build, so the recurrence is not a fit but the true growth law.
-hold warp-recurrence-reproduces-shell-five
-  call is-equal
-    code 2800344
-    call add
+rule shell-three-is-eight-thousand-three-hundred-seventy-six
+  show hold
+    call is-equal
+      call total-two
+        code 24
+        code 0
+        code 0
+      code 8376
+
+rule shell-four-is-one-hundred-fifty-three-thousand-one-hundred-ninety-two
+  show hold
+    call is-equal
+      call total-three
+        code 24
+        code 0
+        code 0
+      code 153192
+
+# Shells five and six from the type vector of shell three, v(3) = (6456, 1824, 96) = M^2 v(1).
+rule the-type-vector-of-shell-three-a
+  show hold
+    call is-equal
+      call square-a
+        code 24
+        code 0
+        code 0
+      code 6456
+
+rule the-type-vector-of-shell-three-b
+  show hold
+    call is-equal
+      call square-b
+        code 24
+        code 0
+        code 0
+      code 1824
+
+rule the-type-vector-of-shell-three-c
+  show hold
+    call is-equal
+      call square-c
+        code 24
+        code 0
+        code 0
+      code 96
+
+rule shell-five-is-two-million-eight-hundred-thousand-three-hundred-forty-four
+  show hold
+    call is-equal
+      call total-two
+        code 6456
+        code 1824
+        code 96
+      code 2800344
+
+rule shell-six-is-fifty-one-million-one-hundred-eighty-seven-thousand-eighty
+  show hold
+    call is-equal
+      call total-three
+        code 6456
+        code 1824
+        code 96
+      code 51187080
+
+# THE GENERATING FUNCTION: with shell zero = 1, s(n) - 21 s(n-1) + 51 s(n-2) - 23 s(n-3) is 3, 3, 1 for n = 1, 2, 3
+# and 0 after, the coefficients of the numerator (1 + z)^3.
+rule the-numerator-coefficient-at-one-is-three
+  show hold
+    call is-equal
       call subtract
+        code 24
         call multiply
           code 21
-          code 153192
-        call multiply
-          code 51
-          code 8376
-      call multiply
-        code 23
-        code 456
+          code 1
+      code 3
 
-# The recurrence PREDICTS shell six with no enumeration: 51187080 = 21 * 2800344 - 51 * 153192 + 23 * 8376.
-hold warp-recurrence-predicts-shell-six
-  call is-equal
-    code 51187080
-    call add
-      call subtract
-        call multiply
-          code 21
-          code 2800344
+rule the-numerator-coefficient-at-two-is-three
+  show hold
+    call is-equal
+      call add
+        call subtract
+          code 456
+          call multiply
+            code 21
+            code 24
         call multiply
           code 51
-          code 153192
-      call multiply
+          code 1
+      code 3
+
+rule the-numerator-coefficient-at-three-is-one
+  show hold
+    call is-equal
+      call subtract
+        call add
+          call subtract
+            code 8376
+            call multiply
+              code 21
+              code 456
+          call multiply
+            code 51
+            code 24
+        call multiply
+          code 23
+          code 1
+      code 1
+
+# NO RATIONAL ROOT: a rational root of a monic integer cubic is an integer dividing 23, and none of +-1, +-23 is a root.
+rule warp-polynomial-at-one
+  show hold
+    call is-equal
+      call warp-polynomial
+        code 1
+      code 8
+
+rule warp-polynomial-at-minus-one
+  show hold
+    call is-equal
+      call warp-polynomial
+        code -1
+      code -96
+
+rule warp-polynomial-at-twenty-three
+  show hold
+    call is-equal
+      call warp-polynomial
         code 23
-        code 8376
+      code 2208
+
+rule warp-polynomial-at-minus-twenty-three
+  show hold
+    call is-equal
+      call warp-polynomial
+        code -23
+      code -24472
+
+# THREE REAL ROOTS: sign changes in (0, 1), (2, 3) and (18, 19).
+rule warp-polynomial-at-zero
+  show hold
+    call is-equal
+      call warp-polynomial
+        code 0
+      code -23
+
+rule warp-polynomial-at-two
+  show hold
+    call is-equal
+      call warp-polynomial
+        code 2
+      code 3
+
+rule warp-polynomial-at-three
+  show hold
+    call is-equal
+      call warp-polynomial
+        code 3
+      code -32
+
+rule warp-polynomial-at-eighteen
+  show hold
+    call is-equal
+      call warp-polynomial
+        code 18
+      code -77
+
+rule warp-polynomial-at-nineteen
+  show hold
+    call is-equal
+      call warp-polynomial
+        code 19
+      code 224
+
+# THE WARP FACTOR TO THREE DECIMALS: with x = 1000 lambda, 10^9 p(lambda) = x^3 - 21000 x^2 + 51 10^6 x - 23 10^9 is
+# negative at x = 18278 and positive at x = 18279, so 18.278 < lambda < 18.279.
+task scaled-warp-polynomial
+  take x, like integer
+  like integer
+  send back
+    call subtract
+      call add
+        call subtract
+          call multiply
+            read x
+            call multiply
+              read x
+              read x
+          call multiply
+            code 21000
+            call multiply
+              read x
+              read x
+        call multiply
+          code 51000000
+          read x
+      code 23000000000
+
+rule the-warp-factor-is-above-eighteen-point-two-seven-eight
+  show hold
+    call is-equal
+      call scaled-warp-polynomial
+        code 18278
+      code -202143048
+
+rule the-warp-factor-is-below-eighteen-point-two-seven-nine
+  show hold
+    call is-equal
+      call scaled-warp-polynomial
+        code 18279
+      code 83470639

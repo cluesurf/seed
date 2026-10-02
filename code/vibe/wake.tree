@@ -6,7 +6,7 @@
 # The grown count is proved STRICTLY GREATER than before (the mesh always grows) and the growth NEVER RETURNS (the count
 # is never below where it was, the mesh never shrinks). These are the laws behind "the mesh only grows", not an assertion.
 
-load @term/form/code/atom/flag
+load @term/seed/code/atom/flag
   find flag
 
 # The count of docks in the mesh: none, or one more.

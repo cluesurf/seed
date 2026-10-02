@@ -10,7 +10,7 @@
 # self-composition and must be witnessed by an explicit inverse `unstep`, the opposite rotation. The rule is genuinely a
 # permutation: it moves states (shown by a concrete refutation), it loses nothing (both round-trip laws), and it conserves
 # the particle COUNT (the number of on cells), the discrete conservation law that makes the dynamics physical.
-load @term/form/code/atom/flag
+load @term/seed/code/atom/flag
   find flag
 
 # A cell, the smallest piece of the lattice: off or on, an absent or present particle.

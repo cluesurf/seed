@@ -1,2 +1,2 @@
-export type Set =
+export type SetForm =
   | { form: "opaque" }

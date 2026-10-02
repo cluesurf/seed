@@ -1,0 +1,53 @@
+# NEGATIVE CONTROL: boost. Every rule here must be refused.
+
+load @term/seed/code/vibe/boost
+  find interval
+  find boost-time
+  find boost-space
+
+# the Euclidean norm is not kept by a boost
+rule control-a-boost-keeps-t-squared-plus-x-squared
+  mark d, like integer
+  mark n, like integer
+  mark t, like integer
+  mark x, like integer
+  show hold
+    call is-equal
+      call add
+        call multiply
+          call boost-time
+            read d
+            read n
+            read t
+            read x
+          call boost-time
+            read d
+            read n
+            read t
+            read x
+        call multiply
+          call boost-space
+            read d
+            read n
+            read t
+            read x
+          call boost-space
+            read d
+            read n
+            read t
+            read x
+      call multiply
+        call add
+          call multiply
+            read d
+            read d
+          call multiply
+            read n
+            read n
+        call add
+          call multiply
+            read t
+            read t
+          call multiply
+            read x
+            read x

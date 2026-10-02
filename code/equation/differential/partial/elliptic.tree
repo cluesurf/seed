@@ -1,4 +1,4 @@
-load @term/form/code/manifold/riemannian
+load @term/seed/code/manifold/riemannian
   find riemannian-manifold
 
 # An elliptic partial differential equation: the class of equilibrium equations, like Laplace's and Poisson's, whose

@@ -28,7 +28,7 @@
 # is restated here as the local `curve` form because a fork returning different constructors of an imported enum does not
 # yet unify across files, so the cross-file `geometry` cannot be returned from the branch table directly.
 
-load @term/form/code/number/integer
+load @term/seed/code/number/integer
   find rung
   find combine
   find from-natural

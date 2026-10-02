@@ -1,4 +1,4 @@
-load @term/form/code/structure/manifold
+load @term/seed/code/structure/manifold
   find manifold
 
 # A manifold, the concept: a space that looks locally like flat space but may be globally curved, the stage curved

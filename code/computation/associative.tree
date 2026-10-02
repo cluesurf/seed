@@ -1,7 +1,7 @@
-load @term/form/code/structure/monoid
+load @term/seed/code/structure/monoid
   find monoid
 
-load @term/form/code/structure/function/binary
+load @term/seed/code/structure/function/binary
   find binary-function
 
 # Associative computation: computing by an associative operation, where the grouping of the work does not change the

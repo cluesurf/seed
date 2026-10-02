@@ -1,4 +1,4 @@
-load @term/form/code/structure/set
+load @term/seed/code/structure/set
   find set
 
 # A Turing machine: the foundational model of computation, a finite control reading and writing symbols on an unbounded

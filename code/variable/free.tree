@@ -1,4 +1,4 @@
-load @term/form/code/type/term
+load @term/seed/code/type/term
   find term
 
 # A free variable: a variable in an expression that is not bound by any enclosing binder, a hole that refers outward to

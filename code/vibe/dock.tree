@@ -1,89 +1,1503 @@
-# The dock, the fourth base element: one cell of the mesh, a single here-and-now, shaped as the 24-cell. Its twenty-four
-# sites pair into twelve lines, it meets twenty-four neighbors (one across each face), and its full state, the hyper-color,
-# is the 3^24 ways to fill its sites with tones. This file MODELS the dock's conserved CHARGE: the signed sum of a line's
-# two tones, a value the law never creates or destroys. The vacuum dock (all sites at peace) is proved neutral, and the
-# charge is proved symmetric (independent of which way the line is read), the seed of the dock's charge conservation.
+# The dock, one site of space, and its 24 slots. A slot is a direction of the D4 root system, +-e_i +-e_j, and it is
+# written here as what it is in the substrate: a TETRAD of four tones with exactly two vibes. Of the 81 tetrads, the
+# 24 with two nonzero entries are the 24 vertices of the 24-cell (vibe/forced-dock-24-cell counts the shells), so the
+# dock's directions are not chosen, they are the middle shell of {-1, 0, +1}^4.
+#
+# This file defines the tetrads, their inner product and the slot predicate, and proves the geometry the rule uses:
+#
+#   lines   every slot has norm 2, its opposite is a slot at inner product -2, and no slot is its own opposite, so the
+#           24 slots pair into 12 LINES;
+#   frames  the slots split by which pair of coordinates they occupy, {12|34}, {14|23} or {13|24}, into three FRAMES
+#           (16-cells). Two slots of one frame meet at 0 or +-2, two of different frames at +-1, and negating one slot
+#           flips the sign, so a slot sees 1 + 1 + 6 slots in its own frame and 8 + 8 at +-1 in the other two;
+#   W(D4)   the four simple reflections satisfy the Coxeter relations of D4 on every tetrad, keep the slots and the
+#           inner product, and permute the frames through S3;
+#   W(F4)   the reflections in e4 and in 1/2(e1 - e2 - e3 - e4) join them and satisfy the relations of F4 = {3,4,3}
+#           on the slots: the full 1,152-element symmetry of the dock acts on it;
+#   triality the map tau = 1/2(1 1 1 1 ; 1 1 -1 -1 ; 1 -1 1 -1 ; -1 1 1 -1) keeps the slots and the inner product,
+#           has order three, fixes every frame, and conjugates the three outer reflections of D4 into each other in a
+#           cycle while fixing the central one: the symmetry of the D4 diagram, realized on the dock.
+#
+# It then proves the slots ARE the Hurwitz units (vibe/hurwitz): the map 2q -> (q0 + q1, q0 - q1, q2 + q3, q2 - q3)
+# sends every unit to a slot, is injective, and has an explicit inverse on every slot, so there are exactly 24 slots;
+# it sends -g to the opposite slot and the turn of g to the frame of its slot; and the inner product of two slots is
+# twice the real part of g h^-1, so the dock's whole metric is the group's multiplication.
 
-load @term/form/code/vibe/tone
+load @term/seed/code/atom/flag
+  find flag
+  find both
+  find either
+  find not-flag
+  find implies
+
+load @term/seed/code/atom/sign
+  find sign
+
+load @term/seed/code/vibe/tone
   find tone
-  find tally
+  find tone-sum
+  find tone-difference
+  find tone-product
+  find tone-conjugate
+  find same-tone
+  find is-vibe
+  find balance
+  find balance-shift
+  find total-of-three
 
-# The charge of a line: the signed sum of its two site tones.
-task line-charge
-  take head, like tone
-  take tail, like tone
-  like tally
-  fork case, read head
-    case low
-      fork case, read tail
-        case low
-          send back
-            make sink-two
-        case middle
-          send back
-            make sink-one
-        case high
-          send back
-            make flat
-    case middle
-      fork case, read tail
-        case low
-          send back
-            make sink-one
-        case middle
-          send back
-            make flat
-        case high
-          send back
-            make lift-one
-    case high
-      fork case, read tail
-        case low
-          send back
-            make flat
-        case middle
-          send back
-            make lift-one
-        case high
-          send back
-            make lift-two
+load @term/seed/code/vibe/hurwitz
+  find hurwitz-axis
+  find q8
+  find q8-of
+  find hurwitz-element
+  find hurwitz-of
+  find hurwitz-turn
+  find hurwitz-product
+  find hurwitz-inverse
+  find same-hurwitz
+  find minus-one-unit
+  find half
+  find half-negate
+  find quaternion-point
+  find hurwitz-point
 
-# THE VACUUM IS NEUTRAL: a line at peace (both sites middle) has zero charge. The resting dock carries no charge, the
-# still middle the universe rests at.
-rule vacuum-line-is-neutral
+form tetrad
+  case tones-of
+    link first, like tone
+    link second, like tone
+    link third, like tone
+    link fourth, like tone
+
+task tetrad-of
+  take first, like tone
+  take second, like tone
+  take third, like tone
+  take fourth, like tone
+  like tetrad
+  send back
+    make tones-of
+      bind first
+        read first
+      bind second
+        read second
+      bind third
+        read third
+      bind fourth
+        read fourth
+
+task tetrad-first
+  take v, like tetrad
+  like tone
+  fork case, read v
+    case tones-of
+      send back
+        read first
+
+task tetrad-second
+  take v, like tetrad
+  like tone
+  fork case, read v
+    case tones-of
+      send back
+        read second
+
+task tetrad-third
+  take v, like tetrad
+  like tone
+  fork case, read v
+    case tones-of
+      send back
+        read third
+
+task tetrad-fourth
+  take v, like tetrad
+  like tone
+  fork case, read v
+    case tones-of
+      send back
+        read fourth
+
+task same-tetrad
+  take v, like tetrad
+  take w, like tetrad
+  like flag
+  send back
+    call both
+      call both
+        call same-tone
+          call tetrad-first
+            read v
+          call tetrad-first
+            read w
+        call same-tone
+          call tetrad-second
+            read v
+          call tetrad-second
+            read w
+      call both
+        call same-tone
+          call tetrad-third
+            read v
+          call tetrad-third
+            read w
+        call same-tone
+          call tetrad-fourth
+            read v
+          call tetrad-fourth
+            read w
+
+# love for a vibe, calm for calm: the slot's occupancy read as a count of one.
+task presence
+  take t, like tone
+  like tone
+  fork case, read t
+    case fear
+      send back
+        make love
+    case calm
+      send back
+        make calm
+    case love
+      send back
+        make love
+
+# How many of the four entries are vibes.
+task support
+  take v, like tetrad
+  like balance
+  send back
+    call balance-shift
+      call total-of-three
+        call presence
+          call tetrad-first
+            read v
+        call presence
+          call tetrad-second
+            read v
+        call presence
+          call tetrad-third
+            read v
+      call presence
+        call tetrad-fourth
+          read v
+
+# A SLOT: exactly two vibes.
+task is-slot
+  take v, like tetrad
+  like flag
+  fork case, call support, read v
+    case minus-four
+      send back
+        make no
+    case minus-three
+      send back
+        make no
+    case minus-two
+      send back
+        make no
+    case minus-one
+      send back
+        make no
+    case even
+      send back
+        make no
+    case plus-one
+      send back
+        make no
+    case plus-two
+      send back
+        make yes
+    case plus-three
+      send back
+        make no
+    case plus-four
+      send back
+        make no
+
+# THE INNER PRODUCT: the sum of the four products, as an integer from -4 to 4. Each product of two tones is -1, 0 or 1,
+# and the residue product agrees with the integer one there.
+task dot
+  take v, like tetrad
+  take w, like tetrad
+  like balance
+  send back
+    call balance-shift
+      call total-of-three
+        call tone-product
+          call tetrad-first
+            read v
+          call tetrad-first
+            read w
+        call tone-product
+          call tetrad-second
+            read v
+          call tetrad-second
+            read w
+        call tone-product
+          call tetrad-third
+            read v
+          call tetrad-third
+            read w
+      call tone-product
+        call tetrad-fourth
+          read v
+        call tetrad-fourth
+          read w
+
+task balance-negate
+  take n, like balance
+  like balance
+  fork case, read n
+    case minus-four
+      send back
+        make plus-four
+    case minus-three
+      send back
+        make plus-three
+    case minus-two
+      send back
+        make plus-two
+    case minus-one
+      send back
+        make plus-one
+    case even
+      send back
+        make even
+    case plus-one
+      send back
+        make minus-one
+    case plus-two
+      send back
+        make minus-two
+    case plus-three
+      send back
+        make minus-three
+    case plus-four
+      send back
+        make minus-four
+
+# Is an inner product odd (+-1).
+task is-odd-dot
+  take n, like balance
+  like flag
+  fork case, read n
+    case minus-four
+      send back
+        make no
+    case minus-three
+      send back
+        make yes
+    case minus-two
+      send back
+        make no
+    case minus-one
+      send back
+        make yes
+    case even
+      send back
+        make no
+    case plus-one
+      send back
+        make yes
+    case plus-two
+      send back
+        make no
+    case plus-three
+      send back
+        make yes
+    case plus-four
+      send back
+        make no
+
+# The opposite slot, the other end of the line: every entry negated (charge conjugation on the tetrad).
+task opposite
+  take v, like tetrad
+  like tetrad
+  send back
+    call tetrad-of
+      call tone-conjugate
+        call tetrad-first
+          read v
+      call tone-conjugate
+        call tetrad-second
+          read v
+      call tone-conjugate
+        call tetrad-third
+          read v
+      call tone-conjugate
+        call tetrad-fourth
+          read v
+
+# THE FRAME of a slot, by the pair of coordinates it occupies: {12|34} calm, {14|23} love, {13|24} fear. The labels
+# match the turn of the Hurwitz unit the slot is (proved below).
+task frame-from-flags
+  take first-pair, like flag
+  take crossed-pair, like flag
+  like tone
+  fork case, read first-pair
+    case yes
+      send back
+        make calm
+    case no
+      fork case, read crossed-pair
+        case yes
+          send back
+            make love
+        case no
+          send back
+            make fear
+
+# Do two entries both hold vibes.
+task both-vibes
+  take a, like tone
+  take b, like tone
+  like flag
+  send back
+    call both
+      call is-vibe
+        read a
+      call is-vibe
+        read b
+
+task frame-of
+  take v, like tetrad
+  like tone
+  send back
+    call frame-from-flags
+      call either
+        call both-vibes
+          call tetrad-first
+            read v
+          call tetrad-second
+            read v
+        call both-vibes
+          call tetrad-third
+            read v
+          call tetrad-fourth
+            read v
+      call either
+        call both-vibes
+          call tetrad-first
+            read v
+          call tetrad-fourth
+            read v
+        call both-vibes
+          call tetrad-second
+            read v
+          call tetrad-third
+            read v
+
+# EVERY SLOT HAS NORM TWO.
+rule every-slot-has-norm-two
+  mark v, like tetrad
+  have slot
+    call is-equal
+      call is-slot
+        read v
+      make yes
   show hold
     call is-equal
-      call line-charge
-        make middle
-        make middle
-      make flat
-  calm hold
+      call dot
+        read v
+        read v
+      make plus-two
+  fold v
 
-# CHARGE IS SYMMETRIC: the charge of a line does not depend on which site is read first, line-charge a b = line-charge b a.
-# Charge is a property of the pair, not an ordering, which is why the stream exchange across a line preserves it.
-rule line-charge-is-symmetric
-  mark a, like tone
-  mark b, like tone
+# THE INNER PRODUCT IS SYMMETRIC.
+rule the-inner-product-is-symmetric
+  mark v, like tetrad
+  mark w, like tetrad
   show hold
     call is-equal
-      call line-charge
-        read a
-        read b
-      call line-charge
-        read b
-        read a
-  fold a, b
+      call dot
+        read v
+        read w
+      call dot
+        read w
+        read v
+  fold v, w
 
-# The twenty-four sites pair into twelve lines: 24 = 2 * 12.
-hold sites-pair-into-twelve-lines
-  call is-equal
-    code 24
-    call multiply
-      code 2
-      code 12
+# NEGATING ONE SIDE NEGATES THE INNER PRODUCT. So the slots at +1 to a given slot and those at -1 are exchanged by
+# taking opposites: there are as many of one as of the other.
+rule negating-a-slot-negates-the-inner-product
+  mark v, like tetrad
+  mark w, like tetrad
+  show hold
+    call is-equal
+      call dot
+        read v
+        call opposite
+          read w
+      call balance-negate
+        call dot
+          read v
+          read w
+  fold v, w
 
-# The dock meets twenty-four neighbors, one across each of its twenty-four faces (self-dual): faces equal vertices.
-hold twenty-four-faces-equal-twenty-four-vertices
-  call is-equal
-    code 24
-    code 24
+# THE TWELVE LINES: the opposite of a slot is a slot, at inner product -2, and never the slot itself.
+rule the-opposite-of-a-slot-is-a-slot
+  mark v, like tetrad
+  have slot
+    call is-equal
+      call is-slot
+        read v
+      make yes
+  show hold
+    call is-equal
+      call is-slot
+        call opposite
+          read v
+      make yes
+  fold v
+
+rule a-slot-and-its-opposite-meet-at-minus-two
+  mark v, like tetrad
+  have slot
+    call is-equal
+      call is-slot
+        read v
+      make yes
+  show hold
+    call is-equal
+      call dot
+        read v
+        call opposite
+          read v
+      make minus-two
+  fold v
+
+rule no-slot-is-its-own-opposite
+  mark v, like tetrad
+  have slot
+    call is-equal
+      call is-slot
+        read v
+      make yes
+  show hold
+    call is-equal
+      call same-tetrad
+        read v
+        call opposite
+          read v
+      make no
+  fold v
+
+# THE THREE FRAMES: two slots meet at an odd inner product (+-1) exactly when they lie in different frames. In one
+# frame they meet at 0 (orthogonal lines) or +-2 (one line).
+rule slots-of-different-frames-meet-at-plus-or-minus-one
+  mark v, like tetrad
+  mark w, like tetrad
+  have v-slot
+    call is-equal
+      call is-slot
+        read v
+      make yes
+  have w-slot
+    call is-equal
+      call is-slot
+        read w
+      make yes
+  show hold
+    call is-equal
+      call is-odd-dot
+        call dot
+          read v
+          read w
+      call not-flag
+        call same-tone
+          call frame-of
+            read v
+          call frame-of
+            read w
+  fold v, w
+
+# A slot's frame is the frame of its opposite: a line lies in one frame.
+rule a-line-lies-in-one-frame
+  mark v, like tetrad
+  show hold
+    call is-equal
+      call frame-of
+        call opposite
+          read v
+      call frame-of
+        read v
+  fold v
+
+# THE WEYL GROUP W(D4), generated by the reflections in the simple roots e1 - e2, e2 - e3, e3 - e4 and e3 + e4. The
+# first three swap two coordinates, the last sends (x3, x4) to (-x4, -x3).
+task slot-reflect-a
+  take v, like tetrad
+  like tetrad
+  send back
+    call tetrad-of
+      call tetrad-second
+        read v
+      call tetrad-first
+        read v
+      call tetrad-third
+        read v
+      call tetrad-fourth
+        read v
+
+task slot-reflect-b
+  take v, like tetrad
+  like tetrad
+  send back
+    call tetrad-of
+      call tetrad-first
+        read v
+      call tetrad-third
+        read v
+      call tetrad-second
+        read v
+      call tetrad-fourth
+        read v
+
+task slot-reflect-c
+  take v, like tetrad
+  like tetrad
+  send back
+    call tetrad-of
+      call tetrad-first
+        read v
+      call tetrad-second
+        read v
+      call tetrad-fourth
+        read v
+      call tetrad-third
+        read v
+
+task slot-reflect-d
+  take v, like tetrad
+  like tetrad
+  send back
+    call tetrad-of
+      call tetrad-first
+        read v
+      call tetrad-second
+        read v
+      call tone-conjugate
+        call tetrad-fourth
+          read v
+      call tone-conjugate
+        call tetrad-third
+          read v
+
+# TEMPLATE: the Coxeter relation (f g)^m = 1 on every tetrad, for m = 2 or 3, and each reflection an involution.
+tree coxeter-two
+  take name
+  take f
+  take g
+
+  hook fuse
+    rule {name}
+      mark v, like tetrad
+      show hold
+        call is-equal
+          call {f}
+            call {g}
+              call {f}
+                call {g}
+                  read v
+          read v
+      fold v
+
+tree coxeter-three
+  take name
+  take f
+  take g
+
+  hook fuse
+    rule {name}
+      mark v, like tetrad
+      show hold
+        call is-equal
+          call {f}
+            call {g}
+              call {f}
+                call {g}
+                  call {f}
+                    call {g}
+                      read v
+          read v
+      fold v
+
+tree reflection
+  take name
+  take f
+
+  hook fuse
+    rule {name}-is-an-involution
+      mark v, like tetrad
+      show hold
+        call is-equal
+          call {f}
+            call {f}
+              read v
+          read v
+      fold v
+
+    rule {name}-keeps-the-inner-product
+      mark v, like tetrad
+      mark w, like tetrad
+      show hold
+        call is-equal
+          call dot
+            call {f}
+              read v
+            call {f}
+              read w
+          call dot
+            read v
+            read w
+      fold v, w
+
+    rule {name}-keeps-the-slots
+      mark v, like tetrad
+      show hold
+        call is-equal
+          call is-slot
+            call {f}
+              read v
+          call is-slot
+            read v
+      fold v
+
+fuse reflection, slot-reflect-a, slot-reflect-a
+fuse reflection, slot-reflect-b, slot-reflect-b
+fuse reflection, slot-reflect-c, slot-reflect-c
+fuse reflection, slot-reflect-d, slot-reflect-d
+
+# THE D4 DIAGRAM: b is joined to a, c and d (order three), and a, c, d pairwise commute (order two).
+fuse coxeter-three, a-and-b-make-a-third-turn, slot-reflect-a, slot-reflect-b
+fuse coxeter-three, b-and-c-make-a-third-turn, slot-reflect-b, slot-reflect-c
+fuse coxeter-three, b-and-d-make-a-third-turn, slot-reflect-b, slot-reflect-d
+fuse coxeter-two, a-and-c-commute, slot-reflect-a, slot-reflect-c
+fuse coxeter-two, a-and-d-commute, slot-reflect-a, slot-reflect-d
+fuse coxeter-two, c-and-d-commute, slot-reflect-c, slot-reflect-d
+
+# W(D4) PERMUTES THE FRAMES THROUGH S3: a fixes the frame {12|34} and swaps the other two, b fixes {14|23} and swaps
+# the other two. Two different transpositions generate all six permutations of the three frames.
+task swap-calm-fear
+  take t, like tone
+  like tone
+  fork case, read t
+    case fear
+      send back
+        make calm
+    case calm
+      send back
+        make fear
+    case love
+      send back
+        make love
+
+rule reflection-a-swaps-the-second-and-third-frames
+  mark v, like tetrad
+  have slot
+    call is-equal
+      call is-slot
+        read v
+      make yes
+  show hold
+    call is-equal
+      call frame-of
+        call slot-reflect-a
+          read v
+      call tone-conjugate
+        call frame-of
+          read v
+  fold v
+
+rule reflection-b-swaps-the-first-and-third-frames
+  mark v, like tetrad
+  have slot
+    call is-equal
+      call is-slot
+        read v
+      make yes
+  show hold
+    call is-equal
+      call frame-of
+        call slot-reflect-b
+          read v
+      call swap-calm-fear
+        call frame-of
+          read v
+  fold v
+
+# W(F4). Its simple roots are e2 - e3, e3 - e4, e4 and h = 1/2(e1 - e2 - e3 - e4). The first two reflections are b and
+# c above. The third negates the last coordinate. The fourth sends v to v - 2 (v . h) h = v - k (1, -1, -1, -1) with
+# k = (v1 - v2 - v3 - v4) / 2, which is a whole tone on every slot.
+task reflect-e4
+  take v, like tetrad
+  like tetrad
+  send back
+    call tetrad-of
+      call tetrad-first
+        read v
+      call tetrad-second
+        read v
+      call tetrad-third
+        read v
+      call tone-conjugate
+        call tetrad-fourth
+          read v
+
+# Half of an even integer from -2 to 2, as a tone (the odd values never occur on slots and are sent to calm).
+task halve
+  take n, like balance
+  like tone
+  fork case, read n
+    case minus-four
+      send back
+        make calm
+    case minus-three
+      send back
+        make calm
+    case minus-two
+      send back
+        make fear
+    case minus-one
+      send back
+        make calm
+    case even
+      send back
+        make calm
+    case plus-one
+      send back
+        make calm
+    case plus-two
+      send back
+        make love
+    case plus-three
+      send back
+        make calm
+    case plus-four
+      send back
+        make calm
+
+# (a + b + c + d) / 2, for tones whose sum is even.
+task half-sum-of-four
+  take a, like tone
+  take b, like tone
+  take c, like tone
+  take d, like tone
+  like tone
+  send back
+    call halve
+      call balance-shift
+        call total-of-three
+          read a
+          read b
+          read c
+        read d
+
+task reflect-h
+  take v, like tetrad
+  like tetrad
+  send back
+    call shift-by-h
+      read v
+      call half-sum-of-four
+        call tetrad-first
+          read v
+        call tone-conjugate
+          call tetrad-second
+            read v
+        call tone-conjugate
+          call tetrad-third
+            read v
+        call tone-conjugate
+          call tetrad-fourth
+            read v
+
+# v - k (1, -1, -1, -1).
+task shift-by-h
+  take v, like tetrad
+  take k, like tone
+  like tetrad
+  send back
+    call tetrad-of
+      call tone-difference
+        call tetrad-first
+          read v
+        read k
+      call tone-sum
+        call tetrad-second
+          read v
+        read k
+      call tone-sum
+        call tetrad-third
+          read v
+        read k
+      call tone-sum
+        call tetrad-fourth
+          read v
+        read k
+
+# THE F4 DIAGRAM {3, 4, 3} on the slots. Written out: (b c)^3 = 1, (c e4)^4 = 1, (e4 h)^3 = 1, and b, e4 commute,
+# b, h commute, c, h commute; each reflection an involution that keeps the slots and the inner product.
+rule e4-reflection-is-an-involution
+  mark v, like tetrad
+  show hold
+    call is-equal
+      call reflect-e4
+        call reflect-e4
+          read v
+      read v
+  fold v
+
+rule h-reflection-is-an-involution-on-the-slots
+  mark v, like tetrad
+  have slot
+    call is-equal
+      call is-slot
+        read v
+      make yes
+  show hold
+    call is-equal
+      call reflect-h
+        call reflect-h
+          read v
+      read v
+  fold v
+
+rule h-reflection-keeps-the-slots
+  mark v, like tetrad
+  have slot
+    call is-equal
+      call is-slot
+        read v
+      make yes
+  show hold
+    call is-equal
+      call is-slot
+        call reflect-h
+          read v
+      make yes
+  fold v
+
+rule h-reflection-keeps-the-inner-product
+  mark v, like tetrad
+  mark w, like tetrad
+  have v-slot
+    call is-equal
+      call is-slot
+        read v
+      make yes
+  have w-slot
+    call is-equal
+      call is-slot
+        read w
+      make yes
+  show hold
+    call is-equal
+      call dot
+        call reflect-h
+          read v
+        call reflect-h
+          read w
+      call dot
+        read v
+        read w
+  fold v, w
+
+rule e4-reflection-keeps-the-inner-product
+  mark v, like tetrad
+  mark w, like tetrad
+  show hold
+    call is-equal
+      call dot
+        call reflect-e4
+          read v
+        call reflect-e4
+          read w
+      call dot
+        read v
+        read w
+  fold v, w
+
+rule c-and-e4-make-a-quarter-turn
+  mark v, like tetrad
+  show hold
+    call is-equal
+      call slot-reflect-c
+        call reflect-e4
+          call slot-reflect-c
+            call reflect-e4
+              call slot-reflect-c
+                call reflect-e4
+                  call slot-reflect-c
+                    call reflect-e4
+                      read v
+      read v
+  fold v
+
+rule e4-and-h-make-a-third-turn-on-the-slots
+  mark v, like tetrad
+  have slot
+    call is-equal
+      call is-slot
+        read v
+      make yes
+  show hold
+    call is-equal
+      call reflect-e4
+        call reflect-h
+          call reflect-e4
+            call reflect-h
+              call reflect-e4
+                call reflect-h
+                  read v
+      read v
+  fold v
+
+rule b-and-e4-commute
+  mark v, like tetrad
+  show hold
+    call is-equal
+      call slot-reflect-b
+        call reflect-e4
+          read v
+      call reflect-e4
+        call slot-reflect-b
+          read v
+  fold v
+
+rule b-and-h-commute-on-the-slots
+  mark v, like tetrad
+  have slot
+    call is-equal
+      call is-slot
+        read v
+      make yes
+  show hold
+    call is-equal
+      call slot-reflect-b
+        call reflect-h
+          read v
+      call reflect-h
+        call slot-reflect-b
+          read v
+  fold v
+
+rule c-and-h-commute-on-the-slots
+  mark v, like tetrad
+  have slot
+    call is-equal
+      call is-slot
+        read v
+      make yes
+  show hold
+    call is-equal
+      call slot-reflect-c
+        call reflect-h
+          read v
+      call reflect-h
+        call slot-reflect-c
+          read v
+  fold v
+
+# TRIALITY. tau v = 1/2 (v1 + v2 + v3 + v4, v1 + v2 - v3 - v4, v1 - v2 + v3 - v4, -v1 + v2 + v3 - v4).
+task triality
+  take v, like tetrad
+  like tetrad
+  send back
+    call tetrad-of
+      call half-sum-of-four
+        call tetrad-first
+          read v
+        call tetrad-second
+          read v
+        call tetrad-third
+          read v
+        call tetrad-fourth
+          read v
+      call half-sum-of-four
+        call tetrad-first
+          read v
+        call tetrad-second
+          read v
+        call tone-conjugate
+          call tetrad-third
+            read v
+        call tone-conjugate
+          call tetrad-fourth
+            read v
+      call half-sum-of-four
+        call tetrad-first
+          read v
+        call tone-conjugate
+          call tetrad-second
+            read v
+        call tetrad-third
+          read v
+        call tone-conjugate
+          call tetrad-fourth
+            read v
+      call half-sum-of-four
+        call tone-conjugate
+          call tetrad-first
+            read v
+        call tetrad-second
+          read v
+        call tetrad-third
+          read v
+        call tone-conjugate
+          call tetrad-fourth
+            read v
+
+# TRIALITY KEEPS THE SLOTS AND THE INNER PRODUCT, so it is a symmetry of the dock.
+rule triality-keeps-the-slots
+  mark v, like tetrad
+  have slot
+    call is-equal
+      call is-slot
+        read v
+      make yes
+  show hold
+    call is-equal
+      call is-slot
+        call triality
+          read v
+      make yes
+  fold v
+
+rule triality-keeps-the-inner-product
+  mark v, like tetrad
+  mark w, like tetrad
+  have v-slot
+    call is-equal
+      call is-slot
+        read v
+      make yes
+  have w-slot
+    call is-equal
+      call is-slot
+        read w
+      make yes
+  show hold
+    call is-equal
+      call dot
+        call triality
+          read v
+        call triality
+          read w
+      call dot
+        read v
+        read w
+  fold v, w
+
+# IT HAS ORDER THREE on the slots.
+rule triality-has-order-three
+  mark v, like tetrad
+  have slot
+    call is-equal
+      call is-slot
+        read v
+      make yes
+  show hold
+    call is-equal
+      call triality
+        call triality
+          call triality
+            read v
+      read v
+  fold v
+
+# IT CYCLES THE THREE OUTER NODES OF THE D4 DIAGRAM: tau a = c tau, tau c = d tau, tau d = a tau, and tau b = b tau.
+tree conjugates
+  take name
+  take f
+  take g
+
+  hook fuse
+    rule {name}
+      mark v, like tetrad
+      have slot
+        call is-equal
+          call is-slot
+            read v
+          make yes
+      show hold
+        call is-equal
+          call triality
+            call {f}
+              read v
+          call {g}
+            call triality
+              read v
+      fold v
+
+fuse conjugates, triality-carries-a-to-c, slot-reflect-a, slot-reflect-c
+fuse conjugates, triality-carries-c-to-d, slot-reflect-c, slot-reflect-d
+fuse conjugates, triality-carries-d-to-a, slot-reflect-d, slot-reflect-a
+fuse conjugates, triality-fixes-b, slot-reflect-b, slot-reflect-b
+
+# AND FIXES EVERY FRAME.
+rule triality-keeps-every-frame
+  mark v, like tetrad
+  have slot
+    call is-equal
+      call is-slot
+        read v
+      make yes
+  show hold
+    call is-equal
+      call frame-of
+        call triality
+          read v
+      call frame-of
+        read v
+  fold v
+
+# THE SLOTS ARE THE HURWITZ UNITS. Half-coordinates as twice their value, -2 to 2.
+task twice
+  take a, like half
+  like balance
+  fork case, read a
+    case minus-whole
+      send back
+        make minus-two
+    case minus-half
+      send back
+        make minus-one
+    case naught
+      send back
+        make even
+    case plus-half
+      send back
+        make plus-one
+    case plus-whole
+      send back
+        make plus-two
+
+# (a + b) for two half-coordinates whose sum is a whole tone.
+task half-pair-sum
+  take a, like half
+  take b, like half
+  like tone
+  send back
+    call halve
+      call add-balance
+        call twice
+          read a
+        call twice
+          read b
+
+# The sum of two small integers (the ends saturate, and are never reached from two half-coordinates).
+task add-balance
+  take m, like balance
+  take n, like balance
+  like balance
+  fork case, read n
+    case minus-four
+      send back
+        call balance-shift
+          call balance-shift
+            call balance-shift
+              call balance-shift
+                read m
+                make fear
+              make fear
+            make fear
+          make fear
+    case minus-three
+      send back
+        call balance-shift
+          call balance-shift
+            call balance-shift
+              read m
+              make fear
+            make fear
+          make fear
+    case minus-two
+      send back
+        call balance-shift
+          call balance-shift
+            read m
+            make fear
+          make fear
+    case minus-one
+      send back
+        call balance-shift
+          read m
+          make fear
+    case even
+      send back
+        read m
+    case plus-one
+      send back
+        call balance-shift
+          read m
+          make love
+    case plus-two
+      send back
+        call balance-shift
+          call balance-shift
+            read m
+            make love
+          make love
+    case plus-three
+      send back
+        call balance-shift
+          call balance-shift
+            call balance-shift
+              read m
+              make love
+            make love
+          make love
+    case plus-four
+      send back
+        call balance-shift
+          call balance-shift
+            call balance-shift
+              call balance-shift
+                read m
+                make love
+              make love
+            make love
+          make love
+
+# THE MAP FROM UNITS TO SLOTS: r = (q0 + q1, q0 - q1, q2 + q3, q2 - q3), which is sqrt 2 times a rotation.
+task unit-slot
+  take g, like hurwitz-element
+  like tetrad
+  fork case, call hurwitz-point, read g
+    case coordinates
+      send back
+        call tetrad-of
+          call half-pair-sum
+            read r
+            read i
+          call half-pair-sum
+            read r
+            call half-negate
+              read i
+          call half-pair-sum
+            read j
+            read k
+          call half-pair-sum
+            read j
+            call half-negate
+              read k
+
+# EVERY UNIT LANDS ON A SLOT.
+rule every-unit-is-a-slot
+  mark g, like hurwitz-element
+  show hold
+    call is-equal
+      call is-slot
+        call unit-slot
+          read g
+      make yes
+  fold g
+
+# DISTINCT UNITS LAND ON DISTINCT SLOTS.
+rule distinct-units-are-distinct-slots
+  mark g, like hurwitz-element
+  mark h, like hurwitz-element
+  have same
+    call is-equal
+      call same-tetrad
+        call unit-slot
+          read g
+        call unit-slot
+          read h
+      make yes
+  show hold
+    call is-equal
+      call same-hurwitz
+        read g
+        read h
+      make yes
+  fold g, h
+
+# THE TURN OF A UNIT IS THE FRAME OF ITS SLOT, so the frames are the cosets of Q8.
+rule the-turn-of-a-unit-is-the-frame-of-its-slot
+  mark g, like hurwitz-element
+  show hold
+    call is-equal
+      call frame-of
+        call unit-slot
+          read g
+      call hurwitz-turn
+        read g
+  fold g
+
+# -g IS THE OPPOSITE SLOT: the center {1, -1} of 2T is the line.
+rule minus-a-unit-is-the-opposite-slot
+  mark g, like hurwitz-element
+  show hold
+    call is-equal
+      call unit-slot
+        call hurwitz-product
+          call minus-one-unit
+          read g
+      call opposite
+        call unit-slot
+          read g
+  fold g
+
+# The real part of a quaternion point.
+task point-real
+  take p, like quaternion-point
+  like half
+  fork case, read p
+    case coordinates
+      send back
+        read r
+
+# THE METRIC IS THE GROUP: the inner product of the slots of g and h is twice the real part of g h^-1. It is 2 when
+# g = h, -2 when g h^-1 = -1, 0 when g h^-1 has order four, +1 at order six and -1 at order three.
+rule the-inner-product-of-two-slots-is-twice-the-real-part-of-their-quotient
+  mark g, like hurwitz-element
+  mark h, like hurwitz-element
+  show hold
+    call is-equal
+      call dot
+        call unit-slot
+          read g
+        call unit-slot
+          read h
+      call twice
+        call point-real
+          call hurwitz-point
+            call hurwitz-product
+              read g
+              call hurwitz-inverse
+                read h
+  fold g, h
+
+# AND EVERY SLOT IS A UNIT: the inverse map. A slot's frame is its unit's turn, and of the eight units with that turn
+# exactly one lands on it; the search below finds it.
+task choose-q8
+  take test, like flag
+  take chosen, like q8
+  take otherwise, like q8
+  like q8
+  fork case, read test
+    case yes
+      send back
+        read chosen
+    case no
+      send back
+        read otherwise
+
+task core-fits
+  take sign, like sign
+  take axis, like hurwitz-axis
+  take t, like tone
+  take r, like tetrad
+  like flag
+  send back
+    call same-tetrad
+      call unit-slot
+        call hurwitz-of
+          call q8-of
+            read sign
+            read axis
+          read t
+      read r
+
+task core-of-slot
+  take t, like tone
+  take r, like tetrad
+  like q8
+  send back
+    call choose-q8
+      call core-fits
+        make positive
+        make real-axis
+        read t
+        read r
+      call q8-of
+        make positive
+        make real-axis
+      call choose-q8
+        call core-fits
+          make negative
+          make real-axis
+          read t
+          read r
+        call q8-of
+          make negative
+          make real-axis
+        call choose-q8
+          call core-fits
+            make positive
+            make i-axis
+            read t
+            read r
+          call q8-of
+            make positive
+            make i-axis
+          call choose-q8
+            call core-fits
+              make negative
+              make i-axis
+              read t
+              read r
+            call q8-of
+              make negative
+              make i-axis
+            call choose-q8
+              call core-fits
+                make positive
+                make j-axis
+                read t
+                read r
+              call q8-of
+                make positive
+                make j-axis
+              call choose-q8
+                call core-fits
+                  make negative
+                  make j-axis
+                  read t
+                  read r
+                call q8-of
+                  make negative
+                  make j-axis
+                call choose-q8
+                  call core-fits
+                    make positive
+                    make k-axis
+                    read t
+                    read r
+                  call q8-of
+                    make positive
+                    make k-axis
+                  call q8-of
+                    make negative
+                    make k-axis
+
+task slot-unit
+  take r, like tetrad
+  like hurwitz-element
+  send back
+    call hurwitz-of
+      call core-of-slot
+        call frame-of
+          read r
+        read r
+      call frame-of
+        read r
+
+# EVERY SLOT IS THE IMAGE OF ITS UNIT. With injectivity the map is a bijection: THERE ARE EXACTLY 24 SLOTS, one per
+# Hurwitz unit.
+rule every-slot-is-a-unit
+  mark r, like tetrad
+  show hold
+    call is-equal
+      call implies
+        call is-slot
+          read r
+        call same-tetrad
+          call unit-slot
+            call slot-unit
+              read r
+          read r
+      make yes
+  fold r

@@ -1,0 +1,559 @@
+# A straight line of the mesh as a world of its own: a periodic ring of four docks, each holding the line's two slots.
+# The first slots form the FORWARD LANE (each beat its tones advance one dock), the second slots the BACKWARD LANE (they
+# retreat one dock), and in every dock the CONTACT (vibe/knit) exchanges the two slots of a full line. One beat is the
+# contact in every dock, then the stream. With no mixer nothing else touches a straight line, so this is the knit
+# restricted to one line, on the smallest periodic box with room for motion both ways.
+#
+# The ring is finite, so every statement below is checked on all 3^8 = 6561 states, not sampled:
+#
+#   REVERSIBILITY  the unbeat (stream back, then contact) undoes the beat, and the beat the unbeat;
+#   THE LINE LAW   the beat keeps the number of loves and the number of fears on the line, so its charge too;
+#   C              conjugating every tone commutes with the beat;
+#   T              time reversal: flip every velocity (trade the lanes in each dock) and re-apply the contact, and the
+#                  beat becomes the unbeat, so run backward the law is the same law; and mirroring the ring while
+#                  trading lanes is a symmetry of the beat;
+#   MOTION         a lone love moves one dock per beat and comes round in four, the top speed of the light cone, and a
+#                  love and a fear meeting head on exchange lanes and turn back.
+
+load @term/seed/code/atom/flag
+  find flag
+
+load @term/seed/code/vibe/tone
+  find tone
+  find is-vibe
+  find tone-conjugate
+
+# The two lanes: forward tones f0..f3 and backward tones b0..b3 at docks 0..3.
+form line-ring
+  case docks
+    link f0, like tone
+    link f1, like tone
+    link f2, like tone
+    link f3, like tone
+    link b0, like tone
+    link b1, like tone
+    link b2, like tone
+    link b3, like tone
+
+task ring-of
+  take f0, like tone
+  take f1, like tone
+  take f2, like tone
+  take f3, like tone
+  take b0, like tone
+  take b1, like tone
+  take b2, like tone
+  take b3, like tone
+  like line-ring
+  send back
+    make docks
+      bind f0
+        read f0
+      bind f1
+        read f1
+      bind f2
+        read f2
+      bind f3
+        read f3
+      bind b0
+        read b0
+      bind b1
+        read b1
+      bind b2
+        read b2
+      bind b3
+        read b3
+
+# Is a dock full: both slots hold vibes.
+task full-dock
+  take f, like tone
+  take b, like tone
+  like flag
+  fork case, call is-vibe, read f
+    case yes
+      send back
+        call is-vibe
+          read b
+    case no
+      send back
+        make no
+
+task pick-after-contact
+  take full, like flag
+  take keep, like tone
+  take other, like tone
+  like tone
+  fork case, read full
+    case yes
+      send back
+        read other
+    case no
+      send back
+        read keep
+
+# The tone a slot holds after the contact: the other slot's if the dock is full, its own otherwise.
+task after-contact
+  take keep, like tone
+  take other, like tone
+  like tone
+  send back
+    call pick-after-contact
+      call full-dock
+        read keep
+        read other
+      read keep
+      read other
+
+task contact-ring
+  take w, like line-ring
+  like line-ring
+  fork case, read w
+    case docks
+      send back
+        call ring-of
+          call after-contact
+            read f0
+            read b0
+          call after-contact
+            read f1
+            read b1
+          call after-contact
+            read f2
+            read b2
+          call after-contact
+            read f3
+            read b3
+          call after-contact
+            read b0
+            read f0
+          call after-contact
+            read b1
+            read f1
+          call after-contact
+            read b2
+            read f2
+          call after-contact
+            read b3
+            read f3
+
+# The stream: the forward lane advances one dock, the backward lane retreats one, around the ring.
+task stream-ring
+  take w, like line-ring
+  like line-ring
+  fork case, read w
+    case docks
+      send back
+        call ring-of
+          read f3
+          read f0
+          read f1
+          read f2
+          read b1
+          read b2
+          read b3
+          read b0
+
+task unstream-ring
+  take w, like line-ring
+  like line-ring
+  fork case, read w
+    case docks
+      send back
+        call ring-of
+          read f1
+          read f2
+          read f3
+          read f0
+          read b3
+          read b0
+          read b1
+          read b2
+
+task beat-ring
+  take w, like line-ring
+  like line-ring
+  send back
+    call stream-ring
+      call contact-ring
+        read w
+
+task unbeat-ring
+  take w, like line-ring
+  like line-ring
+  send back
+    call contact-ring
+      call unstream-ring
+        read w
+
+# REVERSIBILITY.
+rule the-unbeat-undoes-the-beat
+  mark w, like line-ring
+  show hold
+    call is-equal
+      call unbeat-ring
+        call beat-ring
+          read w
+      read w
+  fold w
+
+rule the-beat-undoes-the-unbeat
+  mark w, like line-ring
+  show hold
+    call is-equal
+      call beat-ring
+        call unbeat-ring
+          read w
+      read w
+  fold w
+
+# COUNTS: a natural number built from scratch, enough for the eight slots.
+form heap
+  case empty-heap
+  case one-more
+    link prior, like heap
+
+task count-if-same
+  take same, like flag
+  take n, like heap
+  like heap
+  fork case, read same
+    case yes
+      send back
+        make one-more
+          bind prior
+            read n
+    case no
+      send back
+        read n
+
+task same-as
+  take wanted, like tone
+  take t, like tone
+  like flag
+  fork case, read wanted
+    case love
+      fork case, read t
+        case love
+          send back
+            make yes
+        case calm
+          send back
+            make no
+        case fear
+          send back
+            make no
+    case calm
+      fork case, read t
+        case love
+          send back
+            make no
+        case calm
+          send back
+            make yes
+        case fear
+          send back
+            make no
+    case fear
+      fork case, read t
+        case love
+          send back
+            make no
+        case calm
+          send back
+            make no
+        case fear
+          send back
+            make yes
+
+task count-tone
+  take wanted, like tone
+  take t, like tone
+  take n, like heap
+  like heap
+  send back
+    call count-if-same
+      call same-as
+        read wanted
+        read t
+      read n
+
+# How many slots of the ring hold the wanted tone.
+task ring-count
+  take wanted, like tone
+  take w, like line-ring
+  like heap
+  fork case, read w
+    case docks
+      send back
+        call count-tone
+          read wanted
+          read f0
+          call count-tone
+            read wanted
+            read f1
+            call count-tone
+              read wanted
+              read f2
+              call count-tone
+                read wanted
+                read f3
+                call count-tone
+                  read wanted
+                  read b0
+                  call count-tone
+                    read wanted
+                    read b1
+                    call count-tone
+                      read wanted
+                      read b2
+                      call count-tone
+                        read wanted
+                        read b3
+                        make empty-heap
+
+# THE LINE LAW: the loves and the fears on the line are counted the same after every beat.
+rule the-beat-keeps-the-loves-on-the-line
+  mark w, like line-ring
+  show hold
+    call is-equal
+      call ring-count
+        make love
+        call beat-ring
+          read w
+      call ring-count
+        make love
+        read w
+  fold w
+
+rule the-beat-keeps-the-fears-on-the-line
+  mark w, like line-ring
+  show hold
+    call is-equal
+      call ring-count
+        make fear
+        call beat-ring
+          read w
+      call ring-count
+        make fear
+        read w
+  fold w
+
+# C: conjugate every tone.
+task conjugate-ring
+  take w, like line-ring
+  like line-ring
+  fork case, read w
+    case docks
+      send back
+        call ring-of
+          call tone-conjugate
+            read f0
+          call tone-conjugate
+            read f1
+          call tone-conjugate
+            read f2
+          call tone-conjugate
+            read f3
+          call tone-conjugate
+            read b0
+          call tone-conjugate
+            read b1
+          call tone-conjugate
+            read b2
+          call tone-conjugate
+            read b3
+
+rule the-beat-commutes-with-charge-conjugation
+  mark w, like line-ring
+  show hold
+    call is-equal
+      call beat-ring
+        call conjugate-ring
+          read w
+      call conjugate-ring
+        call beat-ring
+          read w
+  fold w
+
+# THE VELOCITY FLIP V: in every dock the two lanes trade tones, so what was moving forward now moves backward. It
+# commutes with the contact (the contact treats the lanes alike) and turns the stream into the unstream.
+task flip-velocities
+  take w, like line-ring
+  like line-ring
+  fork case, read w
+    case docks
+      send back
+        call ring-of
+          read b0
+          read b1
+          read b2
+          read b3
+          read f0
+          read f1
+          read f2
+          read f3
+
+rule the-velocity-flip-turns-the-stream-around
+  mark w, like line-ring
+  show hold
+    call is-equal
+      call flip-velocities
+        call stream-ring
+          call flip-velocities
+            read w
+      call unstream-ring
+        read w
+  fold w
+
+rule the-velocity-flip-commutes-with-the-contact
+  mark w, like line-ring
+  show hold
+    call is-equal
+      call flip-velocities
+        call contact-ring
+          call flip-velocities
+            read w
+      call contact-ring
+        read w
+  fold w
+
+# TIME REVERSAL T = contact . V, with inverse V . contact: T beat T^-1 = unbeat. Since beat = stream . contact, flipping
+# the velocities and re-applying the contact runs the same law backward. (Flipping alone gives unstream . contact, the
+# pieces in the wrong order; the contact on the outside puts them right.)
+task reverse-time
+  take w, like line-ring
+  like line-ring
+  send back
+    call contact-ring
+      call flip-velocities
+        read w
+
+task unreverse-time
+  take w, like line-ring
+  like line-ring
+  send back
+    call flip-velocities
+      call contact-ring
+        read w
+
+rule time-reversal-turns-the-beat-into-the-unbeat
+  mark w, like line-ring
+  show hold
+    call is-equal
+      call reverse-time
+        call beat-ring
+          call unreverse-time
+            read w
+      call unbeat-ring
+        read w
+  fold w
+
+# A MIRROR SYMMETRY: reflecting the ring (dock i to dock -i) together with trading the lanes commutes with the beat.
+task mirror-ring
+  take w, like line-ring
+  like line-ring
+  fork case, read w
+    case docks
+      send back
+        call ring-of
+          read b0
+          read b3
+          read b2
+          read b1
+          read f0
+          read f3
+          read f2
+          read f1
+
+rule the-mirror-is-a-symmetry-of-the-beat
+  mark w, like line-ring
+  show hold
+    call is-equal
+      call mirror-ring
+        call beat-ring
+          call mirror-ring
+            read w
+      call beat-ring
+        read w
+  fold w
+
+# MOTION AT THE TOP SPEED: a lone love at dock 0 of the forward lane is at dock 1 after one beat, and back at dock 0
+# after four, one dock per beat around the ring.
+rule a-lone-love-moves-one-dock-per-beat
+  show hold
+    call is-equal
+      call beat-ring
+        call ring-of
+          make love
+          make calm
+          make calm
+          make calm
+          make calm
+          make calm
+          make calm
+          make calm
+      call ring-of
+        make calm
+        make love
+        make calm
+        make calm
+        make calm
+        make calm
+        make calm
+        make calm
+  calm hold
+
+rule a-lone-love-comes-round-in-four-beats
+  show hold
+    call is-equal
+      call beat-ring
+        call beat-ring
+          call beat-ring
+            call beat-ring
+              call ring-of
+                make love
+                make calm
+                make calm
+                make calm
+                make calm
+                make calm
+                make calm
+                make calm
+      call ring-of
+        make love
+        make calm
+        make calm
+        make calm
+        make calm
+        make calm
+        make calm
+        make calm
+  calm hold
+
+# A LOVE AND A FEAR MEETING HEAD ON TURN BACK: love moving forward from dock 0 and fear moving backward from dock 2
+# meet at dock 1 after one beat; the contact exchanges their lanes, so after two beats the fear is at forward dock 2 and
+# the love at backward dock 0, each having reversed.
+rule a-love-and-a-fear-meet-and-turn-back
+  show hold
+    call is-equal
+      call beat-ring
+        call beat-ring
+          call ring-of
+            make love
+            make calm
+            make calm
+            make calm
+            make calm
+            make calm
+            make fear
+            make calm
+      call ring-of
+        make calm
+        make calm
+        make fear
+        make calm
+        make love
+        make calm
+        make calm
+        make calm
+  calm hold

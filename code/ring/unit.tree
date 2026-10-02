@@ -1,4 +1,4 @@
-load @term/form/code/structure/ring
+load @term/seed/code/structure/ring
   find ring
 
 # A unit: an invertible element of a ring, one with a multiplicative inverse also in the ring. The units of a ring form

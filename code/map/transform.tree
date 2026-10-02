@@ -1,4 +1,4 @@
-load @term/form/code/structure/space/vector
+load @term/seed/code/structure/space/vector
   find vector-space
 
 # A transformation: a map of a space to itself, a way of moving or reshaping it, a rotation, reflection, translation, or

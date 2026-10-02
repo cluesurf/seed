@@ -1,0 +1,568 @@
+# Which geometry a regular honeycomb lives in, decided by one determinant. A regular polytope or honeycomb {p, q, r, ...}
+# is cut out by mirrors whose Coxeter diagram is a chain; mirrors i and i + 1 meet at angle pi / m_i, the rest at
+# right angles. Its Gram matrix G has 1 on the diagonal and -cos(pi / m_i) beside it. For a chain, 2G has 2 on the
+# diagonal and -u_i beside it with u_i^2 = x_i = 4 cos^2(pi / m_i), which is RATIONAL for the labels that occur here:
+#
+#   m = 2: x = 0     m = 3: x = 1     m = 4: x = 2     m = 6: x = 3
+#
+# and the determinant of a chain depends only on the x_i. Sylvester's criterion reads the geometry off the leading
+# minors: all positive is the sphere, positive then a zero is flat space, and exactly one sign change in the sequence
+# of minors is one negative eigenvalue, the hyperbolic signature (n, 1).
+#
+# This file DEFINES the determinant by Laplace expansion (3 x 3 by Sarrus' rule, 4 x 4 and 5 x 5 along the first row)
+# and PROVES, for all integer entries, that the determinant of a tridiagonal 2G is the continuant
+#
+#   D0 = 1,  D1 = 2,  Dk = 2 D(k-1) - x(k-1) D(k-2),
+#
+# then evaluates the minors of the cell {3,4,3}, the vertex figure {4,3,4}, and the model's space {3,4,3,4}:
+#
+#   {3,4,3}     2, 3, 2, 1          spherical: the 24-cell is a finite polytope, det G = 1/16
+#   {4,3,4}     2, 2, 2, 0          flat: the cusp is tiled by cubes, the horosphere is Euclidean 3-space
+#   {3,4,3,4}   2, 3, 2, 1, -2      one sign change: hyperbolic 4-space, det G = -2 / 32 = -1/16
+#
+# With a spherical cell and a flat vertex figure the honeycomb has finite cells and ideal vertices (paracompact). The
+# Cartan determinants of the root systems the dock meets come from the same continuant: A4 is 5, B4 is 2, F4 is 1.
+# The plane criterion "1/p + 1/q > 1/2 exactly when (p - 2)(q - 2) < 4" is proved as a polynomial identity.
+
+load @term/seed/code/vibe/warp
+  find determinant-three
+
+# The 4 x 4 determinant, expanded along the first row.
+task determinant-four
+  take a11, like integer
+  take a12, like integer
+  take a13, like integer
+  take a14, like integer
+  take a21, like integer
+  take a22, like integer
+  take a23, like integer
+  take a24, like integer
+  take a31, like integer
+  take a32, like integer
+  take a33, like integer
+  take a34, like integer
+  take a41, like integer
+  take a42, like integer
+  take a43, like integer
+  take a44, like integer
+  like integer
+  send back
+    call subtract
+      call add
+        call subtract
+          call multiply
+            read a11
+            call determinant-three
+              read a22
+              read a23
+              read a24
+              read a32
+              read a33
+              read a34
+              read a42
+              read a43
+              read a44
+          call multiply
+            read a12
+            call determinant-three
+              read a21
+              read a23
+              read a24
+              read a31
+              read a33
+              read a34
+              read a41
+              read a43
+              read a44
+        call multiply
+          read a13
+          call determinant-three
+            read a21
+            read a22
+            read a24
+            read a31
+            read a32
+            read a34
+            read a41
+            read a42
+            read a44
+      call multiply
+        read a14
+        call determinant-three
+          read a21
+          read a22
+          read a23
+          read a31
+          read a32
+          read a33
+          read a41
+          read a42
+          read a43
+
+# The 5 x 5 determinant, expanded along the first row.
+task determinant-five
+  take a11, like integer
+  take a12, like integer
+  take a13, like integer
+  take a14, like integer
+  take a15, like integer
+  take a21, like integer
+  take a22, like integer
+  take a23, like integer
+  take a24, like integer
+  take a25, like integer
+  take a31, like integer
+  take a32, like integer
+  take a33, like integer
+  take a34, like integer
+  take a35, like integer
+  take a41, like integer
+  take a42, like integer
+  take a43, like integer
+  take a44, like integer
+  take a45, like integer
+  take a51, like integer
+  take a52, like integer
+  take a53, like integer
+  take a54, like integer
+  take a55, like integer
+  like integer
+  send back
+    call add
+      call subtract
+        call add
+          call subtract
+            call multiply
+              read a11
+              call determinant-four
+                read a22
+                read a23
+                read a24
+                read a25
+                read a32
+                read a33
+                read a34
+                read a35
+                read a42
+                read a43
+                read a44
+                read a45
+                read a52
+                read a53
+                read a54
+                read a55
+            call multiply
+              read a12
+              call determinant-four
+                read a21
+                read a23
+                read a24
+                read a25
+                read a31
+                read a33
+                read a34
+                read a35
+                read a41
+                read a43
+                read a44
+                read a45
+                read a51
+                read a53
+                read a54
+                read a55
+          call multiply
+            read a13
+            call determinant-four
+              read a21
+              read a22
+              read a24
+              read a25
+              read a31
+              read a32
+              read a34
+              read a35
+              read a41
+              read a42
+              read a44
+              read a45
+              read a51
+              read a52
+              read a54
+              read a55
+        call multiply
+          read a14
+          call determinant-four
+            read a21
+            read a22
+            read a23
+            read a25
+            read a31
+            read a32
+            read a33
+            read a35
+            read a41
+            read a42
+            read a43
+            read a45
+            read a51
+            read a52
+            read a53
+            read a55
+      call multiply
+        read a15
+        call determinant-four
+          read a21
+          read a22
+          read a23
+          read a24
+          read a31
+          read a32
+          read a33
+          read a34
+          read a41
+          read a42
+          read a43
+          read a44
+          read a51
+          read a52
+          read a53
+          read a54
+
+# The continuant of a chain of 2 mirrors: det 2G with x_i = 4 cos^2(pi / m_i).
+task chain-2
+  take x1, like integer
+  like integer
+  send back
+    call subtract
+      call multiply
+        code 2
+        code 2
+      call multiply
+        read x1
+        code 1
+
+# The continuant of a chain of 3 mirrors: det 2G with x_i = 4 cos^2(pi / m_i).
+task chain-3
+  take x1, like integer
+  take x2, like integer
+  like integer
+  send back
+    call subtract
+      call multiply
+        code 2
+        call chain-2
+          read x1
+      call multiply
+        read x2
+        code 2
+
+# The continuant of a chain of 4 mirrors: det 2G with x_i = 4 cos^2(pi / m_i).
+task chain-4
+  take x1, like integer
+  take x2, like integer
+  take x3, like integer
+  like integer
+  send back
+    call subtract
+      call multiply
+        code 2
+        call chain-3
+          read x1
+          read x2
+      call multiply
+        read x3
+        call chain-2
+          read x1
+
+# The continuant of a chain of 5 mirrors: det 2G with x_i = 4 cos^2(pi / m_i).
+task chain-5
+  take x1, like integer
+  take x2, like integer
+  take x3, like integer
+  take x4, like integer
+  like integer
+  send back
+    call subtract
+      call multiply
+        code 2
+        call chain-4
+          read x1
+          read x2
+          read x3
+      call multiply
+        read x4
+        call chain-3
+          read x1
+          read x2
+
+# THE DETERMINANT OF A CHAIN OF 3 MIRRORS IS ITS CONTINUANT, for every set of off-diagonal entries.
+rule the-determinant-of-a-chain-of-3-is-its-continuant
+  mark u1, like integer
+  mark u2, like integer
+  show hold
+    call is-equal
+      call determinant-three
+        code 2
+        call subtract
+          code 0
+          read u1
+        code 0
+        call subtract
+          code 0
+          read u1
+        code 2
+        call subtract
+          code 0
+          read u2
+        code 0
+        call subtract
+          code 0
+          read u2
+        code 2
+      call chain-3
+        call multiply
+          read u1
+          read u1
+        call multiply
+          read u2
+          read u2
+
+# THE DETERMINANT OF A CHAIN OF 4 MIRRORS IS ITS CONTINUANT, for every set of off-diagonal entries.
+rule the-determinant-of-a-chain-of-4-is-its-continuant
+  mark u1, like integer
+  mark u2, like integer
+  mark u3, like integer
+  show hold
+    call is-equal
+      call determinant-four
+        code 2
+        call subtract
+          code 0
+          read u1
+        code 0
+        code 0
+        call subtract
+          code 0
+          read u1
+        code 2
+        call subtract
+          code 0
+          read u2
+        code 0
+        code 0
+        call subtract
+          code 0
+          read u2
+        code 2
+        call subtract
+          code 0
+          read u3
+        code 0
+        code 0
+        call subtract
+          code 0
+          read u3
+        code 2
+      call chain-4
+        call multiply
+          read u1
+          read u1
+        call multiply
+          read u2
+          read u2
+        call multiply
+          read u3
+          read u3
+
+# THE DETERMINANT OF A CHAIN OF 5 MIRRORS IS ITS CONTINUANT, for every set of off-diagonal entries.
+rule the-determinant-of-a-chain-of-5-is-its-continuant
+  mark u1, like integer
+  mark u2, like integer
+  mark u3, like integer
+  mark u4, like integer
+  show hold
+    call is-equal
+      call determinant-five
+        code 2
+        call subtract
+          code 0
+          read u1
+        code 0
+        code 0
+        code 0
+        call subtract
+          code 0
+          read u1
+        code 2
+        call subtract
+          code 0
+          read u2
+        code 0
+        code 0
+        code 0
+        call subtract
+          code 0
+          read u2
+        code 2
+        call subtract
+          code 0
+          read u3
+        code 0
+        code 0
+        code 0
+        call subtract
+          code 0
+          read u3
+        code 2
+        call subtract
+          code 0
+          read u4
+        code 0
+        code 0
+        code 0
+        call subtract
+          code 0
+          read u4
+        code 2
+      call chain-5
+        call multiply
+          read u1
+          read u1
+        call multiply
+          read u2
+          read u2
+        call multiply
+          read u3
+          read u3
+        call multiply
+          read u4
+          read u4
+
+# THE 24-CELL {3,4,3}: minors 2, 3, 2, 1, all positive, so its mirrors bound a sphere chamber.
+rule the-24-cell-chain-of-two-is-three
+  show hold
+    call is-equal
+      call chain-2
+        code 1
+      code 3
+
+rule the-24-cell-chain-of-three-is-two
+  show hold
+    call is-equal
+      call chain-3
+        code 1
+        code 2
+      code 2
+
+rule the-24-cell-chain-of-four-is-one
+  show hold
+    call is-equal
+      call chain-4
+        code 1
+        code 2
+        code 1
+      code 1
+
+# THE CUBIC HONEYCOMB {4,3,4}: minors 2, 2, 2 then 0, flat. This is the horosphere at every vertex of {3,4,3,4}.
+rule the-cubic-chain-of-two-is-two
+  show hold
+    call is-equal
+      call chain-2
+        code 2
+      code 2
+
+rule the-cubic-chain-of-three-is-two
+  show hold
+    call is-equal
+      call chain-3
+        code 2
+        code 1
+      code 2
+
+rule the-cubic-chain-of-four-is-zero
+  show hold
+    call is-equal
+      call chain-4
+        code 2
+        code 1
+        code 2
+      code 0
+
+# THE MESH {3,4,3,4}: the first four minors are those of {3,4,3} (2, 3, 2, 1), the fifth is -2. One sign change:
+# signature (4, 1), hyperbolic 4-space, and det G = -2 / 2^5 = -1/16.
+rule the-mesh-chain-of-five-is-minus-two
+  show hold
+    call is-equal
+      call chain-5
+        code 1
+        code 2
+        code 1
+        code 2
+      code -2
+
+# THE CARTAN DETERMINANTS: A4 (the 5-cell {3,3,3}) is 5, B4 (the tesseract {4,3,3}) is 2, F4 is 1 (above).
+rule the-five-cell-has-cartan-determinant-five
+  show hold
+    call is-equal
+      call chain-4
+        code 1
+        code 1
+        code 1
+      code 5
+
+rule the-tesseract-has-cartan-determinant-two
+  show hold
+    call is-equal
+      call chain-4
+        code 2
+        code 1
+        code 1
+      code 2
+
+# THE DISTANCE BETWEEN NEIGHBOURING CELLS. For the mirror opposite the cell, (G^-1)_55 = det G_1234 / det G
+# = (D4 / 2^4) / (D5 / 2^5) = 2 D4 / D5, which is -1 here, so cosh d = 1 - 2 / (G^-1)_55 = 3 and d = 1.7627...
+rule the-distance-between-adjacent-cells-has-cosh-three
+  show hold
+    call is-equal
+      call multiply
+        code 2
+        call chain-4
+          code 1
+          code 2
+          code 1
+      call subtract
+        code 0
+        call chain-5
+          code 1
+          code 2
+          code 1
+          code 2
+
+# THE PLANE CRITERION: 2pq (1/p + 1/q - 1/2) = 2q + 2p - pq = 4 - (p - 2)(q - 2). So {p, q} tiles the sphere,
+# the plane or the hyperbolic plane as (p - 2)(q - 2) is below, at or above 4: {7,3} gives 5, hyperbolic.
+rule the-plane-criterion
+  mark p, like integer
+  mark q, like integer
+  show hold
+    call is-equal
+      call subtract
+        call add
+          call multiply
+            code 2
+            read p
+          call multiply
+            code 2
+            read q
+        call multiply
+          read p
+          read q
+      call subtract
+        code 4
+        call multiply
+          call subtract
+            read p
+            code 2
+          call subtract
+            read q
+            code 2
+

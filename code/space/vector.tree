@@ -1,4 +1,4 @@
-load @term/form/code/structure/space/vector
+load @term/seed/code/structure/space/vector
   find vector-space
 
 # A vector space, the concept: the space vectors live in, closed under addition and scaling by a field, the home of

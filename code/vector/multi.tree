@@ -1,4 +1,4 @@
-load @term/form/code/algebra/exterior
+load @term/seed/code/algebra/exterior
   find exterior-algebra
 
 # A multivector: a sum of blades of different grades in a geometric or exterior algebra, the general element that may mix

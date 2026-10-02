@@ -15,7 +15,7 @@
 # as graph reduction, and the HVM runtime is interaction combinators executed in parallel. This file models the LOCAL
 # RULE on a single active pair, not the whole graph: which kinds annihilate, which commute, and the agent count each
 # rewrite leaves, with the conservation and symmetry laws proved by the kernel.
-load @term/form/code/atom/flag
+load @term/seed/code/atom/flag
   find flag
   find either
 

@@ -1,4 +1,4 @@
-load @term/form/code/automaton/finite
+load @term/seed/code/automaton/finite
   find finite-automaton
 
 # A timed automaton: a finite automaton equipped with real-valued clocks that advance together and gate the

@@ -1,4 +1,4 @@
-load @term/form/code/structure/set
+load @term/seed/code/structure/set
   find set
 
 # A function: a map that assigns to each element of one set (the domain) exactly one element of another (the codomain).

@@ -1,4 +1,4 @@
-load @term/form/code/algebra/lie
+load @term/seed/code/algebra/lie
   find lie-algebra
 
 # The Heisenberg algebra: the Lie algebra of position and momentum, where the bracket of position with momentum is a

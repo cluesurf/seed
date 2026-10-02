@@ -1,10 +1,10 @@
-load @term/form/code/structure/set
+load @term/seed/code/structure/set
   find set
 
-load @term/form/code/structure/function/binary
+load @term/seed/code/structure/function/binary
   find binary-function
 
-load @term/form/code/structure/function/unary
+load @term/seed/code/structure/function/unary
   find unary-function
 
 # The Cayley-Dickson construction doubles a star-algebra. Given an algebra with a conjugation, the double is the set of ordered pairs of its elements, with a product that mixes the two parts through the conjugation and a conjugation that flips the sign of the second part. The double has twice the dimension of the input. It keeps the norm exactly when the input is associative, the Hurwitz condition, so the norm survives through the octonions and dies at the sedenions. That is why the reversible ceiling is eight.

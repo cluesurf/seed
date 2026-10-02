@@ -1,0 +1,176 @@
+# The Hopf fibration of the dock. The Hopf map sends a unit quaternion q to q i q^-1, a point of the 2-sphere; on the
+# dock's 24 slots (the Hurwitz units, vibe/hurwitz and vibe/dock) it lands on the six points +-i, +-j, +-k, the corners
+# of an octahedron, and each point is hit by exactly four slots, a circle q, q i, -q, -q i. So the 24-cell is six
+# circles of four over an octahedron, and each of the three frames is the pair of circles over one axis.
+#
+# This file defines the map on the group and PROVES: its value is always one of the six imaginary units; it is
+# constant along each circle (g and g i, g and -g land on the same point); conversely two units land on the same point
+# only if they differ by right multiplication by one of 1, i, -1, -i, so the fibers are exactly the circles; and the
+# axis a unit lands on is fixed by its frame: the first frame over +-i, the second (turn w) over +-k, the third (turn
+# w^2) over +-j.
+
+load @term/seed/code/atom/flag
+  find flag
+  find both
+  find either
+  find not-flag
+
+load @term/seed/code/atom/sign
+  find sign
+
+load @term/seed/code/vibe/tone
+  find tone
+  find same-tone
+
+load @term/seed/code/vibe/hurwitz
+  find hurwitz-axis
+  find q8
+  find q8-of
+  find q8-axis
+  find hurwitz-element
+  find hurwitz-of
+  find hurwitz-core
+  find hurwitz-turn
+  find hurwitz-product
+  find hurwitz-inverse
+  find same-hurwitz
+  find same-axis
+  find minus-one-unit
+  find unit-i
+
+# The Hopf map: g i g^-1.
+task hopf
+  take g, like hurwitz-element
+  like hurwitz-element
+  send back
+    call hurwitz-product
+      call hurwitz-product
+        read g
+        call unit-i
+      call hurwitz-inverse
+        read g
+
+# Is a unit one of the six imaginary units +-i, +-j, +-k (no turn, a non-real axis).
+task is-imaginary-unit
+  take g, like hurwitz-element
+  like flag
+  send back
+    call both
+      call same-tone
+        call hurwitz-turn
+          read g
+        make calm
+      call not-flag
+        call same-axis
+          call q8-axis
+            call hurwitz-core
+              read g
+          make real-axis
+
+# Is a unit on the circle {1, i, -1, -i}.
+task on-the-i-circle
+  take g, like hurwitz-element
+  like flag
+  send back
+    call both
+      call same-tone
+        call hurwitz-turn
+          read g
+        make calm
+      call either
+        call same-axis
+          call q8-axis
+            call hurwitz-core
+              read g
+          make real-axis
+        call same-axis
+          call q8-axis
+            call hurwitz-core
+              read g
+          make i-axis
+
+# THE IMAGE IS THE SIX CORNERS OF AN OCTAHEDRON.
+rule the-hopf-map-lands-on-an-imaginary-unit
+  mark g, like hurwitz-element
+  show hold
+    call is-equal
+      call is-imaginary-unit
+        call hopf
+          read g
+      make yes
+  fold g
+
+# THE MAP IS CONSTANT ALONG A CIRCLE: g and g i land together, and so do g and -g.
+rule the-hopf-map-is-constant-along-i
+  mark g, like hurwitz-element
+  show hold
+    call is-equal
+      call hopf
+        call hurwitz-product
+          read g
+          call unit-i
+      call hopf
+        read g
+  fold g
+
+rule the-hopf-map-is-constant-under-negation
+  mark g, like hurwitz-element
+  show hold
+    call is-equal
+      call hopf
+        call hurwitz-product
+          call minus-one-unit
+          read g
+      call hopf
+        read g
+  fold g
+
+# THE FIBERS ARE EXACTLY THE CIRCLES: two units landing on the same point differ by an element of {1, i, -1, -i}.
+rule units-on-one-point-differ-by-the-i-circle
+  mark g, like hurwitz-element
+  mark h, like hurwitz-element
+  have same-point
+    call is-equal
+      call same-hurwitz
+        call hopf
+          read g
+        call hopf
+          read h
+      make yes
+  show hold
+    call is-equal
+      call on-the-i-circle
+        call hurwitz-product
+          call hurwitz-inverse
+            read g
+          read h
+      make yes
+  fold g, h
+
+# THE FRAME FIXES THE AXIS: the first frame lies over +-i, the second over +-k, the third over +-j.
+task axis-of-frame
+  take t, like tone
+  like hurwitz-axis
+  fork case, read t
+    case calm
+      send back
+        make i-axis
+    case love
+      send back
+        make k-axis
+    case fear
+      send back
+        make j-axis
+
+rule each-frame-is-the-pair-of-circles-over-one-axis
+  mark g, like hurwitz-element
+  show hold
+    call is-equal
+      call q8-axis
+        call hurwitz-core
+          call hopf
+            read g
+      call axis-of-frame
+        call hurwitz-turn
+          read g
+  fold g

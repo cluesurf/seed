@@ -1,0 +1,758 @@
+# The role grid, the qutrit phase space: the nine points of Z3 x Z3 a vibe's role can sit at. A point is a pair of tones,
+# its SHIFT (the power of X, |x> -> |x + 1>) and its CLOCK (the power of Z, |x> -> w^x |x>). The grid carries the
+# SYMPLECTIC FORM [u, v] = u_shift v_clock - u_clock v_shift, the number that makes X and Z fail to commute
+# (vibe/heisenberg), and it is the affine plane AG(2, 3): nine points, twelve lines, three points on each line.
+#
+# The twelve lines are the twelve STABILIZER STATES of one qutrit. A line is a direction (one of the four points of the
+# projective line P1(F3)) and an offset. Lines in the same direction are the three states of one measurement basis, and
+# lines in different directions meet in exactly one point, which is why two of the four bases are mutually unbiased:
+# overlap 1 point of 3 is the squared overlap 1/3.
+#
+# This file defines the grid and proves: the points form an abelian group; the form is alternating, antisymmetric,
+# bilinear and nondegenerate; every nonzero point is a nonzero multiple of exactly one direction; and the plane axioms,
+# with each step a theorem over every case: a point lies on exactly one line of each direction, two lines of different
+# directions meet in exactly one point, each line has exactly three points, and two distinct points span exactly one
+# line.
+
+load @term/seed/code/atom/flag
+  find flag
+  find both
+  find either
+
+load @term/seed/code/vibe/law
+  find associative
+  find commutative
+  find identity
+  find inverse
+  find involution
+
+load @term/seed/code/vibe/tone
+  find tone
+  find tone-row
+  find tone-entry
+  find tone-sum
+  find tone-product
+  find tone-difference
+  find tone-conjugate
+  find is-vibe
+  find same-tone
+
+form role
+  case grid-point
+    link shift, like tone
+    link clock, like tone
+
+task role-of
+  take shift, like tone
+  take clock, like tone
+  like role
+  send back
+    make grid-point
+      bind shift
+        read shift
+      bind clock
+        read clock
+
+task role-shift
+  take u, like role
+  like tone
+  fork case, read u
+    case grid-point
+      send back
+        read shift
+
+task role-clock
+  take u, like role
+  like tone
+  fork case, read u
+    case grid-point
+      send back
+        read clock
+
+task role-sum
+  take u, like role
+  take v, like role
+  like role
+  send back
+    call role-of
+      call tone-sum
+        call role-shift
+          read u
+        call role-shift
+          read v
+      call tone-sum
+        call role-clock
+          read u
+        call role-clock
+          read v
+
+task role-negate
+  take u, like role
+  like role
+  send back
+    call role-of
+      call tone-conjugate
+        call role-shift
+          read u
+      call tone-conjugate
+        call role-clock
+          read u
+
+task role-zero
+  like role
+  send back
+    call role-of
+      make calm
+      make calm
+
+# t u, a tone times a point.
+task role-scale
+  take t, like tone
+  take u, like role
+  like role
+  send back
+    call role-of
+      call tone-product
+        read t
+        call role-shift
+          read u
+      call tone-product
+        read t
+        call role-clock
+          read u
+
+task role-is-zero
+  take u, like role
+  like flag
+  send back
+    call both
+      call same-tone
+        call role-shift
+          read u
+        make calm
+      call same-tone
+        call role-clock
+          read u
+        make calm
+
+task same-role
+  take u, like role
+  take v, like role
+  like flag
+  send back
+    call both
+      call same-tone
+        call role-shift
+          read u
+        call role-shift
+          read v
+      call same-tone
+        call role-clock
+          read u
+        call role-clock
+          read v
+
+# THE SYMPLECTIC FORM: [u, v] = u_shift v_clock - u_clock v_shift.
+task wedge
+  take u, like role
+  take v, like role
+  like tone
+  send back
+    call tone-difference
+      call tone-product
+        call role-shift
+          read u
+        call role-clock
+          read v
+      call tone-product
+        call role-clock
+          read u
+        call role-shift
+          read v
+
+# The quarter turn (s, c) -> (-c, s): [u, perp u] = s^2 + c^2, which is nonzero for every nonzero u because -1 is not a
+# square modulo three.
+task perp
+  take u, like role
+  like role
+  send back
+    call role-of
+      call tone-conjugate
+        call role-clock
+          read u
+      call role-shift
+        read u
+
+# THE POINTS FORM AN ABELIAN GROUP under addition.
+fuse associative, role-sum, role, role-sum
+fuse commutative, role-sum, role, role-sum
+fuse identity, role-sum, role, role-sum, role-zero
+fuse inverse, role-sum, role, role-sum, role-negate, role-zero
+
+# THE FORM IS ALTERNATING: [u, u] = 0.
+rule the-wedge-is-alternating
+  mark u, like role
+  show hold
+    call is-equal
+      call wedge
+        read u
+        read u
+      make calm
+  fold u
+
+# ANTISYMMETRIC: [u, v] = -[v, u].
+rule the-wedge-is-antisymmetric
+  mark u, like role
+  mark v, like role
+  show hold
+    call is-equal
+      call wedge
+        read u
+        read v
+      call tone-conjugate
+        call wedge
+          read v
+          read u
+  fold u, v
+
+# BILINEAR: [u + v, w] = [u, w] + [v, w] and [t u, v] = t [u, v]. (Linearity in the second slot follows by
+# antisymmetry.)
+rule the-wedge-is-additive
+  mark u, like role
+  mark v, like role
+  mark w, like role
+  show hold
+    call is-equal
+      call wedge
+        call role-sum
+          read u
+          read v
+        read w
+      call tone-sum
+        call wedge
+          read u
+          read w
+        call wedge
+          read v
+          read w
+  fold u, v, w
+
+rule the-wedge-is-homogeneous
+  mark t, like tone
+  mark u, like role
+  mark v, like role
+  show hold
+    call is-equal
+      call wedge
+        call role-scale
+          read t
+          read u
+        read v
+      call tone-product
+        read t
+        call wedge
+          read u
+          read v
+  fold t, u, v
+
+# NONDEGENERATE: every nonzero point pairs to a nonzero tone with its quarter turn.
+rule the-wedge-is-nondegenerate
+  mark u, like role
+  have nonzero
+    call is-equal
+      call role-is-zero
+        read u
+      make no
+  show hold
+    call is-equal
+      call is-vibe
+        call wedge
+          read u
+          call perp
+            read u
+      make yes
+  fold u
+
+# THE FOUR DIRECTIONS, the points of the projective line over F3, each named by a representative vector.
+form direction
+  case horizontal
+  case vertical
+  case diagonal
+  case antidiagonal
+
+task direction-vector
+  take d, like direction
+  like role
+  fork case, read d
+    case horizontal
+      send back
+        call role-of
+          make love
+          make calm
+    case vertical
+      send back
+        call role-of
+          make calm
+          make love
+    case diagonal
+      send back
+        call role-of
+          make love
+          make love
+    case antidiagonal
+      send back
+        call role-of
+          make love
+          make fear
+
+task same-direction
+  take d, like direction
+  take e, like direction
+  like flag
+  send back
+    call same-role
+      call direction-vector
+        read d
+      call direction-vector
+        read e
+
+# The direction and the coefficient of a nonzero point: u = coefficient-of u times direction-vector (direction-of u).
+# Normalize so the first nonzero coordinate of the representative is love.
+task direction-of
+  take u, like role
+  like direction
+  fork case, read u
+    case grid-point
+      fork case, read shift
+        case calm
+          send back
+            make vertical
+        case love
+          fork case, read clock
+            case fear
+              send back
+                make antidiagonal
+            case calm
+              send back
+                make horizontal
+            case love
+              send back
+                make diagonal
+        case fear
+          fork case, read clock
+            case fear
+              send back
+                make diagonal
+            case calm
+              send back
+                make horizontal
+            case love
+              send back
+                make antidiagonal
+
+task coefficient-of
+  take u, like role
+  like tone
+  fork case, read u
+    case grid-point
+      fork case, read shift
+        case calm
+          send back
+            read clock
+        case love
+          send back
+            make love
+        case fear
+          send back
+            make fear
+
+# EVERY NONZERO POINT IS A MULTIPLE OF ITS DIRECTION: u = c v with c = coefficient-of u and v its direction's vector.
+rule every-nonzero-point-is-a-multiple-of-its-direction
+  mark u, like role
+  have nonzero
+    call is-equal
+      call role-is-zero
+        read u
+      make no
+  show hold
+    call is-equal
+      call role-scale
+        call coefficient-of
+          read u
+        call direction-vector
+          call direction-of
+            read u
+      read u
+  fold u
+
+# ... OF EXACTLY ONE: if two nonzero multiples of two directions are equal, the directions are equal.
+rule a-point-has-only-one-direction
+  mark s, like tone
+  mark t, like tone
+  mark d, like direction
+  mark e, like direction
+  have s-nonzero
+    call is-equal
+      call is-vibe
+        read s
+      make yes
+  have t-nonzero
+    call is-equal
+      call is-vibe
+        read t
+      make yes
+  have equal
+    call is-equal
+      call role-scale
+        read s
+        call direction-vector
+          read d
+      call role-scale
+        read t
+        call direction-vector
+          read e
+  show hold
+    call is-equal
+      read d
+      read e
+  fold s, t, d, e
+
+# DISTINCT DIRECTIONS ARE TRANSVERSE: their vectors pair to a nonzero tone.
+rule distinct-directions-are-transverse
+  mark d, like direction
+  mark e, like direction
+  have distinct
+    call is-equal
+      call same-direction
+        read d
+        read e
+      make no
+  show hold
+    call is-equal
+      call is-vibe
+        call wedge
+          call direction-vector
+            read d
+          call direction-vector
+            read e
+      make yes
+  fold d, e
+
+# THE TWELVE LINES. A line is a direction and an offset: the points u with [v, u] = offset, v the direction's vector.
+form stabilizer-line
+  case through
+    link direction, like direction
+    link offset, like tone
+
+task on-line
+  take l, like stabilizer-line
+  take u, like role
+  like flag
+  fork case, read l
+    case through
+      send back
+        call same-tone
+          call wedge
+            call direction-vector
+              read direction
+            read u
+          read offset
+
+# A POINT LIES ON EXACTLY ONE LINE OF EACH DIRECTION: the line with offset [v, u] holds u, and no other offset does.
+rule a-point-lies-on-its-line-of-each-direction
+  mark d, like direction
+  mark u, like role
+  show hold
+    call is-equal
+      call on-line
+        make through
+          bind direction
+            read d
+          bind offset
+            call wedge
+              call direction-vector
+                read d
+              read u
+        read u
+      make yes
+  fold d, u
+
+rule a-point-lies-on-no-other-parallel-line
+  mark d, like direction
+  mark c, like tone
+  mark u, like role
+  have on
+    call is-equal
+      call on-line
+        make through
+          bind direction
+            read d
+          bind offset
+            read c
+        read u
+      make yes
+  show hold
+    call is-equal
+      read c
+      call wedge
+        call direction-vector
+          read d
+        read u
+  fold d, c, u
+
+# The meeting point of the lines (d, c) and (e, k) for transverse d, e: with n = [v, w] (its own inverse, being a
+# nonzero tone), u = n (c w - k v) has [v, u] = n c [v, w] = c and [w, u] = -n k [w, v] = k.
+task meeting-point
+  take d, like direction
+  take c, like tone
+  take e, like direction
+  take k, like tone
+  like role
+  send back
+    call role-scale
+      call wedge
+        call direction-vector
+          read d
+        call direction-vector
+          read e
+      call role-sum
+        call role-scale
+          read c
+          call direction-vector
+            read e
+        call role-negate
+          call role-scale
+            read k
+            call direction-vector
+              read d
+
+# TWO LINES OF DIFFERENT DIRECTIONS MEET: the meeting point lies on both.
+rule transverse-lines-meet
+  mark d, like direction
+  mark c, like tone
+  mark e, like direction
+  mark k, like tone
+  have distinct
+    call is-equal
+      call same-direction
+        read d
+        read e
+      make no
+  show hold
+    call is-equal
+      call both
+        call on-line
+          make through
+            bind direction
+              read d
+            bind offset
+              read c
+          call meeting-point
+            read d
+            read c
+            read e
+            read k
+        call on-line
+          make through
+            bind direction
+              read e
+            bind offset
+              read k
+          call meeting-point
+            read d
+            read c
+            read e
+            read k
+      make yes
+  fold d, c, e, k
+
+# ... IN EXACTLY ONE POINT: any point on both lines is the meeting point.
+rule transverse-lines-meet-once
+  mark d, like direction
+  mark c, like tone
+  mark e, like direction
+  mark k, like tone
+  mark u, like role
+  have distinct
+    call is-equal
+      call same-direction
+        read d
+        read e
+      make no
+  have on-first
+    call is-equal
+      call on-line
+        make through
+          bind direction
+            read d
+          bind offset
+            read c
+        read u
+      make yes
+  have on-second
+    call is-equal
+      call on-line
+        make through
+          bind direction
+            read e
+          bind offset
+            read k
+        read u
+      make yes
+  show hold
+    call is-equal
+      read u
+      call meeting-point
+        read d
+        read c
+        read e
+        read k
+  fold d, c, e, k, u
+
+# THE THREE POINTS OF A LINE. The base point b = c n (perp v), with n = [v, perp v] its own inverse, has [v, b] = c,
+# and the line is b + t v for the three tones t. The parameter of a point on the line is t = n [u - b, perp v].
+task line-point
+  take d, like direction
+  take c, like tone
+  take t, like tone
+  like role
+  send back
+    call role-sum
+      call role-scale
+        call tone-product
+          read c
+          call wedge
+            call direction-vector
+              read d
+            call perp
+              call direction-vector
+                read d
+        call perp
+          call direction-vector
+            read d
+      call role-scale
+        read t
+        call direction-vector
+          read d
+
+task line-parameter
+  take d, like direction
+  take c, like tone
+  take u, like role
+  like tone
+  send back
+    call tone-product
+      call wedge
+        call direction-vector
+          read d
+        call perp
+          call direction-vector
+            read d
+      call wedge
+        call role-sum
+          read u
+          call role-negate
+            call line-point
+              read d
+              read c
+              make calm
+        call perp
+          call direction-vector
+            read d
+
+# Every line-point is on its line,
+rule every-line-point-is-on-its-line
+  mark d, like direction
+  mark c, like tone
+  mark t, like tone
+  show hold
+    call is-equal
+      call on-line
+        make through
+          bind direction
+            read d
+          bind offset
+            read c
+        call line-point
+          read d
+          read c
+          read t
+      make yes
+  fold d, c, t
+
+# distinct parameters give distinct points (the parameter reads the point back),
+rule the-line-parameter-reads-a-line-point-back
+  mark d, like direction
+  mark c, like tone
+  mark t, like tone
+  show hold
+    call is-equal
+      call line-parameter
+        read d
+        read c
+        call line-point
+          read d
+          read c
+          read t
+      read t
+  fold d, c, t
+
+# and every point on the line is one of them: A LINE HAS EXACTLY THREE POINTS.
+rule every-point-on-a-line-is-a-line-point
+  mark d, like direction
+  mark c, like tone
+  mark u, like role
+  have on
+    call is-equal
+      call on-line
+        make through
+          bind direction
+            read d
+          bind offset
+            read c
+        read u
+      make yes
+  show hold
+    call is-equal
+      call line-point
+        read d
+        read c
+        call line-parameter
+          read d
+          read c
+          read u
+      read u
+  fold d, c, u
+
+# TWO DISTINCT POINTS SPAN A LINE: the line through u in the direction of v - u holds v as well.
+rule two-distinct-points-span-a-line
+  mark u, like role
+  mark v, like role
+  have distinct
+    call is-equal
+      call same-role
+        read u
+        read v
+      make no
+  show hold
+    call is-equal
+      call on-line
+        make through
+          bind direction
+            call direction-of
+              call role-sum
+                read v
+                call role-negate
+                  read u
+          bind offset
+            call wedge
+              call direction-vector
+                call direction-of
+                  call role-sum
+                    read v
+                    call role-negate
+                      read u
+              read u
+        read v
+      make yes
+  fold u, v

@@ -1,4 +1,4 @@
-load @term/form/code/structure/space/vector
+load @term/seed/code/structure/space/vector
   find vector-space
 
 # A quadratic form: a homogeneous degree-two polynomial on a vector space, a sum of squares and cross terms, the machine

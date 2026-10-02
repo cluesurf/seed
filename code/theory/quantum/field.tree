@@ -1,4 +1,4 @@
-load @term/form/code/theory/quantum
+load @term/seed/code/theory/quantum
   find quantum-theory
 
 # Quantum field theory: quantum mechanics married to special relativity, where particles are excitations of fields

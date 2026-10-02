@@ -1,4 +1,7 @@
+export type SetForm =
+  | { form: "opaque" }
+
 export interface RootSystem {
-  space: Set
-  roots: Set[]
+  space: SetForm
+  roots: SetForm[]
 }

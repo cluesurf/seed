@@ -25,7 +25,7 @@
 # induction over the events, the spacelike antichain by direct computation, and local finiteness by counting the interval
 # between bottom and top and proving it is exactly the finite set {left, right}, of size two.
 
-load @term/form/code/atom/flag
+load @term/seed/code/atom/flag
   find flag
   find both
   find either

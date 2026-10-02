@@ -1,0 +1,596 @@
+# The coin and the meeting, the two amplitude pieces of the rule, as exact matrices over the Eisenstein integers with 2
+# inverted. Both act on the two slots of one line and both are CIRCULANT, a I + b X with X the swap of the slots, so
+# both have the same eigenvectors: e0 + e1 (symmetric) with eigenvalue a + b, and e0 - e1 (antisymmetric) with
+# eigenvalue a - b.
+#
+#   the coin      2C = (1 + w) I + (1 - w) X     eigenvalues 1 (symmetric), w (antisymmetric)
+#   the meeting   2U = (1 + w) I - (1 - w) X     eigenvalues w (symmetric), 1 (antisymmetric)
+#
+# The meeting keeps two like vibes' points with weight |1 + w|^2 / 4 = 1/4 and exchanges them with weight
+# |1 - w|^2 / 4 = 3/4. Because 2 is inert in Z[w] (vibe/eisenstein), no single amplitude here has weight 1/2, which is
+# what keeps a one-meeting knot's CHSH value at sqrt 7 rather than 2 sqrt 2.
+#
+# This file PROVES the circulant theory once, for all Eisenstein a and b (the parallelogram and polarization laws for
+# the norm, which say a I + b X is unitary exactly when a + b and a - b have absolute value 1), then evaluates it on the
+# two pieces: unitarity, eigenvalues, determinant, and the phase identity (1 + w)^2 = w that turns the walk's
+# characteristic polynomial into the band cos E = (cos k) / 2, with mass gap 2 pi / 3 and top speed 1/2.
+
+load @term/seed/code/vibe/eisenstein
+  find omega-real
+  find omega-part
+  find bar-real
+  find bar-part
+  find eisenstein-norm
+
+# The real part of x conj(y), for x = a + b w and y = c + d w: half the cross term of |x + y|^2.
+task cross-real
+  take a, like integer
+  take b, like integer
+  take c, like integer
+  take d, like integer
+  like integer
+  send back
+    call omega-real
+      read a
+      read b
+      call bar-real
+        read c
+        read d
+      call bar-part
+        read c
+        read d
+
+task cross-part
+  take a, like integer
+  take b, like integer
+  take c, like integer
+  take d, like integer
+  like integer
+  send back
+    call omega-part
+      read a
+      read b
+      call bar-real
+        read c
+        read d
+      call bar-part
+        read c
+        read d
+
+# THE PARALLELOGRAM LAW: N(a + b) + N(a - b) = 2 N(a) + 2 N(b). So the circulant's two eigenvalues have total weight
+# twice the weight of one row: a I + b X keeps the norm exactly when its eigenvalues are unimodular.
+rule the-parallelogram-law
+  mark a, like integer
+  mark b, like integer
+  mark c, like integer
+  mark d, like integer
+  show hold
+    call is-equal
+      call add
+        call eisenstein-norm
+          call add
+            read a
+            read c
+          call add
+            read b
+            read d
+        call eisenstein-norm
+          call subtract
+            read a
+            read c
+          call subtract
+            read b
+            read d
+      call multiply
+        code 2
+        call add
+          call eisenstein-norm
+            read a
+            read b
+          call eisenstein-norm
+            read c
+            read d
+
+# THE POLARIZATION LAW: N(a + b) - N(a - b) = 2 (x conj(y) + y conj(x)) = 4 Re(x conj(y)), with the real part read in
+# the basis 1, w (Re(u + v w) = u - v / 2, so 4 Re = 4 u - 2 v). The two rows of a I + b X are orthogonal exactly when
+# the eigenvalues have equal weight.
+rule the-polarization-law
+  mark a, like integer
+  mark b, like integer
+  mark c, like integer
+  mark d, like integer
+  show hold
+    call is-equal
+      call subtract
+        call eisenstein-norm
+          call add
+            read a
+            read c
+          call add
+            read b
+            read d
+        call eisenstein-norm
+          call subtract
+            read a
+            read c
+          call subtract
+            read b
+            read d
+      call subtract
+        call multiply
+          code 4
+          call cross-real
+            read a
+            read b
+            read c
+            read d
+        call multiply
+          code 2
+          call cross-part
+            read a
+            read b
+            read c
+            read d
+
+# A CIRCULANT ACTING ON A PAIR. With a = a1 + a2 w and b = b1 + b2 w, the first slot of (a I + b X)(x, y) is
+# a x + b y. (The second slot is b x + a y, the same expression with the slots swapped.)
+task circulant-real
+  take a1, like integer
+  take a2, like integer
+  take b1, like integer
+  take b2, like integer
+  take x1, like integer
+  take x2, like integer
+  take y1, like integer
+  take y2, like integer
+  like integer
+  send back
+    call add
+      call omega-real
+        read a1
+        read a2
+        read x1
+        read x2
+      call omega-real
+        read b1
+        read b2
+        read y1
+        read y2
+
+task circulant-part
+  take a1, like integer
+  take a2, like integer
+  take b1, like integer
+  take b2, like integer
+  take x1, like integer
+  take x2, like integer
+  take y1, like integer
+  take y2, like integer
+  like integer
+  send back
+    call add
+      call omega-part
+        read a1
+        read a2
+        read x1
+        read x2
+      call omega-part
+        read b1
+        read b2
+        read y1
+        read y2
+
+# THE EIGENVECTORS OF EVERY CIRCULANT: on (v, v) it multiplies by a + b, on (v, -v) by a - b, for all Eisenstein a, b, v.
+rule a-circulant-scales-the-symmetric-pair-by-a-plus-b-real
+  mark a1, like integer
+  mark a2, like integer
+  mark b1, like integer
+  mark b2, like integer
+  mark x1, like integer
+  mark x2, like integer
+  show hold
+    call is-equal
+      call circulant-real
+        read a1
+        read a2
+        read b1
+        read b2
+        read x1
+        read x2
+        read x1
+        read x2
+      call omega-real
+        call add
+          read a1
+          read b1
+        call add
+          read a2
+          read b2
+        read x1
+        read x2
+
+rule a-circulant-scales-the-symmetric-pair-by-a-plus-b-part
+  mark a1, like integer
+  mark a2, like integer
+  mark b1, like integer
+  mark b2, like integer
+  mark x1, like integer
+  mark x2, like integer
+  show hold
+    call is-equal
+      call circulant-part
+        read a1
+        read a2
+        read b1
+        read b2
+        read x1
+        read x2
+        read x1
+        read x2
+      call omega-part
+        call add
+          read a1
+          read b1
+        call add
+          read a2
+          read b2
+        read x1
+        read x2
+
+rule a-circulant-scales-the-antisymmetric-pair-by-a-minus-b-real
+  mark a1, like integer
+  mark a2, like integer
+  mark b1, like integer
+  mark b2, like integer
+  mark x1, like integer
+  mark x2, like integer
+  show hold
+    call is-equal
+      call circulant-real
+        read a1
+        read a2
+        read b1
+        read b2
+        read x1
+        read x2
+        call subtract
+          code 0
+          read x1
+        call subtract
+          code 0
+          read x2
+      call omega-real
+        call subtract
+          read a1
+          read b1
+        call subtract
+          read a2
+          read b2
+        read x1
+        read x2
+
+rule a-circulant-scales-the-antisymmetric-pair-by-a-minus-b-part
+  mark a1, like integer
+  mark a2, like integer
+  mark b1, like integer
+  mark b2, like integer
+  mark x1, like integer
+  mark x2, like integer
+  show hold
+    call is-equal
+      call circulant-part
+        read a1
+        read a2
+        read b1
+        read b2
+        read x1
+        read x2
+        call subtract
+          code 0
+          read x1
+        call subtract
+          code 0
+          read x2
+      call omega-part
+        call subtract
+          read a1
+          read b1
+        call subtract
+          read a2
+          read b2
+        read x1
+        read x2
+
+# THE COIN, 2C = (1 + w) I + (1 - w) X, FIXES EVERY SYMMETRIC PAIR: 2C (v, v) = 2 (v, v), for every Eisenstein v.
+rule the-coin-fixes-every-symmetric-pair-real
+  mark x1, like integer
+  mark x2, like integer
+  show hold
+    call is-equal
+      call circulant-real
+        code 1
+        code 1
+        code 1
+        code -1
+        read x1
+        read x2
+        read x1
+        read x2
+      call multiply
+        code 2
+        read x1
+
+rule the-coin-fixes-every-symmetric-pair-part
+  mark x1, like integer
+  mark x2, like integer
+  show hold
+    call is-equal
+      call circulant-part
+        code 1
+        code 1
+        code 1
+        code -1
+        read x1
+        read x2
+        read x1
+        read x2
+      call multiply
+        code 2
+        read x2
+
+# and TURNS EVERY ANTISYMMETRIC PAIR BY w: 2C (v, -v) = 2 w (v, -v).
+rule the-coin-turns-every-antisymmetric-pair-by-omega-real
+  mark x1, like integer
+  mark x2, like integer
+  show hold
+    call is-equal
+      call circulant-real
+        code 1
+        code 1
+        code 1
+        code -1
+        read x1
+        read x2
+        call subtract
+          code 0
+          read x1
+        call subtract
+          code 0
+          read x2
+      call omega-real
+        code 0
+        code 2
+        read x1
+        read x2
+
+rule the-coin-turns-every-antisymmetric-pair-by-omega-part
+  mark x1, like integer
+  mark x2, like integer
+  show hold
+    call is-equal
+      call circulant-part
+        code 1
+        code 1
+        code 1
+        code -1
+        read x1
+        read x2
+        call subtract
+          code 0
+          read x1
+        call subtract
+          code 0
+          read x2
+      call omega-part
+        code 0
+        code 2
+        read x1
+        read x2
+
+# THE COIN IS UNITARY: each row of 2C has weight N(1 + w) + N(1 - w) = 1 + 3 = 4 = |2|^2.
+rule a-coin-row-has-weight-four
+  show hold
+    call is-equal
+      call add
+        call eisenstein-norm
+          code 1
+          code 1
+        call eisenstein-norm
+          code 1
+          code -1
+      code 4
+
+# and the two rows are orthogonal: (1 + w) conj(1 - w) + (1 - w) conj(1 + w) = 0, both coordinates.
+rule the-coin-rows-are-orthogonal-real
+  show hold
+    call is-equal
+      call add
+        call cross-real
+          code 1
+          code 1
+          code 1
+          code -1
+        call cross-real
+          code 1
+          code -1
+          code 1
+          code 1
+      code 0
+
+rule the-coin-rows-are-orthogonal-part
+  show hold
+    call is-equal
+      call add
+        call cross-part
+          code 1
+          code 1
+          code 1
+          code -1
+        call cross-part
+          code 1
+          code -1
+          code 1
+          code 1
+      code 0
+
+# THE COIN'S DETERMINANT IS w: det 2C = (1 + w)^2 - (1 - w)^2 = w - (-3 w) = 4 w, so det C = w.
+rule the-coin-determinant-is-four-omega-real
+  show hold
+    call is-equal
+      call subtract
+        call omega-real
+          code 1
+          code 1
+          code 1
+          code 1
+        call omega-real
+          code 1
+          code -1
+          code 1
+          code -1
+      code 0
+
+rule the-coin-determinant-is-four-omega-part
+  show hold
+    call is-equal
+      call subtract
+        call omega-part
+          code 1
+          code 1
+          code 1
+          code 1
+        call omega-part
+          code 1
+          code -1
+          code 1
+          code -1
+      code 4
+
+# THE BAND. The walk is U = S C with S = diag(e^(-ik), e^(ik)), so tr U = (1 + w) cos k and det U = det C = w. Write an
+# eigenvalue as (1 + w) mu: the two mu add to cos k and multiply to w / (1 + w)^2. Since (1 + w)^2 = w (proved in
+# vibe/eisenstein as `one-plus-omega-squared-is-omega`), they multiply to 1, so mu = e^(+-iE) with 2 cos E = cos k.
+# At k = 0, cos E = 1/2 and E = +- pi / 3: the mass gap is 2 pi / 3.
+#
+# THE TOP SPEED. Differentiating cos E = (cos k) / 2 gives v^2 = sin^2 k / (4 - cos^2 k). v^2 <= 1/4 is
+# 4 sin^2 k <= 4 - cos^2 k, which with sin^2 k = 1 - cos^2 k is 4 (1 - c^2) <= 4 - c^2, true because the difference is
+# 3 c^2 >= 0. The certificate is a sum of squares, so it holds over the reals and not only the integers the kernel
+# quantifies over. Equality at c = 0, k = pi / 2: the top speed is exactly 1/2.
+rule the-coined-walk-is-at-most-half-light-speed
+  mark c, like integer
+  show hold
+    call is-maximum
+      call multiply
+        code 4
+        call subtract
+          code 1
+          call multiply
+            read c
+            read c
+      call subtract
+        code 4
+        call multiply
+          read c
+          read c
+
+# THE MEETING. 2a = 1 + w, 2b = -(1 - w). Keep weight N(1 + w) = 1 of 4 and exchange weight N(1 - w) = 3 of 4.
+rule the-meeting-keeps-with-weight-one-quarter
+  show hold
+    call is-equal
+      call eisenstein-norm
+        code 1
+        code 1
+      code 1
+
+rule the-meeting-exchanges-with-weight-three-quarters
+  show hold
+    call is-equal
+      call eisenstein-norm
+        code -1
+        code 1
+      code 3
+
+# THE MEETING, 2U = (1 + w) I - (1 - w) X, TURNS EVERY SYMMETRIC PAIR BY w and FIXES EVERY ANTISYMMETRIC PAIR:
+# U = w P_sym + P_anti. Two like vibes on equal points (a symmetric pair) pick up the phase w.
+rule the-meeting-turns-every-symmetric-pair-by-omega-real
+  mark x1, like integer
+  mark x2, like integer
+  show hold
+    call is-equal
+      call circulant-real
+        code 1
+        code 1
+        code -1
+        code 1
+        read x1
+        read x2
+        read x1
+        read x2
+      call omega-real
+        code 0
+        code 2
+        read x1
+        read x2
+
+rule the-meeting-turns-every-symmetric-pair-by-omega-part
+  mark x1, like integer
+  mark x2, like integer
+  show hold
+    call is-equal
+      call circulant-part
+        code 1
+        code 1
+        code -1
+        code 1
+        read x1
+        read x2
+        read x1
+        read x2
+      call omega-part
+        code 0
+        code 2
+        read x1
+        read x2
+
+rule the-meeting-fixes-every-antisymmetric-pair-real
+  mark x1, like integer
+  mark x2, like integer
+  show hold
+    call is-equal
+      call circulant-real
+        code 1
+        code 1
+        code -1
+        code 1
+        read x1
+        read x2
+        call subtract
+          code 0
+          read x1
+        call subtract
+          code 0
+          read x2
+      call multiply
+        code 2
+        read x1
+
+rule the-meeting-fixes-every-antisymmetric-pair-part
+  mark x1, like integer
+  mark x2, like integer
+  show hold
+    call is-equal
+      call circulant-part
+        code 1
+        code 1
+        code -1
+        code 1
+        read x1
+        read x2
+        call subtract
+          code 0
+          read x1
+        call subtract
+          code 0
+          read x2
+      call multiply
+        code 2
+        read x2

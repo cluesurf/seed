@@ -1,13 +1,13 @@
-load @term/form/code/structure/field
+load @term/seed/code/structure/field
   find field
 
-load @term/form/code/structure/set
+load @term/seed/code/structure/set
   find set
 
-load @term/form/code/structure/function/binary
+load @term/seed/code/structure/function/binary
   find binary-function
 
-load @term/form/code/structure/function/unary
+load @term/seed/code/structure/function/unary
   find unary-function
 
 # A composition algebra: an algebra over a field carrying a norm that multiplies through the product, so the norm of a product is the product of the norms. The norm is the length that never lies, and demanding it multiply is demanding that combining lose nothing, the reversibility condition. By Hurwitz there are only four, the reals, complex numbers, quaternions, and octonions.

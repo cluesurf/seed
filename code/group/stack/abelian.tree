@@ -1,4 +1,4 @@
-load @term/form/code/group/abelian
+load @term/seed/code/group/abelian
   find abelian-group
 
 # A stack of abelian groups: a family of abelian groups varying over a base, the additive coefficient systems of

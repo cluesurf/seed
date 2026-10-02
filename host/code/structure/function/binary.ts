@@ -1,4 +1,7 @@
+export type SetForm =
+  | { form: "opaque" }
+
 export interface BinaryFunction {
-  domain: Set
-  codomain: Set
+  domain: SetForm
+  codomain: SetForm
 }

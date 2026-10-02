@@ -13,7 +13,7 @@
 # non-minimal controls, the antipode is an involution pairing the twenty-four into twelve lines, and the kissing count is
 # twenty-four read off the enumeration of the minimal-vector set.
 
-load @term/form/code/atom/flag
+load @term/seed/code/atom/flag
   find flag
   find both
 

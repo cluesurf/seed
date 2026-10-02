@@ -1,4 +1,4 @@
-load @term/form/code/space/vector/normed
+load @term/seed/code/space/vector/normed
   find normed-vector-space
 
 # A Banach algebra: a complete normed algebra, a vector space that is at once an algebra and a Banach space (a complete

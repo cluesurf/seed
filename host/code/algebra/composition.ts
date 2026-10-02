@@ -1,6 +1,25 @@
+export type SetForm =
+  | { form: "opaque" }
+
+export interface BinaryFunction {
+  domain: SetForm
+  codomain: SetForm
+}
+
+export interface Field {
+  set: SetForm
+  add: BinaryFunction
+  multiply: BinaryFunction
+}
+
+export interface UnaryFunction {
+  domain: SetForm
+  codomain: SetForm
+}
+
 export interface CompositionAlgebra {
   field: Field
-  set: Set
+  set: SetForm
   multiply: BinaryFunction
   conjugation: UnaryFunction
   norm: UnaryFunction

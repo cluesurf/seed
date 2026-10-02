@@ -1,4 +1,4 @@
-load @term/form/code/automaton/finite
+load @term/seed/code/automaton/finite
   find finite-automaton
 
 # A pushdown automaton: a finite automaton given a stack, a last-in first-out memory it can push to and pop from. The

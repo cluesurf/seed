@@ -1,0 +1,194 @@
+# NEGATIVE CONTROL: design, honeycomb, warp, growth, forced-dock-24-cell. Every rule here must be refused.
+
+load @term/seed/code/vibe/design
+  find root-moment-4
+  find root-moment-6
+  find norm-squared
+
+load @term/seed/code/vibe/honeycomb
+  find chain-5
+  find determinant-five
+
+load @term/seed/code/vibe/warp
+  find warp-polynomial
+  find determinant-three
+  find total-three
+  find total-two
+  find total-one
+  find shell-total
+
+load @term/seed/code/vibe/growth
+  find total-after-two
+  find total-after-one
+  find level-total
+
+load @term/seed/code/vibe/forced-dock-24-cell
+  find fourth-power
+  find slot-weight
+  find power-of-x
+
+rule control-fourth-moment-eleven
+  mark k1, like integer
+  mark k2, like integer
+  mark k3, like integer
+  mark k4, like integer
+  show hold
+    call is-equal
+      call root-moment-4
+        read k1
+        read k2
+        read k3
+        read k4
+      call multiply
+        code 11
+        call multiply
+          call norm-squared
+            read k1
+            read k2
+            read k3
+            read k4
+          call norm-squared
+            read k1
+            read k2
+            read k3
+            read k4
+
+rule control-the-roots-are-a-six-design
+  mark k1, like integer
+  mark k2, like integer
+  mark k3, like integer
+  mark k4, like integer
+  show hold
+    call is-equal
+      call root-moment-6
+        read k1
+        read k2
+        read k3
+        read k4
+      call multiply
+        code 12
+        call multiply
+          call norm-squared
+            read k1
+            read k2
+            read k3
+            read k4
+          call multiply
+            call norm-squared
+              read k1
+              read k2
+              read k3
+              read k4
+            call norm-squared
+              read k1
+              read k2
+              read k3
+              read k4
+
+rule control-the-mesh-chain-is-minus-one
+  show hold
+    call is-equal
+      call chain-5
+        code 1
+        code 2
+        code 1
+        code 2
+      code -1
+
+rule control-characteristic-polynomial-fifty-two
+  mark x, like integer
+  show hold
+    call is-equal
+      call determinant-three
+        call subtract
+          read x
+          code 15
+        code -11
+        code -9
+        code -4
+        call subtract
+          read x
+          code 4
+        code -3
+        code 0
+        code -1
+        call subtract
+          read x
+          code 2
+      call add
+        call warp-polynomial
+          read x
+        read x
+
+rule control-shell-four-off-by-one
+  show hold
+    call is-equal
+      call total-three
+        code 24
+        code 0
+        code 0
+      code 153193
+
+rule control-shell-recurrence-with-twenty-two
+  mark x, like integer
+  mark y, like integer
+  mark z, like integer
+  show hold
+    call is-equal
+      call total-three
+        read x
+        read y
+        read z
+      call add
+        call subtract
+          call multiply
+            code 22
+            call total-two
+              read x
+              read y
+              read z
+          call multiply
+            code 51
+            call total-one
+              read x
+              read y
+              read z
+        call multiply
+          code 23
+          call shell-total
+            read x
+            read y
+            read z
+
+rule control-splitting-recurrence-with-four
+  mark w, like integer
+  mark b, like integer
+  show hold
+    call is-equal
+      call total-after-two
+        read w
+        read b
+      call subtract
+        call multiply
+          code 4
+          call total-after-one
+            read w
+            read b
+        call level-total
+          read w
+          read b
+
+rule control-shells-with-twenty-five
+  mark x, like integer
+  show hold
+    call is-equal
+      call fourth-power
+        call slot-weight
+          read x
+      call power-of-x
+        read x
+        code 1
+        code 8
+        code 25
+        code 32
+        code 16

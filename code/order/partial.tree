@@ -1,7 +1,7 @@
-load @term/form/code/structure/set
+load @term/seed/code/structure/set
   find set
 
-load @term/form/code/structure/function/binary
+load @term/seed/code/structure/function/binary
   find binary-function
 
 # A partial order: an order that may leave some pairs incomparable, reflexive, antisymmetric, and transitive but not

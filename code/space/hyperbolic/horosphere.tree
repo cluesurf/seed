@@ -1,4 +1,4 @@
-load @term/form/code/structure/manifold
+load @term/seed/code/structure/manifold
   find manifold
 
 # Horocycles and horospheres, the surfaces centered at infinity, the bridge from the curved bulk to a flat lattice.

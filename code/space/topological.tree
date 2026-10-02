@@ -1,4 +1,4 @@
-load @term/form/code/structure/set
+load @term/seed/code/structure/set
   find set
 
 # A topological space: a set together with a choice of which subsets count as open, closed under arbitrary unions and

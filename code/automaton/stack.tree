@@ -1,4 +1,4 @@
-load @term/form/code/structure/set
+load @term/seed/code/structure/set
   find set
 
 # A stack machine: a model of computation whose only memory is one or more stacks, evaluating by pushing operands and

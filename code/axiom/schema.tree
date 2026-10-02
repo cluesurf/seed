@@ -1,4 +1,4 @@
-load @term/form/code/axiom
+load @term/seed/code/axiom
   find axiom
 
 # An axiom schema: not a single axiom but a template standing for infinitely many, one for each way of filling its

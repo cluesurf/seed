@@ -1,4 +1,4 @@
-load @term/form/code/group
+load @term/seed/code/group
   find group
 
 # The special unitary group: the group of unitary matrices of determinant one, the rotations of complex vector space

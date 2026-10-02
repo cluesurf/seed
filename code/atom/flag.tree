@@ -52,3 +52,60 @@ rule either-no-left-is-identity
         read a
       read a
   fold a
+
+# Negation: yes and no trade places.
+task not-flag
+  take a, like flag
+  like flag
+  fork case, read a
+    case yes
+      send back
+        make no
+    case no
+      send back
+        make yes
+
+# Implication: a implies b is no only when a is yes and b is no. A theorem "P implies Q" over a finite type can be
+# stated as `implies P Q = yes` for every value, which needs no hypothesis handling.
+task implies
+  take a, like flag
+  take b, like flag
+  like flag
+  fork case, read a
+    case yes
+      send back
+        read b
+    case no
+      send back
+        make yes
+
+# NEGATION IS AN INVOLUTION.
+rule not-flag-is-an-involution
+  mark a, like flag
+  show hold
+    call is-equal
+      call not-flag
+        call not-flag
+          read a
+      read a
+  fold a
+
+# MODUS PONENS, as a table: if a holds and a implies b, then b holds.
+rule implication-carries-truth
+  mark a, like flag
+  mark b, like flag
+  have premise
+    call is-equal
+      read a
+      make yes
+  have implication
+    call is-equal
+      call implies
+        read a
+        read b
+      make yes
+  show hold
+    call is-equal
+      read b
+      make yes
+  fold a, b

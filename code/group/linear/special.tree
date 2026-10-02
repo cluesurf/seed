@@ -1,4 +1,4 @@
-load @term/form/code/group/linear/general
+load @term/seed/code/group/linear/general
   find general-linear-group
 
 # The special linear group: the invertible linear maps of determinant one, the volume-and-orientation-preserving maps.

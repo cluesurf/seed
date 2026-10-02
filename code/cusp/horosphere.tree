@@ -13,7 +13,7 @@
 # returns (one-way bulk growth, the arrow), and the horocyclic row count strictly grows level by level with the same
 # two-step Fibonacci recurrence that governs the hyperbolic shells.
 
-load @term/form/code/atom/flag
+load @term/seed/code/atom/flag
   find flag
 
 # The level coordinate: combinatorial depth from the cusp. The cusp is level zero; every other level is one deeper than

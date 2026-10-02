@@ -1,4 +1,4 @@
-load @term/form/code/group
+load @term/seed/code/group
   find group
 
 # An abelian group: a group whose operation commutes, so a times b equals b times a for every pair. The order of

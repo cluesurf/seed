@@ -1,4 +1,4 @@
-load @term/form/code/structure/manifold
+load @term/seed/code/structure/manifold
   find manifold
 
 # A Lorentzian manifold: a manifold whose metric has one timelike and the rest spacelike directions, the geometry of

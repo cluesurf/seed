@@ -1,4 +1,4 @@
-load @term/form/code/structure/space/vector
+load @term/seed/code/structure/space/vector
   find vector-space
 
 # A polytope: a shape with flat sides, the higher-dimensional generalization of a polygon and a polyhedron, the convex

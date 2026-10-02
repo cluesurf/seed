@@ -1,6 +1,6 @@
-# form.tree — the machine-checked mathematics library
+# seed.tree: the machine-checked mathematics library, `@term/seed`
 
-This package is a kernel-verified math library written in Seed `.tree`. Every file models a real
+This package is a kernel-verified math library written in Term `.tree`. Every file models a real
 mathematical object and proves theorems about it that the `term` kernel checks.
 
 ## Read this before writing or editing any `.tree` file here

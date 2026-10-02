@@ -1,408 +1,418 @@
-# The tone, the quality of a vibe's experience, the first base element. It is the ternary value with three cases: a low value, a middle value, and a high value. Three is forced. The smallest usable alphabet needs a resting middle value and a mirror that swaps the two sides, and the three-case set is the smallest with both.
-load @term/form/code/atom/flag
+# The tone, one trit, the only kind of value the substrate holds. A slot holds fear (-1), calm (0) or love (+1). A slot
+# holding love or fear holds a VIBE, and calm is the empty value. Read as residues modulo three, with fear standing for
+# -1 = 2, the three tones are the field F3: they add and multiply, every nonzero tone has an inverse, and negation is
+# charge conjugation C, which swaps love and fear and fixes calm.
+#
+# This file DEFINES the two operations by their tables and PROVES the field axioms over every tone, plus the facts the
+# rest of the theory leans on: every vibe squares to love (so each is its own inverse), three of anything is calm
+# (characteristic three), every tone is its own cube (Frobenius), and there are no zero divisors. It then models
+# BALANCED TERNARY, the positional numeral the substrate counts in: a full adder whose carry and digit are tones, proved
+# to satisfy a + b + c = 3 carry + digit as integers, for all twenty-seven inputs.
+#
+# Three is forced: the smallest alphabet with an empty value and a sign flip is {-1, 0, +1}, and the sign flip must be an
+# order-two symmetry fixing the empty value, which is `tone-conjugate` below.
+
+load @term/seed/code/atom/flag
   find flag
+  find both
   find either
 
+load @term/seed/code/vibe/law
+  find associative
+  find commutative
+  find identity
+  find inverse
+  find distributive
+  find involution
+  find homomorphism
+
 form tone
-  case low
-  case middle
-  case high
+  case fear
+  case calm
+  case love
 
-# The tone is ternary, proof-checked by `seed test`: three cases, a resting middle and a mirrored pair around it. Three
-# is the smallest alphabet with both a middle and a mirror: 3 = 1 + 2.
-hold tone-has-three-cases
-  call is-equal
-    code 3
-    call add
-      code 1
-      code 2
+# TEMPLATE: one row of a two-argument table on tones, for a fixed first tone `row`, the result against each second tone.
+tree tone-row
+  take row
+  take at-fear
+  take at-calm
+  take at-love
 
-# mirror swaps the two outer values around the resting middle: low and high trade places, middle is fixed. This is the
-# reflection that, with the ternary set, makes three the smallest alphabet carrying both a center and a symmetry.
-task mirror
-  take t, like tone
+  hook fuse
+    case {row}
+      fork case, read b
+        case fear
+          send back
+            make {at-fear}
+        case calm
+          send back
+            make {at-calm}
+        case love
+          send back
+            make {at-love}
+
+# TEMPLATE: one entry of a one-argument map on tones.
+tree tone-entry
+  take from
+  take to
+
+  hook fuse
+    case {from}
+      send back
+        make {to}
+
+# Addition modulo three on the balanced residues: love + love = 2 = fear, fear + fear = -2 = love.
+task tone-sum
+  take a, like tone
+  take b, like tone
   like tone
-  fork case, read t
-    case low
-      send back
-        make high
-    case middle
-      send back
-        make middle
-    case high
-      send back
-        make low
+  fork case, read a
+    fuse tone-row, fear, love, fear, calm
+    fuse tone-row, calm, fear, calm, love
+    fuse tone-row, love, calm, love, fear
 
-# The mirror is an INVOLUTION: mirror (mirror t) = t, for every tone. Reflecting twice returns the original value, so the
-# symmetry is its own inverse, an order-two operation. Proved by case analysis on the three tones, each closing by
-# computation. A reversible rule is built from order-two pieces, and this is the first of them.
-rule mirror-tone-is-involution
-  mark t, like tone
-  show hold
-    call is-equal
-      call mirror
-        call mirror
-          read t
-      read t
-  fold t
+# Multiplication modulo three: love is the unit, calm absorbs, fear negates.
+task tone-product
+  take a, like tone
+  take b, like tone
+  like tone
+  fork case, read a
+    fuse tone-row, fear, love, calm, fear
+    fuse tone-row, calm, calm, calm, calm
+    fuse tone-row, love, fear, calm, love
 
-# The middle is the unique FIXED POINT of the mirror: mirror middle = middle. The resting value reflects to itself, which
-# is why it is the neutral charge.
-rule mirror-fixes-middle
-  show hold
-    call is-equal
-      call mirror
-        make middle
-      make middle
-  calm hold
+# Charge conjugation C: the additive inverse, love and fear swap, calm stays.
+task tone-conjugate
+  take a, like tone
+  like tone
+  fork case, read a
+    fuse tone-entry, fear, love
+    fuse tone-entry, calm, calm
+    fuse tone-entry, love, fear
 
-# The two outer tones are genuinely SWAPPED, not fixed: mirror low = high. With the fixed middle, this shows the mirror is
-# the transposition of the outer pair, the order-two symmetry of the ternary set.
-rule mirror-swaps-low-to-high
-  show hold
-    call is-equal
-      call mirror
-        make low
-      make high
-  calm hold
+# a - b = a + C b.
+task tone-difference
+  take a, like tone
+  take b, like tone
+  like tone
+  send back
+    call tone-sum
+      read a
+      call tone-conjugate
+        read b
 
-# The charge sign: a tone reads as a signed value through the lean. The low value is negative, the middle is neutral, the
-# high value is positive. This is the smallest signed group, the integers modulo their order: minus, naught, plus.
-form spin
-  case minus
-  case naught
-  case plus
+# The two identities, as constants for the law kit.
+task calm-tone
+  like tone
+  send back
+    make calm
 
-# Negation of a sign flips minus and plus and fixes naught, exactly mirroring the tone reflection.
-task flip-spin
-  take s, like spin
-  like spin
-  fork case, read s
-    case minus
-      send back
-        make plus
-    case naught
-      send back
-        make naught
-    case plus
-      send back
-        make minus
+task love-tone
+  like tone
+  send back
+    make love
 
-# The charge of a tone: low is minus, middle is naught, high is plus. This is how the lean turns a tone into a signed
-# charge, the second base element acting on the first.
-task charge
-  take t, like tone
-  like spin
-  fork case, read t
-    case low
-      send back
-        make minus
-    case middle
-      send back
-        make naught
-    case high
-      send back
-        make plus
+# Is the tone a vibe (love or fear), rather than calm.
+task is-vibe
+  take a, like tone
+  like flag
+  fork case, read a
+    fuse tone-entry, fear, yes
+    fuse tone-entry, calm, no
+    fuse tone-entry, love, yes
 
-# The mirror NEGATES charge: charge (mirror t) = flip-spin (charge t), for every tone. Reflecting a tone flips the sign of
-# its charge, so the tone reflection IS sign negation carried back to the ternary value. The first base element and its
-# order on the second are bound: the mirror is an order-two symmetry precisely because sign negation is.
-rule mirror-negates-charge
-  mark t, like tone
-  show hold
-    call is-equal
-      call charge
-        call mirror
-          read t
-      call flip-spin
-        call charge
-          read t
-  fold t
-
-# Sign negation is itself an INVOLUTION: flip-spin (flip-spin s) = s. The signed-charge group is order two, the same shape
-# as the tone reflection, confirming the bridge above is an isomorphism of order-two symmetries.
-rule flip-spin-is-involution
-  mark s, like spin
-  show hold
-    call is-equal
-      call flip-spin
-        call flip-spin
-          read s
-      read s
-  fold s
-
-# A line, the unit the law acts on: two opposite sites of a dock, each carrying one tone, meeting head on. The knit's
-# collide step rearranges the pair, and the stream step is the exchange across the line. Modelling the line here, where
-# the tone constructors live, lets the law's reversibility and charge conservation be proved. It is a pairing of two tones.
-form line
-  case pair
-    link head, like tone
-    link tail, like tone
-
-# The collide step, the actual knit collision table from the model: a fixed permutation of the nine line states that
-# preserves the pair's signed sum. The two equal-pole pairs are inert. A pole meeting peace hops past it. A pole meeting
-# its opposite annihilates to two peaces, peace meeting peace creates an opposite pole pair, and a pole pair flips, the
-# neutral three-cycle peace-peace, high-low, low-high. Charge-conserving and reversible, with no adjustable parts.
-# TEMPLATE: one row of a nine-state line table that outputs a line. For a fixed head tone, give the resulting head and
-# tail tone against each of the three tail tones. One definition serves both the collide step and its inverse.
-tree line-row
-  take head-tone
-  take low-head
-  take low-tail
-  take middle-head
-  take middle-tail
-  take high-head
-  take high-tail
-
-  hook fuse
-    case {head-tone}
-      fork case, read tail
-        case low
-          send back
-            make pair
-              bind head
-                make {low-head}
-              bind tail
-                make {low-tail}
-        case middle
-          send back
-            make pair
-              bind head
-                make {middle-head}
-              bind tail
-                make {middle-tail}
-        case high
-          send back
-            make pair
-              bind head
-                make {high-head}
-              bind tail
-                make {high-tail}
-
-# TEMPLATE: one row of a nine-state line table that outputs a single value. For a fixed head tone, give the value
-# against each tail tone.
-tree value-row
-  take head-tone
-  take at-low
-  take at-middle
-  take at-high
-
-  hook fuse
-    case {head-tone}
-      fork case, read tail
-        case low
-          send back
-            make {at-low}
-        case middle
-          send back
-            make {at-middle}
-        case high
-          send back
-            make {at-high}
-
-
-task collide
-  take l, like line
-  like line
-  fork case, read l
-    case pair
-      link head
-      link tail
-      fork case, read head
-        fuse line-row, low, low, low, middle, low, middle, middle
-        fuse line-row, middle, low, middle, high, low, high, middle
-        fuse line-row, high, low, high, middle, high, high, high
-
-# The inverse collision, the permutation run backward. Since the neutral three-cycle is not order two, reversibility is
-# shown by an explicit inverse rather than by self-composition. Every other line state is fixed or in a two-cycle.
-task uncollide
-  take l, like line
-  like line
-  fork case, read l
-    case pair
-      link head
-      link tail
-      fork case, read head
-        fuse line-row, low, low, low, middle, low, high, low
-        fuse line-row, middle, low, middle, low, high, high, middle
-        fuse line-row, high, middle, middle, middle, high, high, high
-
-# The signed charge of a line: the sum of its two tone charges, a value in minus two to plus two. This is the quantity the
-# collision must conserve, the discrete charge the law never creates or destroys.
-form tally
-  case sink-two
-  case sink-one
-  case flat
-  case lift-one
-  case lift-two
-
-# The pair charge, tone plus tone read as a tally: the signed sum the lean assigns to a whole line.
-task pair-charge
-  take l, like line
-  like tally
-  fork case, read l
-    case pair
-      link head
-      link tail
-      fork case, read head
-        fuse value-row, low, sink-two, sink-one, flat
-        fuse value-row, middle, sink-one, flat, lift-one
-        fuse value-row, high, flat, lift-one, lift-two
-
-# The collide step is REVERSIBLE: uncollide (collide (pair a b)) = pair a b, for every pair of tones. The law of motion is
-# invertible, so from the result of a beat the state before it is recovered and no information is lost. Proved by
-# simultaneous case analysis on the two tones, all nine line states resolving by computation. This is the knit's first
-# hard constraint, the reason any arrow of time must come from the growing edge and not from the local law.
-rule collide-is-reversible
-  mark a, like tone
-  mark b, like tone
-  show hold
-    call is-equal
-      call uncollide
-        call collide
-          make pair
-            bind head
-              read a
-            bind tail
-              read b
-      make pair
-        bind head
-          read a
-        bind tail
-          read b
-  fold a, b
-
-# The collide step CONSERVES CHARGE: pair-charge (collide (pair a b)) = pair-charge (pair a b). The signed sum of the two
-# tones is the same before and after the collision, across all nine line states. This is the knit's second hard
-# constraint, the discrete conservation law from which the gauge charge and its current later emerge.
-rule collide-conserves-charge
-  mark a, like tone
-  mark b, like tone
-  show hold
-    call is-equal
-      call pair-charge
-        call collide
-          make pair
-            bind head
-              read a
-            bind tail
-              read b
-      call pair-charge
-        make pair
-          bind head
-            read a
-          bind tail
-            read b
-  fold a, b
-
-# The lean's order: low at the bottom, middle in the middle, high at the top. at-most a b is yes when a sits no higher
-# than b. This is the order that turns a tone into a signed charge and gives growth its outward direction.
-task at-most
+# Equality of tones, as a flag.
+task same-tone
   take a, like tone
   take b, like tone
   like flag
   fork case, read a
-    case low
-      send back
-        make yes
-    case middle
-      fork case, read b
-        case low
-          send back
-            make no
-        case middle
-          send back
-            make yes
-        case high
-          send back
-            make yes
-    case high
-      fork case, read b
-        case low
-          send back
-            make no
-        case middle
-          send back
-            make no
-        case high
-          send back
-            make yes
+    fuse tone-row, fear, yes, no, no
+    fuse tone-row, calm, no, yes, no
+    fuse tone-row, love, no, no, yes
 
-# The order is REFLEXIVE: at-most t t = yes, every tone sits no higher than itself. By case on t.
-rule at-most-is-reflexive
-  mark t, like tone
+# THE ADDITIVE GROUP: (tone, tone-sum, calm, tone-conjugate) is an abelian group.
+fuse associative, tone-sum, tone, tone-sum
+fuse commutative, tone-sum, tone, tone-sum
+fuse identity, tone-sum, tone, tone-sum, calm-tone
+fuse inverse, tone-sum, tone, tone-sum, tone-conjugate, calm-tone
+
+# THE MULTIPLICATIVE MONOID, and the ring: tone-product is associative, commutative, has love as its unit, and
+# distributes over tone-sum. With the field rules below, the tones are the field F3.
+fuse associative, tone-product, tone, tone-product
+fuse commutative, tone-product, tone, tone-product
+fuse identity, tone-product, tone, tone-product, love-tone
+fuse distributive, tone-product, tone, tone-product, tone-sum
+
+# C is an involution, and an automorphism of the additive group: C (a + b) = C a + C b.
+fuse involution, tone-conjugate, tone, tone-conjugate
+fuse homomorphism, tone-conjugate, tone, tone-conjugate, tone-sum, tone-sum
+
+# C is NEGATION: tone-conjugate a = fear a. Charge conjugation is multiplication by -1.
+rule conjugate-is-multiplying-by-fear
+  mark a, like tone
   show hold
     call is-equal
-      call at-most
-        read t
-        read t
-      make yes
-  fold t
+      call tone-conjugate
+        read a
+      call tone-product
+        make fear
+        read a
+  fold a
 
-# The order is TOTAL: either (at-most a b) (at-most b a) = yes, any two tones are comparable one way or the other. By
-# simultaneous case analysis on both tones, the nine pairs each resolving by computation. With reflexivity this makes the
-# lean a genuine total order on the ternary value.
-rule at-most-is-total
+# C passes through a product onto either factor: C (a b) = (C a) b. It is linear, not multiplicative.
+rule conjugate-passes-through-a-product
   mark a, like tone
   mark b, like tone
+  show hold
+    call is-equal
+      call tone-conjugate
+        call tone-product
+          read a
+          read b
+      call tone-product
+        call tone-conjugate
+          read a
+        read b
+  fold a, b
+
+# THE FIELD: every vibe is a unit, its own inverse, because it squares to love. A vibe times itself is love, whatever its
+# sign, which is why the charge of a pair of like vibes and of a love-fear pair differ only in sign.
+rule every-vibe-squares-to-love
+  mark a, like tone
+  have vibe
+    call is-equal
+      call is-vibe
+        read a
+      make yes
+  show hold
+    call is-equal
+      call tone-product
+        read a
+        read a
+      make love
+  fold a
+
+# NO ZERO DIVISORS: if a b = calm then a = calm or b = calm.
+rule a-product-is-calm-only-through-a-calm-factor
+  mark a, like tone
+  mark b, like tone
+  have calm-product
+    call is-equal
+      call tone-product
+        read a
+        read b
+      make calm
   show hold
     call is-equal
       call either
-        call at-most
+        call same-tone
           read a
+          make calm
+        call same-tone
           read b
-        call at-most
-          read b
-          read a
+          make calm
       make yes
   fold a, b
 
-# The order is ANTISYMMETRIC: if a is at most b AND b is at most a, then a = b. The two outer tones cannot each sit no
-# higher than the other unless they are the same. Proved by simultaneous case analysis on both tones; the off-diagonal
-# pairs are ruled out because one of the two hypotheses is false there, leaving only the equal cases.
-rule at-most-is-antisymmetric
+# CHARACTERISTIC THREE: a + a + a = calm for every tone.
+rule three-of-a-tone-is-calm
   mark a, like tone
-  mark b, like tone
-  have hab
-    call is-equal
-      call at-most
-        read a
-        read b
-      make yes
-  have hba
-    call is-equal
-      call at-most
-        read b
-        read a
-      make yes
   show hold
     call is-equal
+      call tone-sum
+        call tone-sum
+          read a
+          read a
+        read a
+      make calm
+  fold a
+
+# FROBENIUS: every tone is its own cube, a a a = a, the identity x^3 = x that holds for every element of F3.
+rule every-tone-is-its-own-cube
+  mark a, like tone
+  show hold
+    call is-equal
+      call tone-product
+        call tone-product
+          read a
+          read a
+        read a
       read a
-      read b
+  fold a
+
+# NO SQUARE IS FEAR: a a is calm or love, never fear (-1 is not a square modulo three). This is the residue fact that
+# makes two inert in the Eisenstein integers and keeps the qutrit symplectic form nondegenerate (vibe/eisenstein,
+# vibe/role).
+rule no-square-is-fear
+  mark a, like tone
+  show hold
+    call is-equal
+      call same-tone
+        call tone-product
+          read a
+          read a
+        make fear
+      make no
+  fold a
+
+# A SUM OF TWO SQUARES IS CALM ONLY AT CALM: a a + b b = calm forces a = b = calm, since -1 is not a square.
+rule two-squares-vanish-only-at-calm
+  mark a, like tone
+  mark b, like tone
+  have calm-sum
+    call is-equal
+      call tone-sum
+        call tone-product
+          read a
+          read a
+        call tone-product
+          read b
+          read b
+      make calm
+  show hold
+    call is-equal
+      call both
+        call same-tone
+          read a
+          make calm
+        call same-tone
+          read b
+          make calm
+      make yes
   fold a, b
 
-# The order is TRANSITIVE: if a is at most b AND b is at most c, then a is at most c. The order carries through the
-# middle. Proved by simultaneous case analysis on all three tones; impossible antecedent combinations are discharged.
-rule at-most-is-transitive
+# BALANCED TERNARY. A count from -4 to +4, wide enough for the sum of three tones and for 3 carry + digit.
+form balance
+  case minus-four
+  case minus-three
+  case minus-two
+  case minus-one
+  case even
+  case plus-one
+  case plus-two
+  case plus-three
+  case plus-four
+
+# TEMPLATE: one row of the shift table: a balance moved down by one, kept, or moved up by one.
+tree shift-row
+  take row
+  take down
+  take up
+
+  hook fuse
+    case {row}
+      fork case, read t
+        case fear
+          send back
+            make {down}
+        case calm
+          send back
+            make {row}
+        case love
+          send back
+            make {up}
+
+# Add a tone's integer value (-1, 0, +1) to a balance. The ends are never reached by the sums below and saturate.
+task balance-shift
+  take n, like balance
+  take t, like tone
+  like balance
+  fork case, read n
+    fuse shift-row, minus-four, minus-four, minus-three
+    fuse shift-row, minus-three, minus-four, minus-two
+    fuse shift-row, minus-two, minus-three, minus-one
+    fuse shift-row, minus-one, minus-two, even
+    fuse shift-row, even, minus-one, plus-one
+    fuse shift-row, plus-one, even, plus-two
+    fuse shift-row, plus-two, plus-one, plus-three
+    fuse shift-row, plus-three, plus-two, plus-four
+    fuse shift-row, plus-four, plus-three, plus-four
+
+# The integer value of three tones added, as a balance from -3 to +3.
+task total-of-three
+  take a, like tone
+  take b, like tone
+  take c, like tone
+  like balance
+  send back
+    call balance-shift
+      call balance-shift
+        call balance-shift
+          make even
+          read a
+        read b
+      read c
+
+# The carry of a half adder: love + love overflows to (carry love, digit fear) since 1 + 1 = 3 - 1, fear + fear to
+# (carry fear, digit love), and every other pair fits in one digit.
+task half-carry
+  take a, like tone
+  take b, like tone
+  like tone
+  fork case, read a
+    fuse tone-row, fear, fear, calm, calm
+    fuse tone-row, calm, calm, calm, calm
+    fuse tone-row, love, calm, calm, love
+
+# The full adder: two half adders. Its digit is the residue sum, its carry the residue sum of the two half carries
+# (they are never both the same vibe, so the carry stays one trit).
+task full-digit
+  take a, like tone
+  take b, like tone
+  take c, like tone
+  like tone
+  send back
+    call tone-sum
+      call tone-sum
+        read a
+        read b
+      read c
+
+task full-carry
+  take a, like tone
+  take b, like tone
+  take c, like tone
+  like tone
+  send back
+    call tone-sum
+      call half-carry
+        read a
+        read b
+      call half-carry
+        call tone-sum
+          read a
+          read b
+        read c
+
+# THE CARRY LAW: a + b + c = 3 carry + digit, as integers, for all twenty-seven triples of tones. Three times the carry
+# is the carry shifted three times, then the digit is added. Balanced ternary addition is exact with one-trit carries.
+rule the-full-adder-is-exact
   mark a, like tone
   mark b, like tone
   mark c, like tone
-  have hab
-    call is-equal
-      call at-most
-        read a
-        read b
-      make yes
-  have hbc
-    call is-equal
-      call at-most
-        read b
-        read c
-      make yes
   show hold
     call is-equal
-      call at-most
+      call total-of-three
         read a
+        read b
         read c
-      make yes
+      call balance-shift
+        call total-of-three
+          call full-carry
+            read a
+            read b
+            read c
+          call full-carry
+            read a
+            read b
+            read c
+          call full-carry
+            read a
+            read b
+            read c
+        call full-digit
+          read a
+          read b
+          read c
   fold a, b, c

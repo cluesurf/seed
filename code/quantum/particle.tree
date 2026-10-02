@@ -28,7 +28,7 @@
 # and the charge of a species does not depend on which generation it sits in. The up quark, the charm quark, and the top
 # quark all carry +2 thirds.
 
-load @term/form/code/atom/flag
+load @term/seed/code/atom/flag
   find flag
 
 # The opposite truth value: yes becomes no and back. Used to state that the quark and lepton tests are exact

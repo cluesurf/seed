@@ -1,4 +1,4 @@
-load @term/form/code/structure/set
+load @term/seed/code/structure/set
   find set
 
 # An operation: a function that combines elements of a set into another element of the same set, the verb of an

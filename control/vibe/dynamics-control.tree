@@ -1,0 +1,106 @@
+# NEGATIVE CONTROL: knit, line, clifford, boost. Every rule here must be refused.
+
+load @term/seed/code/atom/flag
+  find flag
+
+load @term/seed/code/vibe/tone
+  find tone
+
+load @term/seed/code/vibe/knit
+  find dock-line
+  find store-move
+  find line-content
+  find pair-collide
+
+load @term/seed/code/vibe/line
+  find line-ring
+  find ring-of
+  find beat-ring
+  find unstream-ring
+  find stream-ring
+  find flip-velocities
+
+load @term/seed/code/vibe/clifford
+  find cl4-blade
+  find blade-product
+  find volume
+  find scalar-one
+  find negate-blade
+
+load @term/seed/code/vibe/boost
+  find interval
+  find boost-time
+  find boost-space
+
+# the store does not keep the content (a pair is stored, two vibes leave the slots)
+rule control-the-store-keeps-the-content
+  mark l, like dock-line
+  show hold
+    call is-equal
+      call line-content
+        call store-move
+          read l
+      call line-content
+        read l
+  fold l
+
+# the pair collision is not an involution
+rule control-the-pair-collision-is-an-involution
+  mark l, like dock-line
+  show hold
+    call is-equal
+      call pair-collide
+        call pair-collide
+          read l
+      read l
+  fold l
+
+# the stream alone does not undo the beat
+rule control-unstream-undoes-the-beat
+  mark w, like line-ring
+  show hold
+    call is-equal
+      call unstream-ring
+        call beat-ring
+          read w
+      read w
+  fold w
+
+# the velocity flip does not commute with the stream
+rule control-the-flip-commutes-with-the-stream
+  mark w, like line-ring
+  show hold
+    call is-equal
+      call flip-velocities
+        call stream-ring
+          read w
+      call stream-ring
+        call flip-velocities
+          read w
+  fold w
+
+# Cl(4) is not commutative
+rule control-blades-commute
+  mark x, like cl4-blade
+  mark y, like cl4-blade
+  show hold
+    call is-equal
+      call blade-product
+        read x
+        read y
+      call blade-product
+        read y
+        read x
+  fold x, y
+
+# the volume element does not square to -1 in signature (4, 0)
+rule control-the-volume-squares-to-minus-one
+  show hold
+    call is-equal
+      call blade-product
+        call volume
+        call volume
+      call negate-blade
+        call scalar-one
+  calm hold
+

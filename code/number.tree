@@ -1,4 +1,4 @@
-load @term/form/code/number/real
+load @term/seed/code/number/real
   find real
 
 # Number, the concept: the measure of quantity, built up in a tower of widening systems, the naturals (counting), the

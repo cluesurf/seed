@@ -15,7 +15,7 @@
 # to the identity, excitations come in conserved-parity pairs along a string, the two logical operators anticommute, and
 # the braiding phase of e around m is minus one.
 
-load @term/form/code/atom/flag
+load @term/seed/code/atom/flag
   find flag
   find both
   find either

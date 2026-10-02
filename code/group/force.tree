@@ -1,4 +1,4 @@
-load @term/form/code/group
+load @term/seed/code/group
   find group
 
 # A gauge group: the symmetry group of a force, the transformations of the internal fields that leave the physics

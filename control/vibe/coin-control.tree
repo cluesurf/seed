@@ -1,0 +1,67 @@
+# NEGATIVE CONTROL: the integer identities of coin. Every rule here must be refused.
+
+load @term/seed/code/vibe/eisenstein
+  find eisenstein-norm
+  find omega-real
+  find omega-part
+
+load @term/seed/code/vibe/coin
+  find circulant-real
+  find circulant-part
+
+# the coin does NOT fix the antisymmetric pair (it turns it by w)
+rule control-coin-fixes-the-antisymmetric-pair
+  mark x1, like integer
+  mark x2, like integer
+  show hold
+    call is-equal
+      call circulant-real
+        code 1
+        code 1
+        code 1
+        code -1
+        read x1
+        read x2
+        call subtract
+          code 0
+          read x1
+        call subtract
+          code 0
+          read x2
+      call multiply
+        code 2
+        read x1
+
+# the parallelogram law with the wrong factor
+rule control-parallelogram-factor-three
+  mark a, like integer
+  mark b, like integer
+  mark c, like integer
+  mark d, like integer
+  show hold
+    call is-equal
+      call add
+        call eisenstein-norm
+          call add
+            read a
+            read c
+          call add
+            read b
+            read d
+        call eisenstein-norm
+          call subtract
+            read a
+            read c
+          call subtract
+            read b
+            read d
+      call multiply
+        code 3
+        call add
+          call eisenstein-norm
+            read a
+            read b
+          call eisenstein-norm
+            read c
+            read d
+

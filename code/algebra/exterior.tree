@@ -1,4 +1,4 @@
-load @term/form/code/structure/space/vector
+load @term/seed/code/structure/space/vector
   find vector-space
 
 # An exterior algebra: the algebra of the wedge product, where a vector times itself is zero, so products of distinct

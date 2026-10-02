@@ -1,7 +1,7 @@
-load @term/form/code/structure/set
+load @term/seed/code/structure/set
   find set
 
-load @term/form/code/structure/function/binary
+load @term/seed/code/structure/function/binary
   find binary-function
 
 # A field, a set with addition and multiplication, both invertible, where multiplication distributes over addition. The reals, the complex numbers, and the rationals are fields. It is the scalars an algebra is built over.

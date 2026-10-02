@@ -1,4 +1,4 @@
-load @term/form/code/structure/manifold
+load @term/seed/code/structure/manifold
   find manifold
 
 # An embedding: an inclusion of one space inside another that faithfully preserves its structure, so the smaller space

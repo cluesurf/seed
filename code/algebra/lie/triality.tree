@@ -12,7 +12,7 @@
 # the vector. It proves the cycle has order three, the swap is an involution, the vector is the fixed point of the swap, and
 # the two generators satisfy the S3 relation that makes the group the symmetric group of order six, not the cyclic group.
 
-load @term/form/code/atom/flag
+load @term/seed/code/atom/flag
   find flag
 
 # The three eight-dimensional irreducible representations of Spin(8): the vector 8v, the spinor 8s, and the cospinor 8c.

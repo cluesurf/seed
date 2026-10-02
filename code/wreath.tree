@@ -1,4 +1,4 @@
-load @term/form/code/group
+load @term/seed/code/group
   find group
 
 # A wreath product: a way of combining two groups where one group acts by permuting several copies of the other, the

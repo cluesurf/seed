@@ -1,4 +1,4 @@
-load @term/form/code/space/hyperbolic/heptagrid
+load @term/seed/code/space/hyperbolic/heptagrid
   find heptagrid
 
 # The mantilla, the recursive lace-like pattern that lives in the heptagrid {7, 3}, a background of nested regions of

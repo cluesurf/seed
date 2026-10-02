@@ -197,6 +197,36 @@ a proved ceiling theorem (`fold`), plus pure-constant dimension holds.
 `node <...>/host/line.js scan code/<f>.tree 2>&1 | grep -iE 'warn|unchecked|error|invalid'`. A file with
 `unchecked-hold` warnings is not done.
 
+## What the kernel can do now (learned building code/vibe, 2026-10-02)
+
+- **A polynomial defined once as a task can be named in a ring identity.** A task over `integer` whose whole body is
+  one `send back <expression>` is unfolded by the ring prover (check/unfold.ts), so `call eisenstein-norm` works in
+  a goal, in a `have`, and in an `is-minimum` sum-of-squares goal. Recursive tasks and tasks over `natural-number`
+  are never unfolded (`subtract` truncates there). Test: test/check/ring-unfold.ts.
+- **`fold` splits records down to their finite fields.** `fold m, n` over two 2x2 matrices of residues enumerates
+  every entry. A law about a record carrier needs no hand-written marks for its fields. Test: test/check/deep-split.ts.
+- **The law kit, code/vibe/law.tree**: `fuse associative, name, carrier, op` and its siblings state one law in one
+  line. Templates cannot expand other templates, so a structure is the list of its laws. Every template has a negative
+  control that must be refused.
+- **Define a task BEFORE the rule that calls it.** A rule elaborated before its helper fails with "the induction did
+  not establish the equality", which reads like a false theorem. Two of these cost real time.
+- **Do not write a multi-line `fork case` scrutinee.** Branch on a flag computed by a helper task instead:
+  `fork case, call is-full, read l`, or a task that takes the flag as an argument.
+- **Deep computations used to fail silently.** The kernel unfolded one definition per nested call, so a long chain
+  exhausted the stack, and the fuel counter leaked on the exception, so EVERY later proof in the same build quietly
+  failed. Both are fixed in check/judge.ts (iterative `whnf` unfolding, `try/finally` on the fuel). If a true closed
+  computation fails, split it (two half-size rules) before suspecting the mathematics, and check with Python.
+- **`cite` rewrites only the case term as quoted, before definitions unfold**, and the conversion that unfolds them
+  uses only the induction hypotheses. An induction step that must unfold and THEN apply a lemma does not close. State
+  lemmas in the shape the unreduced goal has, or model a finite instance and prove it by exhaustion.
+- **Name every rule, task and form uniquely across the package.** `conjugate`, `shift`, `flip`, `negate` are taken.
+
+## Checking a few files fast
+
+The full package takes most of an hour. To check a handful of modules with every diagnostic printed, link them into
+a small package (below sixteen files `term make` is sequential and prints every diagnostic; above, it prints only the
+first per file): `sh control/check.sh law tone role`. The negative controls run with `sh control/run.sh`.
+
 ## The test that decides if a file is real
 
 Ask: **if I deleted every `hold` and kept only the `form`, `task`, and `rule` blocks, would there

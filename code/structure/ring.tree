@@ -1,10 +1,10 @@
-load @term/form/code/structure/set
+load @term/seed/code/structure/set
   find set
 
-load @term/form/code/structure/function/binary
+load @term/seed/code/structure/function/binary
   find binary-function
 
-load @term/form/code/structure/function/unary
+load @term/seed/code/structure/function/unary
   find unary-function
 
 # A ring: a set with two operations, an addition that makes it an abelian group and a multiplication that is

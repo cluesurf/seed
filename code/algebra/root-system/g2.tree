@@ -82,7 +82,7 @@ task is-long
             make no
 
 # The flag, imported for the length test.
-load @term/form/code/atom/flag
+load @term/seed/code/atom/flag
   find flag
 
 # THE HALF-TURN IS AN INVOLUTION: half-turn (half-turn s) = s, for every clock direction. Two half turns are a full turn,

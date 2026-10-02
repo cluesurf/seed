@@ -1,126 +1,129 @@
-# The dock is the 24-cell, DERIVED. A tone written in four slots, each in {-1,0,+1}, gives 3^4 = 81 words. Sort them by how
-# many slots are nonzero: the shells have sizes choose(4,k) * 2^k for k = 0..4, namely 1, 8, 24, 32, 16, and they sum to
-# 3^4 = 81 (the binomial expansion of (1+2)^4). The two-nonzero shell, choose(4,2) * 2^2 = 6 * 4 = 24, IS the 24-cell:
-# choose which two of four slots are nonzero (6 ways), a sign for each (4 ways). These are exact arithmetic identities,
-# checked by `seed test` by native evaluation (machine integers, no unfold-fuel limit). The binomial coefficients are not
-# asserted: each is built by Pascal's triangle, every entry the sum of the two above it, so the row 1,4,6,4,1 is derived.
+# The dock is the 24-cell, DERIVED from the tone. Four slots each hold a tone, so there are 3^4 = 81 tetrads (vibe/dock).
+# Count them by how many slots hold a vibe: a calm slot contributes 1 and each of the two vibes contributes x, so one
+# slot is 1 + 2x and four slots are (1 + 2x)^4. The coefficient of x^k is the number of tetrads with k vibes:
+#
+#   (1 + 2x)^4 = 1 + 8 x + 24 x^2 + 32 x^3 + 16 x^4,    1 + 8 + 24 + 32 + 16 = 81 = 3^4.
+#
+# The shells are the origin, the 16-cell's 8 vertices +-e_i, the 24-cell's 24 vertices +-e_i +-e_j, 32 vectors with
+# three vibes, and the tesseract's 16 vertices (+-1, +-1, +-1, +-1). The two-vibe shell is the only one that is a
+# self-dual regular polytope, and it is the dock: vibe/dock proves those 24 tetrads are exactly the 24 Hurwitz units,
+# with 12 lines and 3 frames. The same expansion with one choice per slot, (1 + x)^4 = 1 + 4x + 6x^2 + 4x^3 + x^4,
+# counts the blades of the Clifford algebra Cl(4) by grade (vibe/clifford), and its even part 1 + 6 + 1 = 8 is the
+# register a member carries.
+#
+# Proved as polynomial identities in x, for every x, so each coefficient is pinned, not only the total.
 
-# Pascal's triangle to row four. Each entry is the sum of the two above. Row 2: choose(2,1) = choose(1,0)+choose(1,1) = 2.
-hold pascal-two-one-is-two
-  call is-equal
-    code 2
+# What one slot contributes: calm counts 1, each of love and fear counts x.
+task slot-weight
+  take x, like integer
+  like integer
+  send back
     call add
       code 1
-      code 1
-
-# Row 3: choose(3,1) = choose(2,0)+choose(2,1) = 1+2 = 3, and choose(3,2) = choose(2,1)+choose(2,2) = 2+1 = 3.
-hold pascal-three-one-is-three
-  call is-equal
-    code 3
-    call add
-      code 1
-      code 2
-
-hold pascal-three-two-is-three
-  call is-equal
-    code 3
-    call add
-      code 2
-      code 1
-
-# Row 4: choose(4,1) = choose(3,0)+choose(3,1) = 1+3 = 4, choose(4,2) = choose(3,1)+choose(3,2) = 3+3 = 6,
-# choose(4,3) = choose(3,2)+choose(3,3) = 3+1 = 4. The full row is 1, 4, 6, 4, 1.
-hold pascal-four-one-is-four
-  call is-equal
-    code 4
-    call add
-      code 1
-      code 3
-
-hold pascal-four-two-is-six
-  call is-equal
-    code 6
-    call add
-      code 3
-      code 3
-
-hold pascal-four-three-is-four
-  call is-equal
-    code 4
-    call add
-      code 3
-      code 1
-
-# THE DOCK: the two-nonzero shell is choose(4,2) * 2^2 = 6 * 4 = 24, the count of 24-cell vertices, equal to its faces
-# (self-dual), to the D4 roots, to the unit Hurwitz quaternions, and to the 4D kissing number. The dock has 24 sites.
-hold dock-two-nonzero-shell-is-twenty-four
-  call is-equal
-    code 24
-    call multiply
-      code 6
-      code 4
-
-# The twenty-four sites pair into the twelve lines the knit acts along: 24 = 2 * 12.
-hold dock-sites-pair-into-twelve-lines
-  call is-equal
-    code 24
-    call multiply
-      code 2
-      code 12
-
-# THE SHELL DECOMPOSITION. The 81 ternary four-words split by nonzero count into shells of size choose(4,k) * 2^k:
-# shell 0 = 1*1 = 1, shell 1 = 4*2 = 8, shell 2 = 6*4 = 24, shell 3 = 4*8 = 32, shell 4 = 1*16 = 16.
-hold shell-one-is-eight
-  call is-equal
-    code 8
-    call multiply
-      code 4
-      code 2
-
-hold shell-two-is-twenty-four
-  call is-equal
-    code 24
-    call multiply
-      code 6
-      code 4
-
-hold shell-three-is-thirty-two
-  call is-equal
-    code 32
-    call multiply
-      code 4
-      code 8
-
-hold shell-four-is-sixteen
-  call is-equal
-    code 16
-    call multiply
-      code 1
-      code 16
-
-# The shells sum to every word: 1 + 8 + 24 + 32 + 16 = 81. This is the real content, the binomial theorem (1+2)^4 = 3^4
-# tying the 24-cell shell to the whole tone alphabet. It cannot sum to 81 by accident.
-hold shells-sum-to-eighty-one
-  call is-equal
-    code 81
-    call add
-      code 1
-      call add
-        code 8
-        call add
-          code 24
-          call add
-            code 32
-            code 16
-
-# And eighty-one is three to the fourth, the count of all four-slot ternary words.
-hold eighty-one-is-three-to-the-fourth
-  call is-equal
-    code 81
-    call multiply
-      code 3
       call multiply
+        code 2
+        read x
+
+task blade-weight
+  take x, like integer
+  like integer
+  send back
+    call add
+      code 1
+      read x
+
+task fourth-power
+  take y, like integer
+  like integer
+  send back
+    call multiply
+      call multiply
+        read y
+        read y
+      call multiply
+        read y
+        read y
+
+task power-of-x
+  take x, like integer
+  take c0, like integer
+  take c1, like integer
+  take c2, like integer
+  take c3, like integer
+  take c4, like integer
+  like integer
+  send back
+    call add
+      read c0
+      call multiply
+        read x
+        call add
+          read c1
+          call multiply
+            read x
+            call add
+              read c2
+              call multiply
+                read x
+                call add
+                  read c3
+                  call multiply
+                    read x
+                    read c4
+
+# THE SHELLS OF THE TONE: four slots of (1 + 2x) expand to 1 + 8x + 24x^2 + 32x^3 + 16x^4.
+rule the-tetrads-split-into-shells-of-one-eight-twenty-four-thirty-two-sixteen
+  mark x, like integer
+  show hold
+    call is-equal
+      call fourth-power
+        call slot-weight
+          read x
+      call power-of-x
+        read x
+        code 1
+        code 8
+        code 24
+        code 32
+        code 16
+
+# ALL 81: at x = 1 every tetrad counts once, (1 + 2)^4 = 3^4.
+rule the-shells-total-three-to-the-fourth
+  show hold
+    call is-equal
+      call fourth-power
+        call slot-weight
+          code 1
+      call fourth-power
         code 3
-        call multiply
-          code 3
-          code 3
+
+# THE BLADES OF Cl(4) BY GRADE: 1, 4, 6, 4, 1, sixteen in all, the even ones 1 + 6 + 1 = 8.
+rule the-blades-split-by-grade-into-one-four-six-four-one
+  mark x, like integer
+  show hold
+    call is-equal
+      call fourth-power
+        call blade-weight
+          read x
+      call power-of-x
+        read x
+        code 1
+        code 4
+        code 6
+        code 4
+        code 1
+
+# Half the sum of (1 + x)^4 at x = 1 and x = -1 counts the even grades: (16 + 0) / 2 = 8.
+rule the-even-blades-number-eight
+  show hold
+    call is-equal
+      call add
+        call fourth-power
+          call blade-weight
+            code 1
+        call fourth-power
+          call blade-weight
+            code -1
+      call multiply
+        code 2
+        code 8

@@ -18,7 +18,7 @@
 # shadow of how a symmetry group sorts its own states into irreducible pieces, the orbit-by-orbit structure of a theory's
 # spectrum.
 
-load @term/form/code/atom/flag
+load @term/seed/code/atom/flag
   find flag
   find both
   find either

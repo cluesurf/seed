@@ -6,9 +6,9 @@
 <br/>
 <br/>
 
-<h3 align='center'>form.tree</h3>
+<h3 align='center'>@term/seed</h3>
 <p align='center'>
-  The Seed Math Definition Library
+  The math library: machine-checked definitions and proofs
 </p>
 
 <br/>
@@ -17,7 +17,7 @@
 
 ## Introduction
 
-form.tree is a machine-checked library of mathematics, written in Seed
+seed.tree is a machine-checked library of mathematics, written in Term
 `.tree` code.
 
 Every structure here is defined as a concrete object and every theorem
@@ -28,7 +28,7 @@ inverse by induction. If a proof is wrong, the file does not compile.
 
 It is a proof assistant and proof library in the lineage of Coq, Agda,
 Lean, Idris, and Isabelle. The aim is the full foundations of
-mathematics, the way those libraries do it, but in Seed, with a small
+mathematics, the way those libraries do it, but in Term, with a small
 clear surface anyone can read.
 
 ### Scope
@@ -124,7 +124,11 @@ computable operations plus proven laws), not a stub.
 
 | area                    | proves                                                                                                                                                                                                                 |
 | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| The eight base elements | tone, lean, site, dock, mesh, knit, wake, beat, each modeled and proved to satisfy its defining laws, the reversible charge-conserving law of motion, and the forced derivation from one distinction up to the 24-cell |
+| The tone and its numbers | the tone is the field F3 (C is negation, x^3 = x, balanced ternary adds exactly); the Eisenstein integers Z[w] (ring laws, multiplicative norm, reduction to F3, 3 ramifies, 7 splits, the six units); the coin and the meeting as exact unitary circulants (eigenvalues, det w, top speed 1/2) |
+| The qutrit | the role grid Z3 x Z3 with its symplectic form and the 12 stabilizer lines of AG(2, 3); the 27 Weyl operators (Z X = w X Z, exponent 3, center); SL(2, 3) proved isomorphic to 2T by an explicit map; the Clifford action as automorphisms |
+| The dock | 2T = Q8 x\| Z3 checked against the quaternions; the 24 slots as tone tetrads, proved to be exactly the 24 Hurwitz units; lines, frames, the W(D4) and W(F4) Coxeter relations, triality; the inner product is twice Re(g h^-1); a spherical 5-design, not a 6-design; the Hopf fibration as six circles of four; Cl(4) and the split of Cl+(4) |
+| The mesh | Gram determinants classify {3,4,3} (spherical), {4,3,4} (flat), {3,4,3,4} (hyperbolic); the cone-type matrix gives the cubic, the shells 1, 24, 456, 8376, ... and the warp factor in (18.278, 18.279); Margenstern's Fibonacci splitting of {7,3}; the D4 lattice stand-in |
+| The rule | the contact (bounce and pass), the pair store and the earliest pair map, each reversible and conserving charge, momentum and energy, with C; a ring of docks under the knit: the line law, reversibility, C and time reversal, motion at one dock per beat; velocity addition and the invariant interval |
 
 ### What a foundation is, and why it exists
 
@@ -156,7 +160,7 @@ runnable, and the modern branches argue over how equality should behave.
 
 ### Why we chose what we did
 
-form.tree exists to serve a system, Seed, that compiles and runs real
+seed.tree exists to serve a system, Term, that compiles and runs real
 programs, and to model physics (the vibe substrate) where computation is
 the subject itself. So we need a foundation that is:
 
@@ -225,8 +229,8 @@ theorems are true. Each is also tested against a deliberately false
 variant, which must be rejected, so the proofs are not vacuous.
 
 The result reads like ordinary code, checks like a proof assistant, and
-(because Seed compiles to many targets) can run anywhere. That is the
-power and the future of form.tree: one readable library, mechanically
+(because Term compiles to many targets) can run anywhere. That is the
+power and the future of seed.tree: one readable library, mechanically
 certain, growing toward all of mathematics and the physics built on it.
 
 ### How this differs from the math you were taught
@@ -236,7 +240,7 @@ Arithmetic gives answers, algebra solves for `x`, calculus finds a
 derivative. Even proofs, when they appear, are written as informal prose
 for a human reader to be convinced by.
 
-form.tree is a different activity (the same one as Lean, Agda, Idris,
+seed.tree is a different activity (the same one as Lean, Agda, Idris,
 Coq, and Isabelle). It is closer to building with code than to solving
 for an answer, and it rests on three ideas, more general than numbers:
 
@@ -269,7 +273,7 @@ data.
 
 ### Formal verification, and why foundations are essential
 
-form.tree is one point in a much larger field: formal verification, the
+seed.tree is one point in a much larger field: formal verification, the
 science of proving software and mathematics correct rather than just
 hoping they are. The field is a spectrum, from cheap-and-partial to
 expensive-and-total.
@@ -286,7 +290,7 @@ expensive-and-total.
 Underneath, three philosophies: search (SAT, SMT, fuzzing, model
 checking find a bug or a witness), approximate (types, abstract
 interpretation compute a safe summary), and prove (Coq, Lean, Agda, and
-form.tree construct a certificate that holds for _every_ case). The
+seed.tree construct a certificate that holds for _every_ case). The
 advanced tools converge downward onto SMT and SAT engines.
 
 How proving is done in practice is interactive theorem proving: a person
@@ -294,9 +298,9 @@ states a theorem and builds the proof, while the machine checks each
 step, usually live in an editor over the Language Server Protocol or at
 a terminal, so a red underline appears the instant a step is wrong. Some
 steps are discharged by automated search (an SMT call, a decision
-procedure); the rest are guided by the human. form.tree sits firmly on
+procedure); the rest are guided by the human. seed.tree sits firmly on
 the prove side: it is a type-checker, every `rule` is a machine-checked
-proof, and the same Seed tooling that gives editor feedback for code
+proof, and the same Term tooling that gives editor feedback for code
 gives it for proofs.
 
 Why insist on this when testing is so much cheaper? Because tests sample
@@ -313,13 +317,13 @@ A model checker, an SMT solver, a proof assistant each rest on a small
 formal core whose own rules must be sound, or the whole tower certifies
 nothing. The foundation is the bedrock. It is what makes "the machine
 checked it" mean "it is true" rather than "it passed the tests we
-wrote." form.tree builds on a foundation chosen to be sound,
+wrote." seed.tree builds on a foundation chosen to be sound,
 computational, and small precisely so that everything checked on top of
 it inherits that certainty, all the way up to the physics models.
 
 ### Standard foundations, and why we chose differently
 
-Each historical foundation solved a problem and left one. form.tree sits
+Each historical foundation solved a problem and left one. seed.tree sits
 at the end of this line, taking the computational, typed, resource-aware
 branch.
 
@@ -334,14 +338,14 @@ branch.
 | Calculus of Constructions / CIC (Coq)         | 1980s       | very powerful, but impredicative `Prop` and heavy machinery                                   |
 | Homotopy Type Theory / Univalent Foundations  | 2000s-2010s | beautiful, but univalence was a non-computing axiom                                           |
 | Cubical type theory                           | 2010s       | makes univalence compute, at the cost of large, intricate machinery                           |
-| Quantitative + Observational TT (our base)    | 2010s-2020s | usage-aware and equality-computing, the branch form.tree builds on                            |
+| Quantitative + Observational TT (our base)    | 2010s-2020s | usage-aware and equality-computing, the branch seed.tree builds on                            |
 
 The old line trades away either typing (set theory), computation
 (formalism, axiomatic univalence), or simplicity (cubical). Our kernel
 keeps all three: typed, computational, and small.
 
 This file collects mathematical structures from across the literature
-and models them in Seed, each one checked.
+and models them in Term, each one checked.
 
 ## License
 
@@ -349,11 +353,4 @@ MIT
 
 ## ClueSurf
 
-Made by [ClueSurf](https://clue.surf), meditating on the universe ¤.
-Follow the work on [YouTube](https://youtube.com/@cluesurf),
-[X](https://x.com/cluesurf),
-[Instagram](https://instagram.com/cluesurf),
-[Substack](https://cluesurf.substack.com),
-[Facebook](https://facebook.com/cluesurf), and
-[LinkedIn](https://linkedin.com/company/cluesurf), and browse more of
-our open-source work here on [GitHub](https://github.com/cluesurf).
+Made by [ClueSurf](https://clue.surf), meditating on the universe.

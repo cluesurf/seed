@@ -16,7 +16,7 @@
 # bulk reconstructs after no loss, after ANY single erasure, and from EVERY majority region. The radial bulk-boundary
 # wedge of `code/space/holography.tree` supplies the geometry; this file supplies the code living on that boundary.
 
-load @term/form/code/atom/flag
+load @term/seed/code/atom/flag
   find flag
   find both
   find either

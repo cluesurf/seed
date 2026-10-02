@@ -1,4 +1,4 @@
-load @term/form/code/structure/manifold
+load @term/seed/code/structure/manifold
   find manifold
 
 # A tangent space: the vector space of velocities at a point of a manifold, the flat space that best approximates the

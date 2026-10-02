@@ -1,4 +1,4 @@
-load @term/form/code/structure/function/unary
+load @term/seed/code/structure/function/unary
   find unary-function
 
 # A fixed point: a point a map leaves unmoved, where the input equals the output. Fixed points are equilibria, the
