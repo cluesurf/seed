@@ -268,7 +268,7 @@ rule the-norm-of-a-cross-product
             read y1
             read y2
 
-# THE LINE THROUGH TWO POINTS IS UNIQUE. The double cross product expands as (x * y) * n = B(y, n) x - B(x, n) y
+# THE LINE THROUGH TWO POINTS IS UNIQUE. The double cross product expands as (x * y) * n = B(x, n) y - B(y, n) x
 # (coordinate by coordinate below), so a normal n orthogonal to both x and y has (x * y) * n = 0: n is parallel to
 # x * y, and the plane through x and y is the only one.
 
@@ -312,15 +312,6 @@ rule the-double-cross-product-expands-t
       call subtract
         call multiply
           call lorentz-form
-            read y0
-            read y1
-            read y2
-            read n0
-            read n1
-            read n2
-          read x0
-        call multiply
-          call lorentz-form
             read x0
             read x1
             read x2
@@ -328,6 +319,15 @@ rule the-double-cross-product-expands-t
             read n1
             read n2
           read y0
+        call multiply
+          call lorentz-form
+            read y0
+            read y1
+            read y2
+            read n0
+            read n1
+            read n2
+          read x0
 
 rule the-double-cross-product-expands-x
   mark x0, like integer
@@ -369,15 +369,6 @@ rule the-double-cross-product-expands-x
       call subtract
         call multiply
           call lorentz-form
-            read y0
-            read y1
-            read y2
-            read n0
-            read n1
-            read n2
-          read x1
-        call multiply
-          call lorentz-form
             read x0
             read x1
             read x2
@@ -385,6 +376,15 @@ rule the-double-cross-product-expands-x
             read n1
             read n2
           read y1
+        call multiply
+          call lorentz-form
+            read y0
+            read y1
+            read y2
+            read n0
+            read n1
+            read n2
+          read x1
 
 rule the-double-cross-product-expands-y
   mark x0, like integer
@@ -426,15 +426,6 @@ rule the-double-cross-product-expands-y
       call subtract
         call multiply
           call lorentz-form
-            read y0
-            read y1
-            read y2
-            read n0
-            read n1
-            read n2
-          read x2
-        call multiply
-          call lorentz-form
             read x0
             read x1
             read x2
@@ -442,6 +433,15 @@ rule the-double-cross-product-expands-y
             read n1
             read n2
           read y2
+        call multiply
+          call lorentz-form
+            read y0
+            read y1
+            read y2
+            read n0
+            read n1
+            read n2
+          read x2
 
 # TWO POINTS SPAN A LINE: for points (B = 1), the normal x * y has norm 1 - cosh^2 d = -sinh^2 d, which is
 # negative (a genuine line) exactly when the points are distinct.
@@ -838,8 +838,8 @@ rule the-second-parallel-is-ultraparallel
             code 1
       code 24
 
-# The two lines through o are distinct: their normals are independent, since their cross product is not zero
-# (its norm is -16).
+# The two lines through o are distinct: their normals are independent, since their cross product is not zero.
+# It is 4 o, norm 16: two lines through o meet exactly at o.
 rule the-two-parallels-are-distinct-lines
   show hold
     call is-equal
@@ -886,7 +886,7 @@ rule the-two-parallels-are-distinct-lines
           code 0
           code 3
           code 4
-      code -16
+      code 16
 
 # THREE POINTS NOT ON ONE LINE: (1, 0, 0), (3, 2, 2) and (3, 2, -2) are points (norm 1), and the third is not on the
 # line through the first two (it is off their normal).
