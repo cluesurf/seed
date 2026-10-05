@@ -1,4 +1,4 @@
-load @term/seed/code/structure/ring
+load @term/seed/structure/ring
   find ring
 
 # A cluster algebra: a commutative ring with a distinguished set of generators (cluster variables) grouped into

@@ -1,4 +1,4 @@
-load @term/seed/code/type/identity
+load @term/seed/type/identity
   find identity-type
 
 # Homotopy type theory, the reading of types as spaces and of equality proofs as paths, where a type's higher structure

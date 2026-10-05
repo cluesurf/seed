@@ -1,0 +1,226 @@
+# NEGATIVE CONTROLS for number/arithmetic: each must be REFUSED. Expected: 2.
+
+# false: x(m) + y(m) is regular only with 2 e, not e
+rule control-the-sum-without-reindexing
+  mark x
+    like task
+      take a0, like integer
+      like integer
+  mark y
+    like task
+      take a0, like integer
+      like integer
+  mark e
+    like task
+      take a0, like integer
+      like integer
+  mark m, like integer
+  mark n, like integer
+  have x-is-a-real
+    mark p, like integer
+    mark q, like integer
+    meet or
+      call is-below
+        read p
+        code 1
+      call is-below
+        read q
+        code 1
+      meet and
+        call is-maximum
+          call subtract
+            call x
+              read p
+            call x
+              read q
+          call add
+            call e
+              read p
+            call e
+              read q
+        call is-maximum
+          call subtract
+            call x
+              read q
+            call x
+              read p
+          call add
+            call e
+              read p
+            call e
+              read q
+  have y-is-a-real
+    mark p, like integer
+    mark q, like integer
+    meet or
+      call is-below
+        read p
+        code 1
+      call is-below
+        read q
+        code 1
+      meet and
+        call is-maximum
+          call subtract
+            call y
+              read p
+            call y
+              read q
+          call add
+            call e
+              read p
+            call e
+              read q
+        call is-maximum
+          call subtract
+            call y
+              read q
+            call y
+              read p
+          call add
+            call e
+              read p
+            call e
+              read q
+  have the-modulus-halves
+    mark t, like integer
+    meet or
+      call is-below
+        read t
+        code 1
+      call is-equal
+        call multiply
+          code 2
+          call e
+            call multiply
+              code 2
+              read t
+        call e
+          read t
+  have m-is-an-index
+    call is-minimum
+      read m
+      code 1
+  have n-is-an-index
+    call is-minimum
+      read n
+      code 1
+  show hold
+    call is-maximum
+      call subtract
+        call add
+          call x
+            read m
+          call y
+            read m
+        call add
+          call x
+            read n
+          call y
+            read n
+      call add
+        call e
+          read m
+        call e
+          read n
+
+
+# false: without a bound on x the step is unbounded
+rule control-a-product-step-without-a-bound
+  mark x
+    like task
+      take a0, like integer
+      like integer
+  mark y
+    like task
+      take a0, like integer
+      like integer
+  mark e
+    like task
+      take a0, like integer
+      like integer
+  mark p, like integer
+  mark q, like integer
+  mark big, like integer
+  have y-at-q-is-bounded
+    meet and
+      call is-maximum
+        call y
+          read q
+        read big
+      call is-maximum
+        call subtract
+          code 0
+          call y
+            read q
+        read big
+  have x-is-regular-here
+    meet and
+      call is-maximum
+        call subtract
+          call x
+            read p
+          call x
+            read q
+        call add
+          call e
+            read p
+          call e
+            read q
+      call is-maximum
+        call subtract
+          call x
+            read q
+          call x
+            read p
+        call add
+          call e
+            read p
+          call e
+            read q
+  have y-is-regular-here
+    meet and
+      call is-maximum
+        call subtract
+          call y
+            read p
+          call y
+            read q
+        call add
+          call e
+            read p
+          call e
+            read q
+      call is-maximum
+        call subtract
+          call y
+            read q
+          call y
+            read p
+        call add
+          call e
+            read p
+          call e
+            read q
+  show hold
+    call is-maximum
+      call subtract
+        call multiply
+          call x
+            read p
+          call y
+            read p
+        call multiply
+          call x
+            read q
+          call y
+            read q
+      call multiply
+        call multiply
+          code 2
+          read big
+        call add
+          call e
+            read p
+          call e
+            read q

@@ -7,12 +7,12 @@
 # both signs. The opposite map is proved an INVOLUTION and FIXED-POINT-FREE (no direction is its own opposite), which is
 # what makes the twenty-four sites pair cleanly into twelve lines with none left over.
 
-load @term/seed/code/atom/sign
+load @term/seed/atom/sign
   find sign
   find flip-sign
   find same-sign
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
   find both
 

@@ -6,15 +6,15 @@
 # total), that charge conjugation REVERSES it, and that the residue addition does NOT respect it, so a signed count of
 # vibes must be an integer (vibe/tone `balance`) and never a residue.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
   find either
 
-load @term/seed/code/vibe/law
+load @term/seed/vibe/law
   find order
   find involution
 
-load @term/seed/code/vibe/tone
+load @term/seed/vibe/tone
   find tone
   find tone-row
   find tone-sum

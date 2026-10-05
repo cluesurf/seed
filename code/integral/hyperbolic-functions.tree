@@ -1,0 +1,869 @@
+# COSH AND SINH FROM THE EXPONENTIAL, with explicit errors: the analysis under the hyperbolic disk's area.
+#
+# integral/fundamental proves the area from two facts about cosh and sinh: the local bounds near 0 and the addition
+# formula. This file proves both for the functions built from the exponential's PARTIAL SUMS E_N(x) (exact rationals,
+# no limit taken):
+#   cosh_N = (E_N + 1 / E_N) / 2,   sinh_N = (E_N - 1 / E_N) / 2,
+# using the reciprocal where the classical definition uses E at -x, so no negative argument is needed.
+#
+#   THE EXPONENTIAL       each term after the first is at most half the last on [0, 1], and every partial sum from the
+#                         third on lies between 1 + w + w^2/2 and 1 + w + w^2/2 + w^3/3;
+#   THE LOCAL BOUNDS      so 0 <= cosh_N(w) - 1 <= w^2 and 0 <= sinh_N(w) - w <= w^3 on [0, 1];
+#   THE ADDITION FORMULA  integral/exponential proves E_N(x) E_N(w) is within delta of E_N(x + w), with delta at most
+#                         twice the N-th term of the series of e^(x + w) plus the last column, which tend to 0. Through
+#                         the reciprocals (each of the four steps below), cosh_N(x + w) is within delta of
+#                         cosh_N(x) cosh_N(w) + sinh_N(x) sinh_N(w);
+#   THE DERIVATIVE        so each step of cosh_N is sinh_N times the step, up to big (w^2 + w^3) + delta;
+#   THE AREA              and integral/fundamental's theorem with a per-step tolerance makes the Riemann sums of sinh_N
+#                         over [0, r] within n (big (w^2 + w^3) + delta) of cosh_N(r) - 1. With n w = r the error is
+#                         r big (w + w^2) + n delta: it tends to 0 as the mesh w shrinks and N grows with it. Times
+#                         2 pi (the circumference is 2 pi sinh r, space/hyperbolic/metric), the disk's area is
+#                         2 pi (cosh r - 1).
+#
+# Each rule takes as hypotheses what the rules before it prove, at the values named. Every certificate is the product
+# prover's, replayed (check/product.ts), over an ordered field.
+
+
+# THE EXPONENTIAL's terms t(k) = w^k / k! obey (k + 1) t(k + 1) = w t(k): on [0, 1], from the second on, each is at most
+# half the last.
+rule each-exp-term-is-at-most-half-the-last
+  mark t
+    like task
+      take a0, like integer
+      like integer
+  mark k, like integer
+  mark w, like integer
+  have the-term-from-the-last
+    call is-equal
+      call multiply
+        call add
+          read k
+          code 1
+        call t
+          call add
+            read k
+            code 1
+      call multiply
+        read w
+        call t
+          read k
+  have the-last-term-is-not-negative
+    call is-minimum
+      call t
+        read k
+      code 0
+  have k-is-at-least-one
+    call is-minimum
+      read k
+      code 1
+  have w-is-in-the-unit-interval
+    meet and
+      call is-minimum
+        read w
+        code 0
+      call is-maximum
+        read w
+        code 1
+  show hold
+    call is-maximum
+      call multiply
+        code 2
+        call t
+          call add
+            read k
+            code 1
+      call t
+        read k
+
+
+# Every partial sum from the third, E_(n + 3), lies in [1 + w + w^2/2, 1 + w + w^2/2 + w^3/3], by induction with the
+# invariant 6 E + 6 t <= 6 + 6 w + 3 w^2 + 2 w^3.
+rule the-exp-partial-sums-are-bounded
+  mark t
+    like task
+      take a0, like integer
+      like integer
+  mark psum
+    like task
+      take a0, like integer
+      like integer
+  mark n, like integer
+  mark w, like integer
+  have the-third-term
+    call is-equal
+      call multiply
+        code 6
+        call t
+          code 3
+      call multiply
+        call multiply
+          read w
+          read w
+        read w
+  have each-term-is-at-most-half-the-last
+    mark k, like integer
+    meet or
+      call is-below
+        read k
+        code 1
+      call is-maximum
+        call multiply
+          code 2
+          call t
+            call add
+              read k
+              code 1
+        call t
+          read k
+  have each-term-is-not-negative
+    mark k, like integer
+    meet or
+      call is-below
+        read k
+        code 0
+      call is-minimum
+        call t
+          read k
+        code 0
+  have the-third-partial-sum
+    call is-equal
+      call multiply
+        code 2
+        call psum
+          code 3
+      call add
+        call add
+          call add
+            code 2
+            call multiply
+              code 2
+              read w
+          call multiply
+            read w
+            read w
+        call multiply
+          code 2
+          call t
+            code 3
+  have each-partial-sum-adds-a-term
+    mark k, like integer
+    meet or
+      call is-below
+        read k
+        code 0
+      call is-equal
+        call psum
+          call add
+            read k
+            code 1
+        call add
+          call psum
+            read k
+          call t
+            call add
+              read k
+              code 1
+  have n-is-a-count
+    call is-minimum
+      read n
+      code 0
+  show hold
+    meet and
+      call is-maximum
+        call add
+          call subtract
+            call multiply
+              code 6
+              call psum
+                call add
+                  read n
+                  code 3
+            call add
+              call add
+                code 6
+                call multiply
+                  code 6
+                  read w
+              call multiply
+                call multiply
+                  code 3
+                  read w
+                read w
+          call multiply
+            code 6
+            call t
+              call add
+                read n
+                code 3
+        call multiply
+          call multiply
+            call multiply
+              code 2
+              read w
+            read w
+          read w
+      call is-minimum
+        call subtract
+          call multiply
+            code 2
+            call psum
+              call add
+                read n
+                code 3
+          call add
+            call add
+              code 2
+              call multiply
+                code 2
+                read w
+            call multiply
+              read w
+              read w
+        code 0
+  fold n
+
+
+# THE LOCAL BOUNDS of cosh = (E + R)/2, R = 1/E: 0 <= cosh(w) - 1 <= w^2, written for 2 cosh.
+rule cosh-near-zero
+  mark w, like integer
+  mark ee, like integer
+  mark rr, like integer
+  have w-is-in-the-unit-interval
+    meet and
+      call is-minimum
+        read w
+        code 0
+      call is-maximum
+        read w
+        code 1
+  have e-is-above-its-second-order-part
+    call is-minimum
+      call subtract
+        call multiply
+          code 2
+          read ee
+        call add
+          call add
+            code 2
+            call multiply
+              code 2
+              read w
+          call multiply
+            read w
+            read w
+      code 0
+  have e-is-below-its-third-order-bound
+    call is-maximum
+      call subtract
+        call multiply
+          code 6
+          read ee
+        call add
+          call add
+            code 6
+            call multiply
+              code 6
+              read w
+          call multiply
+            call multiply
+              code 3
+              read w
+            read w
+      call multiply
+        call multiply
+          call multiply
+            code 2
+            read w
+          read w
+        read w
+  have rr-is-its-reciprocal
+    call is-equal
+      call multiply
+        read ee
+        read rr
+      code 1
+  have rr-is-positive
+    call is-above
+      read rr
+      code 0
+  show hold
+    meet and
+      call is-minimum
+        call subtract
+          call add
+            read ee
+            read rr
+          code 2
+        code 0
+      call is-maximum
+        call subtract
+          call add
+            read ee
+            read rr
+          code 2
+        call multiply
+          call multiply
+            code 2
+            read w
+          read w
+
+
+# and of sinh = (E - R)/2: 0 <= sinh(w) - w <= w^3. (The lower side rests on (1 + w + w^2/2)^2 - 1 - 2 w (1 + w + w^2/2)
+# = w^4 / 4.)
+rule sinh-near-zero
+  mark w, like integer
+  mark ee, like integer
+  mark rr, like integer
+  have w-is-in-the-unit-interval
+    meet and
+      call is-minimum
+        read w
+        code 0
+      call is-maximum
+        read w
+        code 1
+  have e-is-above-its-second-order-part
+    call is-minimum
+      call subtract
+        call multiply
+          code 2
+          read ee
+        call add
+          call add
+            code 2
+            call multiply
+              code 2
+              read w
+          call multiply
+            read w
+            read w
+      code 0
+  have e-is-below-its-third-order-bound
+    call is-maximum
+      call subtract
+        call multiply
+          code 6
+          read ee
+        call add
+          call add
+            code 6
+            call multiply
+              code 6
+              read w
+          call multiply
+            call multiply
+              code 3
+              read w
+            read w
+      call multiply
+        call multiply
+          call multiply
+            code 2
+            read w
+          read w
+        read w
+  have rr-is-its-reciprocal
+    call is-equal
+      call multiply
+        read ee
+        read rr
+      code 1
+  have rr-is-positive
+    call is-above
+      read rr
+      code 0
+  show hold
+    meet and
+      call is-minimum
+        call subtract
+          call subtract
+            read ee
+            read rr
+          call multiply
+            code 2
+            read w
+        code 0
+      call is-maximum
+        call subtract
+          call subtract
+            read ee
+            read rr
+          call multiply
+            code 2
+            read w
+        call multiply
+          call multiply
+            call multiply
+              code 2
+              read w
+            read w
+          read w
+
+
+# THE ADDITION FORMULA, through the reciprocals. First: 1/x times 1/w inverts x w.
+rule the-product-of-inverses-inverts-the-product
+  mark ex, like integer
+  mark ew, like integer
+  mark rx, like integer
+  mark rw, like integer
+  have rx-inverts
+    call is-equal
+      call multiply
+        read ex
+        read rx
+      code 1
+  have rw-inverts
+    call is-equal
+      call multiply
+        read ew
+        read rw
+      code 1
+  show hold
+    call is-equal
+      call multiply
+        call multiply
+          read rx
+          read rw
+        call multiply
+          read ex
+          read ew
+      code 1
+
+
+# 1/s - 1/(x w) = (x w - s) / (s x w), as rs - pp = rs pp (x w - s).
+rule the-reciprocal-difference
+  mark ex, like integer
+  mark ew, like integer
+  mark es, like integer
+  mark rs, like integer
+  mark pp, like integer
+  have rs-inverts
+    call is-equal
+      call multiply
+        read es
+        read rs
+      code 1
+  have pp-inverts-the-product
+    call is-equal
+      call multiply
+        read pp
+        call multiply
+          read ex
+          read ew
+      code 1
+  show hold
+    call is-equal
+      call subtract
+        read rs
+        read pp
+      call multiply
+        call multiply
+          read rs
+          read pp
+        call subtract
+          call multiply
+            read ex
+            read ew
+          read es
+
+
+# An inverse of a number at least 1 is at most 1 (so rs pp is in [0, 1]).
+rule an-inverse-of-at-least-one-is-at-most-one
+  mark ee, like integer
+  mark rr, like integer
+  have ee-is-at-least-one
+    call is-minimum
+      read ee
+      code 1
+  have rr-inverts
+    call is-equal
+      call multiply
+        read ee
+        read rr
+      code 1
+  have rr-is-positive
+    call is-above
+      read rr
+      code 0
+  show hold
+    call is-maximum
+      read rr
+      code 1
+
+
+# A difference within delta, times a factor in [0, 1], is within delta.
+rule a-small-difference-scaled-by-at-most-one
+  mark dd, like integer
+  mark q, like integer
+  mark delta, like integer
+  have dd-is-small
+    meet and
+      call is-maximum
+        read dd
+        read delta
+      call is-maximum
+        call subtract
+          code 0
+          read dd
+        read delta
+  have q-is-in-the-unit-interval
+    meet and
+      call is-minimum
+        read q
+        code 0
+      call is-maximum
+        read q
+        code 1
+  show hold
+    meet and
+      call is-maximum
+        call multiply
+          read dd
+          read q
+        read delta
+      call is-maximum
+        call subtract
+          code 0
+          call multiply
+            read dd
+            read q
+        read delta
+
+
+# So 2 cosh(x + w) = es + rs is within 2 delta of 2 (cosh x cosh w + sinh x sinh w) = ex ew + rx rw: the addition
+# formula, up to the exponential's own error.
+rule cosh-addition-up-to-the-error-of-e
+  mark ex, like integer
+  mark ew, like integer
+  mark es, like integer
+  mark rs, like integer
+  mark pp, like integer
+  mark q, like integer
+  mark dd, like integer
+  mark delta, like integer
+  have dd-is-the-error-of-e
+    call is-equal
+      read dd
+      call subtract
+        call multiply
+          read ex
+          read ew
+        read es
+  have the-reciprocal-difference
+    call is-equal
+      call subtract
+        read rs
+        read pp
+      call multiply
+        read q
+        read dd
+  have the-error-scaled
+    meet and
+      call is-maximum
+        call multiply
+          read q
+          read dd
+        read delta
+      call is-maximum
+        call subtract
+          code 0
+          call multiply
+            read q
+            read dd
+        read delta
+  have the-error-is-small
+    meet and
+      call is-maximum
+        read dd
+        read delta
+      call is-maximum
+        call subtract
+          code 0
+          read dd
+        read delta
+  show hold
+    meet and
+      call is-maximum
+        call subtract
+          call add
+            read es
+            read rs
+          call add
+            call multiply
+              read ex
+              read ew
+            read pp
+        call multiply
+          code 2
+          read delta
+      call is-maximum
+        call subtract
+          call add
+            call multiply
+              read ex
+              read ew
+            read pp
+          call add
+            read es
+            read rs
+        call multiply
+          code 2
+          read delta
+
+
+# THE DERIVATIVE, with the addition formula's error: a step of w changes cosh by sinh x w up to big (w^2 + w^3) + delta.
+rule cosh-has-derivative-sinh-up-to-an-error
+  mark cx, like integer
+  mark sx, like integer
+  mark cw, like integer
+  mark sw, like integer
+  mark cs, like integer
+  mark w, like integer
+  mark big, like integer
+  mark delta, like integer
+  have the-addition-up-to-delta
+    meet and
+      call is-maximum
+        call subtract
+          read cs
+          call add
+            call multiply
+              read cx
+              read cw
+            call multiply
+              read sx
+              read sw
+        read delta
+      call is-maximum
+        call subtract
+          call add
+            call multiply
+              read cx
+              read cw
+            call multiply
+              read sx
+              read sw
+          read cs
+        read delta
+  have cosh-near-zero
+    meet and
+      call is-minimum
+        call subtract
+          read cw
+          code 1
+        code 0
+      call is-maximum
+        call subtract
+          read cw
+          code 1
+        call multiply
+          read w
+          read w
+  have sinh-near-zero
+    meet and
+      call is-minimum
+        call subtract
+          read sw
+          read w
+        code 0
+      call is-maximum
+        call subtract
+          read sw
+          read w
+        call multiply
+          call multiply
+            read w
+            read w
+          read w
+  have the-step-is-small
+    meet and
+      call is-minimum
+        read w
+        code 0
+      call is-maximum
+        read w
+        code 1
+  have cosh-is-bounded-here
+    meet and
+      call is-minimum
+        read cx
+        code 0
+      call is-maximum
+        read cx
+        read big
+  have sinh-is-bounded-here
+    meet and
+      call is-minimum
+        read sx
+        code 0
+      call is-maximum
+        read sx
+        read big
+  have the-bound-is-not-negative
+    call is-minimum
+      read big
+      code 0
+  show hold
+    meet and
+      call is-maximum
+        call subtract
+          call subtract
+            read cs
+            read cx
+          call multiply
+            read sx
+            read w
+        call add
+          call add
+            call multiply
+              call multiply
+                read big
+                read w
+              read w
+            call multiply
+              call multiply
+                call multiply
+                  read big
+                  read w
+                read w
+              read w
+          read delta
+      call is-minimum
+        call subtract
+          call subtract
+            read cs
+            read cx
+          call multiply
+            read sx
+            read w
+        call subtract
+          code 0
+          read delta
+
+
+# THE AREA: the fundamental theorem with a per-step tolerance. If each step of F is f times the step up to tol, the
+# Riemann sum of f over n strips is within n tol of F(b) - F(a).
+rule the-riemann-sums-with-a-tolerance
+  mark bigf
+    like task
+      take a0, like integer
+      like integer
+  mark f
+    like task
+      take a0, like integer
+      like integer
+  mark pt
+    like task
+      take a0, like integer
+      like integer
+  mark sum
+    like task
+      take a0, like integer
+      like integer
+  mark n, like integer
+  mark w, like integer
+  mark tol, like integer
+  have bigf-steps-like-f
+    mark i, like integer
+    meet or
+      call is-below
+        read i
+        code 0
+      meet and
+        call is-maximum
+          call subtract
+            call subtract
+              call bigf
+                call pt
+                  call add
+                    read i
+                    code 1
+              call bigf
+                call pt
+                  read i
+            call multiply
+              call f
+                call pt
+                  read i
+              read w
+          read tol
+        call is-maximum
+          call subtract
+            call multiply
+              call f
+                call pt
+                  read i
+              read w
+            call subtract
+              call bigf
+                call pt
+                  call add
+                    read i
+                    code 1
+              call bigf
+                call pt
+                  read i
+          read tol
+  have the-riemann-sum-starts-at-zero
+    call is-equal
+      call sum
+        code 0
+      code 0
+  have the-riemann-sum-adds-a-strip
+    mark i, like integer
+    meet or
+      call is-below
+        read i
+        code 0
+      call is-equal
+        call sum
+          call add
+            read i
+            code 1
+        call add
+          call sum
+            read i
+          call multiply
+            call f
+              call pt
+                read i
+            read w
+  have the-tolerance-is-not-negative
+    call is-minimum
+      read tol
+      code 0
+  have n-is-a-count
+    call is-minimum
+      read n
+      code 0
+  show hold
+    meet and
+      call is-maximum
+        call subtract
+          call sum
+            read n
+          call subtract
+            call bigf
+              call pt
+                read n
+            call bigf
+              call pt
+                code 0
+        call multiply
+          read n
+          read tol
+      call is-maximum
+        call subtract
+          call subtract
+            call bigf
+              call pt
+                read n
+            call bigf
+              call pt
+                code 0
+          call sum
+            read n
+        call multiply
+          read n
+          read tol
+  fold n

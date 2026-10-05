@@ -4,16 +4,15 @@ deck @term/seed
   mark <1.0.0>
   sort tool
   lock mit
-  site <https://github.com/cluesurf/form.tree>
+  site <https://github.com/cluesurf/seed>
   view ./view/view.gif
-  term <mathematics>
-  term <physics>
-  term <proof>
-  term <kernel>
-  term <library>
-  term <algebra>
-  term <quantum>
-  term <geometry>
-  term <relativity>
-  bear ./code
+  make <mathematics>
+  make <physics>
+  make <proof>
+  make <kernel>
+  make <library>
+  make <algebra>
+  make <quantum>
+  make <geometry>
+  make <relativity>
   face <Lance Pollard>, site <lp@elk.fm>

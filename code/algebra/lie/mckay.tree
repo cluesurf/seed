@@ -37,7 +37,7 @@
 # witnesses (`calm hold`), that the maps are mutually inverse bijections on the exceptional triple, that the three orders
 # are twenty-four, forty-eight, and one hundred twenty, and that distinct ADE types land on distinct groups and solids.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
   find both
 

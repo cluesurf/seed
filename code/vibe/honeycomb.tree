@@ -24,7 +24,7 @@
 # Cartan determinants of the root systems the dock meets come from the same continuant: A4 is 5, B4 is 2, F4 is 1.
 # The plane criterion "1/p + 1/q > 1/2 exactly when (p - 2)(q - 2) < 4" is proved as a polynomial identity.
 
-load @term/seed/code/vibe/warp
+load @term/seed/vibe/warp
   find determinant-three
 
 # The 4 x 4 determinant, expanded along the first row.

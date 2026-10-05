@@ -1,4 +1,4 @@
-load @term/seed/code/manifold/riemannian
+load @term/seed/manifold/riemannian
   find riemannian-manifold
 
 # Poisson's equation: the equation that the Laplacian of a potential equals a given source, the master equation of

@@ -1,4 +1,4 @@
-load @term/seed/code/structure/space/vector
+load @term/seed/structure/space/vector
   find vector-space
 
 # A flag: a nested chain of subspaces, each contained in the next, a point in a line in a plane and so on, or for a

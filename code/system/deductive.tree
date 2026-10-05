@@ -1,4 +1,4 @@
-load @term/seed/code/structure/set
+load @term/seed/structure/set
   find set
 
 # A deductive system: a set of axioms and inference rules for deriving theorems, the formal engine of proof. A

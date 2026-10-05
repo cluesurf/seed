@@ -1,4 +1,4 @@
-load @term/seed/code/structure/set
+load @term/seed/structure/set
   find set
 
 # A point: the atom of geometry, a location with no extent. A space is a set of points with structure (nearness,

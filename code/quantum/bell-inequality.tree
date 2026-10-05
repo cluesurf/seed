@@ -14,7 +14,7 @@
 # cannot be reproduced by any local recipe, so no local hidden variable model can underlie quantum mechanics. The win
 # count here is a Peano natural and the bound is the kernel's at-most order, so the whole statement reduces and checks.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
 
 # A bit, the value of a question or an answer, off or on.

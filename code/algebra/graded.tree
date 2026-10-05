@@ -1,4 +1,4 @@
-load @term/seed/code/structure/ring
+load @term/seed/structure/ring
   find ring
 
 # A graded algebra: an algebra split into degree pieces whose products add degrees, so a degree-two times a degree-three

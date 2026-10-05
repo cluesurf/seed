@@ -14,7 +14,7 @@
 # side, exhibits the far-right site as the gap between the two, and tracks an attenuation tally that drops across the
 # barrier yet stays nonzero on the far side, strictly smaller than at the source. That gap is tunneling, made checkable.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
   find both
 

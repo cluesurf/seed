@@ -1,4 +1,4 @@
-load @term/seed/code/group
+load @term/seed/group
   find group
 
 # The orthogonal group: the group of linear maps that preserve length, the rotations and reflections of a space with a

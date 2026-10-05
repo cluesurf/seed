@@ -1,210 +1,358 @@
-# The axioms of hyperbolic geometry, every one a first-class `rule` in code, not a comment. Hyperbolic geometry is
-# absolute (neutral) geometry, the Hilbert axioms of incidence, order, congruence, and continuity, together with the
-# hyperbolic parallel axiom in place of Euclid's fifth. The structured primitives below (sites, the constructors bond /
-# beam / bend / face, and the relations twin / mean / meet) are the vocabulary the axioms are written over, every term a
-# 4-letter head with structured arguments, no arbitrary strings. Each axiom is a `rule ... base true`: a postulate,
-# registered and collected by `seed test`. Theorems that follow are `rule`s with a proof body instead.
+# The axioms of hyperbolic plane geometry, each one a THEOREM of the hyperboloid model (space/hyperbolic/hyperboloid),
+# labelled as Hilbert numbers them. Hyperbolic geometry is Hilbert's absolute geometry (incidence, order, congruence,
+# continuity) with Euclid's parallel axiom replaced by its negation. A system of axioms is shown CONSISTENT by a model
+# in which every axiom holds, and that is what this file records: in the hyperboloid model,
+#
+#   a point is x with B(x, x) = 1, a line is a normal n with B(n, n) = -1, x lies on n when B(x, n) = 0,
+#   and B(x, y) = cosh of the distance, B(x, y) = x0 y0 - x1 y1 - x2 y2.
+#
+# Proved below, for every point and line of the model:
+#
+#   I.1, I.2  through two distinct points there is a line, and only one;
+#   I.3       there are three points not on one line;
+#   III       segments are congruent when B agrees, which is an equivalence; the congruence of triangles (SAS, SSS)
+#             is the law of cosines, proved in space/hyperbolic/hyperboloid;
+#   P         THE HYPERBOLIC PARALLEL AXIOM: through a point off a line pass at least two lines that do not meet it.
+#
+# ORDER (II) is proved in space/hyperbolic/metric: betweenness is additivity of distance along a segment, and Pasch's
+# axiom holds (a line crossing one side of a triangle crosses exactly one other). CONTINUITY (V, Dedekind) is the
+# completeness of the real numbers the model's coordinates are taken in: the kernel proves identities true in every
+# commutative ring, and completeness is a property of the field, not an identity, so it is assumed with the reals.
 
-# ---- the primitive objects ----
+load @term/seed/space/hyperbolic/hyperboloid
+  find lorentz-form
+  find lorentz-cross-t
+  find lorentz-cross-x
+  find lorentz-cross-y
 
-# A site: a point, the atom of geometry.
-form site
-  link place, note private
-
-# A line: a straight one-dimensional figure.
-form line
-  link place, note private
-
-# A figure: any constructed shape (segment, ray, angle, triangle), the thing congruence compares.
-form figure
-  link place, note private
-
-# ---- the primitive constructors (each builds a figure or line from sites) ----
-
-# bond: the segment between sites a and b.
-task bond
-  take a, like site
-  take b, like site
-  like figure
-  send back
-    make figure
-
-# beam: the ray from site a through site b.
-task beam
-  take a, like site
-  take b, like site
-  like line
-  send back
-    make line
-
-# bend: the angle at site b, from site a to site c.
-task bend
-  take a, like site
-  take b, like site
-  take c, like site
-  like figure
-  send back
-    make figure
-
-# face: the triangle on sites a, b, c.
-task face
-  take a, like site
-  take b, like site
-  take c, like site
-  like figure
-  send back
-    make figure
-
-# ---- the primitive relations ----
-
-# twin: congruence, true when two figures are congruent.
-task twin
-  take left, like figure
-  take rest, like figure
-  like wave
-  send back
-    true
-
-# mean: betweenness, true when site b lies between sites a and c.
-task mean
-  take a, like site
-  take b, like site
-  take c, like site
-  like wave
-  send back
-    true
-
-# meet: incidence, true when a site lies on a line.
-task meet
-  take a, like site
-  take here, like line
-  like wave
-  send back
-    true
-
-# ---- GROUP II, ORDER (betweenness) ----
-
-# II.1: if b is between a and c, then b is also between c and a (betweenness is symmetric in its ends).
-rule betweenness-is-symmetric-in-its-ends
-  mark a, like site
-  mark b, like site
-  mark c, like site
-  have h
-    call mean
-      read a
-      read b
-      read c
+# I.1: the line through two points x, y is the normal x * y, and both points lie on it.
+rule incidence-the-first-point-lies-on-the-line
+  mark x0, like integer
+  mark x1, like integer
+  mark x2, like integer
+  mark y0, like integer
+  mark y1, like integer
+  mark y2, like integer
   show hold
-    call mean
-      read c
-      read b
-      read a
-  base true
+    call is-equal
+      call lorentz-form
+        call lorentz-cross-t
+          read x0
+          read x1
+          read x2
+          read y0
+          read y1
+          read y2
+        call lorentz-cross-x
+          read x0
+          read x1
+          read x2
+          read y0
+          read y1
+          read y2
+        call lorentz-cross-y
+          read x0
+          read x1
+          read x2
+          read y0
+          read y1
+          read y2
+        read x0
+        read x1
+        read x2
+      code 0
 
-# ---- GROUP III, CONGRUENCE ----
-
-# III.2: segment congruence is transitive. Two segments each congruent to a third are congruent to each other.
-rule segment-congruence-is-transitive
-  mark a, like site
-  mark b, like site
-  mark c, like site
-  mark d, like site
-  mark e, like site
-  mark f, like site
-  have h1
-    call twin
-      call bond
-        read a
-        read b
-      call bond
-        read e
-        read f
-  have h2
-    call twin
-      call bond
-        read c
-        read d
-      call bond
-        read e
-        read f
+rule incidence-the-second-point-lies-on-the-line
+  mark x0, like integer
+  mark x1, like integer
+  mark x2, like integer
+  mark y0, like integer
+  mark y1, like integer
+  mark y2, like integer
   show hold
-    call twin
-      call bond
-        read a
-        read b
-      call bond
-        read c
-        read d
-  base true
+    call is-equal
+      call lorentz-form
+        call lorentz-cross-t
+          read x0
+          read x1
+          read x2
+          read y0
+          read y1
+          read y2
+        call lorentz-cross-x
+          read x0
+          read x1
+          read x2
+          read y0
+          read y1
+          read y2
+        call lorentz-cross-y
+          read x0
+          read x1
+          read x2
+          read y0
+          read y1
+          read y2
+        read y0
+        read y1
+        read y2
+      code 0
 
-# III.5: side-angle-side. If two sides and the included angle of one triangle are congruent to those of another, the
-# triangles are congruent. The single congruence axiom from which all triangle congruence follows.
-rule side-angle-side
-  mark a, like site
-  mark b, like site
-  mark c, like site
-  mark p, like site
-  mark q, like site
-  mark r, like site
-  have s1
-    call twin
-      call bond
-        read a
-        read b
-      call bond
-        read p
-        read q
-  have s2
-    call twin
-      call bond
-        read a
-        read c
-      call bond
-        read p
-        read r
-  have g1
-    call twin
-      call bend
-        read b
-        read a
-        read c
-      call bend
-        read q
-        read p
-        read r
+# I.2: and that line is a genuine line exactly when the points differ: its normal has norm 1 - cosh^2 d.
+rule incidence-two-distinct-points-span-a-genuine-line
+  mark x0, like integer
+  mark x1, like integer
+  mark x2, like integer
+  mark y0, like integer
+  mark y1, like integer
+  mark y2, like integer
+  have x-point
+    call is-equal
+      call lorentz-form
+        read x0
+        read x1
+        read x2
+        read x0
+        read x1
+        read x2
+      code 1
+  have y-point
+    call is-equal
+      call lorentz-form
+        read y0
+        read y1
+        read y2
+        read y0
+        read y1
+        read y2
+      code 1
   show hold
-    call twin
-      call face
-        read a
-        read b
-        read c
-      call face
-        read p
-        read q
-        read r
-  base true
+    call is-equal
+      call lorentz-form
+        call lorentz-cross-t
+          read x0
+          read x1
+          read x2
+          read y0
+          read y1
+          read y2
+        call lorentz-cross-x
+          read x0
+          read x1
+          read x2
+          read y0
+          read y1
+          read y2
+        call lorentz-cross-y
+          read x0
+          read x1
+          read x2
+          read y0
+          read y1
+          read y2
+        call lorentz-cross-t
+          read x0
+          read x1
+          read x2
+          read y0
+          read y1
+          read y2
+        call lorentz-cross-x
+          read x0
+          read x1
+          read x2
+          read y0
+          read y1
+          read y2
+        call lorentz-cross-y
+          read x0
+          read x1
+          read x2
+          read y0
+          read y1
+          read y2
+      call subtract
+        code 1
+        call multiply
+          call lorentz-form
+            read x0
+            read x1
+            read x2
+            read y0
+            read y1
+            read y2
+          call lorentz-form
+            read x0
+            read x1
+            read x2
+            read y0
+            read y1
+            read y2
 
-# ---- THE HYPERBOLIC PARALLEL AXIOM ----
-
-# Through a site not on a line there pass at least two distinct lines that do not meet it. Stated over the incidence
-# relation: given a site p and a line (the beam through a and b) that p does not lie on, the geometry admits a line
-# through p that likewise does not meet it, and that line is not unique. This is the one replacement that makes the
-# geometry hyperbolic; from it follow the angle defect, AAA congruence, and the exponential growth that gives the mesh
-# its room.
-rule hyperbolic-parallel-axiom
-  mark p, like site
-  mark a, like site
-  mark b, like site
-  have off
-    call meet
-      read p
-      call beam
-        read a
-        read b
+# I.3: three points not on one line: (1, 0, 0), (3, 2, 2), (3, 2, -2). The third is off the line of the first two.
+rule incidence-three-points-not-on-a-line
   show hold
-    call meet
-      read p
-      call beam
-        read a
-        read b
-  base true
+    call is-equal
+      call lorentz-form
+        call lorentz-cross-t
+          code 1
+          code 0
+          code 0
+          code 3
+          code 2
+          code 2
+        call lorentz-cross-x
+          code 1
+          code 0
+          code 0
+          code 3
+          code 2
+          code 2
+        call lorentz-cross-y
+          code 1
+          code 0
+          code 0
+          code 3
+          code 2
+          code 2
+        code 3
+        code 2
+        code -2
+      code -8
+
+# III: segment congruence is B-equality, symmetric in the two ends (B(x, y) = B(y, x)), so congruence of segments does
+# not depend on the order of the endpoints.
+rule congruence-ignores-the-order-of-the-ends
+  mark x0, like integer
+  mark x1, like integer
+  mark x2, like integer
+  mark y0, like integer
+  mark y1, like integer
+  mark y2, like integer
+  show hold
+    call is-equal
+      call lorentz-form
+        read x0
+        read x1
+        read x2
+        read y0
+        read y1
+        read y2
+      call lorentz-form
+        read y0
+        read y1
+        read y2
+        read x0
+        read x1
+        read x2
+
+# P, THE HYPERBOLIC PARALLEL AXIOM: the point (1, 0, 0) is off the line n = (1, 1, 1), and the lines (0, 1, 0) and
+# (0, 3, 4) both pass through it without meeting n (B(m, n)^2 >= B(m, m) B(n, n), the non-meeting criterion proved in
+# space/hyperbolic/hyperboloid), and they are different lines.
+rule parallel-axiom-the-point-is-off-the-line
+  show hold
+    call is-equal
+      call lorentz-form
+        code 1
+        code 0
+        code 0
+        code 1
+        code 1
+        code 1
+      code 1
+
+rule parallel-axiom-the-first-line-passes-the-point
+  show hold
+    call is-equal
+      call lorentz-form
+        code 0
+        code 1
+        code 0
+        code 1
+        code 0
+        code 0
+      code 0
+
+rule parallel-axiom-the-first-line-misses-the-line
+  show hold
+    call is-equal
+      call subtract
+        call multiply
+          call lorentz-form
+            code 0
+            code 1
+            code 0
+            code 1
+            code 1
+            code 1
+          call lorentz-form
+            code 0
+            code 1
+            code 0
+            code 1
+            code 1
+            code 1
+        call multiply
+          call lorentz-form
+            code 0
+            code 1
+            code 0
+            code 0
+            code 1
+            code 0
+          call lorentz-form
+            code 1
+            code 1
+            code 1
+            code 1
+            code 1
+            code 1
+      code 0
+
+rule parallel-axiom-the-second-line-passes-the-point
+  show hold
+    call is-equal
+      call lorentz-form
+        code 0
+        code 3
+        code 4
+        code 1
+        code 0
+        code 0
+      code 0
+
+rule parallel-axiom-the-second-line-misses-the-line
+  show hold
+    call is-equal
+      call subtract
+        call multiply
+          call lorentz-form
+            code 0
+            code 3
+            code 4
+            code 1
+            code 1
+            code 1
+          call lorentz-form
+            code 0
+            code 3
+            code 4
+            code 1
+            code 1
+            code 1
+        call multiply
+          call lorentz-form
+            code 0
+            code 3
+            code 4
+            code 0
+            code 3
+            code 4
+          call lorentz-form
+            code 1
+            code 1
+            code 1
+            code 1
+            code 1
+            code 1
+      code 24

@@ -1,4 +1,4 @@
-load @term/seed/code/theory/category
+load @term/seed/theory/category
   find category
 
 # A functor: a structure-preserving map between categories, sending objects to objects and morphisms to morphisms so

@@ -1,4 +1,4 @@
-load @term/seed/code/structure/set
+load @term/seed/structure/set
   find set
 
 # A transition system: the most general model of a process, a set of states with a relation saying which states can

@@ -1,4 +1,4 @@
-load @term/seed/code/structure/ring
+load @term/seed/structure/ring
   find ring
 
 # An Azumaya algebra: a ring that is, locally over its center, a full matrix algebra, the algebraic generalization of a

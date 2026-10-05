@@ -1,4 +1,4 @@
-load @term/seed/code/structure/space/vector
+load @term/seed/structure/space/vector
   find vector-space
 
 # An ambient space: the larger space a shape is considered inside of, the backdrop against which a curve, surface, or

@@ -1,0 +1,155 @@
+# NEGATIVE CONTROLS for space/hyperbolic/polar: each must be REFUSED. Expected: 4.
+
+# false: sinh^2 r carries sd^2 cc^2, not cc^2
+rule control-the-radius-without-the-foot
+  mark cc, like integer
+  mark ss, like integer
+  mark cd, like integer
+  mark sd, like integer
+  mark rr2, like integer
+  have the-step-is-on-the-hyperbola
+    call is-equal
+      call subtract
+        call multiply
+          read cc
+          read cc
+        call multiply
+          read ss
+          read ss
+      code 1
+  have the-foot-is-on-the-hyperbola
+    call is-equal
+      call subtract
+        call multiply
+          read cd
+          read cd
+        call multiply
+          read sd
+          read sd
+      code 1
+  have rr2-is-sinh-r-squared
+    call is-equal
+      read rr2
+      call subtract
+        call multiply
+          call multiply
+            call multiply
+              read cd
+              read cd
+            read cc
+          read cc
+        code 1
+  show hold
+    call is-equal
+      read rr2
+      call add
+        call multiply
+          read cc
+          read cc
+        call multiply
+          read ss
+          read ss
+
+
+# false: the turning is cosh r times the polar rate
+rule control-the-turning-equals-the-polar-rate
+  mark th, like integer
+  mark pc, like integer
+  mark ch, like integer
+  mark sd, like integer
+  mark rr2, like integer
+  have the-polar-rate
+    call is-equal
+      call multiply
+        read th
+        read rr2
+      read sd
+  have the-turning-rate
+    call is-equal
+      call multiply
+        read pc
+        read rr2
+      call multiply
+        read ch
+        read sd
+  have the-radius-is-positive
+    call is-above
+      read rr2
+      code 0
+  show hold
+    call is-equal
+      read pc
+      read th
+
+
+# false: theta' sinh^2 r is sd, not 1
+rule control-the-polar-rate-without-the-foot
+  mark th, like integer
+  mark zd, like integer
+  mark k, like integer
+  mark cc, like integer
+  mark sd, like integer
+  mark rr2, like integer
+  have the-rate-times-the-radius
+    call is-equal
+      call multiply
+        read th
+        read rr2
+      call multiply
+        read zd
+        call multiply
+          read k
+          read k
+  have zd-is-the-rate-of-z
+    call is-equal
+      call multiply
+        call multiply
+          read zd
+          read k
+        read cc
+      code 1
+  have k-is-the-foot-part
+    call is-equal
+      read k
+      call multiply
+        read sd
+        read cc
+  show hold
+    call is-equal
+      call multiply
+        read th
+        read rr2
+      code 1
+
+
+# false: the rates are opposite
+rule control-complementary-angles-have-equal-rates
+  mark zd, like integer
+  mark yd, like integer
+  mark yy, like integer
+  mark f1, like integer
+  mark f2, like integer
+  have yd-is-the-rate-of-y
+    call is-equal
+      read yd
+      call subtract
+        code 0
+        call multiply
+          read zd
+          read yy
+  have the-integrand-at-the-reciprocal
+    call is-equal
+      call multiply
+        read yy
+        read f2
+      read f1
+  show hold
+    call is-equal
+      call subtract
+        call multiply
+          read f1
+          read zd
+        call multiply
+          read f2
+          read yd
+      code 0

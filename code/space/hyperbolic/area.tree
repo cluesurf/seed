@@ -1,0 +1,598 @@
+# AREA in the hyperbolic plane, in differential form: the identities whose integrals are the area theorems. On the
+# hyperboloid (space/hyperbolic/hyperboloid) the geodesic through a point u with unit tangent v is
+#
+#   x(s) = cosh(s) u + sinh(s) v,   written with c = cosh s, s = sinh s, c^2 - s^2 = 1,
+#
+# and d/ds is the DERIVATION D with D c = s and D s = c (u and v are constant), so D x = d := s u + c v and D d = x.
+# Every statement below is an identity in the polynomial ring, proved for all values. Where it has hypotheses (u a
+# point, v a unit tangent at u, c and s a cosh and sinh) it is written as a CERTIFICATE, as in space/hyperbolic/metric:
+# the difference of its two sides as a sum of multiples of the hypotheses' differences, so it holds whenever they do.
+#
+#   THE GEODESIC        x stays on the hyperboloid and d is a unit tangent to it (the flow D keeps c^2 - s^2, since
+#                       D (c^2 - s^2) = 2 c s - 2 s c);
+#   ANGULAR MOMENTUM    N = x1 d2 - x2 d1 is constant along the geodesic: D N = 0, by the product rule and D d = x;
+#   THE TURNING         with r the distance from the origin (cosh r = x0, sinh^2 r = x1^2 + x2^2), theta the polar
+#                       angle and psi the angle between the geodesic and the radial direction:
+#                         (sinh^2 r) D theta = N,   tan psi = N / M with M = D x0 = d0,
+#                       so D psi = (M D N - N D M) / (M^2 + N^2) = -N x0 / (M^2 + N^2). The identity proved here is
+#                         M^2 + N^2 = x1^2 + x2^2 = sinh^2 r,
+#                       which makes D psi = -cosh r D theta: the geodesic turns away from the radial direction at
+#                       cosh r times the rate the polar angle turns. This is the GAUSS-BONNET INTEGRAND;
+#   THE DISK            the circle of radius r is traced at speed sinh r (space/hyperbolic/metric), so the area
+#                       element in polar coordinates is sinh r dr dtheta, and cosh r - 1 is the antiderivative of
+#                       sinh r that vanishes at r = 0 (D cosh = sinh, cosh 0 = 1): the disk area's integrand.
+#
+# What integration then gives, with the fundamental theorem of calculus as the one step not proved here:
+#
+#   the disk of radius r has area  integral over theta of integral_0^r sinh = 2 pi (cosh r - 1);
+#   a triangle with a vertex at the origin, angle alpha there, and far side the geodesic, has area
+#     integral_0^alpha (cosh r - 1) d theta = integral (-D psi - D theta) = psi(start) - psi(end) - alpha,
+#   which is pi minus its three angles: AREA EQUALS DEFECT (Gauss-Bonnet), and every triangle is a sum of two of these.
+#
+# The fundamental theorem of calculus itself needs the real numbers (K4 in note/term/port/kernel-prerequisites.md):
+# every algebraic step above is proved, and that one analytic step is what remains.
+
+# THE GEODESIC. B(x, x) - 1, for x = c u + s v, is a combination of the hypotheses' differences: it is 0 whenever u is
+# a point (B(u, u) = 1), v a unit tangent (B(v, v) = -1, B(u, v) = 0) and c^2 - s^2 = 1.
+rule the-geodesic-stays-on-the-hyperboloid
+  mark u0, like integer
+  mark u1, like integer
+  mark u2, like integer
+  mark v0, like integer
+  mark v1, like integer
+  mark v2, like integer
+  mark c, like integer
+  mark s, like integer
+  show hold
+    call is-equal
+      call subtract
+        call subtract
+          call subtract
+            call multiply
+              call add
+                call multiply
+                  read c
+                  read u0
+                call multiply
+                  read s
+                  read v0
+              call add
+                call multiply
+                  read c
+                  read u0
+                call multiply
+                  read s
+                  read v0
+            call multiply
+              call add
+                call multiply
+                  read c
+                  read u1
+                call multiply
+                  read s
+                  read v1
+              call add
+                call multiply
+                  read c
+                  read u1
+                call multiply
+                  read s
+                  read v1
+          call multiply
+            call add
+              call multiply
+                read c
+                read u2
+              call multiply
+                read s
+                read v2
+            call add
+              call multiply
+                read c
+                read u2
+              call multiply
+                read s
+                read v2
+        code 1
+      call add
+        call add
+          call add
+            call multiply
+              call multiply
+                read c
+                read c
+              call subtract
+                call subtract
+                  call subtract
+                    call multiply
+                      read u0
+                      read u0
+                    call multiply
+                      read u1
+                      read u1
+                  call multiply
+                    read u2
+                    read u2
+                code 1
+            call multiply
+              call multiply
+                call multiply
+                  code 2
+                  read c
+                read s
+              call subtract
+                call subtract
+                  call multiply
+                    read u0
+                    read v0
+                  call multiply
+                    read u1
+                    read v1
+                call multiply
+                  read u2
+                  read v2
+          call multiply
+            call multiply
+              read s
+              read s
+            call add
+              call subtract
+                call subtract
+                  call multiply
+                    read v0
+                    read v0
+                  call multiply
+                    read v1
+                    read v1
+                call multiply
+                  read v2
+                  read v2
+              code 1
+        call subtract
+          call subtract
+            call multiply
+              read c
+              read c
+            call multiply
+              read s
+              read s
+          code 1
+
+# Its velocity d = D x = s u + c v has B(d, d) = -1: the geodesic is traced at unit speed.
+rule the-geodesic-velocity-is-a-unit-vector
+  mark u0, like integer
+  mark u1, like integer
+  mark u2, like integer
+  mark v0, like integer
+  mark v1, like integer
+  mark v2, like integer
+  mark c, like integer
+  mark s, like integer
+  show hold
+    call is-equal
+      call add
+        call subtract
+          call subtract
+            call multiply
+              call add
+                call multiply
+                  read s
+                  read u0
+                call multiply
+                  read c
+                  read v0
+              call add
+                call multiply
+                  read s
+                  read u0
+                call multiply
+                  read c
+                  read v0
+            call multiply
+              call add
+                call multiply
+                  read s
+                  read u1
+                call multiply
+                  read c
+                  read v1
+              call add
+                call multiply
+                  read s
+                  read u1
+                call multiply
+                  read c
+                  read v1
+          call multiply
+            call add
+              call multiply
+                read s
+                read u2
+              call multiply
+                read c
+                read v2
+            call add
+              call multiply
+                read s
+                read u2
+              call multiply
+                read c
+                read v2
+        code 1
+      call subtract
+        call add
+          call add
+            call multiply
+              call multiply
+                read s
+                read s
+              call subtract
+                call subtract
+                  call subtract
+                    call multiply
+                      read u0
+                      read u0
+                    call multiply
+                      read u1
+                      read u1
+                  call multiply
+                    read u2
+                    read u2
+                code 1
+            call multiply
+              call multiply
+                call multiply
+                  code 2
+                  read c
+                read s
+              call subtract
+                call subtract
+                  call multiply
+                    read u0
+                    read v0
+                  call multiply
+                    read u1
+                    read v1
+                call multiply
+                  read u2
+                  read v2
+          call multiply
+            call multiply
+              read c
+              read c
+            call add
+              call subtract
+                call subtract
+                  call multiply
+                    read v0
+                    read v0
+                  call multiply
+                    read v1
+                    read v1
+                call multiply
+                  read v2
+                  read v2
+              code 1
+        call subtract
+          call subtract
+            call multiply
+              read c
+              read c
+            call multiply
+              read s
+              read s
+          code 1
+
+# And B(x, d) = 0: the velocity is tangent to the hyperboloid at x.
+rule the-geodesic-velocity-is-tangent
+  mark u0, like integer
+  mark u1, like integer
+  mark u2, like integer
+  mark v0, like integer
+  mark v1, like integer
+  mark v2, like integer
+  mark c, like integer
+  mark s, like integer
+  show hold
+    call is-equal
+      call subtract
+        call subtract
+          call multiply
+            call add
+              call multiply
+                read c
+                read u0
+              call multiply
+                read s
+                read v0
+            call add
+              call multiply
+                read s
+                read u0
+              call multiply
+                read c
+                read v0
+          call multiply
+            call add
+              call multiply
+                read c
+                read u1
+              call multiply
+                read s
+                read v1
+            call add
+              call multiply
+                read s
+                read u1
+              call multiply
+                read c
+                read v1
+        call multiply
+          call add
+            call multiply
+              read c
+              read u2
+            call multiply
+              read s
+              read v2
+          call add
+            call multiply
+              read s
+              read u2
+            call multiply
+              read c
+              read v2
+      call add
+        call add
+          call multiply
+            call multiply
+              read c
+              read s
+            call subtract
+              call subtract
+                call subtract
+                  call multiply
+                    read u0
+                    read u0
+                  call multiply
+                    read u1
+                    read u1
+                call multiply
+                  read u2
+                  read u2
+              code 1
+          call multiply
+            call add
+              call multiply
+                read c
+                read c
+              call multiply
+                read s
+                read s
+            call subtract
+              call subtract
+                call multiply
+                  read u0
+                  read v0
+                call multiply
+                  read u1
+                  read v1
+              call multiply
+                read u2
+                read v2
+        call multiply
+          call multiply
+            read c
+            read s
+          call add
+            call subtract
+              call subtract
+                call multiply
+                  read v0
+                  read v0
+                call multiply
+                  read v1
+                  read v1
+              call multiply
+                read v2
+                read v2
+            code 1
+
+# ANGULAR MOMENTUM. D N for N = x1 d2 - x2 d1, by the product rule with D x = d and D d = x, is
+# (d1 d2 + x1 x2) - (d2 d1 + x2 x1) = 0.
+rule angular-momentum-is-conserved
+  mark u0, like integer
+  mark u1, like integer
+  mark u2, like integer
+  mark v0, like integer
+  mark v1, like integer
+  mark v2, like integer
+  mark c, like integer
+  mark s, like integer
+  show hold
+    call is-equal
+      call subtract
+        call add
+          call multiply
+            call add
+              call multiply
+                read s
+                read u1
+              call multiply
+                read c
+                read v1
+            call add
+              call multiply
+                read s
+                read u2
+              call multiply
+                read c
+                read v2
+          call multiply
+            call add
+              call multiply
+                read c
+                read u1
+              call multiply
+                read s
+                read v1
+            call add
+              call multiply
+                read c
+                read u2
+              call multiply
+                read s
+                read v2
+        call add
+          call multiply
+            call add
+              call multiply
+                read s
+                read u2
+              call multiply
+                read c
+                read v2
+            call add
+              call multiply
+                read s
+                read u1
+              call multiply
+                read c
+                read v1
+          call multiply
+            call add
+              call multiply
+                read c
+                read u2
+              call multiply
+                read s
+                read v2
+            call add
+              call multiply
+                read c
+                read u1
+              call multiply
+                read s
+                read v1
+      code 0
+
+# THE TURNING, for any point x and tangent d (not only on one geodesic): M^2 + N^2 - sinh^2 r, with M = d0 and
+# N = x1 d2 - x2 d1, is the certificate below in h1 = B(x, x) - 1, h2 = B(d, d) + 1 and h3 = B(x, d). So where x is a
+# point and d a unit tangent at it, M^2 + N^2 = x1^2 + x2^2 = sinh^2 r and D psi = -cosh r D theta.
+rule the-gauss-bonnet-turning-identity
+  mark x0, like integer
+  mark x1, like integer
+  mark x2, like integer
+  mark d0, like integer
+  mark d1, like integer
+  mark d2, like integer
+  show hold
+    call is-equal
+      call subtract
+        call add
+          call multiply
+            read d0
+            read d0
+          call multiply
+            call subtract
+              call multiply
+                read x1
+                read d2
+              call multiply
+                read x2
+                read d1
+            call subtract
+              call multiply
+                read x1
+                read d2
+              call multiply
+                read x2
+                read d1
+        call add
+          call multiply
+            read x1
+            read x1
+          call multiply
+            read x2
+            read x2
+      call add
+        call subtract
+          call multiply
+            call add
+              call subtract
+                call subtract
+                  call multiply
+                    read d0
+                    read d0
+                  call multiply
+                    read d1
+                    read d1
+                call multiply
+                  read d2
+                  read d2
+              code 1
+            call add
+              call subtract
+                code 1
+                call multiply
+                  read x0
+                  read x0
+              call subtract
+                call subtract
+                  call subtract
+                    call multiply
+                      read x0
+                      read x0
+                    call multiply
+                      read x1
+                      read x1
+                  call multiply
+                    read x2
+                    read x2
+                code 1
+          call multiply
+            call multiply
+              call subtract
+                call subtract
+                  call subtract
+                    call multiply
+                      read x0
+                      read x0
+                    call multiply
+                      read x1
+                      read x1
+                  call multiply
+                    read x2
+                    read x2
+                code 1
+              read d0
+            read d0
+        call multiply
+          call subtract
+            call subtract
+              call multiply
+                read x0
+                read d0
+              call multiply
+                read x1
+                read d1
+            call multiply
+              read x2
+              read d2
+          call subtract
+            call multiply
+              call multiply
+                code 2
+                read x0
+              read d0
+            call subtract
+              call subtract
+                call multiply
+                  read x0
+                  read d0
+                call multiply
+                  read x1
+                  read d1
+              call multiply
+                read x2
+                read d2

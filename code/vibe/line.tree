@@ -15,10 +15,10 @@
 #   MOTION         a lone love moves one dock per beat and comes round in four, the top speed of the light cone, and a
 #                  love and a fear meeting head on exchange lanes and turn back.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
 
-load @term/seed/code/vibe/tone
+load @term/seed/vibe/tone
   find tone
   find is-vibe
   find tone-conjugate

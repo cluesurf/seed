@@ -1,4 +1,4 @@
-load @term/seed/code/structure/set
+load @term/seed/structure/set
   find set
 
 # Linear logic: a logic that treats propositions as resources consumed exactly once, refining the structural rules so a

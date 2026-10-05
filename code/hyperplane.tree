@@ -1,4 +1,4 @@
-load @term/seed/code/structure/space/vector
+load @term/seed/structure/space/vector
   find vector-space
 
 # A hyperplane: a flat subspace one dimension below the whole, a line in the plane, a plane in space, the mirror a

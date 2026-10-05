@@ -1,4 +1,4 @@
-load @term/seed/code/manifold/riemannian
+load @term/seed/manifold/riemannian
   find riemannian-manifold
 
 # A vector differential operator: an operator that differentiates fields on a manifold, the gradient (slope of a scalar),

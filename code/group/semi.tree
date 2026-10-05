@@ -1,7 +1,7 @@
-load @term/seed/code/structure/set
+load @term/seed/structure/set
   find set
 
-load @term/seed/code/structure/function/binary
+load @term/seed/structure/function/binary
   find binary-function
 
 # A semigroup: a set with one associative operation, a magma with associativity added but still no identity and no

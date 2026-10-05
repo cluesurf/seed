@@ -1,4 +1,4 @@
-load @term/seed/code/structure/space/vector
+load @term/seed/structure/space/vector
   find vector-space
 
 # A bilinear map: a function of two vector arguments, linear in each separately, the shape of every product in algebra,

@@ -1,7 +1,7 @@
-load @term/seed/code/structure/set
+load @term/seed/structure/set
   find set
 
-load @term/seed/code/structure/function/binary
+load @term/seed/structure/function/binary
   find binary-function
 
 # A magma: the barest algebraic structure, a set with one binary operation closed on it and nothing more, no

@@ -1,4 +1,4 @@
-load @term/seed/code/structure/space/vector
+load @term/seed/structure/space/vector
   find vector-space
 
 # An algebraic variety: the set of common zeros of a collection of polynomials, the geometric shape cut out by

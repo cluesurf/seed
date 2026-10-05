@@ -1,0 +1,145 @@
+# NEGATIVE CONTROLS for the coordinate rules of space/hyperbolic/archimedes: each must be REFUSED. Expected: 2.
+# Run: sh deck/term/deck/seed.tree/tmp/check-continuity-control.sh
+
+# false: n = C fails at C = 1, A = 1
+rule control-the-witness-c-alone
+  mark aa, like integer
+  mark cc, like integer
+  have aa-is-positive
+    call is-minimum
+      read aa
+      code 1
+  find n, like integer
+    read cc
+  show hold
+    call is-above
+      call multiply
+        read n
+        read aa
+      read cc
+
+
+# false: a minus sign in the B(u, v) term
+rule control-the-line-with-a-wrong-sign
+  mark u0, like integer
+  mark u1, like integer
+  mark u2, like integer
+  mark v0, like integer
+  mark v1, like integer
+  mark v2, like integer
+  mark ca, like integer
+  mark sa, like integer
+  mark cb, like integer
+  mark sb, like integer
+  show hold
+    call is-equal
+      call subtract
+        call subtract
+          call subtract
+            call multiply
+              call add
+                call multiply
+                  read ca
+                  read u0
+                call multiply
+                  read sa
+                  read v0
+              call add
+                call multiply
+                  read cb
+                  read u0
+                call multiply
+                  read sb
+                  read v0
+            call multiply
+              call add
+                call multiply
+                  read ca
+                  read u1
+                call multiply
+                  read sa
+                  read v1
+              call add
+                call multiply
+                  read cb
+                  read u1
+                call multiply
+                  read sb
+                  read v1
+          call multiply
+            call add
+              call multiply
+                read ca
+                read u2
+              call multiply
+                read sa
+                read v2
+            call add
+              call multiply
+                read cb
+                read u2
+              call multiply
+                read sb
+                read v2
+        call subtract
+          call multiply
+            read ca
+            read cb
+          call multiply
+            read sa
+            read sb
+      call add
+        call add
+          call multiply
+            call multiply
+              read ca
+              read cb
+            call subtract
+              call subtract
+                call subtract
+                  call multiply
+                    read u0
+                    read u0
+                  call multiply
+                    read u1
+                    read u1
+                call multiply
+                  read u2
+                  read u2
+              code 1
+          call multiply
+            call subtract
+              call multiply
+                read ca
+                read sb
+              call multiply
+                read sa
+                read cb
+            call subtract
+              call subtract
+                call multiply
+                  read u0
+                  read v0
+                call multiply
+                  read u1
+                  read v1
+              call multiply
+                read u2
+                read v2
+        call multiply
+          call multiply
+            read sa
+            read sb
+          call add
+            call subtract
+              call subtract
+                call multiply
+                  read v0
+                  read v0
+                call multiply
+                  read v1
+                  read v1
+              call multiply
+                read v2
+                read v2
+            code 1

@@ -7,7 +7,7 @@
 # cross-polytope sits inside the hypercube as an alternation. Together with the self-dual 24-cell these are the regular
 # polychora that frame the four-dimensional geometry of the mesh.
 
-load @term/seed/code/atom/sign
+load @term/seed/atom/sign
   find sign
   find flip-sign
 

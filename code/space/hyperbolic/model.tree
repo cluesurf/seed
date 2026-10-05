@@ -1,7 +1,7 @@
-load @term/seed/code/structure/manifold
+load @term/seed/structure/manifold
   find manifold
 
-load @term/seed/code/structure/set
+load @term/seed/structure/set
   find set
 
 # The models of hyperbolic space, the ways to draw the undrawable inside flat space. No model is faithful (a perfect

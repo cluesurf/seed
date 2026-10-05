@@ -1,4 +1,4 @@
-load @term/seed/code/structure/space/vector
+load @term/seed/structure/space/vector
   find vector-space
 
 # A linear map: a function between vector spaces that respects addition and scaling, sending sums to sums and scalings to

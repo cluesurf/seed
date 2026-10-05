@@ -1,4 +1,4 @@
-load @term/seed/code/structure/space/hilbert
+load @term/seed/structure/space/hilbert
   find hilbert-space
 
 # A Hermitian adjoint: the conjugate-transpose of an operator on an inner-product space, the operator that moves to the

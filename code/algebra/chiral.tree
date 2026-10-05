@@ -1,4 +1,4 @@
-load @term/seed/code/structure/ring
+load @term/seed/structure/ring
   find ring
 
 # A chiral algebra: the algebraic skeleton of a two-dimensional conformal field theory, encoding how local operators on

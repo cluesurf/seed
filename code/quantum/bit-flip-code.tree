@@ -7,7 +7,7 @@
 # is the discrete, exactly-checkable core of stabilizer quantum codes: the same redundancy and syndrome decoding protect a
 # qubit against a single Pauli-X error, and the substrate's spread-encoded memory relies on the very same property.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
   find both
 

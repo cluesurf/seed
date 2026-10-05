@@ -1,4 +1,4 @@
-load @term/seed/code/structure/manifold
+load @term/seed/structure/manifold
   find manifold
 
 # An analytic manifold: a manifold whose charts overlap by analytic maps (locally equal to their power series), a

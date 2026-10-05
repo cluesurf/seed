@@ -1,4 +1,4 @@
-load @term/seed/code/structure/space/vector
+load @term/seed/structure/space/vector
   find vector-space
 
 # The dimension of a vector space: the number of vectors in any basis, the count of independent directions, the single

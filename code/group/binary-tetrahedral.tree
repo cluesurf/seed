@@ -14,7 +14,7 @@
 # the twenty-four under that multiplication is witnessed on representative products. Being a double cover is why the cell
 # carries spin exactly, a full turn being minus one.
 
-load @/code/group/quaternion
+load @/group/quaternion
   find sign
   find axis
   find flip-sign

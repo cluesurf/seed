@@ -1,4 +1,4 @@
-load @term/seed/code/structure/algebra/clifford
+load @term/seed/structure/algebra/clifford
   find clifford-algebra
 
 # A geometric algebra: a Clifford algebra used as the language of geometry, where the single geometric product unifies

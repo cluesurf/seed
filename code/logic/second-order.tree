@@ -1,4 +1,4 @@
-load @term/seed/code/structure/set
+load @term/seed/structure/set
   find set
 
 # Second-order logic: first-order logic extended to quantify over predicates and sets, not just individuals, so it can

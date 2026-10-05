@@ -1,4 +1,4 @@
-load @term/seed/code/group/homomorphism
+load @term/seed/group/homomorphism
   find group-homomorphism
 
 # A group isomorphism: a bijective homomorphism, both injective and surjective, so the two groups are the same up to

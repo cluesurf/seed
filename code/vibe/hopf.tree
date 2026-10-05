@@ -9,20 +9,20 @@
 # axis a unit lands on is fixed by its frame: the first frame over +-i, the second (turn w) over +-k, the third (turn
 # w^2) over +-j.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
   find both
   find either
   find not-flag
 
-load @term/seed/code/atom/sign
+load @term/seed/atom/sign
   find sign
 
-load @term/seed/code/vibe/tone
+load @term/seed/vibe/tone
   find tone
   find same-tone
 
-load @term/seed/code/vibe/hurwitz
+load @term/seed/vibe/hurwitz
   find hurwitz-axis
   find q8
   find q8-of

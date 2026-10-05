@@ -1,0 +1,307 @@
+# NEGATIVE CONTROLS for integral/angle: each must be REFUSED. Expected: 5.
+
+# false: 1 / (1 + s^2) falls on s >= 0
+rule control-the-integrand-rises
+  mark f1, like integer
+  mark f2, like integer
+  mark pp, like integer
+  mark g, like integer
+  have the-integrand-difference
+    call is-equal
+      call subtract
+        read f1
+        read f2
+      call multiply
+        read pp
+        read g
+  have pp-is-positive
+    call is-above
+      read pp
+      code 0
+  have g-is-not-negative
+    call is-minimum
+      read g
+      code 0
+  show hold
+    call is-maximum
+      read f1
+      read f2
+
+
+# false: pp may be near 1
+rule control-the-integrand-falls-by-at-most-half-the-growth
+  mark f1, like integer
+  mark f2, like integer
+  mark pp, like integer
+  mark g, like integer
+  have the-integrand-difference
+    call is-equal
+      call subtract
+        read f1
+        read f2
+      call multiply
+        read pp
+        read g
+  have pp-is-at-most-one
+    meet and
+      call is-above
+        read pp
+        code 0
+      call is-maximum
+        read pp
+        code 1
+  have g-is-not-negative
+    call is-minimum
+      read g
+      code 0
+  show hold
+    call is-maximum
+      call multiply
+        code 2
+        call subtract
+          read f1
+          read f2
+      read g
+
+
+# false: at n = 0 both sums are 0, so the difference is not the fall plus 1
+rule control-the-upper-sum-equals-the-lower-sum
+  mark fl
+    like task
+      take a0, like integer
+      like integer
+  mark up
+    like task
+      take a0, like integer
+      like integer
+  mark lo
+    like task
+      take a0, like integer
+      like integer
+  mark n, like integer
+  mark w, like integer
+  have up-starts-at-zero
+    call is-equal
+      call up
+        code 0
+      code 0
+  have lo-starts-at-zero
+    call is-equal
+      call lo
+        code 0
+      code 0
+  have up-adds-a-left-strip
+    mark i, like integer
+    meet or
+      call is-below
+        read i
+        code 0
+      call is-equal
+        call up
+          call add
+            read i
+            code 1
+        call add
+          call up
+            read i
+          call multiply
+            call fl
+              read i
+            read w
+  have lo-adds-a-right-strip
+    mark i, like integer
+    meet or
+      call is-below
+        read i
+        code 0
+      call is-equal
+        call lo
+          call add
+            read i
+            code 1
+        call add
+          call lo
+            read i
+          call multiply
+            call fl
+              call add
+                read i
+                code 1
+            read w
+  have n-is-a-count
+    call is-minimum
+      read n
+      code 0
+  show hold
+    call is-equal
+      call subtract
+        call up
+          read n
+        call lo
+          read n
+      call add
+        call multiply
+          call subtract
+            call fl
+              code 0
+            call fl
+              read n
+          read w
+        code 1
+  fold n
+
+
+# false without the slow fall: the increment may sit at h f2
+rule control-the-angle-with-a-first-order-error
+  mark t, like integer
+  mark h, like integer
+  mark f1, like integer
+  mark f2, like integer
+  mark dt, like integer
+  have the-increment-is-squeezed
+    meet and
+      call is-maximum
+        read dt
+        call multiply
+          read h
+          read f1
+      call is-minimum
+        read dt
+        call multiply
+          read h
+          read f2
+  have h-is-not-negative
+    call is-minimum
+      read h
+      code 0
+  show hold
+    call is-maximum
+      call subtract
+        call multiply
+          read f1
+          read h
+        read dt
+      call multiply
+        call multiply
+          call add
+            call multiply
+              code 2
+              read t
+            read h
+          read h
+        read h
+
+
+# false: at n = 0 both sums are 0, and refining never lowers the lower sum
+rule control-halving-the-mesh-lowers-the-lower-sum
+  mark fp
+    like task
+      take a0, like integer
+      like integer
+  mark fo
+    like task
+      take a0, like integer
+      like integer
+  mark ll
+    like task
+      take a0, like integer
+      like integer
+  mark mm
+    like task
+      take a0, like integer
+      like integer
+  mark n, like integer
+  mark w, like integer
+  have ll-adds-a-strip
+    mark i, like integer
+    meet or
+      call is-below
+        read i
+        code 0
+      call is-equal
+        call ll
+          call add
+            read i
+            code 1
+        call add
+          call ll
+            read i
+          call multiply
+            call fp
+              call add
+                read i
+                code 1
+            read w
+  have mm-adds-two-half-strips
+    mark i, like integer
+    meet or
+      call is-below
+        read i
+        code 0
+      call is-equal
+        call multiply
+          code 2
+          call mm
+            call add
+              read i
+              code 1
+        call add
+          call add
+            call multiply
+              code 2
+              call mm
+                read i
+            call multiply
+              call fo
+                read i
+              read w
+          call multiply
+            call fp
+              call add
+                read i
+                code 1
+            read w
+  have the-odd-strip-is-at-least-the-right-end
+    mark i, like integer
+    meet or
+      call is-below
+        read i
+        code 0
+      call is-minimum
+        call multiply
+          call fo
+            read i
+          read w
+        call multiply
+          call fp
+            call add
+              read i
+              code 1
+          read w
+  have ll-starts-at-zero
+    call is-equal
+      call ll
+        code 0
+      code 0
+  have mm-starts-at-zero
+    call is-equal
+      call mm
+        code 0
+      code 0
+  have the-width-is-not-negative
+    call is-minimum
+      read w
+      code 0
+  have n-is-a-count
+    call is-minimum
+      read n
+      code 0
+  show hold
+    call is-maximum
+      call add
+        call mm
+          read n
+        code 1
+      call ll
+        read n
+  fold n

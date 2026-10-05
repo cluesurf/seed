@@ -1,4 +1,4 @@
-load @term/seed/code/structure/space/vector
+load @term/seed/structure/space/vector
   find vector-space
 
 # A hyperbola: the conic of points whose distances to two foci differ by a constant, a curve of two opposing branches

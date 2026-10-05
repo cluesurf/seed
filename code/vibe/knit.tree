@@ -16,20 +16,20 @@
 # its energy (vibes plus twice the stored ones), and it COMMUTES WITH CHARGE CONJUGATION C. The stream that carries the
 # slots between docks, and the line law it gives, are in vibe/line.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
 
-load @term/seed/code/atom/sign
+load @term/seed/atom/sign
   find sign
   find flip-sign
 
-load @term/seed/code/vibe/law
+load @term/seed/vibe/law
   find involution
   find bijection
   find conserves
   find commutes
 
-load @term/seed/code/vibe/tone
+load @term/seed/vibe/tone
   find tone
   find tone-conjugate
   find is-vibe

@@ -1,4 +1,4 @@
-load @term/seed/code/structure/space/vector
+load @term/seed/structure/space/vector
   find vector-space
 
 # A reflection: the map that flips a space across a hyperplane mirror, fixing the mirror and reversing the perpendicular

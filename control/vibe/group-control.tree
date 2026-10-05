@@ -1,17 +1,17 @@
 # NEGATIVE CONTROL: hurwitz, turn, dock, hopf. Every rule here must be refused.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
   find implies
   find not-flag
 
-load @term/seed/code/vibe/tone
+load @term/seed/vibe/tone
   find tone
   find tone-sum
   find tone-product
   find same-tone
 
-load @term/seed/code/vibe/hurwitz
+load @term/seed/vibe/hurwitz
   find hurwitz-element
   find hurwitz-unit
   find hurwitz-product
@@ -23,7 +23,7 @@ load @term/seed/code/vibe/hurwitz
   find q8-axis
   find hurwitz-core
 
-load @term/seed/code/vibe/turn
+load @term/seed/vibe/turn
   find turn-matrix
   find entry-a
   find entry-b
@@ -33,7 +33,7 @@ load @term/seed/code/vibe/turn
   find rho
   find same-matrix
 
-load @term/seed/code/vibe/dock
+load @term/seed/vibe/dock
   find tetrad
   find is-slot
   find dot
@@ -42,7 +42,7 @@ load @term/seed/code/vibe/dock
   find triality
   find unit-slot
 
-load @term/seed/code/vibe/hopf
+load @term/seed/vibe/hopf
   find hopf
   find axis-of-frame
 

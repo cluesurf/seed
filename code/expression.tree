@@ -1,4 +1,4 @@
-load @term/seed/code/type/term
+load @term/seed/type/term
   find term
 
 # An expression: a well-formed combination of symbols denoting a value, built from variables, constants, and operations,

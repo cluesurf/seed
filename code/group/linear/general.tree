@@ -1,4 +1,4 @@
-load @term/seed/code/group
+load @term/seed/group
   find group
 
 # The general linear group: the group of all invertible linear maps of a vector space, equivalently the invertible

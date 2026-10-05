@@ -1,0 +1,69 @@
+# NEGATIVE CONTROLS for integral/disk: each must be REFUSED. Expected: 1.
+
+# false: the error carries the mesh term 2 p
+rule control-the-disk-area-without-the-mesh-error
+  mark ss, like integer
+  mark dd, like integer
+  mark nt, like integer
+  mark q, like integer
+  mark r, like integer
+  mark w, like integer
+  mark nd, like integer
+  mark eps, like integer
+  mark p, like integer
+  have the-sums-are-within-n-tol
+    meet and
+      call is-maximum
+        call subtract
+          read ss
+          read dd
+        read nt
+      call is-maximum
+        call subtract
+          code 0
+          call subtract
+            read ss
+            read dd
+        read nt
+  have the-step-errors-sum
+    call is-equal
+      read nt
+      call add
+        call add
+          call multiply
+            read q
+            read r
+          call multiply
+            call multiply
+              read q
+              read r
+            read w
+        read nd
+  have the-exponential-errors-sum
+    call is-maximum
+      read nd
+      call multiply
+        read eps
+        read r
+  have the-mesh-errors-sum
+    call is-maximum
+      call add
+        call multiply
+          read q
+          read r
+        call multiply
+          call multiply
+            read q
+            read r
+          read w
+      call multiply
+        code 2
+        read p
+  show hold
+    call is-maximum
+      call subtract
+        read ss
+        read dd
+      call multiply
+        read eps
+        read r

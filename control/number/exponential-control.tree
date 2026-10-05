@@ -1,0 +1,235 @@
+# NEGATIVE CONTROLS for integral/exponential: each must be REFUSED. Expected: 2.
+
+# false: the a u(m) v(n - m) correction dropped
+rule control-the-inner-identity-without-the-a-term
+  mark u
+    like task
+      take a0, like integer
+      like integer
+  mark v
+    like task
+      take a0, like integer
+      like integer
+  mark c
+    like task
+      take a0, like integer
+      take a1, like integer
+      like integer
+  mark n, like integer
+  mark m, like integer
+  mark a, like integer
+  mark b, like integer
+  have u-times-v
+    mark k, like integer
+    mark j, like integer
+    meet or
+      call is-below
+        read k
+        code 0
+      call is-below
+        read j
+        code 0
+      call is-equal
+        call multiply
+          call multiply
+            call add
+              read k
+              code 1
+            call u
+              call add
+                read k
+                code 1
+          call v
+            read j
+        call multiply
+          call multiply
+            read a
+            call u
+              read k
+          call v
+            read j
+  have v-times-u
+    mark k, like integer
+    mark j, like integer
+    meet or
+      call is-below
+        read k
+        code 0
+      call is-below
+        read j
+        code 0
+      call is-equal
+        call multiply
+          call multiply
+            call add
+              read j
+              code 1
+            call u
+              read k
+          call v
+            call add
+              read j
+              code 1
+        call multiply
+          call multiply
+            read b
+            call u
+              read k
+          call v
+            read j
+  have c-starts
+    mark q, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-equal
+        call c
+          read q
+          code 0
+        call multiply
+          call u
+            code 0
+          call v
+            read q
+  have c-adds
+    mark q, like integer
+    mark r, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-below
+        read r
+        code 0
+      call is-equal
+        call c
+          read q
+          call add
+            read r
+            code 1
+        call add
+          call c
+            read q
+            read r
+          call multiply
+            call u
+              call add
+                read r
+                code 1
+            call v
+              call subtract
+                call subtract
+                  read q
+                  read r
+                code 1
+  have m-is-a-count
+    call is-minimum
+      read m
+      code 0
+  have m-is-at-most-n
+    call is-maximum
+      read m
+      read n
+  show hold
+    call is-equal
+      call multiply
+        call add
+          read n
+          code 1
+        call c
+          call add
+            read n
+            code 1
+          read m
+      call multiply
+        call add
+          read a
+          read b
+        call c
+          read n
+          read m
+  fold m
+
+
+# false: starting apart, they stay apart
+rule control-the-binomial-identity-from-another-start
+  mark c
+    like task
+      take a0, like integer
+      take a1, like integer
+      like integer
+  mark w
+    like task
+      take a0, like integer
+      like integer
+  mark n, like integer
+  mark a, like integer
+  mark b, like integer
+  have the-convolution-steps
+    mark q, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-equal
+        call multiply
+          call add
+            read q
+            code 1
+          call c
+            call add
+              read q
+              code 1
+            call add
+              read q
+              code 1
+        call multiply
+          call add
+            read a
+            read b
+          call c
+            read q
+            read q
+  have w-recurrence
+    mark q, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-equal
+        call multiply
+          call add
+            read q
+            code 1
+          call w
+            call add
+              read q
+              code 1
+        call multiply
+          call add
+            read a
+            read b
+          call w
+            read q
+  have they-start-apart
+    call is-equal
+      call c
+        code 0
+        code 0
+      call add
+        call w
+          code 0
+        code 1
+  have n-is-a-count
+    call is-minimum
+      read n
+      code 0
+  show hold
+    call is-equal
+      call c
+        read n
+        read n
+      call w
+        read n
+  fold n

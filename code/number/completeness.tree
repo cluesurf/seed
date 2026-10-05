@@ -1,0 +1,392 @@
+# THE COMPLETENESS OF THE REAL NUMBERS, in Cauchy's form: a Cauchy sequence of reals converges to a real.
+#
+# A REAL is a regular sequence of rationals, Bishop's construction: x(p) for p = 1, 2, 3, ... with
+#   |x(p) - x(q)| <= e(p) + e(q)   for all p, q >= 1,
+# where e is the MODULUS: e(t) > 0 and 4 e(4 t) = e(t). The usual modulus is e(t) = 1 / t, which has both properties,
+# and the theorems below hold for every modulus that does, so for that one. Two reals x, y are EQUAL when
+# |x(p) - y(p)| <= 2 e(p) for every p, and |x - y| <= c as reals when |x(p) - y(p)| <= c + 2 e(p) for every p.
+#
+# A SEQUENCE OF REALS is x(k, p): the k-th real's p-th approximation. It is CAUCHY when
+#   |x(k, p) - x(j, p)| <= e(k) + e(j) + 2 e(p)   for all k, j, p >= 1,
+# which says |x_k - x_j| <= e(k) + e(j) as reals. Its LIMIT is the diagonal L(p) = x(4 p, 4 p), and the theorems are
+#   THE LIMIT IS A REAL       |L(m) - L(n)| <= e(m) + e(n): L is itself a regular sequence;
+#   THE SEQUENCE CONVERGES    |x(k, p) - L(p)| <= e(k) + 2 e(p): |x_k - L| <= e(k) as reals, which tends to 0.
+#
+# Each is a chain of triangle inequalities, and the proof is the prover INSTANTIATING the universal hypotheses
+# (`have ... / mark k, like integer / ...`, each true for every value of its marks) at the terms the goal names, then
+# a linear combination of the instances over an ordered field (check/product.ts, no integer rounding), so it holds
+# whatever field the approximations are drawn from. x and e are quantified functions: the theorems hold for every
+# sequence and every modulus satisfying the hypotheses.
+#
+# With the Archimedean property (space/hyperbolic/archimedes), Cauchy completeness is the completeness of an ordered
+# field, and it is what Dedekind's axiom of the hyperbolic plane reduces to (archimedes.tree: the line is an isometric
+# copy of its coordinates). The rationals fail it: a sequence whose limit is not rational has no limit there, which is
+# why a real is a sequence and not a rational.
+
+
+# THE LIMIT IS A REAL: L(m) = x(4m, 4m) and L(n) = x(4n, 4n) differ by at most e(m) + e(n). Through x(4n, 4m):
+# |x(4m, 4m) - x(4n, 4m)| <= 3 e(4m) + e(4n) (Cauchy at p = 4m) and |x(4n, 4m) - x(4n, 4n)| <= e(4m) + e(4n)
+# (the 4n-th real is regular), summing to 4 e(4m) + 2 e(4n) = e(m) + e(n) / 2.
+rule the-limit-is-a-real
+  mark x
+    like task
+      take k, like integer
+      take p, like integer
+      like integer
+  mark e
+    like task
+      take t, like integer
+      like integer
+  mark m, like integer
+  mark n, like integer
+  have the-modulus-is-positive
+    mark t, like integer
+    meet or
+      call is-below
+        read t
+        code 1
+      call is-above
+        call e
+          read t
+        code 0
+  have the-modulus-quarters
+    mark t, like integer
+    meet or
+      call is-below
+        read t
+        code 1
+      call is-equal
+        call multiply
+          code 4
+          call e
+            call multiply
+              code 4
+              read t
+        call e
+          read t
+  have each-is-a-real
+    mark k, like integer
+    mark p, like integer
+    mark q, like integer
+    meet or
+      call is-below
+        read k
+        code 1
+      call is-below
+        read p
+        code 1
+      call is-below
+        read q
+        code 1
+      meet and
+        call is-maximum
+          call subtract
+            call x
+              read k
+              read p
+            call x
+              read k
+              read q
+          call add
+            call e
+              read p
+            call e
+              read q
+        call is-maximum
+          call subtract
+            call x
+              read k
+              read q
+            call x
+              read k
+              read p
+          call add
+            call e
+              read p
+            call e
+              read q
+  have they-are-a-cauchy-sequence
+    mark k, like integer
+    mark j, like integer
+    mark p, like integer
+    meet or
+      call is-below
+        read k
+        code 1
+      call is-below
+        read j
+        code 1
+      call is-below
+        read p
+        code 1
+      meet and
+        call is-maximum
+          call subtract
+            call x
+              read k
+              read p
+            call x
+              read j
+              read p
+          call add
+            call add
+              call e
+                read k
+              call e
+                read j
+            call multiply
+              code 2
+              call e
+                read p
+        call is-maximum
+          call subtract
+            call x
+              read j
+              read p
+            call x
+              read k
+              read p
+          call add
+            call add
+              call e
+                read k
+              call e
+                read j
+            call multiply
+              code 2
+              call e
+                read p
+  have m-is-an-index
+    call is-minimum
+      read m
+      code 1
+  have n-is-an-index
+    call is-minimum
+      read n
+      code 1
+  show hold
+    meet and
+      call is-maximum
+        call subtract
+          call x
+            call multiply
+              code 4
+              read m
+            call multiply
+              code 4
+              read m
+          call x
+            call multiply
+              code 4
+              read n
+            call multiply
+              code 4
+              read n
+        call add
+          call e
+            read m
+          call e
+            read n
+      call is-maximum
+        call subtract
+          call x
+            call multiply
+              code 4
+              read n
+            call multiply
+              code 4
+              read n
+          call x
+            call multiply
+              code 4
+              read m
+            call multiply
+              code 4
+              read m
+        call add
+          call e
+            read m
+          call e
+            read n
+
+
+# THE SEQUENCE CONVERGES: the k-th real is within e(k) of the limit. Through x(k, 4p):
+# |x(k, p) - x(k, 4p)| <= e(p) + e(4p) (regular) and |x(k, 4p) - x(4p, 4p)| <= e(k) + 3 e(4p) (Cauchy), summing to
+# e(k) + e(p) + 4 e(4p) = e(k) + 2 e(p).
+rule the-sequence-converges-to-its-limit
+  mark x
+    like task
+      take k, like integer
+      take p, like integer
+      like integer
+  mark e
+    like task
+      take t, like integer
+      like integer
+  mark k, like integer
+  mark p, like integer
+  have the-modulus-is-positive
+    mark t, like integer
+    meet or
+      call is-below
+        read t
+        code 1
+      call is-above
+        call e
+          read t
+        code 0
+  have the-modulus-quarters
+    mark t, like integer
+    meet or
+      call is-below
+        read t
+        code 1
+      call is-equal
+        call multiply
+          code 4
+          call e
+            call multiply
+              code 4
+              read t
+        call e
+          read t
+  have each-is-a-real
+    mark k, like integer
+    mark p, like integer
+    mark q, like integer
+    meet or
+      call is-below
+        read k
+        code 1
+      call is-below
+        read p
+        code 1
+      call is-below
+        read q
+        code 1
+      meet and
+        call is-maximum
+          call subtract
+            call x
+              read k
+              read p
+            call x
+              read k
+              read q
+          call add
+            call e
+              read p
+            call e
+              read q
+        call is-maximum
+          call subtract
+            call x
+              read k
+              read q
+            call x
+              read k
+              read p
+          call add
+            call e
+              read p
+            call e
+              read q
+  have they-are-a-cauchy-sequence
+    mark k, like integer
+    mark j, like integer
+    mark p, like integer
+    meet or
+      call is-below
+        read k
+        code 1
+      call is-below
+        read j
+        code 1
+      call is-below
+        read p
+        code 1
+      meet and
+        call is-maximum
+          call subtract
+            call x
+              read k
+              read p
+            call x
+              read j
+              read p
+          call add
+            call add
+              call e
+                read k
+              call e
+                read j
+            call multiply
+              code 2
+              call e
+                read p
+        call is-maximum
+          call subtract
+            call x
+              read j
+              read p
+            call x
+              read k
+              read p
+          call add
+            call add
+              call e
+                read k
+              call e
+                read j
+            call multiply
+              code 2
+              call e
+                read p
+  have k-is-an-index
+    call is-minimum
+      read k
+      code 1
+  have p-is-an-index
+    call is-minimum
+      read p
+      code 1
+  show hold
+    meet and
+      call is-maximum
+        call subtract
+          call x
+            read k
+            read p
+          call x
+            call multiply
+              code 4
+              read p
+            call multiply
+              code 4
+              read p
+        call add
+          call e
+            read k
+          call multiply
+            code 2
+            call e
+              read p
+      call is-maximum
+        call subtract
+          call x
+            call multiply
+              code 4
+              read p
+            call multiply
+              code 4
+              read p
+          call x
+            read k
+            read p
+        call add
+          call e
+            read k
+          call multiply
+            code 2
+            call e
+              read p

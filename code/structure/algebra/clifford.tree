@@ -1,10 +1,10 @@
-load @term/seed/code/structure/space/vector
+load @term/seed/structure/space/vector
   find vector-space
 
-load @term/seed/code/structure/function/binary
+load @term/seed/structure/function/binary
   find binary-function
 
-load @term/seed/code/structure/function/unary
+load @term/seed/structure/function/unary
   find unary-function
 
 # A Clifford algebra: the universal associative algebra built from a vector space with a quadratic form, in which every

@@ -1,4 +1,4 @@
-load @term/seed/code/structure/space/vector
+load @term/seed/structure/space/vector
   find vector-space
 
 # A basis of a vector space: a minimal set of vectors from which every vector is a unique combination, the coordinate

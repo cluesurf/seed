@@ -1,4 +1,4 @@
-load @term/seed/code/type/term
+load @term/seed/type/term
   find term
 
 # The surface layer of the type system, the everyday code a person writes. It is gradual and bidirectional. Gradual

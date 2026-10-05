@@ -1,7 +1,7 @@
-load @term/seed/code/structure/set
+load @term/seed/structure/set
   find set
 
-load @term/seed/code/computation/spr
+load @term/seed/computation/spr
   find spr-cycle
 
 # Content-addressable memory: memory accessed by what is stored, not where. You present a value (the comparand) and the

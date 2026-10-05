@@ -29,17 +29,17 @@
 # the integers of integer.tree, the geometry classification tied to curvature.tree, and the boundary commutator word with
 # its length and side-pairing cancellation. Every closed value is reduced and checked by the kernel.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
 
-load @term/seed/code/number/integer
+load @term/seed/number/integer
   find natural
   find rung
   find from-natural
   find negate
   find combine
 
-load @term/seed/code/space/hyperbolic/curvature
+load @term/seed/space/hyperbolic/curvature
   find geometry
 
 # The genus of a closed orientable surface, the number of handles. We model the four smallest concretely: the sphere, the

@@ -1,4 +1,4 @@
-load @term/seed/code/type/term
+load @term/seed/type/term
   find term
 
 # A dependent variable: a variable whose value is determined by others, the output side of a function, the y that

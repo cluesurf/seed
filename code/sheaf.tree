@@ -1,4 +1,4 @@
-load @term/seed/code/space/topological
+load @term/seed/space/topological
   find topological-space
 
 # A sheaf: an assignment of data to each open set of a space, consistent under restriction, so that local data agreeing

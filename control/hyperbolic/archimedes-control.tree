@@ -1,0 +1,158 @@
+# NEGATIVE CONTROLS for space/hyperbolic/archimedes and for `fold` on order goals: each must be REFUSED. Expected: 5.
+# Run: sh deck/term/deck/seed.tree/tmp/check-archimedes-control.sh
+
+task doubled-cosh
+  take p, like integer
+  take k, like integer
+  like integer
+  send back
+    fork test
+      hook test
+        call is-equal
+          read k
+          code 0
+      hook hold
+        read p
+      hook miss
+        call subtract
+          call multiply
+            code 2
+            call multiply
+              call doubled-cosh
+                read p
+                call subtract
+                  read k
+                  code 1
+              call doubled-cosh
+                read p
+                call subtract
+                  read k
+                  code 1
+          code 1
+
+# the BASE holds (p <= p) and the STEP fails (2 p^2 - 1 > p for p > 1): an induction that skipped the step accepts it
+rule control-a-step-that-fails
+  mark p, like integer
+  mark k, like integer
+  have p-is-a-cosh
+    call is-minimum
+      read p
+      code 1
+  have k-is-a-count
+    call is-minimum
+      read k
+      code 0
+  show hold
+    call is-maximum
+      call doubled-cosh
+        read p
+        read k
+      read p
+  fold k
+
+# the BASE fails: p - 1 >= 2 (p - 1) is false for p > 1
+rule control-a-base-that-fails
+  mark p, like integer
+  mark k, like integer
+  have p-is-a-cosh
+    call is-minimum
+      read p
+      code 1
+  have k-is-a-count
+    call is-minimum
+      read k
+      code 0
+  show hold
+    call is-minimum
+      call subtract
+        call doubled-cosh
+          read p
+          read k
+        code 1
+      call multiply
+        code 2
+        call multiply
+          call add
+            read k
+            code 1
+          call subtract
+            read p
+            code 1
+  fold k
+
+# without p >= 1 the claim is false (p = 0 gives doubled-cosh 0)
+rule control-growth-without-a-cosh
+  mark p, like integer
+  mark k, like integer
+  have k-is-a-count
+    call is-minimum
+      read k
+      code 0
+  show hold
+    meet and
+      call is-minimum
+        call subtract
+          call doubled-cosh
+            read p
+            read k
+          code 1
+        call multiply
+          call add
+            read k
+            code 1
+          call subtract
+            read p
+            code 1
+      call is-minimum
+        call doubled-cosh
+          read p
+          read k
+        code 1
+  fold k
+
+# one past the witness: p = 2, m = 0 gives 2, not 3
+rule control-passing-one-more
+  mark p, like integer
+  mark m, like integer
+  have p-is-at-least-two
+    call is-minimum
+      read p
+      code 2
+  have m-is-a-count
+    call is-minimum
+      read m
+      code 0
+  show hold
+    call is-minimum
+      call doubled-cosh
+        read p
+        read m
+      call add
+        read m
+        code 3
+  fold m
+
+# a hypothesis about the induction variable other than its range is REFUSED (it would change from case to case), even
+# though this statement is true
+rule control-a-hypothesis-about-the-counter
+  mark p, like integer
+  mark k, like integer
+  have p-is-a-cosh
+    call is-minimum
+      read p
+      code 1
+  have k-is-a-count
+    call is-minimum
+      read k
+      code 0
+  have k-is-small
+    call is-maximum
+      read k
+      code 5
+  show hold
+    call is-minimum
+      call doubled-cosh
+        read p
+        read k
+      code 1
+  fold k

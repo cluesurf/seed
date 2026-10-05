@@ -7,7 +7,7 @@
 # whole boundary, the wedge relation is reflexive and nests, and a deep point cannot reconstruct the center (no ultraviolet
 # point sees the full infrared). This is the discrete core of subregion duality and the Ryu-Takayanagi entanglement wedge.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
 
 # A branching direction at each bulk vertex, the two ways the boundary splits.

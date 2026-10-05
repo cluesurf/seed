@@ -1,4 +1,4 @@
-load @term/seed/code/structure/set
+load @term/seed/structure/set
   find set
 
 # A tree: a connected graph with no cycles, a branching structure with a root and no loops, the shape of a hierarchy.

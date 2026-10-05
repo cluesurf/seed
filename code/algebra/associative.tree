@@ -1,10 +1,10 @@
-load @term/seed/code/structure/field
+load @term/seed/structure/field
   find field
 
-load @term/seed/code/structure/set
+load @term/seed/structure/set
   find set
 
-load @term/seed/code/structure/function/binary
+load @term/seed/structure/function/binary
   find binary-function
 
 # An associative algebra: an algebra whose product associates, so (a b) c equals a (b c) and the order of grouping never

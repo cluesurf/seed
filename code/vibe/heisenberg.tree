@@ -11,24 +11,24 @@
 # that the phases are central, and that forgetting the phase is a homomorphism onto the grid whose kernel is the three
 # phases: 27 = 3 x 9.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
   find both
 
-load @term/seed/code/vibe/law
+load @term/seed/vibe/law
   find associative
   find identity
   find inverse
   find homomorphism
 
-load @term/seed/code/vibe/tone
+load @term/seed/vibe/tone
   find tone
   find tone-sum
   find tone-product
   find tone-conjugate
   find same-tone
 
-load @term/seed/code/vibe/role
+load @term/seed/vibe/role
   find role
   find role-of
   find role-sum

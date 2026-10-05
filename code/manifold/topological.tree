@@ -1,4 +1,4 @@
-load @term/seed/code/space/topological
+load @term/seed/space/topological
   find topological-space
 
 # A topological manifold: a space that is locally like flat space but with only continuity assumed, no smoothness yet,

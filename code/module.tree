@@ -1,4 +1,4 @@
-load @term/seed/code/structure/module
+load @term/seed/structure/module
   find module
 
 # A module, the concept: an abelian group whose elements can be scaled by a ring, a vector space over a ring instead of

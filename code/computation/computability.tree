@@ -1,4 +1,4 @@
-load @term/seed/code/machine/turing
+load @term/seed/machine/turing
   find turing-machine
 
 # Computability: the study of what can be computed at all, independent of speed. A function is computable if some Turing

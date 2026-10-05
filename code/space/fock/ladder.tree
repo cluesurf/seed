@@ -11,7 +11,7 @@
 # inverse of creation, a(a-dagger|n>) = |n>. This is second quantization, how a field becomes particles, the same raise and
 # lower the substrate's collision performs on the mesh.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
 
 # The OCCUPATION NUMBER of a mode: the empty count (the vacuum), or one more than a prior count. A Peano natural, finite

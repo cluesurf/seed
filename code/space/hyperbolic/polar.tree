@@ -1,0 +1,678 @@
+# A GEODESIC SEEN FROM A POINT, in polar coordinates: the computation under area = defect (integral/fundamental).
+#
+# On the hyperboloid B(x, x) = 1, B(x, y) = x0 y0 - x1 y1 - x2 y2 (hyperboloid.tree), put the origin at O = (1, 0, 0)
+# and the geodesic at distance d from it, its foot on the x1 axis. With cd, sd = cosh d, sinh d and cc, ss = cosh t,
+# sinh t at arclength t from the foot, its point and unit velocity are
+#   P = (cd cc, sd cc, ss),   T = (cd ss, sd ss, cc).
+#
+#   THE MODEL           P is a point, T a unit tangent at it, and cosh r = B(P, O) = cd cc;
+#   THE RADIAL ANGLE    the unit radial tangent u = (cosh r P - O) / sinh r has -B(T, u) sinh r = cd ss, and the part of
+#                       T across it is sd, with (cd ss)^2 + sd^2 = sinh^2 r: cos psi = cd ss / sinh r, sin psi =
+#                       sd / sinh r, so the complement of psi has tangent z2 = cd ss / sd;
+#   THE POLAR ANGLE     P's direction from O is (sd cc, ss), so theta has tangent z = ss / (sd cc);
+#   THE RATES           with radian measure the integral of f = 1 / (1 + z^2) (integral/angle) and the derivatives of
+#                       z and z2 from cosh' = sinh, sinh' = cosh (integral/hyperbolic-functions, integral/derivative),
+#                       theta' sinh^2 r = sd and psi_c' sinh^2 r = cd cc sd;
+#   THE TURNING         so psi_c' = cosh r theta', and d(psi) = -cosh r d(theta): the hypothesis area-equals-defect
+#                       takes, now a theorem of the model.
+#
+# Every statement is an identity of the polynomial ring with its reciprocals named, proved by the product prover.
+
+
+# THE MODEL: B(P, P) = 1.
+rule the-geodesic-point-is-a-point
+  mark cc, like integer
+  mark ss, like integer
+  mark cd, like integer
+  mark sd, like integer
+  have the-step-is-on-the-hyperbola
+    call is-equal
+      call subtract
+        call multiply
+          read cc
+          read cc
+        call multiply
+          read ss
+          read ss
+      code 1
+  have the-foot-is-on-the-hyperbola
+    call is-equal
+      call subtract
+        call multiply
+          read cd
+          read cd
+        call multiply
+          read sd
+          read sd
+      code 1
+  show hold
+    call is-equal
+      call subtract
+        call subtract
+          call multiply
+            call multiply
+              read cd
+              read cc
+            call multiply
+              read cd
+              read cc
+          call multiply
+            call multiply
+              read sd
+              read cc
+            call multiply
+              read sd
+              read cc
+        call multiply
+          read ss
+          read ss
+      code 1
+
+
+# B(T, T) = -1 and B(T, P) = 0.
+rule the-geodesic-velocity-is-a-unit-tangent
+  mark cc, like integer
+  mark ss, like integer
+  mark cd, like integer
+  mark sd, like integer
+  have the-step-is-on-the-hyperbola
+    call is-equal
+      call subtract
+        call multiply
+          read cc
+          read cc
+        call multiply
+          read ss
+          read ss
+      code 1
+  have the-foot-is-on-the-hyperbola
+    call is-equal
+      call subtract
+        call multiply
+          read cd
+          read cd
+        call multiply
+          read sd
+          read sd
+      code 1
+  show hold
+    meet and
+      call is-equal
+        call subtract
+          call subtract
+            call multiply
+              call multiply
+                read cd
+                read ss
+              call multiply
+                read cd
+                read ss
+            call multiply
+              call multiply
+                read sd
+                read ss
+              call multiply
+                read sd
+                read ss
+          call multiply
+            read cc
+            read cc
+        call subtract
+          code 0
+          code 1
+      call is-equal
+        call subtract
+          call subtract
+            call multiply
+              call multiply
+                read cd
+                read ss
+              call multiply
+                read cd
+                read cc
+            call multiply
+              call multiply
+                read sd
+                read ss
+              call multiply
+                read sd
+                read cc
+          call multiply
+            read cc
+            read ss
+        code 0
+
+
+# cosh r = B(P, O) = cd cc, and sinh^2 r = cosh^2 r - 1 = sd^2 cc^2 + ss^2 = cd^2 ss^2 + sd^2.
+rule the-radius-from-the-foot
+  mark cc, like integer
+  mark ss, like integer
+  mark cd, like integer
+  mark sd, like integer
+  mark rr2, like integer
+  have the-step-is-on-the-hyperbola
+    call is-equal
+      call subtract
+        call multiply
+          read cc
+          read cc
+        call multiply
+          read ss
+          read ss
+      code 1
+  have the-foot-is-on-the-hyperbola
+    call is-equal
+      call subtract
+        call multiply
+          read cd
+          read cd
+        call multiply
+          read sd
+          read sd
+      code 1
+  have rr2-is-sinh-r-squared
+    call is-equal
+      read rr2
+      call subtract
+        call multiply
+          call multiply
+            call multiply
+              read cd
+              read cd
+            read cc
+          read cc
+        code 1
+  show hold
+    meet and
+      call is-equal
+        read rr2
+        call add
+          call multiply
+            call multiply
+              call multiply
+                read sd
+                read sd
+              read cc
+            read cc
+          call multiply
+            read ss
+            read ss
+      call is-equal
+        read rr2
+        call add
+          call multiply
+            call multiply
+              call multiply
+                read cd
+                read cd
+              read ss
+            read ss
+          call multiply
+            read sd
+            read sd
+
+
+# THE RADIAL ANGLE: sinh r u = cosh r P - O, and -B(T, sinh r u) = B(T, O) - cosh r B(T, P) = cd ss.
+rule the-radial-cosine
+  mark cc, like integer
+  mark ss, like integer
+  mark cd, like integer
+  mark sd, like integer
+  have the-step-is-on-the-hyperbola
+    call is-equal
+      call subtract
+        call multiply
+          read cc
+          read cc
+        call multiply
+          read ss
+          read ss
+      code 1
+  have the-foot-is-on-the-hyperbola
+    call is-equal
+      call subtract
+        call multiply
+          read cd
+          read cd
+        call multiply
+          read sd
+          read sd
+      code 1
+  show hold
+    call is-equal
+      call subtract
+        call multiply
+          call multiply
+            read cd
+            read ss
+          code 1
+        call multiply
+          call multiply
+            read cd
+            read cc
+          call subtract
+            call subtract
+              call multiply
+                call multiply
+                  read cd
+                  read ss
+                call multiply
+                  read cd
+                  read cc
+              call multiply
+                call multiply
+                  read sd
+                  read ss
+                call multiply
+                  read sd
+                  read cc
+            call multiply
+              read cc
+              read ss
+      call multiply
+        read cd
+        read ss
+
+
+# THE POLAR ANGLE: with k = sd cc and z k = ss, ss^2 = z^2 k^2.
+rule the-polar-tangent-squared
+  mark z, like integer
+  mark k, like integer
+  mark ss, like integer
+  mark sd, like integer
+  mark cc, like integer
+  have k-is-the-foot-part
+    call is-equal
+      read k
+      call multiply
+        read sd
+        read cc
+  have z-is-the-tangent
+    call is-equal
+      call multiply
+        read z
+        read k
+      read ss
+  show hold
+    call is-equal
+      call multiply
+        read ss
+        read ss
+      call multiply
+        call multiply
+          call multiply
+            read z
+            read z
+          read k
+        read k
+
+
+# THE RATES. An angle's rate is f z' with f g = 1, g = 1 + z^2 for its tangent z; where sinh^2 r = qq g, the rate
+# times sinh^2 r is z' qq.
+rule a-rate-times-the-radius
+  mark th, like integer
+  mark f, like integer
+  mark zd, like integer
+  mark g, like integer
+  mark qq, like integer
+  mark rr2, like integer
+  have f-inverts
+    call is-equal
+      call multiply
+        read f
+        read g
+      code 1
+  have th-is-the-rate
+    call is-equal
+      read th
+      call multiply
+        read f
+        read zd
+  have the-radius
+    call is-equal
+      read rr2
+      call multiply
+        read qq
+        read g
+  show hold
+    call is-equal
+      call multiply
+        read th
+        read rr2
+      call multiply
+        read zd
+        read qq
+
+
+# THE POLAR ANGLE has tangent z = tanh t / sd, so z' k cc = 1 with k = sd cc, and sinh^2 r = k^2 (1 + z^2): theta'
+# sinh^2 r = z' k^2 = sd.
+rule the-polar-rate
+  mark th, like integer
+  mark zd, like integer
+  mark k, like integer
+  mark cc, like integer
+  mark sd, like integer
+  mark rr2, like integer
+  have the-rate-times-the-radius
+    call is-equal
+      call multiply
+        read th
+        read rr2
+      call multiply
+        read zd
+        call multiply
+          read k
+          read k
+  have zd-is-the-rate-of-z
+    call is-equal
+      call multiply
+        call multiply
+          read zd
+          read k
+        read cc
+      code 1
+  have k-is-the-foot-part
+    call is-equal
+      read k
+      call multiply
+        read sd
+        read cc
+  show hold
+    call is-equal
+      call multiply
+        read th
+        read rr2
+      read sd
+
+
+# The radius in the polar tangent: sinh^2 r = k^2 + ss^2 = k^2 (1 + z^2).
+rule the-radius-in-the-polar-tangent
+  mark z, like integer
+  mark k, like integer
+  mark ss, like integer
+  mark rr2, like integer
+  have the-radius
+    call is-equal
+      read rr2
+      call add
+        call multiply
+          read k
+          read k
+        call multiply
+          read ss
+          read ss
+  have the-tangent-squared
+    call is-equal
+      call multiply
+        read ss
+        read ss
+      call multiply
+        call multiply
+          call multiply
+            read z
+            read z
+          read k
+        read k
+  show hold
+    call is-equal
+      read rr2
+      call multiply
+        call multiply
+          read k
+          read k
+        call add
+          code 1
+          call multiply
+            read z
+            read z
+
+
+# The complement of psi has tangent z2 = cd ss / sd, so sd z2 = cd ss and sinh^2 r = cd^2 ss^2 + sd^2 =
+# sd^2 (1 + z2^2).
+rule the-radius-in-the-turning-tangent
+  mark z2, like integer
+  mark ss, like integer
+  mark cd, like integer
+  mark sd, like integer
+  mark rr2, like integer
+  have the-radius
+    call is-equal
+      read rr2
+      call add
+        call multiply
+          call multiply
+            call multiply
+              read cd
+              read cd
+            read ss
+          read ss
+        call multiply
+          read sd
+          read sd
+  have z2-is-the-tangent
+    call is-equal
+      call multiply
+        read sd
+        read z2
+      call multiply
+        read cd
+        read ss
+  show hold
+    call is-equal
+      read rr2
+      call multiply
+        call multiply
+          read sd
+          read sd
+        call add
+          code 1
+          call multiply
+            read z2
+            read z2
+
+
+# THE TURNING ANGLE's complement has tangent z2 = cd sinh t / sd, so sd z2' = cd cc, and sinh^2 r = sd^2 (1 + z2^2):
+# psi_c' sinh^2 r = z2' sd^2 = cd cc sd.
+rule the-turning-rate
+  mark pc, like integer
+  mark zd2, like integer
+  mark cc, like integer
+  mark cd, like integer
+  mark sd, like integer
+  mark rr2, like integer
+  have the-rate-times-the-radius
+    call is-equal
+      call multiply
+        read pc
+        read rr2
+      call multiply
+        read zd2
+        call multiply
+          read sd
+          read sd
+  have zd2-is-the-rate-of-z2
+    call is-equal
+      call multiply
+        read sd
+        read zd2
+      call multiply
+        read cd
+        read cc
+  show hold
+    call is-equal
+      call multiply
+        read pc
+        read rr2
+      call multiply
+        call multiply
+          read cd
+          read cc
+        read sd
+
+
+# THE TURNING: from theta' sinh^2 r = sd and psi_c' sinh^2 r = cosh r sd, with sinh^2 r > 0, psi_c' = cosh r theta'.
+rule the-turning-is-cosh-r-times-the-polar-rate
+  mark th, like integer
+  mark pc, like integer
+  mark ch, like integer
+  mark sd, like integer
+  mark rr2, like integer
+  have the-polar-rate
+    call is-equal
+      call multiply
+        read th
+        read rr2
+      read sd
+  have the-turning-rate
+    call is-equal
+      call multiply
+        read pc
+        read rr2
+      call multiply
+        read ch
+        read sd
+  have the-radius-is-positive
+    call is-above
+      read rr2
+      code 0
+  show hold
+    call is-equal
+      read pc
+      call multiply
+        read ch
+        read th
+
+
+# THE COMPLEMENT: psi = pi/2 - psi_c, as angle(z) + angle(1/z) has rate 0. First, with yy = y^2 and zz = z^2 for
+# y = 1/z, y^2 f2 = f1 for f1 (1 + z^2) = 1 and f2 (1 + y^2) = 1.
+rule the-integrand-at-the-reciprocal
+  mark yy, like integer
+  mark zz, like integer
+  mark f1, like integer
+  mark f2, like integer
+  have the-squares-invert
+    call is-equal
+      call multiply
+        read yy
+        read zz
+      code 1
+  have zz-is-not-negative
+    call is-minimum
+      read zz
+      code 0
+  have f1-inverts
+    call is-equal
+      call multiply
+        read f1
+        call add
+          code 1
+          read zz
+      code 1
+  have f2-inverts
+    call is-equal
+      call multiply
+        read f2
+        call add
+          code 1
+          read yy
+      code 1
+  show hold
+    call is-equal
+      call multiply
+        read yy
+        read f2
+      read f1
+
+
+# With y' = -z' y^2 (the reciprocal rule), f1 z' + f2 y' = 0, so by the fundamental theorem the sum is constant and
+# d(psi) = -d(psi_c).
+rule complementary-angles-have-opposite-rates
+  mark zd, like integer
+  mark yd, like integer
+  mark yy, like integer
+  mark f1, like integer
+  mark f2, like integer
+  have yd-is-the-rate-of-y
+    call is-equal
+      read yd
+      call subtract
+        code 0
+        call multiply
+          read zd
+          read yy
+  have the-integrand-at-the-reciprocal
+    call is-equal
+      call multiply
+        read yy
+        read f2
+      read f1
+  show hold
+    call is-equal
+      call add
+        call multiply
+          read f1
+          read zd
+        call multiply
+          read f2
+          read yd
+      code 0
+
+
+# THE AREA ELEMENT: the region swept from O as theta moves by dth > 0 lies between the sectors of radii r and r + dr,
+# whose areas are (cosh r - 1) dth and (cosh (r + dr) - 1) dth (the disk, integral/fundamental, by rotation), so with
+# area monotone its increment da is (cosh r - 1) dth up to the change dch of cosh r times dth.
+rule the-swept-area-is-squeezed
+  mark da, like integer
+  mark dth, like integer
+  mark ch, like integer
+  mark dch, like integer
+  have the-area-is-between-the-sectors
+    meet and
+      call is-minimum
+        read da
+        call multiply
+          call subtract
+            read ch
+            code 1
+          read dth
+      call is-maximum
+        read da
+        call multiply
+          call subtract
+            call add
+              read ch
+              read dch
+            code 1
+          read dth
+  have the-angle-moves-forward
+    call is-minimum
+      read dth
+      code 0
+  have cosh-r-grows
+    call is-minimum
+      read dch
+      code 0
+  show hold
+    meet and
+      call is-maximum
+        call subtract
+          read da
+          call multiply
+            call subtract
+              read ch
+              code 1
+            read dth
+        call multiply
+          read dch
+          read dth
+      call is-maximum
+        call subtract
+          call multiply
+            call subtract
+              read ch
+              code 1
+            read dth
+          read da
+        call multiply
+          read dch
+          read dth

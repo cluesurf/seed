@@ -1,25 +1,25 @@
 # NEGATIVE CONTROL: coin, role, heisenberg. Every rule here is a perturbed true theorem and must be refused.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
 
-load @term/seed/code/vibe/tone
+load @term/seed/vibe/tone
   find tone
   find tone-sum
   find tone-product
   find tone-conjugate
   find is-vibe
 
-load @term/seed/code/vibe/eisenstein
+load @term/seed/vibe/eisenstein
   find eisenstein-norm
   find omega-real
   find omega-part
 
-load @term/seed/code/vibe/coin
+load @term/seed/vibe/coin
   find circulant-real
   find circulant-part
 
-load @term/seed/code/vibe/role
+load @term/seed/vibe/role
   find role
   find role-shift
   find role-clock
@@ -31,7 +31,7 @@ load @term/seed/code/vibe/role
   find same-direction
   find stabilizer-line
 
-load @term/seed/code/vibe/heisenberg
+load @term/seed/vibe/heisenberg
   find weyl
   find weyl-product
   find weyl-place

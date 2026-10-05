@@ -1,4 +1,4 @@
-load @term/seed/code/group/homomorphism
+load @term/seed/group/homomorphism
   find group-homomorphism
 
 # The kernel of a group homomorphism: the set of elements the homomorphism sends to the identity. It is always a normal

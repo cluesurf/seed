@@ -1,11 +1,11 @@
 # NEGATIVE CONTROL: the integer identities of coin. Every rule here must be refused.
 
-load @term/seed/code/vibe/eisenstein
+load @term/seed/vibe/eisenstein
   find eisenstein-norm
   find omega-real
   find omega-part
 
-load @term/seed/code/vibe/coin
+load @term/seed/vibe/coin
   find circulant-real
   find circulant-part
 

@@ -1,4 +1,4 @@
-load @term/seed/code/space/metric
+load @term/seed/space/metric
   find metric-space
 
 # The discrete metric: the simplest distance, zero from a point to itself and one to every other point, treating a set

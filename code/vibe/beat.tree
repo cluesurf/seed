@@ -6,7 +6,7 @@
 # not before a, the one-wayness that is the arrow), and TRANSITIVE, and each tick strictly advances. These are the laws
 # that make the arrow an arrow, not a single asserted inequality.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
 
 # The count of beats: zero, or one tick later.

@@ -8,19 +8,19 @@
 #   neighbour relation is symmetric: an undirected 24-regular graph;
 #   the coordinate sum of a slot is -2, 0 or 2: one step moves a site's height (its coordinate sum) by at most two.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
   find either
   find implies
   find not-flag
 
-load @term/seed/code/vibe/tone
+load @term/seed/vibe/tone
   find tone
   find balance
   find balance-shift
   find total-of-three
 
-load @term/seed/code/vibe/dock
+load @term/seed/vibe/dock
   find tetrad
   find tetrad-first
   find tetrad-second

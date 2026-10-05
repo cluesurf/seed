@@ -1,0 +1,647 @@
+# THE ERRORS TEND TO 0: the last analytic step under the hyperbolic disk's area.
+#
+# integral/exponential bounds the gap between E_N(a) E_N(b) and E_N(a + b) by 2 w(N) + u(N) bb(N), where w(N) =
+# (a + b)^N / N! and u(N) = a^N / N! are terms of exponential series and bb(N) is a partial sum of e^b. This file proves
+# each piece tends to 0, with an explicit index for every tolerance, and bounds the partial sums on an interval [0, R],
+# which is the bound `big` integral/hyperbolic-functions takes as a hypothesis.
+#
+#   THE TERMS HALVE       a term t(k) of the series of e^x, (k + 1) t(k + 1) = x t(k), is at most half the last once
+#                         k + 1 >= 2 x;
+#   SO THEY FALL LIKE 2^-j from such a start n0: p(j) t(n0 + j) <= t(n0), with p(j) = 2^j;
+#   2^j >= j + 1          by induction;
+#   SO THEY TEND TO 0     for every eps > 0, any j with (j + 1) eps >= t(n0) gives t(n0 + j) <= eps (the Archimedean
+#                         property of the field gives such a j, number/completeness);
+#   THE SUMS ARE BOUNDED  each partial sum past n0 is at most the sum at n0 plus 2 t(n0), the tail being at most twice
+#                         its first term;
+#   MONOTONE IN x         on 0 <= x <= R each term of e^x is at most the same term of e^R, so each partial sum is too,
+#                         and one bound serves the whole interval;
+#   COSH AND SINH         and cosh_N = (E + 1/E)/2 and sinh_N = (E - 1/E)/2 are each at most E when E >= 1, so that
+#                         bound is the `big` of the derivative step.
+#
+# Every certificate is the product prover's, replayed (check/product.ts), over an ordered field.
+
+
+# THE TERMS HALVE: (k + 1) t(k + 1) = x t(k) with k + 1 >= 2 x gives 2 t(k + 1) <= t(k).
+rule a-term-past-twice-x-is-at-most-half-the-last
+  mark t
+    like task
+      take a0, like integer
+      like integer
+  mark k, like integer
+  mark x, like integer
+  have the-term-from-the-last
+    call is-equal
+      call multiply
+        call add
+          read k
+          code 1
+        call t
+          call add
+            read k
+            code 1
+      call multiply
+        read x
+        call t
+          read k
+  have the-last-term-is-not-negative
+    call is-minimum
+      call t
+        read k
+      code 0
+  have k-is-past-twice-x
+    call is-minimum
+      call add
+        read k
+        code 1
+      call multiply
+        code 2
+        read x
+  have x-is-not-negative
+    call is-minimum
+      read x
+      code 0
+  have k-is-a-count
+    call is-minimum
+      read k
+      code 0
+  show hold
+    call is-maximum
+      call multiply
+        code 2
+        call t
+          call add
+            read k
+            code 1
+      call t
+        read k
+
+
+# 2^j >= j + 1, for the powers p(0) = 1, p(j + 1) = 2 p(j), by induction on j.
+rule the-powers-of-two-pass-the-counts
+  mark p
+    like task
+      take a0, like integer
+      like integer
+  mark j, like integer
+  have p-starts-at-one
+    call is-equal
+      call p
+        code 0
+      code 1
+  have p-doubles
+    mark k, like integer
+    meet or
+      call is-below
+        read k
+        code 0
+      call is-equal
+        call p
+          call add
+            read k
+            code 1
+        call multiply
+          code 2
+          call p
+            read k
+  have j-is-a-count
+    call is-minimum
+      read j
+      code 0
+  show hold
+    call is-minimum
+      call p
+        read j
+      call add
+        read j
+        code 1
+  fold j
+
+
+# SO THEY FALL like 2^-j from a start n0 past twice x: p(j) t(n0 + j) <= t(n0), by induction on j.
+rule the-terms-fall-like-powers-of-two
+  mark t
+    like task
+      take a0, like integer
+      like integer
+  mark p
+    like task
+      take a0, like integer
+      like integer
+  mark n0, like integer
+  mark j, like integer
+  have each-term-past-n0-halves
+    mark k, like integer
+    meet or
+      call is-below
+        read k
+        read n0
+      call is-maximum
+        call multiply
+          code 2
+          call t
+            call add
+              read k
+              code 1
+        call t
+          read k
+  have p-starts-at-one
+    call is-equal
+      call p
+        code 0
+      code 1
+  have p-doubles
+    mark k, like integer
+    meet or
+      call is-below
+        read k
+        code 0
+      call is-equal
+        call p
+          call add
+            read k
+            code 1
+        call multiply
+          code 2
+          call p
+            read k
+  have p-is-not-negative
+    mark k, like integer
+    meet or
+      call is-below
+        read k
+        code 0
+      call is-minimum
+        call p
+          read k
+        code 0
+  have n0-is-a-count
+    call is-minimum
+      read n0
+      code 0
+  have j-is-a-count
+    call is-minimum
+      read j
+      code 0
+  show hold
+    call is-maximum
+      call multiply
+        call p
+          read j
+        call t
+          call add
+            read n0
+            read j
+      call t
+        read n0
+  fold j
+
+
+# SO THEY TEND TO 0: a term t with p t <= t0 and p >= j + 1, for j with (j + 1) eps >= t0, is at most eps.
+rule a-term-is-below-any-tolerance
+  mark tt, like integer
+  mark t0, like integer
+  mark pp, like integer
+  mark j, like integer
+  mark eps, like integer
+  have it-falls-like-a-power-of-two
+    call is-maximum
+      call multiply
+        read pp
+        read tt
+      read t0
+  have the-power-passes-the-count
+    call is-minimum
+      read pp
+      call add
+        read j
+        code 1
+  have j-is-far-enough
+    call is-minimum
+      call multiply
+        call add
+          read j
+          code 1
+        read eps
+      read t0
+  have j-is-a-count
+    call is-minimum
+      read j
+      code 0
+  have the-tolerance-is-positive
+    call is-above
+      read eps
+      code 0
+  show hold
+    call is-maximum
+      read tt
+      read eps
+
+
+# THE SUMS ARE BOUNDED: with s(n0 + j + 1) = s(n0 + j) + t(n0 + j + 1) and each term past n0 at most half the last,
+# s(n0 + j) + 2 t(n0 + j + 1) <= s(n0) + 2 t(n0 + 1), by induction on j: the sum so far plus twice the next term
+# never grows, as the next term plus twice the one after is at most twice the next.
+rule the-partial-sums-past-n0-are-bounded
+  mark t
+    like task
+      take a0, like integer
+      like integer
+  mark s
+    like task
+      take a0, like integer
+      like integer
+  mark n0, like integer
+  mark j, like integer
+  have each-term-past-n0-halves
+    mark k, like integer
+    meet or
+      call is-below
+        read k
+        read n0
+      call is-maximum
+        call multiply
+          code 2
+          call t
+            call add
+              read k
+              code 1
+        call t
+          read k
+  have each-sum-adds-a-term
+    mark k, like integer
+    meet or
+      call is-below
+        read k
+        code 0
+      call is-equal
+        call s
+          call add
+            read k
+            code 1
+        call add
+          call s
+            read k
+          call t
+            call add
+              read k
+              code 1
+  have n0-is-a-count
+    call is-minimum
+      read n0
+      code 0
+  have j-is-a-count
+    call is-minimum
+      read j
+      code 0
+  show hold
+    call is-maximum
+      call add
+        call s
+          call add
+            read n0
+            read j
+        call multiply
+          code 2
+          call t
+            call add
+              call add
+                read n0
+                read j
+              code 1
+      call add
+        call s
+          read n0
+        call multiply
+          code 2
+          call t
+            call add
+              read n0
+              code 1
+  fold j
+
+
+# MONOTONE IN x: on 0 <= x <= R, a term of e^x at most the same term of e^R stays so at the next step (u for x, t
+# for R): (k + 1) u1 = x u0 <= R t0 = (k + 1) t1.
+rule a-term-step-keeps-the-order
+  mark k, like integer
+  mark x, like integer
+  mark r, like integer
+  mark u0, like integer
+  mark u1, like integer
+  mark t0, like integer
+  mark t1, like integer
+  have u-steps
+    call is-equal
+      call multiply
+        call add
+          read k
+          code 1
+        read u1
+      call multiply
+        read x
+        read u0
+  have t-steps
+    call is-equal
+      call multiply
+        call add
+          read k
+          code 1
+        read t1
+      call multiply
+        read r
+        read t0
+  have u0-is-at-most-t0
+    call is-maximum
+      read u0
+      read t0
+  have u0-is-not-negative
+    call is-minimum
+      read u0
+      code 0
+  have x-is-in-the-interval
+    meet and
+      call is-minimum
+        read x
+        code 0
+      call is-maximum
+        read x
+        read r
+  have k-is-a-count
+    call is-minimum
+      read k
+      code 0
+  show hold
+    call is-maximum
+      read u1
+      read t1
+
+
+# so every term of e^x is at most the same term of e^R, by induction on k.
+rule the-terms-grow-with-x
+  mark u
+    like task
+      take a0, like integer
+      like integer
+  mark t
+    like task
+      take a0, like integer
+      like integer
+  mark k, like integer
+  have u-starts-at-one
+    call is-equal
+      call u
+        code 0
+      code 1
+  have t-starts-at-one
+    call is-equal
+      call t
+        code 0
+      code 1
+  have each-step-keeps-the-order
+    mark i, like integer
+    meet or
+      call is-below
+        read i
+        code 0
+      call is-above
+        call u
+          read i
+        call t
+          read i
+      call is-maximum
+        call u
+          call add
+            read i
+            code 1
+        call t
+          call add
+            read i
+            code 1
+  have k-is-a-count
+    call is-minimum
+      read k
+      code 0
+  show hold
+    call is-maximum
+      call u
+        read k
+      call t
+        read k
+  fold k
+
+
+# so each partial sum of e^x is at most the same partial sum of e^R, by induction on n.
+rule the-partial-sums-grow-with-x
+  mark u
+    like task
+      take a0, like integer
+      like integer
+  mark t
+    like task
+      take a0, like integer
+      like integer
+  mark su
+    like task
+      take a0, like integer
+      like integer
+  mark s
+    like task
+      take a0, like integer
+      like integer
+  mark n, like integer
+  have the-terms-grow-with-x
+    mark i, like integer
+    meet or
+      call is-below
+        read i
+        code 0
+      call is-maximum
+        call u
+          read i
+        call t
+          read i
+  have su-starts-at-one
+    call is-equal
+      call su
+        code 0
+      call u
+        code 0
+  have s-starts-at-one
+    call is-equal
+      call s
+        code 0
+      call t
+        code 0
+  have su-adds-a-term
+    mark i, like integer
+    meet or
+      call is-below
+        read i
+        code 0
+      call is-equal
+        call su
+          call add
+            read i
+            code 1
+        call add
+          call su
+            read i
+          call u
+            call add
+              read i
+              code 1
+  have s-adds-a-term
+    mark i, like integer
+    meet or
+      call is-below
+        read i
+        code 0
+      call is-equal
+        call s
+          call add
+            read i
+            code 1
+        call add
+          call s
+            read i
+          call t
+            call add
+              read i
+              code 1
+  have n-is-a-count
+    call is-minimum
+      read n
+      code 0
+  show hold
+    call is-maximum
+      call su
+        read n
+      call s
+        read n
+  fold n
+
+
+# COSH AND SINH: with E >= 1 and R = 1/E, both 2 cosh = E + R and 2 sinh = E - R lie in [0, 2 E].
+rule cosh-and-sinh-are-at-most-e
+  mark ee, like integer
+  mark rr, like integer
+  have ee-is-at-least-one
+    call is-minimum
+      read ee
+      code 1
+  have rr-inverts
+    call is-equal
+      call multiply
+        read ee
+        read rr
+      code 1
+  have rr-is-positive
+    call is-above
+      read rr
+      code 0
+  show hold
+    meet and
+      call is-maximum
+        call add
+          read ee
+          read rr
+        call multiply
+          code 2
+          read ee
+      call is-minimum
+        call add
+          read ee
+          read rr
+        code 0
+      call is-maximum
+        call subtract
+          read ee
+          read rr
+        call multiply
+          code 2
+          read ee
+      call is-minimum
+        call subtract
+          read ee
+          read rr
+        code 0
+
+
+# WITHIN EVERY TOLERANCE IS EQUAL. Reals are regular sequences (number/completeness). If x is within 1/k of y for
+# every k, at every precision n up to the sequences' own 2/n, then at k = n, |x(n) - y(n)| <= 3/n for every n:
+# Bishop's criterion for x = y. This is the last step of "zero derivative means constant" (the fundamental theorem
+# with f = 0 puts F(b) within every eps (b - a) of F(a)).
+rule within-every-tolerance-is-equal
+  mark x
+    like task
+      take a0, like integer
+      like integer
+  mark y
+    like task
+      take a0, like integer
+      like integer
+  mark n, like integer
+  have x-is-within-every-tolerance-of-y
+    mark k, like integer
+    mark m, like integer
+    meet or
+      call is-below
+        read k
+        code 1
+      call is-below
+        read m
+        code 1
+      meet and
+        call is-maximum
+          call multiply
+            call multiply
+              read k
+              read m
+            call subtract
+              call x
+                read m
+              call y
+                read m
+          call add
+            read m
+            call multiply
+              code 2
+              read k
+        call is-maximum
+          call multiply
+            call multiply
+              read k
+              read m
+            call subtract
+              call y
+                read m
+              call x
+                read m
+          call add
+            read m
+            call multiply
+              code 2
+              read k
+  have n-is-a-precision
+    call is-minimum
+      read n
+      code 1
+  show hold
+    meet and
+      call is-maximum
+        call multiply
+          read n
+          call subtract
+            call x
+              read n
+            call y
+              read n
+        code 3
+      call is-maximum
+        call multiply
+          read n
+          call subtract
+            call y
+              read n
+            call x
+              read n
+        code 3

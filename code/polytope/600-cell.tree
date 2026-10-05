@@ -15,7 +15,7 @@
 # five tetrahedra around an edge of the 600-cell, the final 5 of {3,3,5}, are modeled as an order-five cycle and proved
 # to return after five steps.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
 
 # The four ranks of the face lattice of a 4-polytope: a vertex (rank 0), an edge (rank 1), a face (rank 2), and a cell

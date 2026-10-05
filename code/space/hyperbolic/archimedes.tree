@@ -1,0 +1,352 @@
+# ARCHIMEDES' AXIOM in the hyperbolic plane: laying a segment off repeatedly along a line eventually passes any point.
+# On the hyperboloid (space/hyperbolic/hyperboloid) a segment of length a from the origin o = (1, 0, 0) along the x
+# axis ends at the boost of o by (c, s) = (cosh a, sinh a), and laying it off again is the same boost applied twice.
+#
+#   THE DOUBLING FORMULA   boosting o twice lands at (c^2 + s^2, 2 c s, 0), so cosh 2a = c^2 + s^2 = 2 c^2 - 1;
+#   THE DOUBLING SEQUENCE  so the cosh of 2^k a is doubled-cosh(p, k): p at k = 0, then 2 x^2 - 1 of the one before;
+#   GROWTH                 doubled-cosh(p, k) - 1 >= (k + 1)(p - 1) for every k >= 0 and every cosh p >= 1, so the
+#                          distances 2^k a grow at least linearly in k: every distance is eventually passed, as soon
+#                          as (k + 1)(p - 1) exceeds it. Proved by induction on k with the product prover closing the
+#                          base and the step (`fold` on an order goal), carrying doubled-cosh >= 1 alongside;
+#   PASSING A BOUND        for a segment whose cosh p is at least 2, the 2^m-fold segment has cosh above m + 1, for
+#                          every m: an explicit witness that the multiples are unbounded.
+#
+# What reaches the full axiom from here is the ARCHIMEDEAN PROPERTY OF THE COORDINATE FIELD: that (k + 1)(p - 1) passes
+# any given bound for some k. That holds for the integers and the rationals (it is the second rule below at p >= 2,
+# and a scaling otherwise), and for the real numbers it is a consequence of their completeness (K4 in
+# note/term/port/kernel-prerequisites.md). Over a non-Archimedean ordered field it fails, and so does Archimedes'
+# axiom in the model, which is the classical reason the axiom is independent of the others.
+
+load @term/seed/space/hyperbolic/hyperboloid
+  find lorentz-form
+
+# cosh of 2^k times a distance whose cosh is p
+task doubled-cosh
+  take p, like integer
+  take k, like integer
+  like integer
+  send back
+    fork test
+      hook test
+        call is-equal
+          read k
+          code 0
+      hook hold
+        read p
+      hook miss
+        call subtract
+          call multiply
+            code 2
+            call multiply
+              call doubled-cosh
+                read p
+                call subtract
+                  read k
+                  code 1
+              call doubled-cosh
+                read p
+                call subtract
+                  read k
+                  code 1
+          code 1
+
+# THE DOUBLING FORMULA. The origin, boosted twice by (c, s) with c^2 - s^2 = 1, is (c^2 + s^2, 2 c s, 0), and its
+# Lorentz product with the origin, the cosh of the doubled distance, is 2 c^2 - 1.
+rule boosting-twice-doubles-the-distance
+  mark c, like integer
+  mark s, like integer
+  have c-and-s-are-a-cosh-and-sinh
+    call is-equal
+      call subtract
+        call multiply
+          read c
+          read c
+        call multiply
+          read s
+          read s
+      code 1
+  show hold
+    call is-equal
+      call lorentz-form
+        code 1
+        code 0
+        code 0
+        call add
+          call multiply
+            read c
+            read c
+          call multiply
+            read s
+            read s
+        call multiply
+          code 2
+          call multiply
+            read c
+            read s
+        code 0
+      call subtract
+        call multiply
+          code 2
+          call multiply
+            read c
+            read c
+        code 1
+
+# And the doubled point is still on the hyperboloid: B(y, y) = 1 for y = (c^2 + s^2, 2 c s, 0).
+rule the-doubled-point-is-a-point
+  mark c, like integer
+  mark s, like integer
+  have c-and-s-are-a-cosh-and-sinh
+    call is-equal
+      call subtract
+        call multiply
+          read c
+          read c
+        call multiply
+          read s
+          read s
+      code 1
+  show hold
+    call is-equal
+      call lorentz-form
+        call add
+          call multiply
+            read c
+            read c
+          call multiply
+            read s
+            read s
+        call multiply
+          code 2
+          call multiply
+            read c
+            read s
+        code 0
+        call add
+          call multiply
+            read c
+            read c
+          call multiply
+            read s
+            read s
+        call multiply
+          code 2
+          call multiply
+            read c
+            read s
+        code 0
+      code 1
+
+# GROWTH, by induction on k: the distances 2^k a grow at least linearly, and stay cosh values (>= 1).
+rule doubling-grows-at-least-linearly
+  mark p, like integer
+  mark k, like integer
+  have p-is-a-cosh
+    call is-minimum
+      read p
+      code 1
+  have k-is-a-count
+    call is-minimum
+      read k
+      code 0
+  show hold
+    meet and
+      call is-minimum
+        call subtract
+          call doubled-cosh
+            read p
+            read k
+          code 1
+        call multiply
+          call add
+            read k
+            code 1
+          call subtract
+            read p
+            code 1
+      call is-minimum
+        call doubled-cosh
+          read p
+          read k
+        code 1
+  fold k
+
+# PASSING A BOUND: a segment with cosh p >= 2 laid off 2^m times has cosh at least m + 2, for every m >= 0.
+rule doubling-passes-every-bound
+  mark p, like integer
+  mark m, like integer
+  have p-is-at-least-two
+    call is-minimum
+      read p
+      code 2
+  have m-is-a-count
+    call is-minimum
+      read m
+      code 0
+  show hold
+    call is-minimum
+      call doubled-cosh
+        read p
+        read m
+      call add
+        read m
+        code 2
+  fold m
+
+# ---- the coordinates ----
+
+# THE ARCHIMEDEAN PROPERTY OF THE COORDINATES, for the integers and so for the rationals: for every A >= 1 and every
+# C some n has n A > C (the witness is n = C^2 + 1, since C^2 - C + 1 > 0, written aa and cc below). For rationals x = a / b > 0 and
+# y = c / d, n x > y is n (a d) > c b, this statement at A = a d and C = c b. With the growth rule above it completes
+# Archimedes' axiom for the model over the rationals: some 2^k-fold of any segment passes any distance.
+rule the-coordinates-are-archimedean
+  mark aa, like integer
+  mark cc, like integer
+  have aa-is-positive
+    call is-minimum
+      read aa
+      code 1
+  find n, like integer
+    call add
+      call multiply
+        read cc
+        read cc
+      code 1
+  show hold
+    call is-above
+      call multiply
+        read n
+        read aa
+      read cc
+
+
+# DEDEKIND CONTINUITY reduces to the coordinates. The line through u with unit tangent v is
+# x(t) = cosh(t) u + sinh(t) v, and B(x(s), x(t)) = cosh s cosh t - sinh s sinh t = cosh(s - t): the distance between
+# two of its points is the difference of their parameters. So the line, with its betweenness, is an isometric copy of
+# the parameter field, a cut of the line is a cut of the field, and Dedekind's axiom for the plane is exactly the
+# completeness of the coordinates. (Proved as a certificate in the hypotheses B(u, u) = 1, B(v, v) = -1,
+# B(u, v) = 0. Completeness itself holds for the reals and fails for the rationals, and is K4 in
+# note/term/port/kernel-prerequisites.md.)
+rule the-line-is-an-isometric-copy-of-its-parameter
+  mark u0, like integer
+  mark u1, like integer
+  mark u2, like integer
+  mark v0, like integer
+  mark v1, like integer
+  mark v2, like integer
+  mark ca, like integer
+  mark sa, like integer
+  mark cb, like integer
+  mark sb, like integer
+  show hold
+    call is-equal
+      call subtract
+        call subtract
+          call subtract
+            call multiply
+              call add
+                call multiply
+                  read ca
+                  read u0
+                call multiply
+                  read sa
+                  read v0
+              call add
+                call multiply
+                  read cb
+                  read u0
+                call multiply
+                  read sb
+                  read v0
+            call multiply
+              call add
+                call multiply
+                  read ca
+                  read u1
+                call multiply
+                  read sa
+                  read v1
+              call add
+                call multiply
+                  read cb
+                  read u1
+                call multiply
+                  read sb
+                  read v1
+          call multiply
+            call add
+              call multiply
+                read ca
+                read u2
+              call multiply
+                read sa
+                read v2
+            call add
+              call multiply
+                read cb
+                read u2
+              call multiply
+                read sb
+                read v2
+        call subtract
+          call multiply
+            read ca
+            read cb
+          call multiply
+            read sa
+            read sb
+      call add
+        call add
+          call multiply
+            call multiply
+              read ca
+              read cb
+            call subtract
+              call subtract
+                call subtract
+                  call multiply
+                    read u0
+                    read u0
+                  call multiply
+                    read u1
+                    read u1
+                call multiply
+                  read u2
+                  read u2
+              code 1
+          call multiply
+            call add
+              call multiply
+                read ca
+                read sb
+              call multiply
+                read sa
+                read cb
+            call subtract
+              call subtract
+                call multiply
+                  read u0
+                  read v0
+                call multiply
+                  read u1
+                  read v1
+              call multiply
+                read u2
+                read v2
+        call multiply
+          call multiply
+            read sa
+            read sb
+          call add
+            call subtract
+              call subtract
+                call multiply
+                  read v0
+                  read v0
+                call multiply
+                  read v1
+                  read v1
+              call multiply
+                read v2
+                read v2
+            code 1

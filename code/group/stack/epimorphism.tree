@@ -1,4 +1,4 @@
-load @term/seed/code/group/homomorphism
+load @term/seed/group/homomorphism
   find group-homomorphism
 
 # A group epimorphism: a surjective homomorphism, one whose image is the whole target, so the target is a quotient of

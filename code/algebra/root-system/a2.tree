@@ -6,7 +6,7 @@
 # permuting the six roots reproduce exactly the abstract Coxeter group A2. This is the geometric realization the abstract
 # Coxeter file states only as a presentation, and the same root system, scaled up to rank four, is the 24-cell of the mesh.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
   find either
 

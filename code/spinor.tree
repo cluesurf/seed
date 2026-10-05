@@ -1,4 +1,4 @@
-load @term/seed/code/algebra/clifford
+load @term/seed/algebra/clifford
   find clifford-algebra
 
 # The spinor, ported from mathlib (CliffordAlgebra/SpinGroup) and lean-ga (versors). A spinor is an element the spin

@@ -14,17 +14,17 @@
 #   J, right multiplication by the volume element, is an involution that pairs 1 with e1234 and each bivector with its
 #   complement (e12 with e34, e13 with e24, e14 with e23), so (1 +- J)/2 split Cl+(4) into two quaternion halves.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
   find both
   find either
   find not-flag
 
-load @term/seed/code/atom/sign
+load @term/seed/atom/sign
   find sign
   find flip-sign
 
-load @term/seed/code/vibe/law
+load @term/seed/vibe/law
   find associative
   find identity
 

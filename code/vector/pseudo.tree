@@ -1,4 +1,4 @@
-load @term/seed/code/structure/space/vector
+load @term/seed/structure/space/vector
   find vector-space
 
 # A pseudovector: a quantity that transforms like a vector under rotations but flips sign under a reflection, where a

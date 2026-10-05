@@ -16,7 +16,7 @@
 # the shift, yet it misses some strips, so a Garden of Eden exists and is exhibited concretely. The second is the cyclic
 # rotation itself, a bijection of the eight strips; it commutes with the shift and, being surjective, admits NO Garden of
 # Eden, tying reversibility to the absence of unreachable configurations.
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
   find either
 

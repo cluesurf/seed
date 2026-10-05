@@ -1,4 +1,4 @@
-load @term/seed/code/group
+load @term/seed/group
   find group
 
 # The unitary group: the complex linear maps preserving a Hermitian inner product, the length-preserving symmetries of

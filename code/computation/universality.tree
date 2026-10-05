@@ -1,4 +1,4 @@
-load @term/seed/code/machine/turing
+load @term/seed/machine/turing
   find turing-machine
 
 # Universality: the existence of a single machine that, given the description of any machine and its input, simulates

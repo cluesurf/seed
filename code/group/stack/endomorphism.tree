@@ -1,4 +1,4 @@
-load @term/seed/code/group/homomorphism
+load @term/seed/group/homomorphism
   find group-homomorphism
 
 # A group endomorphism: a homomorphism from a group to itself, a structure-preserving self-map. The endomorphisms of a

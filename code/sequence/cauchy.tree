@@ -1,4 +1,4 @@
-load @term/seed/code/space/metric
+load @term/seed/space/metric
   find metric-space
 
 # A Cauchy sequence: a sequence whose terms eventually crowd arbitrarily close together, the precise notion of a

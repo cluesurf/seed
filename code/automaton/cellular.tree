@@ -1,4 +1,4 @@
-load @term/seed/code/structure/set
+load @term/seed/structure/set
   find set
 
 # A cellular automaton: a grid of cells, each holding a state from a finite set, all updating together each tick by one

@@ -1,0 +1,1454 @@
+# THE EXPONENTIAL SERIES AND ITS ADDITION FORMULA, the analytic fact the hyperbolic disk's area and Gauss-Bonnet rest
+# on (integral/fundamental: cosh has derivative sinh given cosh(a + b) = cosh a cosh b + sinh a sinh b, and cosh and
+# sinh are the even and odd parts of the exponential, so their addition formulas are ring identities of E(a + b) =
+# E(a) E(b)).
+#
+# The terms are u(k) = a^k / k!, v(l) = b^l / l! and w(n) = (a + b)^n / n!, given by their recurrences
+#   (k + 1) u(k + 1) = a u(k),   (l + 1) v(l + 1) = b v(l),   (n + 1) w(n + 1) = (a + b) w(n),   u(0) = v(0) = w(0) = 1,
+# and the convolution c(n, m) = u(0) v(n) + u(1) v(n - 1) + ... + u(m) v(n - m).
+#
+#   THE BINOMIAL IDENTITY FOR EXPONENTIAL TERMS   c(n, n) = w(n): the sum over k of a^k b^(n - k) / (k! (n - k)!) is
+#                                                 (a + b)^n / n!, for every n. Four lemmas:
+#     u-recurrence-times-v      an equation times a term is an equation;
+#     the-inner-identity        (n + 1) c(n + 1, m) = (a + b) c(n, m) - a u(m) v(n - m) for 0 <= m <= n, by induction on m
+#                               (each new term splits as (m + 1) + (n - m), one factor for each recurrence);
+#     the-convolution-steps     at m = n: (n + 1) c(n + 1, n + 1) = (a + b) c(n, n);
+#     the-binomial-identity     so c(n, n) = w(n), by induction on n.
+#
+# So the Cauchy product of the series of e^a and e^b is, term by term, the series of e^(a + b). What remains for
+# E(a + b) = E(a) E(b) is analytic: the product of the partial sums differs from the partial sum of the product by
+# the terms u(k) v(l) with k + l > N, and those go to 0 (the tail lemmas of integral/fundamental bound them).
+
+
+# An equation times any quantity is an equation: the recurrence of u, times a term of v.
+rule u-recurrence-times-v
+  mark u
+    like task
+      take a0, like integer
+      like integer
+  mark v
+    like task
+      take a0, like integer
+      like integer
+  mark k, like integer
+  mark j, like integer
+  mark a, like integer
+  have u-recurrence
+    call is-equal
+      call multiply
+        call add
+          read k
+          code 1
+        call u
+          call add
+            read k
+            code 1
+      call multiply
+        read a
+        call u
+          read k
+  show hold
+    call is-equal
+      call multiply
+        call multiply
+          call add
+            read k
+            code 1
+          call u
+            call add
+              read k
+              code 1
+        call v
+          read j
+      call multiply
+        call multiply
+          read a
+          call u
+            read k
+        call v
+          read j
+
+
+# THE INNER IDENTITY, by induction on m up to n. The new term (n + 1) u(m + 1) v(n - m) splits as
+# (m + 1) u(m + 1) v(n - m) = a u(m) v(n - m) and (n - m) u(m + 1) v(n - m) = b u(m + 1) v(n - m - 1).
+rule the-inner-identity
+  mark u
+    like task
+      take a0, like integer
+      like integer
+  mark v
+    like task
+      take a0, like integer
+      like integer
+  mark c
+    like task
+      take a0, like integer
+      take a1, like integer
+      like integer
+  mark n, like integer
+  mark m, like integer
+  mark a, like integer
+  mark b, like integer
+  have u-times-v
+    mark k, like integer
+    mark j, like integer
+    meet or
+      call is-below
+        read k
+        code 0
+      call is-below
+        read j
+        code 0
+      call is-equal
+        call multiply
+          call multiply
+            call add
+              read k
+              code 1
+            call u
+              call add
+                read k
+                code 1
+          call v
+            read j
+        call multiply
+          call multiply
+            read a
+            call u
+              read k
+          call v
+            read j
+  have v-times-u
+    mark k, like integer
+    mark j, like integer
+    meet or
+      call is-below
+        read k
+        code 0
+      call is-below
+        read j
+        code 0
+      call is-equal
+        call multiply
+          call multiply
+            call add
+              read j
+              code 1
+            call u
+              read k
+          call v
+            call add
+              read j
+              code 1
+        call multiply
+          call multiply
+            read b
+            call u
+              read k
+          call v
+            read j
+  have c-starts
+    mark q, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-equal
+        call c
+          read q
+          code 0
+        call multiply
+          call u
+            code 0
+          call v
+            read q
+  have c-adds
+    mark q, like integer
+    mark r, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-below
+        read r
+        code 0
+      call is-equal
+        call c
+          read q
+          call add
+            read r
+            code 1
+        call add
+          call c
+            read q
+            read r
+          call multiply
+            call u
+              call add
+                read r
+                code 1
+            call v
+              call subtract
+                call subtract
+                  read q
+                  read r
+                code 1
+  have m-is-a-count
+    call is-minimum
+      read m
+      code 0
+  have m-is-at-most-n
+    call is-maximum
+      read m
+      read n
+  show hold
+    call is-equal
+      call multiply
+        call add
+          read n
+          code 1
+        call c
+          call add
+            read n
+            code 1
+          read m
+      call subtract
+        call multiply
+          call add
+            read a
+            read b
+          call c
+            read n
+            read m
+        call multiply
+          call multiply
+            read a
+            call u
+              read m
+          call v
+            call subtract
+              read n
+              read m
+  fold m
+
+
+# THE STEP: at m = n the inner identity, the last term u(n + 1) v(0), and the recurrence of u close it.
+rule the-convolution-steps
+  mark u
+    like task
+      take a0, like integer
+      like integer
+  mark v
+    like task
+      take a0, like integer
+      like integer
+  mark c
+    like task
+      take a0, like integer
+      take a1, like integer
+      like integer
+  mark n, like integer
+  mark a, like integer
+  mark b, like integer
+  have the-inner-identity
+    mark q, like integer
+    mark r, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-below
+        read r
+        code 0
+      call is-above
+        read r
+        read q
+      call is-equal
+        call multiply
+          call add
+            read q
+            code 1
+          call c
+            call add
+              read q
+              code 1
+            read r
+        call subtract
+          call multiply
+            call add
+              read a
+              read b
+            call c
+              read q
+              read r
+          call multiply
+            call multiply
+              read a
+              call u
+                read r
+            call v
+              call subtract
+                read q
+                read r
+  have u-times-v
+    mark k, like integer
+    mark j, like integer
+    meet or
+      call is-below
+        read k
+        code 0
+      call is-below
+        read j
+        code 0
+      call is-equal
+        call multiply
+          call multiply
+            call add
+              read k
+              code 1
+            call u
+              call add
+                read k
+                code 1
+          call v
+            read j
+        call multiply
+          call multiply
+            read a
+            call u
+              read k
+          call v
+            read j
+  have c-adds
+    mark q, like integer
+    mark r, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-below
+        read r
+        code 0
+      call is-equal
+        call c
+          read q
+          call add
+            read r
+            code 1
+        call add
+          call c
+            read q
+            read r
+          call multiply
+            call u
+              call add
+                read r
+                code 1
+            call v
+              call subtract
+                call subtract
+                  read q
+                  read r
+                code 1
+  have n-is-a-count
+    call is-minimum
+      read n
+      code 0
+  show hold
+    call is-equal
+      call multiply
+        call add
+          read n
+          code 1
+        call c
+          call add
+            read n
+            code 1
+          call add
+            read n
+            code 1
+      call multiply
+        call add
+          read a
+          read b
+        call c
+          read n
+          read n
+
+
+# THE BINOMIAL IDENTITY for exponential terms, by induction on n: the convolution and w obey one recurrence from one
+# start, so they are equal.
+rule the-binomial-identity
+  mark c
+    like task
+      take a0, like integer
+      take a1, like integer
+      like integer
+  mark w
+    like task
+      take a0, like integer
+      like integer
+  mark n, like integer
+  mark a, like integer
+  mark b, like integer
+  have the-convolution-steps
+    mark q, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-equal
+        call multiply
+          call add
+            read q
+            code 1
+          call c
+            call add
+              read q
+              code 1
+            call add
+              read q
+              code 1
+        call multiply
+          call add
+            read a
+            read b
+          call c
+            read q
+            read q
+  have w-recurrence
+    mark q, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-equal
+        call multiply
+          call add
+            read q
+            code 1
+          call w
+            call add
+              read q
+              code 1
+        call multiply
+          call add
+            read a
+            read b
+          call w
+            read q
+  have they-start-together
+    call is-equal
+      call c
+        code 0
+        code 0
+      call w
+        code 0
+  have n-is-a-count
+    call is-minimum
+      read n
+      code 0
+  show hold
+    call is-equal
+      call c
+        read n
+        read n
+      call w
+        read n
+  fold n
+
+
+# THE REORDERING. bb(l) = v(0) + ... + v(l) are the partial sums of b's series. The triangle T(N), the partial sum of
+# the Cauchy product (T(N) = c(0, 0) + ... + c(N, N), so T(N) is the partial sum of e^(a + b) by the binomial
+# identity), is reordered as r(N, N) = u(0) bb(N) + u(1) bb(N - 1) + ... + u(N) bb(0): a single sum over the terms of
+# a. First, the recurrence of bb times a term of u.
+rule b-recurrence-times-u
+  mark u
+    like task
+      take a0, like integer
+      like integer
+  mark v
+    like task
+      take a0, like integer
+      like integer
+  mark bb
+    like task
+      take a0, like integer
+      like integer
+  mark k, like integer
+  mark l, like integer
+  have b-recurrence
+    call is-equal
+      call bb
+        call add
+          read l
+          code 1
+      call add
+        call bb
+          read l
+        call v
+          call add
+            read l
+            code 1
+  show hold
+    call is-equal
+      call multiply
+        call u
+          read k
+        call bb
+          call add
+            read l
+            code 1
+      call add
+        call multiply
+          call u
+            read k
+          call bb
+            read l
+        call multiply
+          call u
+            read k
+          call v
+            call add
+              read l
+              code 1
+
+
+# r(N + 1, m) - r(N, m) = c(N + 1, m) for 0 <= m <= N, by induction on m: each new term adds u(m + 1) v(N - m).
+rule each-column-adds-a-diagonal
+  mark u
+    like task
+      take a0, like integer
+      like integer
+  mark v
+    like task
+      take a0, like integer
+      like integer
+  mark c
+    like task
+      take a0, like integer
+      take a1, like integer
+      like integer
+  mark bb
+    like task
+      take a0, like integer
+      like integer
+  mark r
+    like task
+      take a0, like integer
+      take a1, like integer
+      like integer
+  mark n, like integer
+  mark m, like integer
+  have b-times-u
+    mark k, like integer
+    mark l, like integer
+    meet or
+      call is-below
+        read k
+        code 0
+      call is-below
+        read l
+        code 0
+      call is-equal
+        call multiply
+          call u
+            read k
+          call bb
+            call add
+              read l
+              code 1
+        call add
+          call multiply
+            call u
+              read k
+            call bb
+              read l
+          call multiply
+            call u
+              read k
+            call v
+              call add
+                read l
+                code 1
+  have c-starts
+    mark q, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-equal
+        call c
+          read q
+          code 0
+        call multiply
+          call u
+            code 0
+          call v
+            read q
+  have c-adds
+    mark q, like integer
+    mark p, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-below
+        read p
+        code 0
+      call is-equal
+        call c
+          read q
+          call add
+            read p
+            code 1
+        call add
+          call c
+            read q
+            read p
+          call multiply
+            call u
+              call add
+                read p
+                code 1
+            call v
+              call subtract
+                call subtract
+                  read q
+                  read p
+                code 1
+  have r-starts
+    mark q, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-equal
+        call r
+          read q
+          code 0
+        call multiply
+          call u
+            code 0
+          call bb
+            read q
+  have r-adds
+    mark q, like integer
+    mark p, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-below
+        read p
+        code 0
+      call is-equal
+        call r
+          read q
+          call add
+            read p
+            code 1
+        call add
+          call r
+            read q
+            read p
+          call multiply
+            call u
+              call add
+                read p
+                code 1
+            call bb
+              call subtract
+                call subtract
+                  read q
+                  read p
+                code 1
+  have m-is-a-count
+    call is-minimum
+      read m
+      code 0
+  have m-is-at-most-n
+    call is-maximum
+      read m
+      read n
+  show hold
+    call is-equal
+      call subtract
+        call r
+          call add
+            read n
+            code 1
+          read m
+        call r
+          read n
+          read m
+      call c
+        call add
+          read n
+          code 1
+        read m
+  fold m
+
+
+# At m = N, with the last term u(N + 1) bb(0) = u(N + 1) v(0): r(N + 1, N + 1) - r(N, N) = c(N + 1, N + 1).
+rule the-reordering-steps
+  mark u
+    like task
+      take a0, like integer
+      like integer
+  mark v
+    like task
+      take a0, like integer
+      like integer
+  mark c
+    like task
+      take a0, like integer
+      take a1, like integer
+      like integer
+  mark bb
+    like task
+      take a0, like integer
+      like integer
+  mark r
+    like task
+      take a0, like integer
+      take a1, like integer
+      like integer
+  mark n, like integer
+  have each-column-adds-a-diagonal
+    mark q, like integer
+    mark p, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-below
+        read p
+        code 0
+      call is-above
+        read p
+        read q
+      call is-equal
+        call subtract
+          call r
+            call add
+              read q
+              code 1
+            read p
+          call r
+            read q
+            read p
+        call c
+          call add
+            read q
+            code 1
+          read p
+  have b-starts
+    call is-equal
+      call bb
+        code 0
+      call v
+        code 0
+  have b-starts-times-u
+    mark k, like integer
+    meet or
+      call is-below
+        read k
+        code 0
+      call is-equal
+        call multiply
+          call u
+            read k
+          call bb
+            code 0
+        call multiply
+          call u
+            read k
+          call v
+            code 0
+  have c-adds
+    mark q, like integer
+    mark p, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-below
+        read p
+        code 0
+      call is-equal
+        call c
+          read q
+          call add
+            read p
+            code 1
+        call add
+          call c
+            read q
+            read p
+          call multiply
+            call u
+              call add
+                read p
+                code 1
+            call v
+              call subtract
+                call subtract
+                  read q
+                  read p
+                code 1
+  have r-adds
+    mark q, like integer
+    mark p, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-below
+        read p
+        code 0
+      call is-equal
+        call r
+          read q
+          call add
+            read p
+            code 1
+        call add
+          call r
+            read q
+            read p
+          call multiply
+            call u
+              call add
+                read p
+                code 1
+            call bb
+              call subtract
+                call subtract
+                  read q
+                  read p
+                code 1
+  have n-is-a-count
+    call is-minimum
+      read n
+      code 0
+  show hold
+    call is-equal
+      call subtract
+        call r
+          call add
+            read n
+            code 1
+          call add
+            read n
+            code 1
+        call r
+          read n
+          read n
+      call c
+        call add
+          read n
+          code 1
+        call add
+          read n
+          code 1
+
+
+# So the reordered sum is the triangle: r(N, N) = T(N), by induction on N.
+rule the-triangle-is-reordered
+  mark c
+    like task
+      take a0, like integer
+      take a1, like integer
+      like integer
+  mark r
+    like task
+      take a0, like integer
+      take a1, like integer
+      like integer
+  mark tt
+    like task
+      take a0, like integer
+      like integer
+  mark n, like integer
+  have the-reordering-steps
+    mark q, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-equal
+        call subtract
+          call r
+            call add
+              read q
+              code 1
+            call add
+              read q
+              code 1
+          call r
+            read q
+            read q
+        call c
+          call add
+            read q
+            code 1
+          call add
+            read q
+            code 1
+  have t-starts
+    call is-equal
+      call tt
+        code 0
+      call c
+        code 0
+        code 0
+  have t-adds
+    mark q, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-equal
+        call tt
+          call add
+            read q
+            code 1
+        call add
+          call tt
+            read q
+          call c
+            call add
+              read q
+              code 1
+            call add
+              read q
+              code 1
+  have they-start-together
+    call is-equal
+      call r
+        code 0
+        code 0
+      call c
+        code 0
+        code 0
+  have n-is-a-count
+    call is-minimum
+      read n
+      code 0
+  show hold
+    call is-equal
+      call r
+        read n
+        read n
+      call tt
+        read n
+  fold n
+
+
+# THE SQUARE MINUS THE TRIANGLE. aa(K) = u(0) + ... + u(K) are the partial sums of a's series, so aa(N) bb(N) is the
+# product of the partial sums: the square of terms u(k) v(l) with k, l <= N. Minus the reordered triangle it is
+# d(N, N) = u(0) (bb(N) - bb(N)) + u(1) (bb(N) - bb(N - 1)) + ... + u(N) (bb(N) - bb(0)): the terms with k + l > N.
+# First, the recurrence of aa times a partial sum of b.
+rule a-recurrence-times-b
+  mark u
+    like task
+      take a0, like integer
+      like integer
+  mark aa
+    like task
+      take a0, like integer
+      like integer
+  mark bb
+    like task
+      take a0, like integer
+      like integer
+  mark k, like integer
+  mark n, like integer
+  have a-recurrence
+    call is-equal
+      call aa
+        call add
+          read k
+          code 1
+      call add
+        call aa
+          read k
+        call u
+          call add
+            read k
+            code 1
+  show hold
+    call is-equal
+      call multiply
+        call aa
+          call add
+            read k
+            code 1
+        call bb
+          read n
+      call add
+        call multiply
+          call aa
+            read k
+          call bb
+            read n
+        call multiply
+          call u
+            call add
+              read k
+              code 1
+          call bb
+            read n
+
+
+# aa(m) bb(N) - r(N, m) = d(N, m) for 0 <= m <= N, by induction on m.
+rule the-square-minus-the-triangle
+  mark u
+    like task
+      take a0, like integer
+      like integer
+  mark aa
+    like task
+      take a0, like integer
+      like integer
+  mark bb
+    like task
+      take a0, like integer
+      like integer
+  mark r
+    like task
+      take a0, like integer
+      take a1, like integer
+      like integer
+  mark d
+    like task
+      take a0, like integer
+      take a1, like integer
+      like integer
+  mark n, like integer
+  mark m, like integer
+  have a-times-b
+    mark k, like integer
+    mark q, like integer
+    meet or
+      call is-below
+        read k
+        code 0
+      call is-below
+        read q
+        code 0
+      call is-equal
+        call multiply
+          call aa
+            call add
+              read k
+              code 1
+          call bb
+            read q
+        call add
+          call multiply
+            call aa
+              read k
+            call bb
+              read q
+          call multiply
+            call u
+              call add
+                read k
+                code 1
+            call bb
+              read q
+  have a-starts-times-b
+    mark q, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-equal
+        call multiply
+          call aa
+            code 0
+          call bb
+            read q
+        call multiply
+          call u
+            code 0
+          call bb
+            read q
+  have r-starts
+    mark q, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-equal
+        call r
+          read q
+          code 0
+        call multiply
+          call u
+            code 0
+          call bb
+            read q
+  have r-adds
+    mark q, like integer
+    mark p, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-below
+        read p
+        code 0
+      call is-equal
+        call r
+          read q
+          call add
+            read p
+            code 1
+        call add
+          call r
+            read q
+            read p
+          call multiply
+            call u
+              call add
+                read p
+                code 1
+            call bb
+              call subtract
+                call subtract
+                  read q
+                  read p
+                code 1
+  have d-starts
+    mark q, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-equal
+        call d
+          read q
+          code 0
+        code 0
+  have d-adds
+    mark q, like integer
+    mark p, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-below
+        read p
+        code 0
+      call is-equal
+        call d
+          read q
+          call add
+            read p
+            code 1
+        call subtract
+          call add
+            call d
+              read q
+              read p
+            call multiply
+              call u
+                call add
+                  read p
+                  code 1
+              call bb
+                read q
+          call multiply
+            call u
+              call add
+                read p
+                code 1
+            call bb
+              call subtract
+                call subtract
+                  read q
+                  read p
+                code 1
+  have m-is-a-count
+    call is-minimum
+      read m
+      code 0
+  have m-is-at-most-n
+    call is-maximum
+      read m
+      read n
+  show hold
+    call is-equal
+      call subtract
+        call multiply
+          call aa
+            read m
+          call bb
+            read n
+        call r
+          read n
+          read m
+      call d
+        read n
+        read m
+  fold m
+
+
+# Each term of the difference is small: a tail of b's series is at most twice its first term (integral/fundamental,
+# a-tail-is-small-and-not-negative), and u(k) >= 0, so u(k) (bb(N) - bb(N - k)) <= 2 u(k) v(N - k).
+rule a-difference-term-is-small
+  mark u
+    like task
+      take a0, like integer
+      like integer
+  mark v
+    like task
+      take a0, like integer
+      like integer
+  mark bb
+    like task
+      take a0, like integer
+      like integer
+  mark k, like integer
+  mark n, like integer
+  have the-tail-of-b
+    call is-maximum
+      call subtract
+        call bb
+          read n
+        call bb
+          call subtract
+            read n
+            read k
+      call multiply
+        code 2
+        call v
+          call subtract
+            read n
+            read k
+  have u-is-not-negative
+    call is-minimum
+      call u
+        read k
+      code 0
+  show hold
+    call is-maximum
+      call subtract
+        call multiply
+          call u
+            read k
+          call bb
+            read n
+        call multiply
+          call u
+            read k
+          call bb
+            call subtract
+              read n
+              read k
+      call multiply
+        call multiply
+          code 2
+          call u
+            read k
+        call v
+          call subtract
+            read n
+            read k
+
+
+# So d(N, m) <= 2 c(N, m) for m < N, by induction on m: the difference is at most twice the convolution, which is the
+# term w(N) = (a + b)^N / N! of the sum's series (the binomial identity), and that tends to 0. The last column,
+# u(N) (bb(N) - bb(0)), is at most u(N) times a bound on bb, and u(N) tends to 0 too. So the product of the partial
+# sums of e^a and e^b and the partial sum of e^(a + b) differ by at most 2 w(N) + u(N) bb(N): E(a) E(b) = E(a + b).
+rule the-difference-is-small
+  mark u
+    like task
+      take a0, like integer
+      like integer
+  mark v
+    like task
+      take a0, like integer
+      like integer
+  mark c
+    like task
+      take a0, like integer
+      take a1, like integer
+      like integer
+  mark bb
+    like task
+      take a0, like integer
+      like integer
+  mark d
+    like task
+      take a0, like integer
+      take a1, like integer
+      like integer
+  mark n, like integer
+  mark m, like integer
+  have each-difference-term-is-small
+    mark k, like integer
+    mark q, like integer
+    meet or
+      call is-below
+        read k
+        code 0
+      call is-below
+        read q
+        code 0
+      call is-maximum
+        call subtract
+          call multiply
+            call u
+              read k
+            call bb
+              read q
+          call multiply
+            call u
+              read k
+            call bb
+              call subtract
+                read q
+                read k
+        call multiply
+          call multiply
+            code 2
+            call u
+              read k
+          call v
+            call subtract
+              read q
+              read k
+  have c-starts
+    mark q, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-equal
+        call c
+          read q
+          code 0
+        call multiply
+          call u
+            code 0
+          call v
+            read q
+  have c-adds
+    mark q, like integer
+    mark p, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-below
+        read p
+        code 0
+      call is-equal
+        call c
+          read q
+          call add
+            read p
+            code 1
+        call add
+          call c
+            read q
+            read p
+          call multiply
+            call u
+              call add
+                read p
+                code 1
+            call v
+              call subtract
+                call subtract
+                  read q
+                  read p
+                code 1
+  have d-starts
+    mark q, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-equal
+        call d
+          read q
+          code 0
+        code 0
+  have d-adds
+    mark q, like integer
+    mark p, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-below
+        read p
+        code 0
+      call is-equal
+        call d
+          read q
+          call add
+            read p
+            code 1
+        call subtract
+          call add
+            call d
+              read q
+              read p
+            call multiply
+              call u
+                call add
+                  read p
+                  code 1
+              call bb
+                read q
+          call multiply
+            call u
+              call add
+                read p
+                code 1
+            call bb
+              call subtract
+                call subtract
+                  read q
+                  read p
+                code 1
+  have the-first-c-term-is-not-negative
+    mark q, like integer
+    meet or
+      call is-below
+        read q
+        code 0
+      call is-minimum
+        call multiply
+          call u
+            code 0
+          call v
+            read q
+        code 0
+  have m-is-a-count
+    call is-minimum
+      read m
+      code 0
+  have m-is-below-n
+    call is-maximum
+      call add
+        read m
+        code 1
+      read n
+  show hold
+    call is-maximum
+      call d
+        read n
+        read m
+      call multiply
+        code 2
+        call c
+          read n
+          read m
+  fold m

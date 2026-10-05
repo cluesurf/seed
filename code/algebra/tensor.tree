@@ -1,4 +1,4 @@
-load @term/seed/code/structure/space/vector
+load @term/seed/structure/space/vector
   find vector-space
 
 # A tensor algebra: the free associative algebra on a vector space, all formal products of vectors with no relations

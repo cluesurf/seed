@@ -1,6 +1,6 @@
 # NEGATIVE CONTROL for vibe/eisenstein. Expected refusals: 5.
 
-load @term/seed/code/vibe/eisenstein
+load @term/seed/vibe/eisenstein
   find omega-real
   find omega-part
   find eisenstein-norm

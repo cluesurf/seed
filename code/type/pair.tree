@@ -1,7 +1,7 @@
-load @term/seed/code/type/term
+load @term/seed/type/term
   find term
 
-load @term/seed/code/type/multiplicity
+load @term/seed/type/multiplicity
   find multiplicity
 
 # The dependent pair type, the sigma type, the one way the theory forms a type whose second component depends on its

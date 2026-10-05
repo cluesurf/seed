@@ -1,4 +1,4 @@
-load @term/seed/code/logic/temporal
+load @term/seed/logic/temporal
   find temporal-logic
 
 # Linear temporal logic: temporal logic over a single linear run of time, with operators for next, eventually, always,

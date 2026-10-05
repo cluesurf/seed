@@ -1,0 +1,265 @@
+# NEGATIVE CONTROLS for integral/limits: each must be REFUSED. Expected: 5.
+
+# false: before k + 1 reaches 2 x the terms may grow
+rule control-a-term-before-twice-x-halves
+  mark t
+    like task
+      take a0, like integer
+      like integer
+  mark k, like integer
+  mark x, like integer
+  have the-term-from-the-last
+    call is-equal
+      call multiply
+        call add
+          read k
+          code 1
+        call t
+          call add
+            read k
+            code 1
+      call multiply
+        read x
+        call t
+          read k
+  have the-last-term-is-not-negative
+    call is-minimum
+      call t
+        read k
+      code 0
+  have x-is-not-negative
+    call is-minimum
+      read x
+      code 0
+  have k-is-a-count
+    call is-minimum
+      read k
+      code 0
+  show hold
+    call is-maximum
+      call multiply
+        code 2
+        call t
+          call add
+            read k
+            code 1
+      call t
+        read k
+
+
+# false: 2^1 = 2 is below 2 (1 + 1) = 4
+rule control-the-powers-of-two-pass-twice-the-counts
+  mark p
+    like task
+      take a0, like integer
+      like integer
+  mark j, like integer
+  have p-starts-at-one
+    call is-equal
+      call p
+        code 0
+      code 1
+  have p-doubles
+    mark k, like integer
+    meet or
+      call is-below
+        read k
+        code 0
+      call is-equal
+        call p
+          call add
+            read k
+            code 1
+        call multiply
+          code 2
+          call p
+            read k
+  have j-is-a-count
+    call is-minimum
+      read j
+      code 0
+  show hold
+    call is-minimum
+      call p
+        read j
+      call add
+        call multiply
+          code 2
+          read j
+        code 2
+  fold j
+
+
+# false: the bound reaches eps, not eps / 2
+rule control-a-term-below-half-the-tolerance
+  mark tt, like integer
+  mark t0, like integer
+  mark pp, like integer
+  mark j, like integer
+  mark eps, like integer
+  have it-falls-like-a-power-of-two
+    call is-maximum
+      call multiply
+        read pp
+        read tt
+      read t0
+  have the-power-passes-the-count
+    call is-minimum
+      read pp
+      call add
+        read j
+        code 1
+  have j-is-far-enough
+    call is-minimum
+      call multiply
+        call add
+          read j
+          code 1
+        read eps
+      read t0
+  have j-is-a-count
+    call is-minimum
+      read j
+      code 0
+  have the-tolerance-is-positive
+    call is-above
+      read eps
+      code 0
+  show hold
+    call is-maximum
+      call multiply
+        code 2
+        read tt
+      read eps
+
+
+# false: the sum grows past its value at n0
+rule control-the-sums-past-n0-without-the-tail
+  mark t
+    like task
+      take a0, like integer
+      like integer
+  mark s
+    like task
+      take a0, like integer
+      like integer
+  mark n0, like integer
+  mark j, like integer
+  have each-term-past-n0-halves
+    mark k, like integer
+    meet or
+      call is-below
+        read k
+        read n0
+      call is-maximum
+        call multiply
+          code 2
+          call t
+            call add
+              read k
+              code 1
+        call t
+          read k
+  have each-sum-adds-a-term
+    mark k, like integer
+    meet or
+      call is-below
+        read k
+        code 0
+      call is-equal
+        call s
+          call add
+            read k
+            code 1
+        call add
+          call s
+            read k
+          call t
+            call add
+              read k
+              code 1
+  have n0-is-a-count
+    call is-minimum
+      read n0
+      code 0
+  have j-is-a-count
+    call is-minimum
+      read j
+      code 0
+  show hold
+    call is-maximum
+      call s
+        call add
+          read n0
+          read j
+      call s
+        read n0
+  fold j
+
+
+# false: the sequences carry their own 2/n
+rule control-within-every-tolerance-is-within-one-over-n
+  mark x
+    like task
+      take a0, like integer
+      like integer
+  mark y
+    like task
+      take a0, like integer
+      like integer
+  mark n, like integer
+  have x-is-within-every-tolerance-of-y
+    mark k, like integer
+    mark m, like integer
+    meet or
+      call is-below
+        read k
+        code 1
+      call is-below
+        read m
+        code 1
+      meet and
+        call is-maximum
+          call multiply
+            call multiply
+              read k
+              read m
+            call subtract
+              call x
+                read m
+              call y
+                read m
+          call add
+            read m
+            call multiply
+              code 2
+              read k
+        call is-maximum
+          call multiply
+            call multiply
+              read k
+              read m
+            call subtract
+              call y
+                read m
+              call x
+                read m
+          call add
+            read m
+            call multiply
+              code 2
+              read k
+  have n-is-a-precision
+    call is-minimum
+      read n
+      code 1
+  show hold
+    call is-maximum
+      call multiply
+        read n
+        call subtract
+          call x
+            read n
+          call y
+            read n
+      code 1

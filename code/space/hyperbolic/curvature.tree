@@ -26,7 +26,7 @@
 # ideal triangle whose three corners vanish. The negative curvature is why room grows exponentially outward: each step
 # away from a vertex meets strictly more cells than a flat grid would, the Fibonacci growth modeled in fibonacci.tree.
 
-load @term/seed/code/atom/sign
+load @term/seed/atom/sign
   find sign
 
 # The three geometries a regular tiling can have, named by the SIGN of its curvature. The flat plane sits on the boundary

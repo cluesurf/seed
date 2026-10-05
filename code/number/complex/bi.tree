@@ -1,4 +1,4 @@
-load @term/seed/code/number/complex
+load @term/seed/number/complex
   find complex
 
 # The bicomplex numbers, the complex numbers doubled by a second commutative square root of minus one, the commutative

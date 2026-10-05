@@ -1,4 +1,4 @@
-load @term/seed/code/algebra/root-system
+load @term/seed/algebra/root-system
   find root-system
 
 # The rotation algebra of eight-dimensional space, the algebra called D four, the home of triality. It is forced from the octonions two ways at once. From above, it is the rotation structure of the dimension where the reversible tower tops out. From below, it is the unique rank where the vector and the half-spinor have the same size, eight against two cubed, the one-substance demand. Its rank is four, the dimension of spacetime, one ordered direction and three unordered. Its root system is the 24-cell, and its threefold symmetry, triality, cycles its three eight-dimensional pieces and lives nowhere else.

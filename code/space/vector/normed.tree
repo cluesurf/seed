@@ -1,7 +1,7 @@
-load @term/seed/code/structure/space/vector
+load @term/seed/structure/space/vector
   find vector-space
 
-load @term/seed/code/structure/function/unary
+load @term/seed/structure/function/unary
   find unary-function
 
 # A normed vector space: a vector space with a norm, a length assigned to each vector that is zero only for the zero

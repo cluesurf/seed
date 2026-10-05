@@ -1,4 +1,4 @@
-load @term/seed/code/structure/space/vector
+load @term/seed/structure/space/vector
   find vector-space
 
 # The amplituhedron: a geometric object whose volume computes the scattering amplitudes of certain quantum field

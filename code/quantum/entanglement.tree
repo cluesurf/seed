@@ -11,7 +11,7 @@
 # signature genuinely separates the four states. This is the combinatorial core of entanglement: the discrete shadow the
 # amplitudes cast on measurement, the part a classical recipe provably cannot fake.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
 
 # A measurement outcome of one qubit, off or on (the zero or one of a single binary measurement).

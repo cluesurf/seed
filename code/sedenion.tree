@@ -1,7 +1,7 @@
-load @term/seed/code/octonion
+load @term/seed/octonion
   find octonion
 
-load @term/seed/code/algebra/cayley-dickson
+load @term/seed/algebra/cayley-dickson
   find cayley-dickson-double
 
 # The sedenions, the Cayley-Dickson double of the octonions, dimension sixteen. They are the cliff. Because the octonions are not associative, doubling them loses the norm, so the sedenions are not a composition algebra and they have zero divisors, two nonzero sedenions whose product is zero. So reversibility fails here, which is why the reversible tower stops one rung below, at the octonions. This is the lower wall the pinch-point sits just above.

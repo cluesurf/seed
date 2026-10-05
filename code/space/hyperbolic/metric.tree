@@ -1,0 +1,1619 @@
+# The metric geometry of the hyperbolic plane, on the hyperboloid model of space/hyperbolic/hyperboloid (a point is x
+# with B(x, x) = 1, cosh of a distance is B(x, y)). Every theorem is a polynomial identity proved for all real values.
+# Where a theorem has hypotheses, it is stated as a CERTIFICATE: the difference of its two sides written as a sum of
+# multiples of the hypotheses' differences. The kernel proves the certificate outright, and under the hypotheses every
+# term vanishes, which is the theorem. (This is how a linear-combination tactic proves a conditional identity.)
+#
+#   CONGRUENCE     side-angle-side and side-side-side for two triangles, by one certificate;
+#   THE TRIANGLE INEQUALITY   the Gram determinant of three vectors is det(x, y, z)^2. For points it reads
+#                  (p^2 - 1)(q^2 - 1) - (r - p q)^2 = det^2 >= 0 with p, q, r the three cosh's, so
+#                  cosh d(x, z) <= cosh(d(x, y) + d(y, z)), with equality exactly when det = 0;
+#   COLLINEARITY   three points on one line have det = 0 (Cramer's identity), so for them the triangle inequality is
+#                  an equality: one distance is the sum of the other two;
+#   BETWEENNESS    for y = l x + m z, r B(y, y) - p q = l m (r^2 - B(x, x) B(z, z)): when y lies on the segment
+#                  (l, m >= 0) the distances ADD, d(x, z) = d(x, y) + d(y, z), and between is additivity;
+#   ISOMETRY CLASSES  a Mobius map of trace t has fixed points with discriminant t^2 - 4 (for determinant 1): two inside
+#                  the half plane's closure as conjugates when t^2 < 4 (ELLIPTIC, a rotation), one double point at
+#                  infinity when t^2 = 4 (PARABOLIC), two boundary points when t^2 > 4 (HYPERBOLIC, a translation);
+#   THE CAYLEY MAP w = (z - i) / (z + i) carries the upper half plane onto the disk: 1 - |w|^2 = 4 Im z / |z + i|^2,
+#                  and it scales differences by 2 i / ((z1 + i)(z2 + i)), so the two distance formulas agree;
+#   THE ANGLE OF PARALLELISM  for a point at distance d from a line, the limiting parallel meets the perpendicular at
+#                  the angle P with cos P = tanh d (Lobachevsky);
+#   PASCH          a line crossing one side of a triangle crosses exactly one other (signs of B(., n));
+#   AREA           the angle defect pi - (angle sum) is additive under cutting a triangle;
+#   THE CIRCLE     a circle of radius r is traced at speed sinh r, so its circumference is 2 pi sinh r.
+
+load @term/seed/space/hyperbolic/hyperboloid
+  find lorentz-form
+  find lorentz-cross-t
+  find lorentz-cross-x
+  find lorentz-cross-y
+
+# CONGRUENCE, Hilbert's group III. For triangles (a, b, c) and (p, q, r), with the angle at a read as the tangent
+# product angle(a) = B(b - B(b, a) a, c - B(c, a) a):
+#
+#   B(b, c) - B(q, r) = [angle(a) - angle(p)] + B(a, b) [B(a, c) - B(p, r)] + B(p, r) [B(a, b) - B(p, q)]
+#                       - B(a, b) B(a, c) [B(a, a) - 1] + B(p, q) B(p, r) [B(p, p) - 1].
+#
+# SIDE-ANGLE-SIDE: if a and p are points and the triangles agree in the two sides at a and p and in the angle between
+# them, every bracket is 0 and the third sides agree. SIDE-SIDE-SIDE: read for the angles, three equal sides make the
+# angle difference 0.
+rule side-angle-side-and-side-side-side
+  mark a0, like integer
+  mark a1, like integer
+  mark a2, like integer
+  mark b0, like integer
+  mark b1, like integer
+  mark b2, like integer
+  mark c0, like integer
+  mark c1, like integer
+  mark c2, like integer
+  mark p0, like integer
+  mark p1, like integer
+  mark p2, like integer
+  mark q0, like integer
+  mark q1, like integer
+  mark q2, like integer
+  mark r0, like integer
+  mark r1, like integer
+  mark r2, like integer
+  show hold
+    call is-equal
+      call subtract
+        call lorentz-form
+          read b0
+          read b1
+          read b2
+          read c0
+          read c1
+          read c2
+        call lorentz-form
+          read q0
+          read q1
+          read q2
+          read r0
+          read r1
+          read r2
+      call subtract
+        call add
+          call add
+            call subtract
+              call lorentz-form
+                call subtract
+                  read b0
+                  call multiply
+                    call lorentz-form
+                      read b0
+                      read b1
+                      read b2
+                      read a0
+                      read a1
+                      read a2
+                    read a0
+                call subtract
+                  read b1
+                  call multiply
+                    call lorentz-form
+                      read b0
+                      read b1
+                      read b2
+                      read a0
+                      read a1
+                      read a2
+                    read a1
+                call subtract
+                  read b2
+                  call multiply
+                    call lorentz-form
+                      read b0
+                      read b1
+                      read b2
+                      read a0
+                      read a1
+                      read a2
+                    read a2
+                call subtract
+                  read c0
+                  call multiply
+                    call lorentz-form
+                      read c0
+                      read c1
+                      read c2
+                      read a0
+                      read a1
+                      read a2
+                    read a0
+                call subtract
+                  read c1
+                  call multiply
+                    call lorentz-form
+                      read c0
+                      read c1
+                      read c2
+                      read a0
+                      read a1
+                      read a2
+                    read a1
+                call subtract
+                  read c2
+                  call multiply
+                    call lorentz-form
+                      read c0
+                      read c1
+                      read c2
+                      read a0
+                      read a1
+                      read a2
+                    read a2
+              call lorentz-form
+                call subtract
+                  read q0
+                  call multiply
+                    call lorentz-form
+                      read q0
+                      read q1
+                      read q2
+                      read p0
+                      read p1
+                      read p2
+                    read p0
+                call subtract
+                  read q1
+                  call multiply
+                    call lorentz-form
+                      read q0
+                      read q1
+                      read q2
+                      read p0
+                      read p1
+                      read p2
+                    read p1
+                call subtract
+                  read q2
+                  call multiply
+                    call lorentz-form
+                      read q0
+                      read q1
+                      read q2
+                      read p0
+                      read p1
+                      read p2
+                    read p2
+                call subtract
+                  read r0
+                  call multiply
+                    call lorentz-form
+                      read r0
+                      read r1
+                      read r2
+                      read p0
+                      read p1
+                      read p2
+                    read p0
+                call subtract
+                  read r1
+                  call multiply
+                    call lorentz-form
+                      read r0
+                      read r1
+                      read r2
+                      read p0
+                      read p1
+                      read p2
+                    read p1
+                call subtract
+                  read r2
+                  call multiply
+                    call lorentz-form
+                      read r0
+                      read r1
+                      read r2
+                      read p0
+                      read p1
+                      read p2
+                    read p2
+            call add
+              call multiply
+                call lorentz-form
+                  read a0
+                  read a1
+                  read a2
+                  read b0
+                  read b1
+                  read b2
+                call subtract
+                  call lorentz-form
+                    read a0
+                    read a1
+                    read a2
+                    read c0
+                    read c1
+                    read c2
+                  call lorentz-form
+                    read p0
+                    read p1
+                    read p2
+                    read r0
+                    read r1
+                    read r2
+              call multiply
+                call lorentz-form
+                  read p0
+                  read p1
+                  read p2
+                  read r0
+                  read r1
+                  read r2
+                call subtract
+                  call lorentz-form
+                    read a0
+                    read a1
+                    read a2
+                    read b0
+                    read b1
+                    read b2
+                  call lorentz-form
+                    read p0
+                    read p1
+                    read p2
+                    read q0
+                    read q1
+                    read q2
+          call multiply
+            call multiply
+              call lorentz-form
+                read p0
+                read p1
+                read p2
+                read q0
+                read q1
+                read q2
+              call lorentz-form
+                read p0
+                read p1
+                read p2
+                read r0
+                read r1
+                read r2
+            call subtract
+              call lorentz-form
+                read p0
+                read p1
+                read p2
+                read p0
+                read p1
+                read p2
+              code 1
+        call multiply
+          call multiply
+            call lorentz-form
+              read a0
+              read a1
+              read a2
+              read b0
+              read b1
+              read b2
+            call lorentz-form
+              read a0
+              read a1
+              read a2
+              read c0
+              read c1
+              read c2
+          call subtract
+            call lorentz-form
+              read a0
+              read a1
+              read a2
+              read a0
+              read a1
+              read a2
+            code 1
+
+# The determinant of three vectors by Sarrus' rule, and of a symmetric 3 x 3 matrix with diagonal (a, g, c) and
+# off-diagonal p (row 1 col 2), r (row 1 col 3), q (row 2 col 3).
+task coordinate-determinant
+  take x0, like integer
+  take x1, like integer
+  take x2, like integer
+  take y0, like integer
+  take y1, like integer
+  take y2, like integer
+  take z0, like integer
+  take z1, like integer
+  take z2, like integer
+  like integer
+  send back
+    call subtract
+      call add
+        call add
+          call multiply
+            read x0
+            call multiply
+              read y1
+              read z2
+          call multiply
+            read x1
+            call multiply
+              read y2
+              read z0
+        call multiply
+          read x2
+          call multiply
+            read y0
+            read z1
+      call add
+        call add
+          call multiply
+            read x2
+            call multiply
+              read y1
+              read z0
+          call multiply
+            read x1
+            call multiply
+              read y0
+              read z2
+        call multiply
+          read x0
+          call multiply
+            read y2
+            read z1
+
+task gram-determinant
+  take ga, like integer
+  take gg, like integer
+  take gc, like integer
+  take gp, like integer
+  take gq, like integer
+  take gr, like integer
+  like integer
+  send back
+    call subtract
+      call add
+        call multiply
+          read ga
+          call multiply
+            read gg
+            read gc
+        call multiply
+          code 2
+          call multiply
+            read gp
+            call multiply
+              read gq
+              read gr
+      call add
+        call add
+          call multiply
+            read ga
+            call multiply
+              read gq
+              read gq
+          call multiply
+            read gg
+            call multiply
+              read gr
+              read gr
+        call multiply
+          read gc
+          call multiply
+            read gp
+            read gp
+
+# THE GRAM DETERMINANT of three vectors under B is det(x, y, z)^2 (det J = 1), for all vectors.
+rule the-gram-determinant-is-the-square-of-the-determinant
+  mark x0, like integer
+  mark x1, like integer
+  mark x2, like integer
+  mark y0, like integer
+  mark y1, like integer
+  mark y2, like integer
+  mark z0, like integer
+  mark z1, like integer
+  mark z2, like integer
+  show hold
+    call is-equal
+      call gram-determinant
+        call lorentz-form
+          read x0
+          read x1
+          read x2
+          read x0
+          read x1
+          read x2
+        call lorentz-form
+          read y0
+          read y1
+          read y2
+          read y0
+          read y1
+          read y2
+        call lorentz-form
+          read z0
+          read z1
+          read z2
+          read z0
+          read z1
+          read z2
+        call lorentz-form
+          read x0
+          read x1
+          read x2
+          read y0
+          read y1
+          read y2
+        call lorentz-form
+          read y0
+          read y1
+          read y2
+          read z0
+          read z1
+          read z2
+        call lorentz-form
+          read x0
+          read x1
+          read x2
+          read z0
+          read z1
+          read z2
+      call multiply
+        call coordinate-determinant
+          read x0
+          read x1
+          read x2
+          read y0
+          read y1
+          read y2
+          read z0
+          read z1
+          read z2
+        call coordinate-determinant
+          read x0
+          read x1
+          read x2
+          read y0
+          read y1
+          read y2
+          read z0
+          read z1
+          read z2
+
+# THE TRIANGLE INEQUALITY. For three points, with p = cosh d(x, y), q = cosh d(y, z), r = cosh d(x, z):
+# (p^2 - 1)(q^2 - 1) - (r - p q)^2 = det(x, y, z)^2 >= 0, so r <= p q + sqrt((p^2 - 1)(q^2 - 1)) = cosh(d(x, y) + d(y, z)),
+# and d(x, z) <= d(x, y) + d(y, z) since cosh increases on [0, oo). Equality exactly when det = 0.
+rule the-triangle-inequality
+  mark x0, like integer
+  mark x1, like integer
+  mark x2, like integer
+  mark y0, like integer
+  mark y1, like integer
+  mark y2, like integer
+  mark z0, like integer
+  mark z1, like integer
+  mark z2, like integer
+  have x-point
+    call is-equal
+      call lorentz-form
+        read x0
+        read x1
+        read x2
+        read x0
+        read x1
+        read x2
+      code 1
+  have y-point
+    call is-equal
+      call lorentz-form
+        read y0
+        read y1
+        read y2
+        read y0
+        read y1
+        read y2
+      code 1
+  have z-point
+    call is-equal
+      call lorentz-form
+        read z0
+        read z1
+        read z2
+        read z0
+        read z1
+        read z2
+      code 1
+  show hold
+    call is-equal
+      call subtract
+        call multiply
+          call subtract
+            call multiply
+              call lorentz-form
+                read x0
+                read x1
+                read x2
+                read y0
+                read y1
+                read y2
+              call lorentz-form
+                read x0
+                read x1
+                read x2
+                read y0
+                read y1
+                read y2
+            code 1
+          call subtract
+            call multiply
+              call lorentz-form
+                read y0
+                read y1
+                read y2
+                read z0
+                read z1
+                read z2
+              call lorentz-form
+                read y0
+                read y1
+                read y2
+                read z0
+                read z1
+                read z2
+            code 1
+        call multiply
+          call subtract
+            call lorentz-form
+              read x0
+              read x1
+              read x2
+              read z0
+              read z1
+              read z2
+            call multiply
+              call lorentz-form
+                read x0
+                read x1
+                read x2
+                read y0
+                read y1
+                read y2
+              call lorentz-form
+                read y0
+                read y1
+                read y2
+                read z0
+                read z1
+                read z2
+          call subtract
+            call lorentz-form
+              read x0
+              read x1
+              read x2
+              read z0
+              read z1
+              read z2
+            call multiply
+              call lorentz-form
+                read x0
+                read x1
+                read x2
+                read y0
+                read y1
+                read y2
+              call lorentz-form
+                read y0
+                read y1
+                read y2
+                read z0
+                read z1
+                read z2
+      call multiply
+        call coordinate-determinant
+          read x0
+          read x1
+          read x2
+          read y0
+          read y1
+          read y2
+          read z0
+          read z1
+          read z2
+        call coordinate-determinant
+          read x0
+          read x1
+          read x2
+          read y0
+          read y1
+          read y2
+          read z0
+          read z1
+          read z2
+
+# COLLINEARITY: Cramer's identity det(x, y, z) J n = B(x, n) (y x z) + B(y, n) (z x x) + B(z, n) (x x y). Three
+# points on the line n make every B(., n) zero, so det(x, y, z) J n = 0 and det = 0: for collinear points the triangle
+# inequality is an equality, one distance the sum of the other two.
+rule three-points-on-a-line-have-zero-determinant-t
+  mark x0, like integer
+  mark x1, like integer
+  mark x2, like integer
+  mark y0, like integer
+  mark y1, like integer
+  mark y2, like integer
+  mark z0, like integer
+  mark z1, like integer
+  mark z2, like integer
+  mark n0, like integer
+  mark n1, like integer
+  mark n2, like integer
+  show hold
+    call is-equal
+      call multiply
+        call coordinate-determinant
+          read x0
+          read x1
+          read x2
+          read y0
+          read y1
+          read y2
+          read z0
+          read z1
+          read z2
+        read n0
+      call add
+        call add
+          call multiply
+            call lorentz-form
+              read x0
+              read x1
+              read x2
+              read n0
+              read n1
+              read n2
+            call subtract
+              call multiply
+                read y1
+                read z2
+              call multiply
+                read y2
+                read z1
+          call multiply
+            call lorentz-form
+              read y0
+              read y1
+              read y2
+              read n0
+              read n1
+              read n2
+            call subtract
+              call multiply
+                read z1
+                read x2
+              call multiply
+                read z2
+                read x1
+        call multiply
+          call lorentz-form
+            read z0
+            read z1
+            read z2
+            read n0
+            read n1
+            read n2
+          call subtract
+            call multiply
+              read x1
+              read y2
+            call multiply
+              read x2
+              read y1
+
+rule three-points-on-a-line-have-zero-determinant-x
+  mark x0, like integer
+  mark x1, like integer
+  mark x2, like integer
+  mark y0, like integer
+  mark y1, like integer
+  mark y2, like integer
+  mark z0, like integer
+  mark z1, like integer
+  mark z2, like integer
+  mark n0, like integer
+  mark n1, like integer
+  mark n2, like integer
+  show hold
+    call is-equal
+      call multiply
+        call coordinate-determinant
+          read x0
+          read x1
+          read x2
+          read y0
+          read y1
+          read y2
+          read z0
+          read z1
+          read z2
+        call subtract
+          code 0
+          read n1
+      call add
+        call add
+          call multiply
+            call lorentz-form
+              read x0
+              read x1
+              read x2
+              read n0
+              read n1
+              read n2
+            call subtract
+              call multiply
+                read y2
+                read z0
+              call multiply
+                read y0
+                read z2
+          call multiply
+            call lorentz-form
+              read y0
+              read y1
+              read y2
+              read n0
+              read n1
+              read n2
+            call subtract
+              call multiply
+                read z2
+                read x0
+              call multiply
+                read z0
+                read x2
+        call multiply
+          call lorentz-form
+            read z0
+            read z1
+            read z2
+            read n0
+            read n1
+            read n2
+          call subtract
+            call multiply
+              read x2
+              read y0
+            call multiply
+              read x0
+              read y2
+
+rule three-points-on-a-line-have-zero-determinant-y
+  mark x0, like integer
+  mark x1, like integer
+  mark x2, like integer
+  mark y0, like integer
+  mark y1, like integer
+  mark y2, like integer
+  mark z0, like integer
+  mark z1, like integer
+  mark z2, like integer
+  mark n0, like integer
+  mark n1, like integer
+  mark n2, like integer
+  show hold
+    call is-equal
+      call multiply
+        call coordinate-determinant
+          read x0
+          read x1
+          read x2
+          read y0
+          read y1
+          read y2
+          read z0
+          read z1
+          read z2
+        call subtract
+          code 0
+          read n2
+      call add
+        call add
+          call multiply
+            call lorentz-form
+              read x0
+              read x1
+              read x2
+              read n0
+              read n1
+              read n2
+            call subtract
+              call multiply
+                read y0
+                read z1
+              call multiply
+                read y1
+                read z0
+          call multiply
+            call lorentz-form
+              read y0
+              read y1
+              read y2
+              read n0
+              read n1
+              read n2
+            call subtract
+              call multiply
+                read z0
+                read x1
+              call multiply
+                read z1
+                read x0
+        call multiply
+          call lorentz-form
+            read z0
+            read z1
+            read z2
+            read n0
+            read n1
+            read n2
+          call subtract
+            call multiply
+              read x0
+              read y1
+            call multiply
+              read x1
+              read y0
+
+# BETWEENNESS IS ADDITIVITY. For y = l x + m z: r B(y, y) - p q = l m (r^2 - B(x, x) B(z, z)), with p = B(x, y),
+# q = B(y, z), r = B(x, z). For points on the segment (B(y, y) = 1, l, m >= 0) the right side is >= 0, so r >= p q,
+# which with the collinear equality (r - p q)^2 = (p^2 - 1)(q^2 - 1) makes r = cosh(d(x, y) + d(y, z)): the distance
+# from x to z through y is the sum. Hilbert's II.1 (y between x and z exactly when between z and x) is the symmetry
+# of this identity in (x, l) and (z, m).
+rule between-is-additive
+  mark x0, like integer
+  mark x1, like integer
+  mark x2, like integer
+  mark z0, like integer
+  mark z1, like integer
+  mark z2, like integer
+  mark lam, like integer
+  mark mu, like integer
+  show hold
+    call is-equal
+      call subtract
+        call multiply
+          call lorentz-form
+            read x0
+            read x1
+            read x2
+            read z0
+            read z1
+            read z2
+          call lorentz-form
+            call add
+              call multiply
+                read lam
+                read x0
+              call multiply
+                read mu
+                read z0
+            call add
+              call multiply
+                read lam
+                read x1
+              call multiply
+                read mu
+                read z1
+            call add
+              call multiply
+                read lam
+                read x2
+              call multiply
+                read mu
+                read z2
+            call add
+              call multiply
+                read lam
+                read x0
+              call multiply
+                read mu
+                read z0
+            call add
+              call multiply
+                read lam
+                read x1
+              call multiply
+                read mu
+                read z1
+            call add
+              call multiply
+                read lam
+                read x2
+              call multiply
+                read mu
+                read z2
+        call multiply
+          call lorentz-form
+            read x0
+            read x1
+            read x2
+            call add
+              call multiply
+                read lam
+                read x0
+              call multiply
+                read mu
+                read z0
+            call add
+              call multiply
+                read lam
+                read x1
+              call multiply
+                read mu
+                read z1
+            call add
+              call multiply
+                read lam
+                read x2
+              call multiply
+                read mu
+                read z2
+          call lorentz-form
+            call add
+              call multiply
+                read lam
+                read x0
+              call multiply
+                read mu
+                read z0
+            call add
+              call multiply
+                read lam
+                read x1
+              call multiply
+                read mu
+                read z1
+            call add
+              call multiply
+                read lam
+                read x2
+              call multiply
+                read mu
+                read z2
+            read z0
+            read z1
+            read z2
+      call multiply
+        call multiply
+          read lam
+          read mu
+        call subtract
+          call multiply
+            call lorentz-form
+              read x0
+              read x1
+              read x2
+              read z0
+              read z1
+              read z2
+            call lorentz-form
+              read x0
+              read x1
+              read x2
+              read z0
+              read z1
+              read z2
+          call multiply
+            call lorentz-form
+              read x0
+              read x1
+              read x2
+              read x0
+              read x1
+              read x2
+            call lorentz-form
+              read z0
+              read z1
+              read z2
+              read z0
+              read z1
+              read z2
+
+# ISOMETRY CLASSES. A fixed point of z -> (a z + b) / (c z + d) solves c z^2 + (d - a) z - b = 0, and the
+# discriminant of that quadratic is (a + d)^2 - 4 (a d - b c), the trace squared minus four for a determinant-1 map.
+rule a-mobius-fixed-point-solves-a-quadratic
+  mark ma, like integer
+  mark mb, like integer
+  mark mc, like integer
+  mark md, like integer
+  mark z, like integer
+  show hold
+    call is-equal
+      call subtract
+        call add
+          call multiply
+            read ma
+            read z
+          read mb
+        call multiply
+          read z
+          call add
+            call multiply
+              read mc
+              read z
+            read md
+      call subtract
+        code 0
+        call subtract
+          call add
+            call multiply
+              read mc
+              call multiply
+                read z
+                read z
+            call multiply
+              call subtract
+                read md
+                read ma
+              read z
+          read mb
+
+rule the-fixed-point-discriminant-is-the-trace-squared-minus-four
+  mark ma, like integer
+  mark mb, like integer
+  mark mc, like integer
+  mark md, like integer
+  show hold
+    call is-equal
+      call add
+        call multiply
+          call subtract
+            read md
+            read ma
+          call subtract
+            read md
+            read ma
+        call multiply
+          code 4
+          call multiply
+            read mb
+            read mc
+      call subtract
+        call multiply
+          call add
+            read ma
+            read md
+          call add
+            read ma
+            read md
+        call multiply
+          code 4
+          call subtract
+            call multiply
+              read ma
+              read md
+            call multiply
+              read mb
+              read mc
+
+# THE CAYLEY MAP w = (z - i) / (z + i). (z1 - i)(z2 + i) - (z2 - i)(z1 + i) = 2 i (z1 - z2), so
+# w1 - w2 = 2 i (z1 - z2) / ((z1 + i)(z2 + i)). And with z = x + i y, |z + i|^2 - |z - i|^2 = 4 y, so
+# 1 - |w|^2 = 4 Im z / |z + i|^2: the upper half plane goes into the disk. Put together,
+# 2 |w1 - w2|^2 / ((1 - |w1|^2)(1 - |w2|^2)) = |z1 - z2|^2 / (2 Im z1 Im z2): the disk's distance formula
+# (space/hyperbolic/hyperboloid) becomes the half plane's, so the Cayley map is an isometry.
+rule the-cayley-map-scales-differences
+  mark z1, like integer
+  mark z2, like integer
+  mark i, like integer
+  show hold
+    call is-equal
+      call subtract
+        call multiply
+          call subtract
+            read z1
+            read i
+          call add
+            read z2
+            read i
+        call multiply
+          call subtract
+            read z2
+            read i
+          call add
+            read z1
+            read i
+      call multiply
+        call multiply
+          code 2
+          read i
+        call subtract
+          read z1
+          read z2
+
+rule the-cayley-map-sends-the-half-plane-into-the-disk
+  mark u, like integer
+  mark v, like integer
+  show hold
+    call is-equal
+      call subtract
+        call add
+          call multiply
+            read u
+            read u
+          call multiply
+            call add
+              read v
+              code 1
+            call add
+              read v
+              code 1
+        call add
+          call multiply
+            read u
+            read u
+          call multiply
+            call subtract
+              read v
+              code 1
+            call subtract
+              read v
+              code 1
+      call multiply
+        code 4
+        read v
+
+# THE ANGLE OF PARALLELISM. Put the point at o = (1, 0, 0) and the line at distance d with normal
+# n = (sinh d, cosh d, 0): a line (B(n, n) = -1), at distance d (B(o, n) = sinh d). The perpendicular from o is the line
+# (0, 0, 1). A line through o has normal (0, cos t, sin t), and it is the limiting parallel when B(m, n)^2 = 1, that is
+# cosh^2 d cos^2 t = 1. Then the angle P it makes with the perpendicular has cos P = |B(m, m_perp)| = |sin t|, and
+# cosh^2 d sin^2 t = sinh^2 d: cos P = tanh d, Lobachevsky's formula (equivalently tan(P / 2) = e^-d).
+rule the-line-at-distance-d-is-a-line
+  mark ch, like integer
+  mark sh, like integer
+  have hyperbolic-unit
+    call is-equal
+      call subtract
+        call multiply
+          read ch
+          read ch
+        call multiply
+          read sh
+          read sh
+      code 1
+  show hold
+    call is-equal
+      call lorentz-form
+        read sh
+        read ch
+        code 0
+        read sh
+        read ch
+        code 0
+      code -1
+
+rule the-point-is-at-distance-d-from-the-line
+  mark ch, like integer
+  mark sh, like integer
+  show hold
+    call is-equal
+      call lorentz-form
+        code 1
+        code 0
+        code 0
+        read sh
+        read ch
+        code 0
+      read sh
+
+rule the-perpendicular-from-the-point-meets-the-line-at-right-angles
+  mark ch, like integer
+  mark sh, like integer
+  show hold
+    call is-equal
+      call lorentz-form
+        code 0
+        code 0
+        code 1
+        read sh
+        read ch
+        code 0
+      code 0
+
+rule the-perpendicular-passes-through-the-point
+  show hold
+    call is-equal
+      call lorentz-form
+        code 0
+        code 0
+        code 1
+        code 1
+        code 0
+        code 0
+      code 0
+
+# The certificate: cosh^2 d sin^2 t - sinh^2 d = cosh^2 d [sin^2 t + cos^2 t - 1] - [cosh^2 d cos^2 t - 1]
+# + [cosh^2 d - sinh^2 d - 1]. Under the three hypotheses (unit direction, limiting, cosh^2 - sinh^2 = 1) every bracket
+# is 0, so cosh^2 d sin^2 t = sinh^2 d and cos P = |sin t| = tanh d.
+rule lobachevsky-cos-of-the-angle-of-parallelism-is-tanh-d
+  mark ch, like integer
+  mark sh, like integer
+  mark co, like integer
+  mark si, like integer
+  show hold
+    call is-equal
+      call subtract
+        call multiply
+          call multiply
+            read ch
+            read ch
+          call multiply
+            read si
+            read si
+        call multiply
+          read sh
+          read sh
+      call add
+        call subtract
+          call multiply
+            call multiply
+              read ch
+              read ch
+            call subtract
+              call add
+                call multiply
+                  read si
+                  read si
+                call multiply
+                  read co
+                  read co
+              code 1
+          call subtract
+            call multiply
+              call multiply
+                read ch
+                read ch
+              call multiply
+                read co
+                read co
+            code 1
+        call subtract
+          call subtract
+            call multiply
+              read ch
+              read ch
+            call multiply
+              read sh
+              read sh
+          code 1
+
+# THE CIRCLE OF RADIUS r about o: x(f) = (cosh r, sinh r cos f, sinh r sin f), on the plane, at distance r from o.
+# Its velocity (0, -sinh r sin f, sinh r cos f) has squared length -B = sinh^2 r: it is traced at speed sinh r, so its
+# circumference is 2 pi sinh r (and a disk's area, the integral of that, is 2 pi (cosh r - 1)).
+rule a-circle-of-radius-r-lies-on-the-plane
+  mark cr, like integer
+  mark sr, like integer
+  mark co, like integer
+  mark si, like integer
+  have hyperbolic-unit
+    call is-equal
+      call subtract
+        call multiply
+          read cr
+          read cr
+        call multiply
+          read sr
+          read sr
+      code 1
+  have unit-direction
+    call is-equal
+      call add
+        call multiply
+          read co
+          read co
+        call multiply
+          read si
+          read si
+      code 1
+  show hold
+    call is-equal
+      call lorentz-form
+        read cr
+        call multiply
+          read sr
+          read co
+        call multiply
+          read sr
+          read si
+        read cr
+        call multiply
+          read sr
+          read co
+        call multiply
+          read sr
+          read si
+      code 1
+
+rule a-circle-of-radius-r-is-at-distance-r
+  mark cr, like integer
+  mark sr, like integer
+  mark co, like integer
+  mark si, like integer
+  show hold
+    call is-equal
+      call lorentz-form
+        code 1
+        code 0
+        code 0
+        read cr
+        call multiply
+          read sr
+          read co
+        call multiply
+          read sr
+          read si
+      read cr
+
+rule a-circle-is-traced-at-speed-sinh-r
+  mark sr, like integer
+  mark co, like integer
+  mark si, like integer
+  have unit-direction
+    call is-equal
+      call add
+        call multiply
+          read co
+          read co
+        call multiply
+          read si
+          read si
+      code 1
+  show hold
+    call is-equal
+      call subtract
+        code 0
+        call lorentz-form
+          code 0
+          call subtract
+            code 0
+            call multiply
+              read sr
+              read si
+          call multiply
+            read sr
+            read co
+          code 0
+          call subtract
+            code 0
+            call multiply
+              read sr
+              read si
+          call multiply
+            read sr
+            read co
+      call multiply
+        read sr
+        read sr
+
+# ORDER: PASCH'S AXIOM. A point of the segment from a to b is l a + m b with l, m > 0, and its side of the line n is
+# B(l a + m b, n) = l B(a, n) + m B(b, n). So the segment crosses the line exactly when B(a, n) and B(b, n) have
+# opposite signs (the sign of B(x, n) is the side of n the point x is on).
+rule a-point-of-a-segment-sits-between-its-ends-sides
+  mark a0, like integer
+  mark a1, like integer
+  mark a2, like integer
+  mark b0, like integer
+  mark b1, like integer
+  mark b2, like integer
+  mark n0, like integer
+  mark n1, like integer
+  mark n2, like integer
+  mark lam, like integer
+  mark mu, like integer
+  show hold
+    call is-equal
+      call lorentz-form
+        call add
+          call multiply
+            read lam
+            read a0
+          call multiply
+            read mu
+            read b0
+        call add
+          call multiply
+            read lam
+            read a1
+          call multiply
+            read mu
+            read b1
+        call add
+          call multiply
+            read lam
+            read a2
+          call multiply
+            read mu
+            read b2
+        read n0
+        read n1
+        read n2
+      call add
+        call multiply
+          read lam
+          call lorentz-form
+            read a0
+            read a1
+            read a2
+            read n0
+            read n1
+            read n2
+        call multiply
+          read mu
+          call lorentz-form
+            read b0
+            read b1
+            read b2
+            read n0
+            read n1
+            read n2
+
+# The three side products multiply to a square: (ab)(ac)(bc) = (abc)^2 >= 0, writing ab = B(a, n) B(b, n) and so on.
+# If the line crosses side ab (ab < 0) and misses c (c not on it), then (ac)(bc) <= 0 with neither zero, so exactly one
+# of the sides ac, bc is crossed: a line entering a triangle through one side leaves through exactly one other.
+rule pasch
+  mark a0, like integer
+  mark a1, like integer
+  mark a2, like integer
+  mark b0, like integer
+  mark b1, like integer
+  mark b2, like integer
+  mark c0, like integer
+  mark c1, like integer
+  mark c2, like integer
+  mark n0, like integer
+  mark n1, like integer
+  mark n2, like integer
+  show hold
+    call is-equal
+      call multiply
+        call multiply
+          call lorentz-form
+            read a0
+            read a1
+            read a2
+            read n0
+            read n1
+            read n2
+          call lorentz-form
+            read b0
+            read b1
+            read b2
+            read n0
+            read n1
+            read n2
+        call multiply
+          call multiply
+            call lorentz-form
+              read a0
+              read a1
+              read a2
+              read n0
+              read n1
+              read n2
+            call lorentz-form
+              read c0
+              read c1
+              read c2
+              read n0
+              read n1
+              read n2
+          call multiply
+            call lorentz-form
+              read b0
+              read b1
+              read b2
+              read n0
+              read n1
+              read n2
+            call lorentz-form
+              read c0
+              read c1
+              read c2
+              read n0
+              read n1
+              read n2
+      call multiply
+        call multiply
+          call multiply
+            call lorentz-form
+              read a0
+              read a1
+              read a2
+              read n0
+              read n1
+              read n2
+            call lorentz-form
+              read b0
+              read b1
+              read b2
+              read n0
+              read n1
+              read n2
+          call lorentz-form
+            read c0
+            read c1
+            read c2
+            read n0
+            read n1
+            read n2
+        call multiply
+          call multiply
+            call lorentz-form
+              read a0
+              read a1
+              read a2
+              read n0
+              read n1
+              read n2
+            call lorentz-form
+              read b0
+              read b1
+              read b2
+              read n0
+              read n1
+              read n2
+          call lorentz-form
+            read c0
+            read c1
+            read c2
+            read n0
+            read n1
+            read n2
+
+# AREA. Cut a triangle with angles alpha, beta, gamma by a segment from the vertex at beta to the opposite side: the
+# angle beta splits as beta1 + beta2 and the two angles at the foot add to pi (delta1 + delta2 = pi). Then the defects
+# (pi minus the angle sum) of the two pieces add to the defect of the whole, plus (delta1 + delta2 - pi), which is 0:
+# the defect is additive, and it is invariant under isometries (they keep angles), which are the defining properties of
+# an area. Up to scale it is the hyperbolic area (Gauss-Bonnet, curvature -1).
+rule the-angle-defect-is-additive
+  mark alpha, like integer
+  mark beta-one, like integer
+  mark beta-two, like integer
+  mark gamma, like integer
+  mark delta-one, like integer
+  mark delta-two, like integer
+  mark pi, like integer
+  mark beta, like integer
+  have split-angle
+    call is-equal
+      read beta
+      call add
+        read beta-one
+        read beta-two
+  show hold
+    call is-equal
+      call add
+        call subtract
+          read pi
+          call add
+            call add
+              read alpha
+              read beta-one
+            read delta-one
+        call subtract
+          read pi
+          call add
+            call add
+              read gamma
+              read beta-two
+            read delta-two
+      call subtract
+        call subtract
+          read pi
+          call add
+            call add
+              read alpha
+              read beta
+            read gamma
+        call subtract
+          call add
+            read delta-one
+            read delta-two
+          read pi
+

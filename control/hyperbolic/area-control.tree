@@ -1,0 +1,330 @@
+# NEGATIVE CONTROLS for space/hyperbolic/area: each perturbs one certificate and must be REFUSED. Expected: 3.
+
+# false: the s^2 term with the wrong sign
+rule control-the-geodesic-off-by-a-sign
+  mark u0, like integer
+  mark u1, like integer
+  mark u2, like integer
+  mark v0, like integer
+  mark v1, like integer
+  mark v2, like integer
+  mark c, like integer
+  mark s, like integer
+  show hold
+    call is-equal
+      call subtract
+        call subtract
+          call subtract
+            call multiply
+              call add
+                call multiply
+                  read c
+                  read u0
+                call multiply
+                  read s
+                  read v0
+              call add
+                call multiply
+                  read c
+                  read u0
+                call multiply
+                  read s
+                  read v0
+            call multiply
+              call add
+                call multiply
+                  read c
+                  read u1
+                call multiply
+                  read s
+                  read v1
+              call add
+                call multiply
+                  read c
+                  read u1
+                call multiply
+                  read s
+                  read v1
+          call multiply
+            call add
+              call multiply
+                read c
+                read u2
+              call multiply
+                read s
+                read v2
+            call add
+              call multiply
+                read c
+                read u2
+              call multiply
+                read s
+                read v2
+        code 1
+      call add
+        call subtract
+          call add
+            call multiply
+              call multiply
+                read c
+                read c
+              call subtract
+                call subtract
+                  call subtract
+                    call multiply
+                      read u0
+                      read u0
+                    call multiply
+                      read u1
+                      read u1
+                  call multiply
+                    read u2
+                    read u2
+                code 1
+            call multiply
+              call multiply
+                call multiply
+                  code 2
+                  read c
+                read s
+              call subtract
+                call subtract
+                  call multiply
+                    read u0
+                    read v0
+                  call multiply
+                    read u1
+                    read v1
+                call multiply
+                  read u2
+                  read v2
+          call multiply
+            call multiply
+              read s
+              read s
+            call add
+              call subtract
+                call subtract
+                  call multiply
+                    read v0
+                    read v0
+                  call multiply
+                    read v1
+                    read v1
+                call multiply
+                  read v2
+                  read v2
+              code 1
+        call subtract
+          call subtract
+            call multiply
+              read c
+              read c
+            call multiply
+              read s
+              read s
+          code 1
+
+# false: the B(x, d) part of the certificate dropped
+rule control-the-turning-without-h3
+  mark x0, like integer
+  mark x1, like integer
+  mark x2, like integer
+  mark d0, like integer
+  mark d1, like integer
+  mark d2, like integer
+  show hold
+    call is-equal
+      call subtract
+        call add
+          call multiply
+            read d0
+            read d0
+          call multiply
+            call subtract
+              call multiply
+                read x1
+                read d2
+              call multiply
+                read x2
+                read d1
+            call subtract
+              call multiply
+                read x1
+                read d2
+              call multiply
+                read x2
+                read d1
+        call add
+          call multiply
+            read x1
+            read x1
+          call multiply
+            read x2
+            read x2
+      call subtract
+        call multiply
+          call add
+            call subtract
+              call subtract
+                call multiply
+                  read d0
+                  read d0
+                call multiply
+                  read d1
+                  read d1
+              call multiply
+                read d2
+                read d2
+            code 1
+          call add
+            call subtract
+              code 1
+              call multiply
+                read x0
+                read x0
+            call subtract
+              call subtract
+                call subtract
+                  call multiply
+                    read x0
+                    read x0
+                  call multiply
+                    read x1
+                    read x1
+                call multiply
+                  read x2
+                  read x2
+              code 1
+        call multiply
+          call multiply
+            call subtract
+              call subtract
+                call subtract
+                  call multiply
+                    read x0
+                    read x0
+                  call multiply
+                    read x1
+                    read x1
+                call multiply
+                  read x2
+                  read x2
+              code 1
+            read d0
+          read d0
+
+# false: (c^2 - s^2) where (c^2 + s^2) belongs
+rule control-the-tangent-with-c-squared-minus-s-squared
+  mark u0, like integer
+  mark u1, like integer
+  mark u2, like integer
+  mark v0, like integer
+  mark v1, like integer
+  mark v2, like integer
+  mark c, like integer
+  mark s, like integer
+  show hold
+    call is-equal
+      call subtract
+        call subtract
+          call multiply
+            call add
+              call multiply
+                read c
+                read u0
+              call multiply
+                read s
+                read v0
+            call add
+              call multiply
+                read s
+                read u0
+              call multiply
+                read c
+                read v0
+          call multiply
+            call add
+              call multiply
+                read c
+                read u1
+              call multiply
+                read s
+                read v1
+            call add
+              call multiply
+                read s
+                read u1
+              call multiply
+                read c
+                read v1
+        call multiply
+          call add
+            call multiply
+              read c
+              read u2
+            call multiply
+              read s
+              read v2
+          call add
+            call multiply
+              read s
+              read u2
+            call multiply
+              read c
+              read v2
+      call add
+        call add
+          call multiply
+            call multiply
+              read c
+              read s
+            call subtract
+              call subtract
+                call subtract
+                  call multiply
+                    read u0
+                    read u0
+                  call multiply
+                    read u1
+                    read u1
+                call multiply
+                  read u2
+                  read u2
+              code 1
+          call multiply
+            call subtract
+              call multiply
+                read c
+                read c
+              call multiply
+                read s
+                read s
+            call subtract
+              call subtract
+                call multiply
+                  read u0
+                  read v0
+                call multiply
+                  read u1
+                  read v1
+              call multiply
+                read u2
+                read v2
+        call multiply
+          call multiply
+            read c
+            read s
+          call add
+            call subtract
+              call subtract
+                call multiply
+                  read v0
+                  read v0
+                call multiply
+                  read v1
+                  read v1
+              call multiply
+                read v2
+                read v2
+            code 1

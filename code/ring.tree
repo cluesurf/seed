@@ -1,4 +1,4 @@
-load @term/seed/code/structure/ring
+load @term/seed/structure/ring
   find ring
 
 # A ring, the concept: a set with addition and multiplication where addition is an abelian group and multiplication

@@ -1,7 +1,7 @@
-load @term/seed/code/algebra/composition
+load @term/seed/algebra/composition
   find composition-algebra
 
-load @term/seed/code/algebra/division
+load @term/seed/algebra/division
   find division-algebra
 
 # A normed division algebra is at once a composition algebra and a division algebra: it carries a multiplicative norm and every nonzero element is invertible. The two conditions coincide, both say the product loses nothing. By Hurwitz there are exactly four, the reals, complex numbers, quaternions, and octonions, of dimensions one, two, four, eight, and nothing larger. The octonions are the last rung, the upper jaw of the pinch-point.

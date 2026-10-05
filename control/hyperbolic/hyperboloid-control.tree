@@ -1,0 +1,641 @@
+# NEGATIVE CONTROL for space/hyperbolic/hyperboloid: each rule perturbed, each must be refused. Expected: 7.
+
+# The Lorentz form B(x, y) = x0 y0 - x1 y1 - x2 y2.
+task lorentz-form
+  take x0, like integer
+  take x1, like integer
+  take x2, like integer
+  take y0, like integer
+  take y1, like integer
+  take y2, like integer
+  like integer
+  send back
+    call subtract
+      call subtract
+        call multiply
+          read x0
+          read y0
+        call multiply
+          read x1
+          read y1
+      call multiply
+        read x2
+        read y2
+
+# The t coordinate of the Lorentz cross product x * y = (J x) x (J y).
+task lorentz-cross-t
+  take x0, like integer
+  take x1, like integer
+  take x2, like integer
+  take y0, like integer
+  take y1, like integer
+  take y2, like integer
+  like integer
+  send back
+    call subtract
+      call multiply
+        read x1
+        read y2
+      call multiply
+        read x2
+        read y1
+
+# The x coordinate of the Lorentz cross product x * y = (J x) x (J y).
+task lorentz-cross-x
+  take x0, like integer
+  take x1, like integer
+  take x2, like integer
+  take y0, like integer
+  take y1, like integer
+  take y2, like integer
+  like integer
+  send back
+    call subtract
+      call multiply
+        read x0
+        read y2
+      call multiply
+        read x2
+        read y0
+
+# The y coordinate of the Lorentz cross product x * y = (J x) x (J y).
+task lorentz-cross-y
+  take x0, like integer
+  take x1, like integer
+  take x2, like integer
+  take y0, like integer
+  take y1, like integer
+  take y2, like integer
+  like integer
+  send back
+    call subtract
+      call multiply
+        read x1
+        read y0
+      call multiply
+        read x0
+        read y1
+
+# The imaginary part of a product of complex numbers (u1 + i u2)(v1 + i v2).
+task complex-product-imaginary
+  take u1, like integer
+  take u2, like integer
+  take v1, like integer
+  take v2, like integer
+  like integer
+  send back
+    call add
+      call multiply
+        read u1
+        read v2
+      call multiply
+        read u2
+        read v1
+
+rule control-the-norm-of-a-cross-product
+  mark x0, like integer
+  mark x1, like integer
+  mark x2, like integer
+  mark y0, like integer
+  mark y1, like integer
+  mark y2, like integer
+  show hold
+    call is-equal
+      call lorentz-form
+        call lorentz-cross-t
+          read x0
+          read x1
+          read x2
+          read y0
+          read y1
+          read y2
+        call lorentz-cross-x
+          read x0
+          read x1
+          read x2
+          read y0
+          read y1
+          read y2
+        call lorentz-cross-y
+          read x0
+          read x1
+          read x2
+          read y0
+          read y1
+          read y2
+        call lorentz-cross-t
+          read x0
+          read x1
+          read x2
+          read y0
+          read y1
+          read y2
+        call lorentz-cross-x
+          read x0
+          read x1
+          read x2
+          read y0
+          read y1
+          read y2
+        call lorentz-cross-y
+          read x0
+          read x1
+          read x2
+          read y0
+          read y1
+          read y2
+      call add
+        call multiply
+          call lorentz-form
+            read x0
+            read x1
+            read x2
+            read x0
+            read x1
+            read x2
+          call lorentz-form
+            read y0
+            read y1
+            read y2
+            read y0
+            read y1
+            read y2
+        call multiply
+          call lorentz-form
+            read x0
+            read x1
+            read x2
+            read y0
+            read y1
+            read y2
+          call lorentz-form
+            read x0
+            read x1
+            read x2
+            read y0
+            read y1
+            read y2
+
+rule control-the-disk-distance-formula
+  mark p1, like integer
+  mark p2, like integer
+  mark q1, like integer
+  mark q2, like integer
+  show hold
+    call is-equal
+      call subtract
+        call lorentz-form
+          call add
+            code 1
+            call add
+              call multiply
+                read p1
+                read p1
+              call multiply
+                read p2
+                read p2
+          call multiply
+            code 3
+            read p1
+          call multiply
+            code 2
+            read p2
+          call add
+            code 1
+            call add
+              call multiply
+                read q1
+                read q1
+              call multiply
+                read q2
+                read q2
+          call multiply
+            code 2
+            read q1
+          call multiply
+            code 2
+            read q2
+        call multiply
+          call subtract
+            code 1
+            call add
+              call multiply
+                read p1
+                read p1
+              call multiply
+                read p2
+                read p2
+          call subtract
+            code 1
+            call add
+              call multiply
+                read q1
+                read q1
+              call multiply
+                read q2
+                read q2
+      call multiply
+        code 2
+        call add
+          call multiply
+            call subtract
+              read p1
+              read q1
+            call subtract
+              read p1
+              read q1
+          call multiply
+            call subtract
+              read p2
+              read q2
+            call subtract
+              read p2
+              read q2
+
+rule control-the-law-of-cosines
+  mark a0, like integer
+  mark a1, like integer
+  mark a2, like integer
+  mark b0, like integer
+  mark b1, like integer
+  mark b2, like integer
+  mark v0, like integer
+  mark v1, like integer
+  mark v2, like integer
+  have vertex
+    call is-equal
+      call lorentz-form
+        read v0
+        read v1
+        read v2
+        read v0
+        read v1
+        read v2
+      code 1
+  show hold
+    call is-equal
+      call lorentz-form
+        call subtract
+          read a0
+          call multiply
+            call lorentz-form
+              read a0
+              read a1
+              read a2
+              read v0
+              read v1
+              read v2
+            read v0
+        call subtract
+          read a1
+          call multiply
+            call lorentz-form
+              read a0
+              read a1
+              read a2
+              read v0
+              read v1
+              read v2
+            read v1
+        call subtract
+          read a2
+          call multiply
+            call lorentz-form
+              read a0
+              read a1
+              read a2
+              read v0
+              read v1
+              read v2
+            read v2
+        call subtract
+          read b0
+          call multiply
+            call lorentz-form
+              read b0
+              read b1
+              read b2
+              read v0
+              read v1
+              read v2
+            read v0
+        call subtract
+          read b1
+          call multiply
+            call lorentz-form
+              read b0
+              read b1
+              read b2
+              read v0
+              read v1
+              read v2
+            read v1
+        call subtract
+          read b2
+          call multiply
+            call lorentz-form
+              read b0
+              read b1
+              read b2
+              read v0
+              read v1
+              read v2
+            read v2
+      call add
+        call lorentz-form
+          read a0
+          read a1
+          read a2
+          read b0
+          read b1
+          read b2
+        call multiply
+          call lorentz-form
+            read a0
+            read a1
+            read a2
+            read v0
+            read v1
+            read v2
+          call lorentz-form
+            read b0
+            read b1
+            read b2
+            read v0
+            read v1
+            read v2
+
+rule control-a-reflection-keeps-the-lorentz-form
+  mark x0, like integer
+  mark x1, like integer
+  mark x2, like integer
+  mark y0, like integer
+  mark y1, like integer
+  mark y2, like integer
+  mark n0, like integer
+  mark n1, like integer
+  mark n2, like integer
+  have line
+    call is-equal
+      call lorentz-form
+        read n0
+        read n1
+        read n2
+        read n0
+        read n1
+        read n2
+      code 1
+  show hold
+    call is-equal
+      call lorentz-form
+        call add
+          read x0
+          call multiply
+            call multiply
+              code 2
+              call lorentz-form
+                read x0
+                read x1
+                read x2
+                read n0
+                read n1
+                read n2
+            read n0
+        call add
+          read x1
+          call multiply
+            call multiply
+              code 2
+              call lorentz-form
+                read x0
+                read x1
+                read x2
+                read n0
+                read n1
+                read n2
+            read n1
+        call add
+          read x2
+          call multiply
+            call multiply
+              code 2
+              call lorentz-form
+                read x0
+                read x1
+                read x2
+                read n0
+                read n1
+                read n2
+            read n2
+        call add
+          read y0
+          call multiply
+            call multiply
+              code 2
+              call lorentz-form
+                read y0
+                read y1
+                read y2
+                read n0
+                read n1
+                read n2
+            read n0
+        call add
+          read y1
+          call multiply
+            call multiply
+              code 2
+              call lorentz-form
+                read y0
+                read y1
+                read y2
+                read n0
+                read n1
+                read n2
+            read n1
+        call add
+          read y2
+          call multiply
+            call multiply
+              code 2
+              call lorentz-form
+                read y0
+                read y1
+                read y2
+                read n0
+                read n1
+                read n2
+            read n2
+      call lorentz-form
+        read x0
+        read x1
+        read x2
+        read y0
+        read y1
+        read y2
+
+rule control-the-second-parallel-is-ultraparallel
+  show hold
+    call is-equal
+      call subtract
+        call multiply
+          call lorentz-form
+            code 0
+            code 3
+            code 4
+            code 1
+            code 1
+            code 1
+          call lorentz-form
+            code 0
+            code 3
+            code 4
+            code 1
+            code 1
+            code 1
+        call multiply
+          call lorentz-form
+            code 0
+            code 3
+            code 4
+            code 0
+            code 3
+            code 4
+          call lorentz-form
+            code 1
+            code 1
+            code 1
+            code 1
+            code 1
+            code 1
+      code 0
+
+rule control-a-mobius-map-keeps-the-imaginary-part
+  mark ma, like integer
+  mark mb, like integer
+  mark mc, like integer
+  mark md, like integer
+  mark zr, like integer
+  mark zi, like integer
+  have unimodular
+    call is-equal
+      call subtract
+        call multiply
+          read ma
+          read md
+        call multiply
+          read mb
+          read mc
+      code 2
+  show hold
+    call is-equal
+      call complex-product-imaginary
+        call add
+          call multiply
+            read ma
+            read zr
+          read mb
+        call multiply
+          read ma
+          read zi
+        call add
+          call multiply
+            read mc
+            read zr
+          read md
+        call subtract
+          code 0
+          call multiply
+            read mc
+            read zi
+      read zi
+
+rule control-two-lines-meet-where-their-cross-product-points
+  mark n0, like integer
+  mark n1, like integer
+  mark n2, like integer
+  mark m0, like integer
+  mark m1, like integer
+  mark m2, like integer
+  have n-line
+    call is-equal
+      call lorentz-form
+        read n0
+        read n1
+        read n2
+        read n0
+        read n1
+        read n2
+      code 1
+  have m-line
+    call is-equal
+      call lorentz-form
+        read m0
+        read m1
+        read m2
+        read m0
+        read m1
+        read m2
+      code -1
+  show hold
+    call is-equal
+      call lorentz-form
+        call lorentz-cross-t
+          read n0
+          read n1
+          read n2
+          read m0
+          read m1
+          read m2
+        call lorentz-cross-x
+          read n0
+          read n1
+          read n2
+          read m0
+          read m1
+          read m2
+        call lorentz-cross-y
+          read n0
+          read n1
+          read n2
+          read m0
+          read m1
+          read m2
+        call lorentz-cross-t
+          read n0
+          read n1
+          read n2
+          read m0
+          read m1
+          read m2
+        call lorentz-cross-x
+          read n0
+          read n1
+          read n2
+          read m0
+          read m1
+          read m2
+        call lorentz-cross-y
+          read n0
+          read n1
+          read n2
+          read m0
+          read m1
+          read m2
+      call subtract
+        code 1
+        call multiply
+          call lorentz-form
+            read n0
+            read n1
+            read n2
+            read m0
+            read m1
+            read m2
+          call lorentz-form
+            read n0
+            read n1
+            read n2
+            read m0
+            read m1
+            read m2

@@ -1,4 +1,4 @@
-load @term/seed/code/group
+load @term/seed/group
   find group
 
 # The maximal torus: the largest subgroup of a Lie group that is a product of circles, a maximal set of rotations that

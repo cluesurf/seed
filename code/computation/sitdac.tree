@@ -1,4 +1,4 @@
-load @term/seed/code/structure/set
+load @term/seed/structure/set
   find set
 
 # SITDAC, the model of associative computing (Potter 1992): Single Instruction stream, Tabular Data, Associative

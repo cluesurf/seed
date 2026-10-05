@@ -1,4 +1,4 @@
-load @term/seed/code/structure/set
+load @term/seed/structure/set
   find set
 
 # A quiver: a directed graph, used as the blueprint for representations, where each node carries a vector space and each

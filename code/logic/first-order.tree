@@ -1,4 +1,4 @@
-load @term/seed/code/structure/set
+load @term/seed/structure/set
   find set
 
 # First-order logic: the logic of quantifiers over individuals, with predicates, functions, and the connectives, able to

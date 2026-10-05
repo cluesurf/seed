@@ -24,10 +24,10 @@
 # (the waterline drops to a strict negsucc and keeps deepening); and the radial within-ordering of the holography file
 # agrees with the Busemann descent on the spine (deeper toward xi is lower on the Busemann function).
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
 
-load @term/seed/code/number/integer
+load @term/seed/number/integer
   find natural
   find rung
   find next

@@ -1,4 +1,4 @@
-load @term/seed/code/group/orthogonal
+load @term/seed/group/orthogonal
   find orthogonal-group
 
 # The special orthogonal group: the rotations, the orthogonal maps of determinant one, the orientation-preserving

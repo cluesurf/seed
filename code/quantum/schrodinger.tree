@@ -24,7 +24,7 @@
 # the kernel refutes commutativity by computation: the commutator acting on a state is nonzero, the +i that makes the
 # uncertainty principle.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
   find both
 

@@ -1,0 +1,38 @@
+# NEGATIVE CONTROL for induction over universal hypotheses (check/holds.ts universalInduction): the step holds and only
+# the base fails, so an induction that skipped its base case would accept it. Expected: 1 refusal.
+
+# false: x is constant (x(t + 1) = x(t)) and starts at 0, so x(n) is 0, never 1
+rule control-a-step-without-its-base
+  mark x
+    like task
+      take t, like integer
+      like integer
+  mark n, like integer
+  have x-is-constant
+    mark t, like integer
+    meet or
+      call is-below
+        read t
+        code 0
+      call is-equal
+        call x
+          call add
+            read t
+            code 1
+        call x
+          read t
+  have x-starts-at-zero
+    call is-equal
+      call x
+        code 0
+      code 0
+  have n-is-a-count
+    call is-minimum
+      read n
+      code 0
+  show hold
+    call is-equal
+      call x
+        read n
+      code 1
+  fold n

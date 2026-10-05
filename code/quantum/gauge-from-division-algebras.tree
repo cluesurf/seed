@@ -16,10 +16,10 @@
 # 8 from the octonion automorphisms, for the twelve force carriers. The su(2) multiplication table below is the genuine
 # algebraic content, computed by the kernel over the constructed generators, not a bare dimension count.
 
-load @term/seed/code/atom/sign
+load @term/seed/atom/sign
   find sign
 
-load @term/seed/code/atom/sign
+load @term/seed/atom/sign
   find flip-sign
 
 # THE COMPLEX IMAGINARY UNITS. The complexes add one imaginary unit to the reals. Its phase rotations e^(i theta) are the

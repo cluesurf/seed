@@ -1,4 +1,4 @@
-load @term/seed/code/structure/ring
+load @term/seed/structure/ring
   find ring
 
 # A scheme: the central object of modern algebraic geometry, a space glued from the spectra of commutative rings, where

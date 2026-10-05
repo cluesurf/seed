@@ -1,4 +1,4 @@
-load @term/seed/code/structure/set
+load @term/seed/structure/set
   find set
 
 # Temporal logic: modal logic whose worlds are moments in time, with operators for "always", "eventually", "until", and

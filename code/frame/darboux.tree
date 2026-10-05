@@ -1,4 +1,4 @@
-load @term/seed/code/manifold/riemannian
+load @term/seed/manifold/riemannian
   find riemannian-manifold
 
 # A Darboux frame: a moving set of axes attached to a curve lying on a surface, adapted to the surface (one axis along

@@ -16,7 +16,7 @@
 # CONE itself, the lightlike events where t = x. The light cone being boost invariant is the geometric statement that the
 # speed of light is the same in every inertial frame.
 
-load @term/seed/code/number/integer
+load @term/seed/number/integer
   find rung
   find combine
   find negate

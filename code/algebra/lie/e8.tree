@@ -17,7 +17,7 @@
 # exactly two of its eight coordinates are nonzero), and the count two hundred forty is stated as an arithmetic fact, NOT
 # dressed up as a derivation.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
   find both
   find either

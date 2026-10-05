@@ -15,7 +15,7 @@
 # momentum KICK is NOT a symmetry of the free step, and its candidate charge is NOT conserved, refuted by direct
 # computation. Energy is additive over independent subsystems, also proved.
 
-load @term/seed/code/number/integer
+load @term/seed/number/integer
   find rung
   find combine
   find combine-is-associative

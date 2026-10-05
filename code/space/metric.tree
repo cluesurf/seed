@@ -1,7 +1,7 @@
-load @term/seed/code/structure/set
+load @term/seed/structure/set
   find set
 
-load @term/seed/code/structure/function/binary
+load @term/seed/structure/function/binary
   find binary-function
 
 # A metric space: a set with a distance function assigning a non-negative number to each pair of points, zero only when

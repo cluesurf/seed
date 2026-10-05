@@ -1,4 +1,4 @@
-load @term/seed/code/theory/category
+load @term/seed/theory/category
   find category
 
 # A morphism: an arrow of a category, a structure-preserving map from one object to another, the second primitive of

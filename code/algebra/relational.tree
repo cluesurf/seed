@@ -1,4 +1,4 @@
-load @term/seed/code/structure/set
+load @term/seed/structure/set
   find set
 
 # A relational algebra: the algebra of relations (tables) under union, intersection, complement, composition, and

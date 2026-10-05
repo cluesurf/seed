@@ -1,4 +1,4 @@
-load @term/seed/code/structure/manifold
+load @term/seed/structure/manifold
   find manifold
 
 # A Riemannian manifold: a manifold with a smoothly varying inner product on each tangent space, so lengths, angles,

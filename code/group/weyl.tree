@@ -1,7 +1,7 @@
-load @term/seed/code/group/coxeter
+load @term/seed/group/coxeter
   find coxeter-group
 
-load @term/seed/code/structure/set
+load @term/seed/structure/set
   find set
 
 # A Weyl group: the finite reflection group of a root system, the symmetries of the roots of a Lie algebra. It is the

@@ -29,7 +29,7 @@ rule flip-sign-is-an-involution
   fold s
 
 # A truth value, for sign equality (defined in atom/flag, imported there). Are two signs equal?
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
 
 task same-sign

@@ -1,4 +1,4 @@
-load @term/seed/code/structure/set
+load @term/seed/structure/set
   find set
 
 # The universe hierarchy, the spine of the type theory. A single self-typed universe (a type of all types including

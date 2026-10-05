@@ -1,4 +1,4 @@
-load @term/seed/code/group/homomorphism
+load @term/seed/group/homomorphism
   find group-homomorphism
 
 # A group automorphism: an invertible endomorphism, a structure-preserving self-map with a structure-preserving inverse,

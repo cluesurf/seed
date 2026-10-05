@@ -1,0 +1,373 @@
+# NEGATIVE CONTROLS for space/hyperbolic/order: each rule drops a hypothesis or tightens the goal, and each must be
+# REFUSED. A prover that accepted these would prove nothing. Expected: 9 refusals.
+
+# false: x = 1, y = -1
+rule control-square-root-without-the-sign
+  mark x, like integer
+  mark y, like integer
+  have squares
+    call is-maximum
+      call multiply
+        read x
+        read x
+      call multiply
+        read y
+        read y
+  show hold
+    call is-maximum
+      read x
+      read y
+
+# false: x = y
+rule control-square-root-strict
+  mark x, like integer
+  mark y, like integer
+  have y-is-non-negative
+    call is-minimum
+      read y
+      code 0
+  have squares
+    call is-maximum
+      call multiply
+        read x
+        read x
+      call multiply
+        read y
+        read y
+  show hold
+    call is-below
+      read x
+      read y
+
+# false: a = b = -1
+rule control-sign-of-a-factor-without-a-sign
+  mark a, like integer
+  mark b, like integer
+  have product-is-positive
+    call is-above
+      call multiply
+        read a
+        read b
+      code 0
+  show hold
+    call is-above
+      read b
+      code 0
+
+# false: the difference pair is (p q - s t, p t - q s), not this
+rule control-addition-wrong-sign
+  mark p, like integer
+  mark q, like integer
+  mark s, like integer
+  mark t, like integer
+  have first-pair
+    call is-equal
+      call subtract
+        call multiply
+          read p
+          read p
+        call multiply
+          read s
+          read s
+      code 1
+  have second-pair
+    call is-equal
+      call subtract
+        call multiply
+          read q
+          read q
+        call multiply
+          read t
+          read t
+      code 1
+  show hold
+    call is-equal
+      call subtract
+        call multiply
+          call add
+            call multiply
+              read p
+              read q
+            call multiply
+              read s
+              read t
+          call add
+            call multiply
+              read p
+              read q
+            call multiply
+              read s
+              read t
+        call multiply
+          call subtract
+            call multiply
+              read p
+              read t
+            call multiply
+              read q
+              read s
+          call subtract
+            call multiply
+              read p
+              read t
+            call multiply
+              read q
+              read s
+      code 1
+
+# false: a third side longer than the sum
+rule control-triangle-without-the-gram-sign
+  mark p, like integer
+  mark q, like integer
+  mark r, like integer
+  mark s, like integer
+  mark t, like integer
+  have s-is-a-sinh
+    call is-minimum
+      read s
+      code 0
+  have t-is-a-sinh
+    call is-minimum
+      read t
+      code 0
+  have s-squared
+    call is-equal
+      call multiply
+        read s
+        read s
+      call subtract
+        call multiply
+          read p
+          read p
+        code 1
+  have t-squared
+    call is-equal
+      call multiply
+        read t
+        read t
+      call subtract
+        call multiply
+          read q
+          read q
+        code 1
+  show hold
+    call is-maximum
+      read r
+      call add
+        call multiply
+          read p
+          read q
+        call multiply
+          read s
+          read t
+
+# false: a degenerate triangle attains it
+rule control-triangle-strict
+  mark p, like integer
+  mark q, like integer
+  mark r, like integer
+  mark s, like integer
+  mark t, like integer
+  have s-is-a-sinh
+    call is-minimum
+      read s
+      code 0
+  have t-is-a-sinh
+    call is-minimum
+      read t
+      code 0
+  have s-squared
+    call is-equal
+      call multiply
+        read s
+        read s
+      call subtract
+        call multiply
+          read p
+          read p
+        code 1
+  have t-squared
+    call is-equal
+      call multiply
+        read t
+        read t
+      call subtract
+        call multiply
+          read q
+          read q
+        code 1
+  have gram-is-a-square
+    call is-minimum
+      call subtract
+        call multiply
+          call subtract
+            call multiply
+              read p
+              read p
+            code 1
+          call subtract
+            call multiply
+              read q
+              read q
+            code 1
+        call multiply
+          call subtract
+            read r
+            call multiply
+              read p
+              read q
+          call subtract
+            read r
+            call multiply
+              read p
+              read q
+      code 0
+  show hold
+    call is-below
+      read r
+      call add
+        call multiply
+          read p
+          read q
+        call multiply
+          read s
+          read t
+
+# false: s = -sinh a reverses the bound
+rule control-triangle-without-the-sinh-sign
+  mark p, like integer
+  mark q, like integer
+  mark r, like integer
+  mark s, like integer
+  mark t, like integer
+  have t-is-a-sinh
+    call is-minimum
+      read t
+      code 0
+  have s-squared
+    call is-equal
+      call multiply
+        read s
+        read s
+      call subtract
+        call multiply
+          read p
+          read p
+        code 1
+  have t-squared
+    call is-equal
+      call multiply
+        read t
+        read t
+      call subtract
+        call multiply
+          read q
+          read q
+        code 1
+  have gram-is-a-square
+    call is-minimum
+      call subtract
+        call multiply
+          call subtract
+            call multiply
+              read p
+              read p
+            code 1
+          call subtract
+            call multiply
+              read q
+              read q
+            code 1
+        call multiply
+          call subtract
+            read r
+            call multiply
+              read p
+              read q
+          call subtract
+            read r
+            call multiply
+              read p
+              read q
+      code 0
+  show hold
+    call is-maximum
+      read r
+      call add
+        call multiply
+          read p
+          read q
+        call multiply
+          read s
+          read t
+
+# false: w = 0
+rule control-pasch-with-c-on-the-line
+  mark u, like integer
+  mark v, like integer
+  mark w, like integer
+  have crosses-a-b
+    call is-below
+      call multiply
+        read u
+        read v
+      code 0
+  show hold
+    meet or
+      call is-below
+        call multiply
+          read u
+          read w
+        code 0
+      call is-below
+        call multiply
+          read v
+          read w
+        code 0
+
+# false: a point outside, a line missing the circle
+rule control-continuity-from-outside
+  mark a1, like integer
+  mark a2, like integer
+  mark v1, like integer
+  mark v2, like integer
+  mark m, like integer
+  mark d, like integer
+  have d-is-the-dot-product
+    call is-equal
+      read d
+      call add
+        call multiply
+          read a1
+          read v1
+        call multiply
+          read a2
+          read v2
+  show hold
+    call is-minimum
+      call subtract
+        call multiply
+          read m
+          call add
+            call multiply
+              read v1
+              read v1
+            call multiply
+              read v2
+              read v2
+        call multiply
+          call subtract
+            call multiply
+              read a1
+              read v2
+            call multiply
+              read a2
+              read v1
+          call subtract
+            call multiply
+              read a1
+              read v2
+            call multiply
+              read a2
+              read v1
+      code 0

@@ -24,7 +24,7 @@
 # comparison of their radii, areas, and entropies, so a heavier hole has a strictly larger horizon and strictly more
 # entropy, and the horizon never shrinks).
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
 
 # Mass (and radius, area, entropy) as a Peano magnitude: zero, or one more than a smaller magnitude. Discrete and finite

@@ -30,31 +30,31 @@
 # in (read off its coordinates in vibe/dock) is the axis its Hopf circle lies over (read off the group in vibe/hopf),
 # and the full turn -1 of the dock is the opposite slot and the matrix -I of the grid.
 
-load @term/seed/code/vibe/tone
+load @term/seed/vibe/tone
   find tone
 
-load @term/seed/code/vibe/hurwitz
+load @term/seed/vibe/hurwitz
   find hurwitz-element
   find hurwitz-core
   find q8-axis
   find minus-one-unit
   find hurwitz-product
 
-load @term/seed/code/vibe/dock
+load @term/seed/vibe/dock
   find unit-slot
   find frame-of
   find opposite
   find same-tetrad
 
-load @term/seed/code/vibe/hopf
+load @term/seed/vibe/hopf
   find hopf
   find axis-of-frame
 
-load @term/seed/code/vibe/turn
+load @term/seed/vibe/turn
   find rho
   find matrix-of
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
 
 # THE FRAME OF A SLOT IS THE AXIS OF ITS HOPF CIRCLE: the coordinate pair a slot occupies decides which pair of

@@ -1,4 +1,4 @@
-load @term/seed/code/manifold/riemannian
+load @term/seed/manifold/riemannian
   find riemannian-manifold
 
 # The osculating plane: at a point of a curve in space, the plane that best fits the curve there, spanned by its

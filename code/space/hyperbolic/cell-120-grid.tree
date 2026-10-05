@@ -1,4 +1,4 @@
-load @term/seed/code/structure/manifold
+load @term/seed/structure/manifold
   find manifold
 
 # The 120-cell grid, the regular honeycomb {5, 3, 3, 4}, hyperbolic four-space built from 120-cell polytopes. It is the

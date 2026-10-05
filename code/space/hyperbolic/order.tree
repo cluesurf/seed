@@ -1,0 +1,517 @@
+# The ORDERED-FIELD steps of hyperbolic geometry: the inequalities that turn the identities of
+# space/hyperbolic/metric into the theorems they are about. metric proves, as polynomial identities, that the Gram
+# determinant of three points is a square and that it equals (p^2 - 1)(q^2 - 1) - (r - p q)^2. What is left is
+# ORDER: from a squared inequality to the inequality, from a product's sign to its factors' signs, from a
+# non-negative discriminant to a meeting point. Each rule below is proved by the product prover (check/product.ts), a
+# degree-two Positivstellensatz: the hypotheses and the negated goal are multiplied in pairs (and with squares and
+# monomials), and an exact simplex finds non-negative multipliers whose combination is identically a negative
+# constant, or zero with a strict part. That combination is the proof, replayed by a checker. No integer rounding is
+# used, so every rule holds in every ORDERED FIELD, the real numbers included, though the variables are typed integer.
+#
+# Notation, as in metric: a distance d is carried by its cosh. For two sides of a triangle, p = cosh a and q = cosh b,
+# with s = sinh a and t = sinh b given by their defining equations s^2 = p^2 - 1, t^2 = q^2 - 1 and signs s, t >= 0.
+# Then cosh(a + b) = p q + s t and cosh(a - b) = p q - s t, and r = cosh c is the third side's.
+#
+#   ORDERED FIELD   the square-root step, the sign of a factor, products of signs;
+#   ADDITION        (p q + s t, p t + q s) is again a (cosh, sinh) pair, so p q + s t IS cosh(a + b), and it is >= 1;
+#   TRIANGLE        cosh(a - b) <= cosh c <= cosh(a + b), from the Gram determinant, and the upper bound is attained
+#                   only when the Gram determinant is 0, which metric shows is det(x, y, z)^2: the points are collinear;
+#   PASCH (II.4)    with u, v, w the signs B(a, n), B(b, n), B(c, n) of a triangle's corners against a line n missing
+#                   c: if the line crosses a b (u v < 0) it crosses exactly one of a c and b c;
+#   CONTINUITY      Tarski's elementary (line-circle) continuity, in the Klein disk: a line through a point inside a
+#                   circle meets it, because the meeting point's quadratic has a non-negative discriminant;
+#
+# What this file does not give: CONTINUITY in Dedekind's second-order form, and the ARCHIMEDEAN property. Both hold
+# for the real numbers and fail in some ordered fields, so no ordered-field proof can reach them. They need the real
+# numbers as a complete ordered field, which the kernel does not have yet (note/term/hyperbolic-geometry.md). The
+# meeting point itself is the root (-B + sqrt(disc)) / 2A, which exists in any field with square roots of its
+# non-negatives (a Euclidean field). That existence is the one field axiom the continuity rule leans on.
+
+# ORDERED FIELD. A squared inequality between a quantity and a non-negative one gives the inequality itself: from
+# y >= 0 and x^2 <= y^2, x <= y. (With x = -2, y = 1 the sign hypothesis is what fails: it cannot be dropped.)
+rule square-root-step
+  mark x, like integer
+  mark y, like integer
+  have y-is-non-negative
+    call is-minimum
+      read y
+      code 0
+  have squares
+    call is-maximum
+      call multiply
+        read x
+        read x
+      call multiply
+        read y
+        read y
+  show hold
+    call is-maximum
+      read x
+      read y
+
+# A positive product with one positive factor has a positive other factor.
+rule sign-of-a-factor
+  mark a, like integer
+  mark b, like integer
+  have product-is-positive
+    call is-above
+      call multiply
+        read a
+        read b
+      code 0
+  have a-is-positive
+    call is-above
+      read a
+      code 0
+  show hold
+    call is-above
+      read b
+      code 0
+
+# Opposite signs multiply to a negative.
+rule opposite-signs-give-a-negative-product
+  mark a, like integer
+  mark b, like integer
+  have a-is-positive
+    call is-above
+      read a
+      code 0
+  have b-is-negative
+    call is-below
+      read b
+      code 0
+  show hold
+    call is-below
+      call multiply
+        read a
+        read b
+      code 0
+
+# ADDITION. (p, s) and (q, t) are points of the hyperbola X^2 - Y^2 = 1, and so is their product
+# (p q + s t, p t + q s): the hyperbolic addition law, so p q + s t is the cosh of a distance, the sum of the two.
+rule the-sum-of-two-distances-is-on-the-hyperbola
+  mark p, like integer
+  mark q, like integer
+  mark s, like integer
+  mark t, like integer
+  have first-pair
+    call is-equal
+      call subtract
+        call multiply
+          read p
+          read p
+        call multiply
+          read s
+          read s
+      code 1
+  have second-pair
+    call is-equal
+      call subtract
+        call multiply
+          read q
+          read q
+        call multiply
+          read t
+          read t
+      code 1
+  show hold
+    call is-equal
+      call subtract
+        call multiply
+          call add
+            call multiply
+              read p
+              read q
+            call multiply
+              read s
+              read t
+          call add
+            call multiply
+              read p
+              read q
+            call multiply
+              read s
+              read t
+        call multiply
+          call add
+            call multiply
+              read p
+              read t
+            call multiply
+              read q
+              read s
+          call add
+            call multiply
+              read p
+              read t
+            call multiply
+              read q
+              read s
+      code 1
+
+# And it is at least 1, as a cosh must be: from p, q >= 1 (a cosh) and s, t >= 0.
+rule the-cosh-of-a-sum-is-at-least-one
+  mark p, like integer
+  mark q, like integer
+  mark s, like integer
+  mark t, like integer
+  have p-is-a-cosh
+    call is-minimum
+      read p
+      code 1
+  have q-is-a-cosh
+    call is-minimum
+      read q
+      code 1
+  have s-is-a-sinh
+    call is-minimum
+      read s
+      code 0
+  have t-is-a-sinh
+    call is-minimum
+      read t
+      code 0
+  show hold
+    call is-minimum
+      call add
+        call multiply
+          read p
+          read q
+        call multiply
+          read s
+          read t
+      code 1
+
+# THE TRIANGLE INEQUALITY, d(x, z) <= d(x, y) + d(y, z): cosh c <= cosh(a + b) = p q + s t. Its hypothesis is the
+# Gram determinant's sign, (p^2 - 1)(q^2 - 1) - (r - p q)^2 >= 0, which metric proves for any three points (it is
+# det(x, y, z)^2). Since cosh is increasing on the distances, this is the inequality of the distances.
+rule the-triangle-inequality
+  mark p, like integer
+  mark q, like integer
+  mark r, like integer
+  mark s, like integer
+  mark t, like integer
+  have s-is-a-sinh
+    call is-minimum
+      read s
+      code 0
+  have t-is-a-sinh
+    call is-minimum
+      read t
+      code 0
+  have s-squared
+    call is-equal
+      call multiply
+        read s
+        read s
+      call subtract
+        call multiply
+          read p
+          read p
+        code 1
+  have t-squared
+    call is-equal
+      call multiply
+        read t
+        read t
+      call subtract
+        call multiply
+          read q
+          read q
+        code 1
+  have gram-is-a-square
+    call is-minimum
+      call subtract
+        call multiply
+          call subtract
+            call multiply
+              read p
+              read p
+            code 1
+          call subtract
+            call multiply
+              read q
+              read q
+            code 1
+        call multiply
+          call subtract
+            read r
+            call multiply
+              read p
+              read q
+          call subtract
+            read r
+            call multiply
+              read p
+              read q
+      code 0
+  show hold
+    call is-maximum
+      read r
+      call add
+        call multiply
+          read p
+          read q
+        call multiply
+          read s
+          read t
+
+# And the other side, cosh(a - b) = p q - s t <= cosh c: a side is at least the difference of the other two.
+rule the-reverse-triangle-inequality
+  mark p, like integer
+  mark q, like integer
+  mark r, like integer
+  mark s, like integer
+  mark t, like integer
+  have s-is-a-sinh
+    call is-minimum
+      read s
+      code 0
+  have t-is-a-sinh
+    call is-minimum
+      read t
+      code 0
+  have s-squared
+    call is-equal
+      call multiply
+        read s
+        read s
+      call subtract
+        call multiply
+          read p
+          read p
+        code 1
+  have t-squared
+    call is-equal
+      call multiply
+        read t
+        read t
+      call subtract
+        call multiply
+          read q
+          read q
+        code 1
+  have gram-is-a-square
+    call is-minimum
+      call subtract
+        call multiply
+          call subtract
+            call multiply
+              read p
+              read p
+            code 1
+          call subtract
+            call multiply
+              read q
+              read q
+            code 1
+        call multiply
+          call subtract
+            read r
+            call multiply
+              read p
+              read q
+          call subtract
+            read r
+            call multiply
+              read p
+              read q
+      code 0
+  show hold
+    call is-minimum
+      read r
+      call subtract
+        call multiply
+          read p
+          read q
+        call multiply
+          read s
+          read t
+
+# EQUALITY: when cosh c = cosh(a + b) the Gram determinant is 0, which metric shows is det(x, y, z)^2, so the three
+# points are collinear and y lies between: the triangle inequality is strict for every genuine triangle.
+rule equality-in-the-triangle-inequality-is-degenerate
+  mark p, like integer
+  mark q, like integer
+  mark r, like integer
+  mark s, like integer
+  mark t, like integer
+  have s-squared
+    call is-equal
+      call multiply
+        read s
+        read s
+      call subtract
+        call multiply
+          read p
+          read p
+        code 1
+  have t-squared
+    call is-equal
+      call multiply
+        read t
+        read t
+      call subtract
+        call multiply
+          read q
+          read q
+        code 1
+  have equality
+    call is-equal
+      read r
+      call add
+        call multiply
+          read p
+          read q
+        call multiply
+          read s
+          read t
+  show hold
+    call is-equal
+      call subtract
+        call multiply
+          call subtract
+            call multiply
+              read p
+              read p
+            code 1
+          call subtract
+            call multiply
+              read q
+              read q
+            code 1
+        call multiply
+          call subtract
+            read r
+            call multiply
+              read p
+              read q
+          call subtract
+            read r
+            call multiply
+              read p
+              read q
+      code 0
+
+# PASCH'S AXIOM (II.4), the sign step. A line n crosses the side a b when B(a, n) and B(b, n) have opposite signs
+# (u v < 0, and metric shows B is linear along the segment, so the crossing point is on it). With c off the line
+# (w^2 > 0) it cannot cross both a c and b c: that would make u w < 0 and v w < 0, hence u v w^2 > 0, so u v > 0.
+rule pasch-the-line-does-not-cross-both-other-sides
+  mark u, like integer
+  mark v, like integer
+  mark w, like integer
+  have crosses-a-c
+    call is-below
+      call multiply
+        read u
+        read w
+      code 0
+  have crosses-b-c
+    call is-below
+      call multiply
+        read v
+        read w
+      code 0
+  have c-is-off-the-line
+    call is-above
+      call multiply
+        read w
+        read w
+      code 0
+  show hold
+    call is-above
+      call multiply
+        read u
+        read v
+      code 0
+
+# And it crosses at least one: if it crosses a b and c is off the line, it crosses a c or b c.
+rule pasch-the-line-crosses-one-other-side
+  mark u, like integer
+  mark v, like integer
+  mark w, like integer
+  have crosses-a-b
+    call is-below
+      call multiply
+        read u
+        read v
+      code 0
+  have c-is-off-the-line
+    call is-above
+      call multiply
+        read w
+        read w
+      code 0
+  show hold
+    meet or
+      call is-below
+        call multiply
+          read u
+          read w
+        code 0
+      call is-below
+        call multiply
+          read v
+          read w
+        code 0
+
+# CONTINUITY, line and circle (Tarski's elementary continuity). By homogeneity (hyperboloid) the circle's center is
+# the origin of the Klein disk, where a circle of radius r is the Euclidean circle |k|^2 = m with m = tanh^2 r. The
+# line through a = (a1, a2) in direction v = (v1, v2) meets it where |a + l v|^2 = m, a quadratic in l whose
+# quarter discriminant is m |v|^2 - (a1 v2 - a2 v1)^2. When a is inside (|a|^2 <= m) it is >= 0, so the root exists.
+# The proof is Lagrange's identity |a|^2 |v|^2 = d^2 + (a1 v2 - a2 v1)^2 with d = a . v, then |a|^2 <= m.
+rule line-circle-continuity
+  mark a1, like integer
+  mark a2, like integer
+  mark v1, like integer
+  mark v2, like integer
+  mark m, like integer
+  mark d, like integer
+  have a-is-inside
+    call is-maximum
+      call add
+        call multiply
+          read a1
+          read a1
+        call multiply
+          read a2
+          read a2
+      read m
+  have d-is-the-dot-product
+    call is-equal
+      read d
+      call add
+        call multiply
+          read a1
+          read v1
+        call multiply
+          read a2
+          read v2
+  show hold
+    call is-minimum
+      call subtract
+        call multiply
+          read m
+          call add
+            call multiply
+              read v1
+              read v1
+            call multiply
+              read v2
+              read v2
+        call multiply
+          call subtract
+            call multiply
+              read a1
+              read v2
+            call multiply
+              read a2
+              read v1
+          call subtract
+            call multiply
+              read a1
+              read v2
+            call multiply
+              read a2
+              read v1
+      code 0

@@ -1,18 +1,18 @@
 # NEGATIVE CONTROL: knit, line, clifford, boost. Every rule here must be refused.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
 
-load @term/seed/code/vibe/tone
+load @term/seed/vibe/tone
   find tone
 
-load @term/seed/code/vibe/knit
+load @term/seed/vibe/knit
   find dock-line
   find store-move
   find line-content
   find pair-collide
 
-load @term/seed/code/vibe/line
+load @term/seed/vibe/line
   find line-ring
   find ring-of
   find beat-ring
@@ -20,14 +20,14 @@ load @term/seed/code/vibe/line
   find stream-ring
   find flip-velocities
 
-load @term/seed/code/vibe/clifford
+load @term/seed/vibe/clifford
   find cl4-blade
   find blade-product
   find volume
   find scalar-one
   find negate-blade
 
-load @term/seed/code/vibe/boost
+load @term/seed/vibe/boost
   find interval
   find boost-time
   find boost-space

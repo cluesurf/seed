@@ -23,17 +23,17 @@
 # it sends -g to the opposite slot and the turn of g to the frame of its slot; and the inner product of two slots is
 # twice the real part of g h^-1, so the dock's whole metric is the group's multiplication.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
   find both
   find either
   find not-flag
   find implies
 
-load @term/seed/code/atom/sign
+load @term/seed/atom/sign
   find sign
 
-load @term/seed/code/vibe/tone
+load @term/seed/vibe/tone
   find tone
   find tone-sum
   find tone-difference
@@ -45,7 +45,7 @@ load @term/seed/code/vibe/tone
   find balance-shift
   find total-of-three
 
-load @term/seed/code/vibe/hurwitz
+load @term/seed/vibe/hurwitz
   find hurwitz-axis
   find q8
   find q8-of

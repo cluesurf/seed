@@ -1,4 +1,4 @@
-load @term/seed/code/tensor
+load @term/seed/tensor
   find tensor
 
 # The torsion tensor: the part of a connection that measures the failure of infinitesimal parallelograms to close, the

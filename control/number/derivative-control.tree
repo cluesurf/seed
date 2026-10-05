@@ -1,0 +1,325 @@
+# NEGATIVE CONTROLS for integral/derivative: each must be REFUSED. Expected: 3.
+
+# false: d(a b) carries da db
+rule control-the-product-rule-without-the-cross-term
+  mark a, like integer
+  mark b, like integer
+  mark da, like integer
+  mark db, like integer
+  mark ad, like integer
+  mark bd, like integer
+  mark h, like integer
+  mark ea, like integer
+  mark eb, like integer
+  mark m, like integer
+  mark ba, like integer
+  mark bb, like integer
+  have da-follows-the-derivative
+    meet and
+      call is-maximum
+        call subtract
+          read da
+          call multiply
+            read ad
+            read h
+        read ea
+      call is-maximum
+        call subtract
+          code 0
+          call subtract
+            read da
+            call multiply
+              read ad
+              read h
+        read ea
+  have db-follows-the-derivative
+    meet and
+      call is-maximum
+        call subtract
+          read db
+          call multiply
+            read bd
+            read h
+        read eb
+      call is-maximum
+        call subtract
+          code 0
+          call subtract
+            read db
+            call multiply
+              read bd
+              read h
+        read eb
+  have a-is-bounded
+    meet and
+      call is-maximum
+        read a
+        read m
+      call is-maximum
+        call subtract
+          code 0
+          read a
+        read m
+  have b-is-bounded
+    meet and
+      call is-maximum
+        read b
+        read m
+      call is-maximum
+        call subtract
+          code 0
+          read b
+        read m
+  have da-is-bounded
+    meet and
+      call is-maximum
+        read da
+        read ba
+      call is-maximum
+        call subtract
+          code 0
+          read da
+        read ba
+  have db-is-bounded
+    meet and
+      call is-maximum
+        read db
+        read bb
+      call is-maximum
+        call subtract
+          code 0
+          read db
+        read bb
+  show hold
+    meet and
+      call is-maximum
+        call subtract
+          call subtract
+            call multiply
+              call add
+                read a
+                read da
+              call add
+                read b
+                read db
+            call multiply
+              read a
+              read b
+          call multiply
+            call add
+              call multiply
+                read ad
+                read b
+              call multiply
+                read a
+                read bd
+            read h
+        call add
+          call multiply
+            read m
+            read eb
+          call multiply
+            read m
+            read ea
+      call is-maximum
+        call subtract
+          code 0
+          call subtract
+            call subtract
+              call multiply
+                call add
+                  read a
+                  read da
+                call add
+                  read b
+                  read db
+              call multiply
+                read a
+                read b
+            call multiply
+              call add
+                call multiply
+                  read ad
+                  read b
+                call multiply
+                  read a
+                  read bd
+              read h
+        call add
+          call multiply
+            read m
+            read eb
+          call multiply
+            read m
+            read ea
+
+
+# false: the derivative of 1/c is -c'/c^2
+rule control-the-reciprocal-identity-with-the-wrong-sign
+  mark c, like integer
+  mark dc, like integer
+  mark cd, like integer
+  mark h, like integer
+  mark q, like integer
+  mark q2, like integer
+  have q-inverts
+    call is-equal
+      call multiply
+        read q
+        read c
+      code 1
+  have q2-inverts
+    call is-equal
+      call multiply
+        read q2
+        call add
+          read c
+          read dc
+      code 1
+  show hold
+    call is-equal
+      call multiply
+        call multiply
+          call multiply
+            read c
+            read c
+          call add
+            read c
+            read dc
+        call subtract
+          call subtract
+            read q2
+            read q
+          call multiply
+            call multiply
+              call multiply
+                read cd
+                read h
+              read q
+            read q
+      call add
+        call subtract
+          code 0
+          call multiply
+            call subtract
+              read dc
+              call multiply
+                read cd
+                read h
+            read c
+        call multiply
+          call multiply
+            read cd
+            read h
+          read dc
+
+
+# false: the error of dz passes through
+rule control-the-chain-rule-without-the-derivative-error
+  mark f, like integer
+  mark z, like integer
+  mark dz, like integer
+  mark zd, like integer
+  mark h, like integer
+  mark ez, like integer
+  mark dth, like integer
+  mark bz, like integer
+  mark bdz, like integer
+  have the-angle-increment
+    meet and
+      call is-maximum
+        call subtract
+          read dth
+          call multiply
+            read f
+            read dz
+        call multiply
+          call multiply
+            call add
+              call multiply
+                code 2
+                read bz
+              read bdz
+            read bdz
+          read bdz
+      call is-maximum
+        call subtract
+          code 0
+          call subtract
+            read dth
+            call multiply
+              read f
+              read dz
+        call multiply
+          call multiply
+            call add
+              call multiply
+                code 2
+                read bz
+              read bdz
+            read bdz
+          read bdz
+  have dz-follows-the-derivative
+    meet and
+      call is-maximum
+        call subtract
+          read dz
+          call multiply
+            read zd
+            read h
+        read ez
+      call is-maximum
+        call subtract
+          code 0
+          call subtract
+            read dz
+            call multiply
+              read zd
+              read h
+        read ez
+  have f-is-in-the-unit-interval
+    meet and
+      call is-above
+        read f
+        code 0
+      call is-maximum
+        read f
+        code 1
+  show hold
+    meet and
+      call is-maximum
+        call subtract
+          read dth
+          call multiply
+            call multiply
+              read f
+              read zd
+            read h
+        call multiply
+          call multiply
+            call add
+              call multiply
+                code 2
+                read bz
+              read bdz
+            read bdz
+          read bdz
+      call is-maximum
+        call subtract
+          code 0
+          call subtract
+            read dth
+            call multiply
+              call multiply
+                read f
+                read zd
+              read h
+        call multiply
+          call multiply
+            call add
+              call multiply
+                code 2
+                read bz
+              read bdz
+            read bdz
+          read bdz

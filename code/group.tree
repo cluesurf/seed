@@ -1,10 +1,10 @@
-load @term/seed/code/structure/set
+load @term/seed/structure/set
   find set
 
-load @term/seed/code/structure/function/binary
+load @term/seed/structure/function/binary
   find binary-function
 
-load @term/seed/code/structure/function/unary
+load @term/seed/structure/function/unary
   find unary-function
 
 # A group: a set with an associative operation, an identity, and an inverse for every element. It is the mathematics of

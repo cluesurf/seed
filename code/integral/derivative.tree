@@ -1,0 +1,532 @@
+# THE RULES OF DIFFERENTIATION, for increments with explicit errors. A quantity a with derivative a' moves over a
+# step h by da, and da - a' h is within an error ea. Each rule below states how the errors combine, as a polynomial
+# inequality the product prover decides, so a derivative computed with these rules carries its own bound.
+#
+#   THE PRODUCT RULE      d(a b) - (a' b + a b') h is within M eb + M ea + DA DB, for |a|, |b| <= M and |da| <= DA,
+#                         |db| <= DB: the exact identity d(a b) = a db + b da + da db;
+#   THE RECIPROCAL RULE   for c, c + dc >= 1 and q = 1/c, q2 = 1/(c + dc): d(1/c) + c' h / c^2 is within
+#                         ec + |c'| h DC, from c^2 (c + dc) (q2 - q + c' h q^2) = -(dc - c' h) c + c' h dc;
+#   THE CHAIN RULE        an increment of the angle at z, within (2 z + dz) dz^2 of f(z) dz (integral/angle), with dz
+#                         within ez of z' h, is within ez + (2 Z + DZ) DZ^2 of f(z) z' h, as 0 < f <= 1.
+#
+# Every certificate is the product prover's, replayed (check/product.ts), over an ordered field.
+
+
+# THE PRODUCT RULE.
+rule the-product-rule
+  mark a, like integer
+  mark b, like integer
+  mark da, like integer
+  mark db, like integer
+  mark ad, like integer
+  mark bd, like integer
+  mark h, like integer
+  mark ea, like integer
+  mark eb, like integer
+  mark m, like integer
+  mark ba, like integer
+  mark bb, like integer
+  have da-follows-the-derivative
+    meet and
+      call is-maximum
+        call subtract
+          read da
+          call multiply
+            read ad
+            read h
+        read ea
+      call is-maximum
+        call subtract
+          code 0
+          call subtract
+            read da
+            call multiply
+              read ad
+              read h
+        read ea
+  have db-follows-the-derivative
+    meet and
+      call is-maximum
+        call subtract
+          read db
+          call multiply
+            read bd
+            read h
+        read eb
+      call is-maximum
+        call subtract
+          code 0
+          call subtract
+            read db
+            call multiply
+              read bd
+              read h
+        read eb
+  have a-is-bounded
+    meet and
+      call is-maximum
+        read a
+        read m
+      call is-maximum
+        call subtract
+          code 0
+          read a
+        read m
+  have b-is-bounded
+    meet and
+      call is-maximum
+        read b
+        read m
+      call is-maximum
+        call subtract
+          code 0
+          read b
+        read m
+  have da-is-bounded
+    meet and
+      call is-maximum
+        read da
+        read ba
+      call is-maximum
+        call subtract
+          code 0
+          read da
+        read ba
+  have db-is-bounded
+    meet and
+      call is-maximum
+        read db
+        read bb
+      call is-maximum
+        call subtract
+          code 0
+          read db
+        read bb
+  show hold
+    meet and
+      call is-maximum
+        call subtract
+          call subtract
+            call multiply
+              call add
+                read a
+                read da
+              call add
+                read b
+                read db
+            call multiply
+              read a
+              read b
+          call multiply
+            call add
+              call multiply
+                read ad
+                read b
+              call multiply
+                read a
+                read bd
+            read h
+        call add
+          call add
+            call multiply
+              read m
+              read eb
+            call multiply
+              read m
+              read ea
+          call multiply
+            read ba
+            read bb
+      call is-maximum
+        call subtract
+          code 0
+          call subtract
+            call subtract
+              call multiply
+                call add
+                  read a
+                  read da
+                call add
+                  read b
+                  read db
+              call multiply
+                read a
+                read b
+            call multiply
+              call add
+                call multiply
+                  read ad
+                  read b
+                call multiply
+                  read a
+                  read bd
+              read h
+        call add
+          call add
+            call multiply
+              read m
+              read eb
+            call multiply
+              read m
+              read ea
+          call multiply
+            read ba
+            read bb
+
+
+# THE RECIPROCAL RULE, first as an identity: c^2 (c + dc) (q2 - q + c' h q^2) = -(dc - c' h) c + c' h dc.
+rule the-reciprocal-identity
+  mark c, like integer
+  mark dc, like integer
+  mark cd, like integer
+  mark h, like integer
+  mark q, like integer
+  mark q2, like integer
+  have q-inverts
+    call is-equal
+      call multiply
+        read q
+        read c
+      code 1
+  have q2-inverts
+    call is-equal
+      call multiply
+        read q2
+        call add
+          read c
+          read dc
+      code 1
+  show hold
+    call is-equal
+      call multiply
+        call multiply
+          call multiply
+            read c
+            read c
+          call add
+            read c
+            read dc
+        call add
+          call subtract
+            read q2
+            read q
+          call multiply
+            call multiply
+              call multiply
+                read cd
+                read h
+              read q
+            read q
+      call add
+        call subtract
+          code 0
+          call multiply
+            call subtract
+              read dc
+              call multiply
+                read cd
+                read h
+            read c
+        call multiply
+          call multiply
+            read cd
+            read h
+          read dc
+
+
+# then as a bound. The right side nn is within c ec + bc, for |dc - c' h| <= ec and |c' h dc| <= bc.
+rule the-reciprocal-numerator-is-small
+  mark c, like integer
+  mark dc, like integer
+  mark cd, like integer
+  mark h, like integer
+  mark ec, like integer
+  mark bc, like integer
+  mark nn, like integer
+  have nn-is-the-numerator
+    call is-equal
+      read nn
+      call add
+        call subtract
+          code 0
+          call multiply
+            call subtract
+              read dc
+              call multiply
+                read cd
+                read h
+            read c
+        call multiply
+          call multiply
+            read cd
+            read h
+          read dc
+  have dc-follows-the-derivative
+    meet and
+      call is-maximum
+        call subtract
+          read dc
+          call multiply
+            read cd
+            read h
+        read ec
+      call is-maximum
+        call subtract
+          code 0
+          call subtract
+            read dc
+            call multiply
+              read cd
+              read h
+        read ec
+  have cd-h-dc-is-bounded
+    meet and
+      call is-maximum
+        call multiply
+          call multiply
+            read cd
+            read h
+          read dc
+        read bc
+      call is-maximum
+        call subtract
+          code 0
+          call multiply
+            call multiply
+              read cd
+              read h
+            read dc
+        read bc
+  have c-is-at-least-one
+    call is-minimum
+      read c
+      code 1
+  show hold
+    meet and
+      call is-maximum
+        read nn
+        call add
+          call multiply
+            read c
+            read ec
+          read bc
+      call is-maximum
+        call subtract
+          code 0
+          read nn
+        call add
+          call multiply
+            read c
+            read ec
+          read bc
+
+
+# The left side's factor kk = c^2 (c + dc), named m e with m = c^2 and e = c + dc >= 1, is at least c.
+rule the-reciprocal-denominator-is-at-least-c
+  mark c, like integer
+  mark m, like integer
+  mark e, like integer
+  mark kk, like integer
+  have kk-is-the-denominator
+    call is-equal
+      read kk
+      call multiply
+        read m
+        read e
+  have m-is-c-squared
+    call is-equal
+      read m
+      call multiply
+        read c
+        read c
+  have c-is-at-least-one
+    call is-minimum
+      read c
+      code 1
+  have e-is-at-least-one
+    call is-minimum
+      read e
+      code 1
+  show hold
+    call is-minimum
+      read kk
+      read c
+
+
+# So kk dd = nn with kk >= c >= 1 puts dd = d(1/c) + c' h / c^2 within ec + bc.
+rule the-reciprocal-rule
+  mark c, like integer
+  mark kk, like integer
+  mark dd, like integer
+  mark nn, like integer
+  mark ec, like integer
+  mark bc, like integer
+  have the-reciprocal-identity
+    call is-equal
+      call multiply
+        read kk
+        read dd
+      read nn
+  have nn-is-small
+    meet and
+      call is-maximum
+        read nn
+        call add
+          call multiply
+            read c
+            read ec
+          read bc
+      call is-maximum
+        call subtract
+          code 0
+          read nn
+        call add
+          call multiply
+            read c
+            read ec
+          read bc
+  have kk-is-at-least-c
+    call is-minimum
+      read kk
+      read c
+  have c-is-at-least-one
+    call is-minimum
+      read c
+      code 1
+  have the-errors-are-not-negative
+    meet and
+      call is-minimum
+        read ec
+        code 0
+      call is-minimum
+        read bc
+        code 0
+  show hold
+    meet and
+      call is-maximum
+        read dd
+        call add
+          read ec
+          read bc
+      call is-maximum
+        call subtract
+          code 0
+          read dd
+        call add
+          read ec
+          read bc
+
+
+# THE CHAIN RULE through the angle: dth within (2 z + dz) dz^2 of f dz, dz within ez of z' h.
+rule the-chain-rule-through-the-angle
+  mark f, like integer
+  mark z, like integer
+  mark dz, like integer
+  mark zd, like integer
+  mark h, like integer
+  mark ez, like integer
+  mark dth, like integer
+  mark bz, like integer
+  mark bdz, like integer
+  have the-angle-increment
+    meet and
+      call is-maximum
+        call subtract
+          read dth
+          call multiply
+            read f
+            read dz
+        call multiply
+          call multiply
+            call add
+              call multiply
+                code 2
+                read bz
+              read bdz
+            read bdz
+          read bdz
+      call is-maximum
+        call subtract
+          code 0
+          call subtract
+            read dth
+            call multiply
+              read f
+              read dz
+        call multiply
+          call multiply
+            call add
+              call multiply
+                code 2
+                read bz
+              read bdz
+            read bdz
+          read bdz
+  have dz-follows-the-derivative
+    meet and
+      call is-maximum
+        call subtract
+          read dz
+          call multiply
+            read zd
+            read h
+        read ez
+      call is-maximum
+        call subtract
+          code 0
+          call subtract
+            read dz
+            call multiply
+              read zd
+              read h
+        read ez
+  have f-is-in-the-unit-interval
+    meet and
+      call is-above
+        read f
+        code 0
+      call is-maximum
+        read f
+        code 1
+  show hold
+    meet and
+      call is-maximum
+        call subtract
+          read dth
+          call multiply
+            call multiply
+              read f
+              read zd
+            read h
+        call add
+          read ez
+          call multiply
+            call multiply
+              call add
+                call multiply
+                  code 2
+                  read bz
+                read bdz
+              read bdz
+            read bdz
+      call is-maximum
+        call subtract
+          code 0
+          call subtract
+            read dth
+            call multiply
+              call multiply
+                read f
+                read zd
+              read h
+        call add
+          read ez
+          call multiply
+            call multiply
+              call add
+                call multiply
+                  code 2
+                  read bz
+                read bdz
+              read bdz
+            read bdz

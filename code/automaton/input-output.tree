@@ -1,4 +1,4 @@
-load @term/seed/code/automaton/finite
+load @term/seed/automaton/finite
   find finite-automaton
 
 # An input-output automaton: a finite automaton that emits an output symbol as it transitions, a transducer rather than

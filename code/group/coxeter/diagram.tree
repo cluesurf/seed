@@ -28,7 +28,7 @@
 # a tree (a path of three nodes, two edges, no cycle). The kernel proves the matrix laws by induction over the nodes:
 # symmetry, the diagonal of one, the off-diagonal lower bound of two, and the commute-exactly-when-unbonded equivalence.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
   find both
   find either

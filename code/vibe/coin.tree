@@ -15,7 +15,7 @@
 # two pieces: unitarity, eigenvalues, determinant, and the phase identity (1 + w)^2 = w that turns the walk's
 # characteristic polynomial into the band cos E = (cos k) / 2, with mass gap 2 pi / 3 and top speed 1/2.
 
-load @term/seed/code/vibe/eisenstein
+load @term/seed/vibe/eisenstein
   find omega-real
   find omega-part
   find bar-real

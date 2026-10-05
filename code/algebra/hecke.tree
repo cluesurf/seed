@@ -1,4 +1,4 @@
-load @term/seed/code/structure/ring
+load @term/seed/structure/ring
   find ring
 
 # A Hecke algebra: a deformation of the group algebra of a Coxeter group, where the generators satisfy a quadratic

@@ -1,0 +1,428 @@
+# NEGATIVE CONTROLS for number/completeness: each must be REFUSED. Expected: 3.
+
+# false: half the modulus is not enough
+rule control-a-tighter-limit
+  mark x
+    like task
+      take k, like integer
+      take p, like integer
+      like integer
+  mark e
+    like task
+      take t, like integer
+      like integer
+  mark m, like integer
+  mark n, like integer
+  have the-modulus-is-positive
+    mark t, like integer
+    meet or
+      call is-below
+        read t
+        code 1
+      call is-above
+        call e
+          read t
+        code 0
+  have the-modulus-quarters
+    mark t, like integer
+    meet or
+      call is-below
+        read t
+        code 1
+      call is-equal
+        call multiply
+          code 4
+          call e
+            call multiply
+              code 4
+              read t
+        call e
+          read t
+  have each-is-a-real
+    mark k, like integer
+    mark p, like integer
+    mark q, like integer
+    meet or
+      call is-below
+        read k
+        code 1
+      call is-below
+        read p
+        code 1
+      call is-below
+        read q
+        code 1
+      meet and
+        call is-maximum
+          call subtract
+            call x
+              read k
+              read p
+            call x
+              read k
+              read q
+          call add
+            call e
+              read p
+            call e
+              read q
+        call is-maximum
+          call subtract
+            call x
+              read k
+              read q
+            call x
+              read k
+              read p
+          call add
+            call e
+              read p
+            call e
+              read q
+  have they-are-a-cauchy-sequence
+    mark k, like integer
+    mark j, like integer
+    mark p, like integer
+    meet or
+      call is-below
+        read k
+        code 1
+      call is-below
+        read j
+        code 1
+      call is-below
+        read p
+        code 1
+      meet and
+        call is-maximum
+          call subtract
+            call x
+              read k
+              read p
+            call x
+              read j
+              read p
+          call add
+            call add
+              call e
+                read k
+              call e
+                read j
+            call multiply
+              code 2
+              call e
+                read p
+        call is-maximum
+          call subtract
+            call x
+              read j
+              read p
+            call x
+              read k
+              read p
+          call add
+            call add
+              call e
+                read k
+              call e
+                read j
+            call multiply
+              code 2
+              call e
+                read p
+  have m-is-an-index
+    call is-minimum
+      read m
+      code 1
+  have n-is-an-index
+    call is-minimum
+      read n
+      code 1
+  show hold
+    call is-maximum
+      call subtract
+        call x
+          call multiply
+            code 4
+            read m
+          call multiply
+            code 4
+            read m
+        call x
+          call multiply
+            code 4
+            read n
+          call multiply
+            code 4
+            read n
+      call e
+        read m
+
+
+# false: without the Cauchy hypothesis the diagonal is not a real
+rule control-without-cauchy
+  mark x
+    like task
+      take k, like integer
+      take p, like integer
+      like integer
+  mark e
+    like task
+      take t, like integer
+      like integer
+  mark m, like integer
+  mark n, like integer
+  have the-modulus-is-positive
+    mark t, like integer
+    meet or
+      call is-below
+        read t
+        code 1
+      call is-above
+        call e
+          read t
+        code 0
+  have the-modulus-quarters
+    mark t, like integer
+    meet or
+      call is-below
+        read t
+        code 1
+      call is-equal
+        call multiply
+          code 4
+          call e
+            call multiply
+              code 4
+              read t
+        call e
+          read t
+  have each-is-a-real
+    mark k, like integer
+    mark p, like integer
+    mark q, like integer
+    meet or
+      call is-below
+        read k
+        code 1
+      call is-below
+        read p
+        code 1
+      call is-below
+        read q
+        code 1
+      meet and
+        call is-maximum
+          call subtract
+            call x
+              read k
+              read p
+            call x
+              read k
+              read q
+          call add
+            call e
+              read p
+            call e
+              read q
+        call is-maximum
+          call subtract
+            call x
+              read k
+              read q
+            call x
+              read k
+              read p
+          call add
+            call e
+              read p
+            call e
+              read q
+  have m-is-an-index
+    call is-minimum
+      read m
+      code 1
+  have n-is-an-index
+    call is-minimum
+      read n
+      code 1
+  show hold
+    call is-maximum
+      call subtract
+        call x
+          call multiply
+            code 4
+            read m
+          call multiply
+            code 4
+            read m
+        call x
+          call multiply
+            code 4
+            read n
+          call multiply
+            code 4
+            read n
+      call add
+        call e
+          read m
+        call e
+          read n
+
+
+# false: e(k) + e(p) is not enough
+rule control-a-tighter-convergence
+  mark x
+    like task
+      take k, like integer
+      take p, like integer
+      like integer
+  mark e
+    like task
+      take t, like integer
+      like integer
+  mark k, like integer
+  mark p, like integer
+  have the-modulus-is-positive
+    mark t, like integer
+    meet or
+      call is-below
+        read t
+        code 1
+      call is-above
+        call e
+          read t
+        code 0
+  have the-modulus-quarters
+    mark t, like integer
+    meet or
+      call is-below
+        read t
+        code 1
+      call is-equal
+        call multiply
+          code 4
+          call e
+            call multiply
+              code 4
+              read t
+        call e
+          read t
+  have each-is-a-real
+    mark k, like integer
+    mark p, like integer
+    mark q, like integer
+    meet or
+      call is-below
+        read k
+        code 1
+      call is-below
+        read p
+        code 1
+      call is-below
+        read q
+        code 1
+      meet and
+        call is-maximum
+          call subtract
+            call x
+              read k
+              read p
+            call x
+              read k
+              read q
+          call add
+            call e
+              read p
+            call e
+              read q
+        call is-maximum
+          call subtract
+            call x
+              read k
+              read q
+            call x
+              read k
+              read p
+          call add
+            call e
+              read p
+            call e
+              read q
+  have they-are-a-cauchy-sequence
+    mark k, like integer
+    mark j, like integer
+    mark p, like integer
+    meet or
+      call is-below
+        read k
+        code 1
+      call is-below
+        read j
+        code 1
+      call is-below
+        read p
+        code 1
+      meet and
+        call is-maximum
+          call subtract
+            call x
+              read k
+              read p
+            call x
+              read j
+              read p
+          call add
+            call add
+              call e
+                read k
+              call e
+                read j
+            call multiply
+              code 2
+              call e
+                read p
+        call is-maximum
+          call subtract
+            call x
+              read j
+              read p
+            call x
+              read k
+              read p
+          call add
+            call add
+              call e
+                read k
+              call e
+                read j
+            call multiply
+              code 2
+              call e
+                read p
+  have k-is-an-index
+    call is-minimum
+      read k
+      code 1
+  have p-is-an-index
+    call is-minimum
+      read p
+      code 1
+  show hold
+    call is-maximum
+      call subtract
+        call x
+          read k
+          read p
+        call x
+          call multiply
+            code 4
+            read p
+          call multiply
+            code 4
+            read p
+      call add
+        call e
+          read k
+        call e
+          read p

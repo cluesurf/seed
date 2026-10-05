@@ -11,12 +11,12 @@
 # This file constructs a local patch of the honeycomb, the dual (polarity) map, the neighbor count, and the four cells
 # around a ridge, and proves the laws that make the figure the self-dual substrate.
 
-load @term/seed/code/algebra/root-system/d4
+load @term/seed/algebra/root-system/d4
   find d4-root
   find negate
   find is-positive
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
   find both
   find either

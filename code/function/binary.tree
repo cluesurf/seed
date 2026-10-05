@@ -1,4 +1,4 @@
-load @term/seed/code/structure/set
+load @term/seed/structure/set
   find set
 
 # A binary function: a function of two arguments, the arity of every algebraic operation. Addition, multiplication, the

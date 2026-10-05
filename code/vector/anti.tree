@@ -1,4 +1,4 @@
-load @term/seed/code/structure/space/vector
+load @term/seed/structure/space/vector
   find vector-space
 
 # An antivector: a grade just below the top of a geometric algebra, the dual of a vector, an oriented hyperplane rather

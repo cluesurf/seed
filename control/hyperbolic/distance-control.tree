@@ -1,0 +1,65 @@
+# NEGATIVE CONTROLS for space/hyperbolic/distance: each must be REFUSED. Expected: 2.
+
+# false: with cw = 1 and sx = 0 cosh does not move
+rule control-cosh-steps-up-from-a-flat-step
+  mark cx, like integer
+  mark sx, like integer
+  mark cw, like integer
+  mark sw, like integer
+  mark cs, like integer
+  have the-addition-formula
+    call is-equal
+      read cs
+      call add
+        call multiply
+          read cx
+          read cw
+        call multiply
+          read sx
+          read sw
+  have cw-is-at-least-one
+    call is-minimum
+      read cw
+      code 1
+  have cx-is-at-least-one
+    call is-minimum
+      read cx
+      code 1
+  have the-sinhs-are-not-negative
+    meet and
+      call is-minimum
+        read sx
+        code 0
+      call is-minimum
+        read sw
+        code 0
+  show hold
+    call is-above
+      read cs
+      read cx
+
+
+# false: monotonicity alone bounds nothing
+rule control-the-triangle-inequality-without-the-cosh-form
+  mark ch
+    like task
+      take a0, like integer
+      like integer
+  mark dac, like integer
+  mark s, like integer
+  have cosh-is-increasing
+    mark x, like integer
+    mark y, like integer
+    meet or
+      call is-maximum
+        read x
+        read y
+      call is-above
+        call ch
+          read x
+        call ch
+          read y
+  show hold
+    call is-maximum
+      read dac
+      read s

@@ -1,4 +1,4 @@
-load @term/seed/code/structure/space/vector
+load @term/seed/structure/space/vector
   find vector-space
 
 # A polygon: a closed figure of straight sides in the plane, the two-dimensional polytope. The regular polygons (equal

@@ -1,7 +1,7 @@
-load @term/seed/code/algebra/cayley-dickson
+load @term/seed/algebra/cayley-dickson
   find cayley-dickson-double
 
-load @term/seed/code/algebra/normed-division
+load @term/seed/algebra/normed-division
   find normed-division-algebra
 
 # The complex numbers, the Cayley-Dickson double of the reals, dimension two. A normed division algebra, commutative and associative, but losing the order: they carry a square root of minus one, whose square is below zero, so no order can place them. This is the first rung past the integers, and the first loss in the tower, the loss of order.

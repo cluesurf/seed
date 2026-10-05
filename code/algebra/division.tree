@@ -1,13 +1,13 @@
-load @term/seed/code/structure/field
+load @term/seed/structure/field
   find field
 
-load @term/seed/code/structure/set
+load @term/seed/structure/set
   find set
 
-load @term/seed/code/structure/function/binary
+load @term/seed/structure/function/binary
   find binary-function
 
-load @term/seed/code/structure/function/unary
+load @term/seed/structure/function/unary
   find unary-function
 
 # A division algebra: an algebra in which every nonzero element is invertible, equivalently in which no two nonzero elements multiply to zero. No zero divisors means the product never collapses information, so it can be run backward and recovered. This is the same reversibility the composition norm expresses, seen from the side of inverses.

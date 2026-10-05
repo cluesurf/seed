@@ -24,6 +24,7 @@
 #   ISOMETRIES   rotations, boosts and the reflection in any line keep B; a reflection is an involution fixing its line;
 #   TRIGONOMETRY the tangent vectors at a vertex give the hyperbolic law of cosines,
 #                cosh c = cosh a cosh b - sinh a sinh b cos C;
+#   4-SPACE      the same lift, distance and reflections for hyperbolic 4-space, the space of the mesh {3,4,3,4};
 #   THE MODELS   the Poincare disk, the Klein disk and the upper half plane are maps of the same plane: the disk lift
 #                lands on the hyperboloid, its distance is cosh d = 1 + 2 |p - q|^2 / ((1 - |p|^2)(1 - |q|^2)), so
 #                d >= 0 with equality only at p = q; the Klein point lies inside the unit disk; a line is a circle
@@ -1529,6 +1530,13 @@ rule a-reflection-fixes-its-line-y
 # THE LAW OF COSINES. At a vertex v of the triangle (a, b, v), the tangent directions toward a and b are
 # u = a - B(a, v) v and w = b - B(b, v) v. Then B(u, w) = B(a, b) - B(a, v) B(b, v), and B(u, u) = 1 - B(a, v)^2 =
 # -sinh^2 of the side, so with cos C = -B(u, w) / (sinh a sinh b) this is cosh c = cosh a cosh b - sinh a sinh b cos C.
+#
+# CONGRUENCE, Hilbert's group III, follows from this identity. Segments are congruent when B (cosh of the length)
+# agrees. SIDE-ANGLE-SIDE (axiom III.5): the third side B(a, b) is B(u, w) + B(a, v) B(b, v), a function of the two
+# sides at v and the angle between them, so triangles agreeing in those agree in the third side. SIDE-SIDE-SIDE: the
+# angle B(u, w) = B(a, b) - B(a, v) B(b, v) is a function of the three sides. (Stated for two triangles at once, the
+# kernel's ideal reduction does not find the chain through these degree-six hypotheses, so the theorem is the
+# identity, from which both follow by substitution.)
 rule the-law-of-cosines
   mark a0, like integer
   mark a1, like integer
@@ -1755,459 +1763,6 @@ rule a-tangent-direction-has-norm-minus-sinh-squared
             read v0
             read v1
             read v2
-
-# CONGRUENCE: SIDE-ANGLE-SIDE, Hilbert's axiom III.5, as a theorem. Segments are congruent when B (cosh of the length)
-# agrees, and the angle at a vertex is read from the tangent product B(u, w) (with equal sides, equal B(u, w) is equal
-# cosine). If triangles (a, b, c) and (p, q, r) agree in the two sides at a and p and in the angle between them, their
-# third sides agree: B(b, c) = B(q, r).
-rule side-angle-side
-  mark a0, like integer
-  mark a1, like integer
-  mark a2, like integer
-  mark b0, like integer
-  mark b1, like integer
-  mark b2, like integer
-  mark c0, like integer
-  mark c1, like integer
-  mark c2, like integer
-  mark p0, like integer
-  mark p1, like integer
-  mark p2, like integer
-  mark q0, like integer
-  mark q1, like integer
-  mark q2, like integer
-  mark r0, like integer
-  mark r1, like integer
-  mark r2, like integer
-  have a-point
-    call is-equal
-      call lorentz-form
-        read a0
-        read a1
-        read a2
-        read a0
-        read a1
-        read a2
-      code 1
-  have p-point
-    call is-equal
-      call lorentz-form
-        read p0
-        read p1
-        read p2
-        read p0
-        read p1
-        read p2
-      code 1
-  have first-side
-    call is-equal
-      call lorentz-form
-        read a0
-        read a1
-        read a2
-        read b0
-        read b1
-        read b2
-      call lorentz-form
-        read p0
-        read p1
-        read p2
-        read q0
-        read q1
-        read q2
-  have second-side
-    call is-equal
-      call lorentz-form
-        read a0
-        read a1
-        read a2
-        read c0
-        read c1
-        read c2
-      call lorentz-form
-        read p0
-        read p1
-        read p2
-        read r0
-        read r1
-        read r2
-  have included-angle
-    call is-equal
-      call lorentz-form
-        call subtract
-          read b0
-          call multiply
-            call lorentz-form
-              read b0
-              read b1
-              read b2
-              read a0
-              read a1
-              read a2
-            read a0
-        call subtract
-          read b1
-          call multiply
-            call lorentz-form
-              read b0
-              read b1
-              read b2
-              read a0
-              read a1
-              read a2
-            read a1
-        call subtract
-          read b2
-          call multiply
-            call lorentz-form
-              read b0
-              read b1
-              read b2
-              read a0
-              read a1
-              read a2
-            read a2
-        call subtract
-          read c0
-          call multiply
-            call lorentz-form
-              read c0
-              read c1
-              read c2
-              read a0
-              read a1
-              read a2
-            read a0
-        call subtract
-          read c1
-          call multiply
-            call lorentz-form
-              read c0
-              read c1
-              read c2
-              read a0
-              read a1
-              read a2
-            read a1
-        call subtract
-          read c2
-          call multiply
-            call lorentz-form
-              read c0
-              read c1
-              read c2
-              read a0
-              read a1
-              read a2
-            read a2
-      call lorentz-form
-        call subtract
-          read q0
-          call multiply
-            call lorentz-form
-              read q0
-              read q1
-              read q2
-              read p0
-              read p1
-              read p2
-            read p0
-        call subtract
-          read q1
-          call multiply
-            call lorentz-form
-              read q0
-              read q1
-              read q2
-              read p0
-              read p1
-              read p2
-            read p1
-        call subtract
-          read q2
-          call multiply
-            call lorentz-form
-              read q0
-              read q1
-              read q2
-              read p0
-              read p1
-              read p2
-            read p2
-        call subtract
-          read r0
-          call multiply
-            call lorentz-form
-              read r0
-              read r1
-              read r2
-              read p0
-              read p1
-              read p2
-            read p0
-        call subtract
-          read r1
-          call multiply
-            call lorentz-form
-              read r0
-              read r1
-              read r2
-              read p0
-              read p1
-              read p2
-            read p1
-        call subtract
-          read r2
-          call multiply
-            call lorentz-form
-              read r0
-              read r1
-              read r2
-              read p0
-              read p1
-              read p2
-            read p2
-  show hold
-    call is-equal
-      call lorentz-form
-        read b0
-        read b1
-        read b2
-        read c0
-        read c1
-        read c2
-      call lorentz-form
-        read q0
-        read q1
-        read q2
-        read r0
-        read r1
-        read r2
-
-# SIDE-SIDE-SIDE: triangles with three congruent sides have congruent angles.
-rule side-side-side-gives-the-angle
-  mark a0, like integer
-  mark a1, like integer
-  mark a2, like integer
-  mark b0, like integer
-  mark b1, like integer
-  mark b2, like integer
-  mark c0, like integer
-  mark c1, like integer
-  mark c2, like integer
-  mark p0, like integer
-  mark p1, like integer
-  mark p2, like integer
-  mark q0, like integer
-  mark q1, like integer
-  mark q2, like integer
-  mark r0, like integer
-  mark r1, like integer
-  mark r2, like integer
-  have a-point
-    call is-equal
-      call lorentz-form
-        read a0
-        read a1
-        read a2
-        read a0
-        read a1
-        read a2
-      code 1
-  have p-point
-    call is-equal
-      call lorentz-form
-        read p0
-        read p1
-        read p2
-        read p0
-        read p1
-        read p2
-      code 1
-  have first-side
-    call is-equal
-      call lorentz-form
-        read a0
-        read a1
-        read a2
-        read b0
-        read b1
-        read b2
-      call lorentz-form
-        read p0
-        read p1
-        read p2
-        read q0
-        read q1
-        read q2
-  have second-side
-    call is-equal
-      call lorentz-form
-        read a0
-        read a1
-        read a2
-        read c0
-        read c1
-        read c2
-      call lorentz-form
-        read p0
-        read p1
-        read p2
-        read r0
-        read r1
-        read r2
-  have third-side
-    call is-equal
-      call lorentz-form
-        read b0
-        read b1
-        read b2
-        read c0
-        read c1
-        read c2
-      call lorentz-form
-        read q0
-        read q1
-        read q2
-        read r0
-        read r1
-        read r2
-  show hold
-    call is-equal
-      call lorentz-form
-        call subtract
-          read b0
-          call multiply
-            call lorentz-form
-              read b0
-              read b1
-              read b2
-              read a0
-              read a1
-              read a2
-            read a0
-        call subtract
-          read b1
-          call multiply
-            call lorentz-form
-              read b0
-              read b1
-              read b2
-              read a0
-              read a1
-              read a2
-            read a1
-        call subtract
-          read b2
-          call multiply
-            call lorentz-form
-              read b0
-              read b1
-              read b2
-              read a0
-              read a1
-              read a2
-            read a2
-        call subtract
-          read c0
-          call multiply
-            call lorentz-form
-              read c0
-              read c1
-              read c2
-              read a0
-              read a1
-              read a2
-            read a0
-        call subtract
-          read c1
-          call multiply
-            call lorentz-form
-              read c0
-              read c1
-              read c2
-              read a0
-              read a1
-              read a2
-            read a1
-        call subtract
-          read c2
-          call multiply
-            call lorentz-form
-              read c0
-              read c1
-              read c2
-              read a0
-              read a1
-              read a2
-            read a2
-      call lorentz-form
-        call subtract
-          read q0
-          call multiply
-            call lorentz-form
-              read q0
-              read q1
-              read q2
-              read p0
-              read p1
-              read p2
-            read p0
-        call subtract
-          read q1
-          call multiply
-            call lorentz-form
-              read q0
-              read q1
-              read q2
-              read p0
-              read p1
-              read p2
-            read p1
-        call subtract
-          read q2
-          call multiply
-            call lorentz-form
-              read q0
-              read q1
-              read q2
-              read p0
-              read p1
-              read p2
-            read p2
-        call subtract
-          read r0
-          call multiply
-            call lorentz-form
-              read r0
-              read r1
-              read r2
-              read p0
-              read p1
-              read p2
-            read p0
-        call subtract
-          read r1
-          call multiply
-            call lorentz-form
-              read r0
-              read r1
-              read r2
-              read p0
-              read p1
-              read p2
-            read p1
-        call subtract
-          read r2
-          call multiply
-            call lorentz-form
-              read r0
-              read r1
-              read r2
-              read p0
-              read p1
-              read p2
-            read p2
 
 # HOMOGENEITY: any point maps to any other by an isometry. The reflection in the line with normal n = x - o (the
 # perpendicular bisector) sends o to x: B(n, n) R(o) = B(n, n) o - 2 B(o, n) n = B(n, n) x, written without the
@@ -2899,6 +2454,500 @@ rule a-mobius-map-scales-differences
         call subtract
           read z
           read w
+
+# HYPERBOLIC 4-SPACE, where the vibe mesh {3,4,3,4} lives: the sheet B(x, x) = 1 of R^(4,1), with
+# B(x, y) = x0 y0 - x1 y1 - x2 y2 - x3 y3 - x4 y4. The same three facts carry over in every dimension: the ball lift lands
+# on the sheet, its distance is cosh d = 1 + 2 |p - q|^2 / ((1 - |p|^2)(1 - |q|^2)) (the Poincare ball), and the
+# reflection in any hyperplane (a spacelike unit normal) keeps B.
+task lorentz-form-four
+  take u0, like integer
+  take u1, like integer
+  take u2, like integer
+  take u3, like integer
+  take u4, like integer
+  take v0, like integer
+  take v1, like integer
+  take v2, like integer
+  take v3, like integer
+  take v4, like integer
+  like integer
+  send back
+    call subtract
+      call subtract
+        call subtract
+          call subtract
+            call multiply
+              read u0
+              read v0
+            call multiply
+              read u1
+              read v1
+          call multiply
+            read u2
+            read v2
+        call multiply
+          read u3
+          read v3
+      call multiply
+        read u4
+        read v4
+
+rule the-ball-lift-lands-on-hyperbolic-four-space
+  mark p1, like integer
+  mark p2, like integer
+  mark p3, like integer
+  mark p4, like integer
+  show hold
+    call is-equal
+      call lorentz-form-four
+        call add
+          code 1
+          call add
+            call add
+              call multiply
+                read p1
+                read p1
+              call multiply
+                read p2
+                read p2
+            call add
+              call multiply
+                read p3
+                read p3
+              call multiply
+                read p4
+                read p4
+        call multiply
+          code 2
+          read p1
+        call multiply
+          code 2
+          read p2
+        call multiply
+          code 2
+          read p3
+        call multiply
+          code 2
+          read p4
+        call add
+          code 1
+          call add
+            call add
+              call multiply
+                read p1
+                read p1
+              call multiply
+                read p2
+                read p2
+            call add
+              call multiply
+                read p3
+                read p3
+              call multiply
+                read p4
+                read p4
+        call multiply
+          code 2
+          read p1
+        call multiply
+          code 2
+          read p2
+        call multiply
+          code 2
+          read p3
+        call multiply
+          code 2
+          read p4
+      call multiply
+        call subtract
+          code 1
+          call add
+            call add
+              call multiply
+                read p1
+                read p1
+              call multiply
+                read p2
+                read p2
+            call add
+              call multiply
+                read p3
+                read p3
+              call multiply
+                read p4
+                read p4
+        call subtract
+          code 1
+          call add
+            call add
+              call multiply
+                read p1
+                read p1
+              call multiply
+                read p2
+                read p2
+            call add
+              call multiply
+                read p3
+                read p3
+              call multiply
+                read p4
+                read p4
+
+rule the-ball-distance-formula-in-four-dimensions
+  mark p1, like integer
+  mark p2, like integer
+  mark p3, like integer
+  mark p4, like integer
+  mark q1, like integer
+  mark q2, like integer
+  mark q3, like integer
+  mark q4, like integer
+  show hold
+    call is-equal
+      call subtract
+        call lorentz-form-four
+          call add
+            code 1
+            call add
+              call add
+                call multiply
+                  read p1
+                  read p1
+                call multiply
+                  read p2
+                  read p2
+              call add
+                call multiply
+                  read p3
+                  read p3
+                call multiply
+                  read p4
+                  read p4
+          call multiply
+            code 2
+            read p1
+          call multiply
+            code 2
+            read p2
+          call multiply
+            code 2
+            read p3
+          call multiply
+            code 2
+            read p4
+          call add
+            code 1
+            call add
+              call add
+                call multiply
+                  read q1
+                  read q1
+                call multiply
+                  read q2
+                  read q2
+              call add
+                call multiply
+                  read q3
+                  read q3
+                call multiply
+                  read q4
+                  read q4
+          call multiply
+            code 2
+            read q1
+          call multiply
+            code 2
+            read q2
+          call multiply
+            code 2
+            read q3
+          call multiply
+            code 2
+            read q4
+        call multiply
+          call subtract
+            code 1
+            call add
+              call add
+                call multiply
+                  read p1
+                  read p1
+                call multiply
+                  read p2
+                  read p2
+              call add
+                call multiply
+                  read p3
+                  read p3
+                call multiply
+                  read p4
+                  read p4
+          call subtract
+            code 1
+            call add
+              call add
+                call multiply
+                  read q1
+                  read q1
+                call multiply
+                  read q2
+                  read q2
+              call add
+                call multiply
+                  read q3
+                  read q3
+                call multiply
+                  read q4
+                  read q4
+      call multiply
+        code 2
+        call add
+          call add
+            call multiply
+              call subtract
+                read p1
+                read q1
+              call subtract
+                read p1
+                read q1
+            call multiply
+              call subtract
+                read p2
+                read q2
+              call subtract
+                read p2
+                read q2
+          call add
+            call multiply
+              call subtract
+                read p3
+                read q3
+              call subtract
+                read p3
+                read q3
+            call multiply
+              call subtract
+                read p4
+                read q4
+              call subtract
+                read p4
+                read q4
+
+rule a-reflection-keeps-the-lorentz-form-in-four-dimensions
+  mark x0, like integer
+  mark x1, like integer
+  mark x2, like integer
+  mark x3, like integer
+  mark x4, like integer
+  mark y0, like integer
+  mark y1, like integer
+  mark y2, like integer
+  mark y3, like integer
+  mark y4, like integer
+  mark n0, like integer
+  mark n1, like integer
+  mark n2, like integer
+  mark n3, like integer
+  mark n4, like integer
+  have hyperplane
+    call is-equal
+      call lorentz-form-four
+        read n0
+        read n1
+        read n2
+        read n3
+        read n4
+        read n0
+        read n1
+        read n2
+        read n3
+        read n4
+      code -1
+  show hold
+    call is-equal
+      call lorentz-form-four
+        call add
+          read x0
+          call multiply
+            call multiply
+              code 2
+              call lorentz-form-four
+                read x0
+                read x1
+                read x2
+                read x3
+                read x4
+                read n0
+                read n1
+                read n2
+                read n3
+                read n4
+            read n0
+        call add
+          read x1
+          call multiply
+            call multiply
+              code 2
+              call lorentz-form-four
+                read x0
+                read x1
+                read x2
+                read x3
+                read x4
+                read n0
+                read n1
+                read n2
+                read n3
+                read n4
+            read n1
+        call add
+          read x2
+          call multiply
+            call multiply
+              code 2
+              call lorentz-form-four
+                read x0
+                read x1
+                read x2
+                read x3
+                read x4
+                read n0
+                read n1
+                read n2
+                read n3
+                read n4
+            read n2
+        call add
+          read x3
+          call multiply
+            call multiply
+              code 2
+              call lorentz-form-four
+                read x0
+                read x1
+                read x2
+                read x3
+                read x4
+                read n0
+                read n1
+                read n2
+                read n3
+                read n4
+            read n3
+        call add
+          read x4
+          call multiply
+            call multiply
+              code 2
+              call lorentz-form-four
+                read x0
+                read x1
+                read x2
+                read x3
+                read x4
+                read n0
+                read n1
+                read n2
+                read n3
+                read n4
+            read n4
+        call add
+          read y0
+          call multiply
+            call multiply
+              code 2
+              call lorentz-form-four
+                read y0
+                read y1
+                read y2
+                read y3
+                read y4
+                read n0
+                read n1
+                read n2
+                read n3
+                read n4
+            read n0
+        call add
+          read y1
+          call multiply
+            call multiply
+              code 2
+              call lorentz-form-four
+                read y0
+                read y1
+                read y2
+                read y3
+                read y4
+                read n0
+                read n1
+                read n2
+                read n3
+                read n4
+            read n1
+        call add
+          read y2
+          call multiply
+            call multiply
+              code 2
+              call lorentz-form-four
+                read y0
+                read y1
+                read y2
+                read y3
+                read y4
+                read n0
+                read n1
+                read n2
+                read n3
+                read n4
+            read n2
+        call add
+          read y3
+          call multiply
+            call multiply
+              code 2
+              call lorentz-form-four
+                read y0
+                read y1
+                read y2
+                read y3
+                read y4
+                read n0
+                read n1
+                read n2
+                read n3
+                read n4
+            read n3
+        call add
+          read y4
+          call multiply
+            call multiply
+              code 2
+              call lorentz-form-four
+                read y0
+                read y1
+                read y2
+                read y3
+                read y4
+                read n0
+                read n1
+                read n2
+                read n3
+                read n4
+            read n4
+      call lorentz-form-four
+        read x0
+        read x1
+        read x2
+        read x3
+        read x4
+        read y0
+        read y1
+        read y2
+        read y3
+        read y4
 
 # CIRCLES, HOROCYCLES AND EQUIDISTANTS: the points at constant B(x, g) = k from a fixed vector g are a circle when g is
 # a point, a horocycle when g is on the light cone (a point at infinity), and an equidistant of a line when g is

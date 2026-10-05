@@ -8,7 +8,7 @@
 # spinor classes, the structure unique to dimension eight that gives the substrate free spin. This file constructs the
 # roots, the antipode, the positive system, and one simple reflection, and proves the laws that make them a root system.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
   find either
 

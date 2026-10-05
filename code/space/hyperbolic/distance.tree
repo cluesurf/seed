@@ -1,0 +1,186 @@
+# DISTANCES: the triangle inequality for lengths, from the one for their cosh's.
+#
+# order.tree proves cosh d(a, c) <= cosh d(a, b) cosh d(b, c) + sinh d(a, b) sinh d(b, c), the right side being
+# cosh (d(a, b) + d(b, c)) by the addition formula (integral/exponential, integral/hyperbolic-functions). What turns
+# that into d(a, c) <= d(a, b) + d(b, c) is that cosh is STRICTLY INCREASING on [0, oo):
+#
+#   THE STEP             cosh(x + w) - cosh x = cosh x (cosh w - 1) + sinh x sinh w, which is positive for x >= 0 and
+#                        w > 0, as cosh w - 1 >= w^2 / 4 > 0 on (0, 1] (from the exponential's bounds) and cosh x >= 1,
+#                        sinh x, sinh w >= 0;
+#   THE INEQUALITY       so a distance past the sum would have a cosh past the sum's cosh, which order.tree refuses.
+#
+# Every certificate is the product prover's, replayed (check/product.ts), over an ordered field.
+
+
+# THE STEP: with the addition formula cs = cx cw + sx sw, cw > 1, cx >= 1 and sx, sw >= 0, cs > cx.
+rule cosh-steps-up
+  mark cx, like integer
+  mark sx, like integer
+  mark cw, like integer
+  mark sw, like integer
+  mark cs, like integer
+  have the-addition-formula
+    call is-equal
+      read cs
+      call add
+        call multiply
+          read cx
+          read cw
+        call multiply
+          read sx
+          read sw
+  have cw-is-past-one
+    call is-above
+      read cw
+      code 1
+  have cx-is-at-least-one
+    call is-minimum
+      read cx
+      code 1
+  have the-sinhs-are-not-negative
+    meet and
+      call is-minimum
+        read sx
+        code 0
+      call is-minimum
+        read sw
+        code 0
+  show hold
+    call is-above
+      read cs
+      read cx
+
+
+# cosh = (E + 1/E) / 2 with E between its second- and third-order parts on [0, 1] (integral/hyperbolic-functions):
+# 2 cosh w - 2 >= w^2 / 2, as (E - 1)^2 >= (w + w^2 / 2)^2 exceeds E w^2 / 2.
+rule cosh-is-a-quarter-square-past-one
+  mark w, like integer
+  mark ee, like integer
+  mark rr, like integer
+  have w-is-in-the-unit-interval
+    meet and
+      call is-minimum
+        read w
+        code 0
+      call is-maximum
+        read w
+        code 1
+  have e-is-above-its-second-order-part
+    call is-minimum
+      call subtract
+        call multiply
+          code 2
+          read ee
+        call add
+          call add
+            code 2
+            call multiply
+              code 2
+              read w
+          call multiply
+            read w
+            read w
+      code 0
+  have e-is-below-its-third-order-bound
+    call is-maximum
+      call subtract
+        call multiply
+          code 6
+          read ee
+        call add
+          call add
+            code 6
+            call multiply
+              code 6
+              read w
+          call multiply
+            call multiply
+              code 3
+              read w
+            read w
+      call multiply
+        call multiply
+          call multiply
+            code 2
+            read w
+          read w
+        read w
+  have rr-is-its-reciprocal
+    call is-equal
+      call multiply
+        read ee
+        read rr
+      code 1
+  have rr-is-positive
+    call is-above
+      read rr
+      code 0
+  show hold
+    call is-minimum
+      call multiply
+        code 2
+        call subtract
+          call add
+            read ee
+            read rr
+          code 2
+      call multiply
+        read w
+        read w
+
+
+# so cosh w > 1 for w > 0.
+rule cosh-is-past-one-off-zero
+  mark w, like integer
+  mark cw, like integer
+  have cosh-near-zero
+    call is-minimum
+      call multiply
+        code 4
+        call subtract
+          read cw
+          code 1
+      call multiply
+        read w
+        read w
+  have w-is-positive
+    call is-above
+      read w
+      code 0
+  show hold
+    call is-above
+      read cw
+      code 1
+
+
+# THE INEQUALITY: d(a, c) = dac and s = d(a, b) + d(b, c). cosh (ch) is strictly increasing, so x <= y or
+# ch(x) > ch(y), and order.tree gives ch(dac) <= ch(s), so dac <= s.
+rule the-triangle-inequality-for-distances
+  mark ch
+    like task
+      take a0, like integer
+      like integer
+  mark dac, like integer
+  mark s, like integer
+  have cosh-is-increasing
+    mark x, like integer
+    mark y, like integer
+    meet or
+      call is-maximum
+        read x
+        read y
+      call is-above
+        call ch
+          read x
+        call ch
+          read y
+  have the-cosh-form
+    call is-maximum
+      call ch
+        read dac
+      call ch
+        read s
+  show hold
+    call is-maximum
+      read dac
+      read s

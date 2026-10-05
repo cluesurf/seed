@@ -11,7 +11,7 @@
 # stabilizer pair (the toric-code vertex and plaquette operators) commutes through an even anticommutation count, and a
 # concrete pair with an odd count anticommutes.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
   find both
   find either

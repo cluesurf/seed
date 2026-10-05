@@ -1,4 +1,4 @@
-load @term/seed/code/algebra/exterior
+load @term/seed/algebra/exterior
   find exterior-algebra
 
 # A bivector: a grade-two element of an exterior or geometric algebra, an oriented area, the wedge of two vectors. A

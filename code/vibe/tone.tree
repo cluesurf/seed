@@ -12,12 +12,12 @@
 # Three is forced: the smallest alphabet with an empty value and a sign flip is {-1, 0, +1}, and the sign flip must be an
 # order-two symmetry fixing the empty value, which is `tone-conjugate` below.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
   find both
   find either
 
-load @term/seed/code/vibe/law
+load @term/seed/vibe/law
   find associative
   find commutative
   find identity

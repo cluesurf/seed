@@ -1,4 +1,4 @@
-load @term/seed/code/structure/ring
+load @term/seed/structure/ring
   find ring
 
 # A vertex operator algebra: the algebraic axiomatization of a two-dimensional conformal field theory, where states are

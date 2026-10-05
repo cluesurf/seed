@@ -15,19 +15,19 @@
 # by t sends (c, u) to (c + [t, u], u), and both are proved automorphisms of the Weyl-Heisenberg group. Together they
 # are ASL(2, 3) = Z3^2 x| SL(2, 3), the 9 x 24 = 216 Clifford moves of one qutrit modulo phase.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
   find both
   find either
   find implies
 
-load @term/seed/code/atom/sign
+load @term/seed/atom/sign
   find sign
 
-load @term/seed/code/vibe/law
+load @term/seed/vibe/law
   find homomorphism
 
-load @term/seed/code/vibe/tone
+load @term/seed/vibe/tone
   find tone
   find tone-sum
   find tone-product
@@ -35,21 +35,21 @@ load @term/seed/code/vibe/tone
   find tone-conjugate
   find same-tone
 
-load @term/seed/code/vibe/role
+load @term/seed/vibe/role
   find role
   find role-of
   find role-shift
   find role-clock
   find wedge
 
-load @term/seed/code/vibe/heisenberg
+load @term/seed/vibe/heisenberg
   find weyl
   find weyl-of
   find weyl-phase
   find weyl-place
   find weyl-product
 
-load @term/seed/code/vibe/hurwitz
+load @term/seed/vibe/hurwitz
   find hurwitz-axis
   find q8
   find q8-of

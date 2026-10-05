@@ -9,10 +9,10 @@
 # SO(3). Finally the real Clifford algebras Cl(n) repeat their Morita type with period EIGHT: type(n+8) = type(n), and
 # eight is the true period, not four, proved by computation and refuted at four by `calm miss`. This is Bott periodicity.
 
-load @term/seed/code/atom/sign
+load @term/seed/atom/sign
   find sign
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
 
 # ---------------------------------------------------------------------------------------------------------------------

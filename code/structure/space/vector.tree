@@ -1,10 +1,10 @@
-load @term/seed/code/structure/field
+load @term/seed/structure/field
   find field
 
-load @term/seed/code/group/abelian
+load @term/seed/group/abelian
   find abelian-group
 
-load @term/seed/code/structure/function/binary
+load @term/seed/structure/function/binary
   find binary-function
 
 # A vector space: an abelian group of vectors that can be scaled by the elements of a field, with the scaling

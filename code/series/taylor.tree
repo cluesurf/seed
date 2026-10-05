@@ -1,4 +1,4 @@
-load @term/seed/code/manifold/analytic
+load @term/seed/manifold/analytic
   find analytic-manifold
 
 # A Taylor series: the expansion of a smooth function as an infinite polynomial in its derivatives at a point, the best

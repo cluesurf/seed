@@ -2,11 +2,11 @@
 # must be REFUSED. Expected refusals: 17 (associative 1, commutative 1, identity 2, inverse 2, distributive 2,
 # involution 1, bijection 2, homomorphism 1, conserves 1, commutes 1, action 2, order 1 for antisymmetry only).
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
   find either
 
-load @term/seed/code/vibe/law
+load @term/seed/vibe/law
   find associative
   find commutative
   find identity
@@ -20,7 +20,7 @@ load @term/seed/code/vibe/law
   find action
   find order
 
-load @term/seed/code/vibe/tone
+load @term/seed/vibe/tone
   find tone
   find tone-row
   find tone-entry

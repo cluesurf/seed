@@ -1,6 +1,6 @@
 # NEGATIVE CONTROL: boost. Every rule here must be refused.
 
-load @term/seed/code/vibe/boost
+load @term/seed/vibe/boost
   find interval
   find boost-time
   find boost-space

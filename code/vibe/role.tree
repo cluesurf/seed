@@ -14,19 +14,19 @@
 # directions meet in exactly one point, each line has exactly three points, and two distinct points span exactly one
 # line.
 
-load @term/seed/code/atom/flag
+load @term/seed/atom/flag
   find flag
   find both
   find either
 
-load @term/seed/code/vibe/law
+load @term/seed/vibe/law
   find associative
   find commutative
   find identity
   find inverse
   find involution
 
-load @term/seed/code/vibe/tone
+load @term/seed/vibe/tone
   find tone
   find tone-row
   find tone-entry

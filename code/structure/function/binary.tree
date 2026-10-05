@@ -1,4 +1,4 @@
-load @term/seed/code/structure/set
+load @term/seed/structure/set
   find set
 
 # A binary function takes two elements of a set and returns one. It is the shape of every algebraic operation, addition, multiplication, the knit.

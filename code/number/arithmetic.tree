@@ -1,0 +1,481 @@
+# THE ARITHMETIC OF THE REALS. number/completeness builds a real as a regular sequence of rationals,
+# |x(p) - x(q)| <= e(p) + e(q), and proves the reals complete. A field needs operations: Bishop's are
+#   the sum      (x + y)(n) = x(2n) + y(2n),
+#   the product  (x y)(n) = x(2 K n) y(2 K n), with K bounding both sequences,
+# and each must be shown to give a real. The modulus is e(t) = 1 / t, written t e(t) = 1, so it halves
+# (2 e(2t) = e(t)) and scales (2 K e(2 K t) = e(t)).
+
+
+# The modulus halves: from t e(t) = 1 and 2t e(2t) = 1, 2 e(2t) = e(t).
+rule the-modulus-halves
+  mark e
+    like task
+      take a0, like integer
+      like integer
+  mark t, like integer
+  have at-t
+    call is-equal
+      call multiply
+        read t
+        call e
+          read t
+      code 1
+  have at-2t
+    call is-equal
+      call multiply
+        call multiply
+          code 2
+          read t
+        call e
+          call multiply
+            code 2
+            read t
+      code 1
+  have t-is-an-index
+    call is-minimum
+      read t
+      code 1
+  show hold
+    call is-equal
+      call multiply
+        code 2
+        call e
+          call multiply
+            code 2
+            read t
+      call e
+        read t
+
+
+# THE SUM IS A REAL: x(2m) + y(2m) and x(2n) + y(2n) differ by at most 2 e(2m) + 2 e(2n) = e(m) + e(n).
+rule the-sum-of-reals-is-a-real
+  mark x
+    like task
+      take a0, like integer
+      like integer
+  mark y
+    like task
+      take a0, like integer
+      like integer
+  mark e
+    like task
+      take a0, like integer
+      like integer
+  mark m, like integer
+  mark n, like integer
+  have x-is-a-real
+    mark p, like integer
+    mark q, like integer
+    meet or
+      call is-below
+        read p
+        code 1
+      call is-below
+        read q
+        code 1
+      meet and
+        call is-maximum
+          call subtract
+            call x
+              read p
+            call x
+              read q
+          call add
+            call e
+              read p
+            call e
+              read q
+        call is-maximum
+          call subtract
+            call x
+              read q
+            call x
+              read p
+          call add
+            call e
+              read p
+            call e
+              read q
+  have y-is-a-real
+    mark p, like integer
+    mark q, like integer
+    meet or
+      call is-below
+        read p
+        code 1
+      call is-below
+        read q
+        code 1
+      meet and
+        call is-maximum
+          call subtract
+            call y
+              read p
+            call y
+              read q
+          call add
+            call e
+              read p
+            call e
+              read q
+        call is-maximum
+          call subtract
+            call y
+              read q
+            call y
+              read p
+          call add
+            call e
+              read p
+            call e
+              read q
+  have the-modulus-halves
+    mark t, like integer
+    meet or
+      call is-below
+        read t
+        code 1
+      call is-equal
+        call multiply
+          code 2
+          call e
+            call multiply
+              code 2
+              read t
+        call e
+          read t
+  have m-is-an-index
+    call is-minimum
+      read m
+      code 1
+  have n-is-an-index
+    call is-minimum
+      read n
+      code 1
+  show hold
+    meet and
+      call is-maximum
+        call subtract
+          call add
+            call x
+              call multiply
+                code 2
+                read m
+            call y
+              call multiply
+                code 2
+                read m
+          call add
+            call x
+              call multiply
+                code 2
+                read n
+            call y
+              call multiply
+                code 2
+                read n
+        call add
+          call e
+            read m
+          call e
+            read n
+      call is-maximum
+        call subtract
+          call add
+            call x
+              call multiply
+                code 2
+                read n
+            call y
+              call multiply
+                code 2
+                read n
+          call add
+            call x
+              call multiply
+                code 2
+                read m
+            call y
+              call multiply
+                code 2
+                read m
+        call add
+          call e
+            read m
+          call e
+            read n
+
+
+# THE PRODUCT, first its step: |x Dy| <= K E from |x| <= K and |Dy| <= E, with the certificate
+# K E - x Dy = ((K - x)(E + Dy) + (K + x)(E - Dy)) / 2.
+rule a-bounded-factor-times-a-small-one
+  mark x, like integer
+  mark dy, like integer
+  mark big, like integer
+  mark eps, like integer
+  have x-is-bounded
+    meet and
+      call is-maximum
+        read x
+        read big
+      call is-maximum
+        call subtract
+          code 0
+          read x
+        read big
+  have dy-is-small
+    meet and
+      call is-maximum
+        read dy
+        read eps
+      call is-maximum
+        call subtract
+          code 0
+          read dy
+        read eps
+  show hold
+    meet and
+      call is-maximum
+        call multiply
+          read x
+          read dy
+        call multiply
+          read big
+          read eps
+      call is-maximum
+        call subtract
+          code 0
+          call multiply
+            read x
+            read dy
+        call multiply
+          read big
+          read eps
+
+
+# At two indices: x(p) y(p) - x(q) y(q) = x(p) (y(p) - y(q)) + y(q) (x(p) - x(q)) is at most 2 K (e(p) + e(q)).
+rule the-product-step
+  mark x
+    like task
+      take a0, like integer
+      like integer
+  mark y
+    like task
+      take a0, like integer
+      like integer
+  mark e
+    like task
+      take a0, like integer
+      like integer
+  mark p, like integer
+  mark q, like integer
+  mark big, like integer
+  have x-at-p-is-bounded
+    meet and
+      call is-maximum
+        call x
+          read p
+        read big
+      call is-maximum
+        call subtract
+          code 0
+          call x
+            read p
+        read big
+  have y-at-q-is-bounded
+    meet and
+      call is-maximum
+        call y
+          read q
+        read big
+      call is-maximum
+        call subtract
+          code 0
+          call y
+            read q
+        read big
+  have x-is-regular-here
+    meet and
+      call is-maximum
+        call subtract
+          call x
+            read p
+          call x
+            read q
+        call add
+          call e
+            read p
+          call e
+            read q
+      call is-maximum
+        call subtract
+          call x
+            read q
+          call x
+            read p
+        call add
+          call e
+            read p
+          call e
+            read q
+  have y-is-regular-here
+    meet and
+      call is-maximum
+        call subtract
+          call y
+            read p
+          call y
+            read q
+        call add
+          call e
+            read p
+          call e
+            read q
+      call is-maximum
+        call subtract
+          call y
+            read q
+          call y
+            read p
+        call add
+          call e
+            read p
+          call e
+            read q
+  show hold
+    call is-maximum
+      call subtract
+        call multiply
+          call x
+            read p
+          call y
+            read p
+        call multiply
+          call x
+            read q
+          call y
+            read q
+      call multiply
+        call multiply
+          code 2
+          read big
+        call add
+          call e
+            read p
+          call e
+            read q
+
+
+# THE PRODUCT IS A REAL: at p = 2 K m and q = 2 K n the step gives 2 K (e(2 K m) + e(2 K n)) = e(m) + e(n).
+rule the-product-of-reals-is-a-real
+  mark x
+    like task
+      take a0, like integer
+      like integer
+  mark y
+    like task
+      take a0, like integer
+      like integer
+  mark e
+    like task
+      take a0, like integer
+      like integer
+  mark m, like integer
+  mark n, like integer
+  mark big, like integer
+  have the-product-step
+    mark p, like integer
+    mark q, like integer
+    meet or
+      call is-below
+        read p
+        code 1
+      call is-below
+        read q
+        code 1
+      call is-maximum
+        call subtract
+          call multiply
+            call x
+              read p
+            call y
+              read p
+          call multiply
+            call x
+              read q
+            call y
+              read q
+        call multiply
+          call multiply
+            code 2
+            read big
+          call add
+            call e
+              read p
+            call e
+              read q
+  have the-modulus-scales
+    mark t, like integer
+    meet or
+      call is-below
+        read t
+        code 1
+      call is-equal
+        call multiply
+          call multiply
+            code 2
+            read big
+          call e
+            call multiply
+              call multiply
+                code 2
+                read big
+              read t
+        call e
+          read t
+  have the-bound-is-an-index
+    call is-minimum
+      read big
+      code 1
+  have m-is-an-index
+    call is-minimum
+      read m
+      code 1
+  have n-is-an-index
+    call is-minimum
+      read n
+      code 1
+  show hold
+    call is-maximum
+      call subtract
+        call multiply
+          call x
+            call multiply
+              call multiply
+                code 2
+                read big
+              read m
+          call y
+            call multiply
+              call multiply
+                code 2
+                read big
+              read m
+        call multiply
+          call x
+            call multiply
+              call multiply
+                code 2
+                read big
+              read n
+          call y
+            call multiply
+              call multiply
+                code 2
+                read big
+              read n
+      call add
+        call e
+          read m
+        call e
+          read n

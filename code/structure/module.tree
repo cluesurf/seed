@@ -1,10 +1,10 @@
-load @term/seed/code/structure/ring
+load @term/seed/structure/ring
   find ring
 
-load @term/seed/code/group/abelian
+load @term/seed/group/abelian
   find abelian-group
 
-load @term/seed/code/structure/function/binary
+load @term/seed/structure/function/binary
   find binary-function
 
 # A module: an abelian group whose elements can be scaled by the elements of a ring, the generalization of a vector

@@ -1,4 +1,4 @@
-load @term/seed/code/structure/space/vector
+load @term/seed/structure/space/vector
   find vector-space
 
 # A vector: an element of a vector space, an arrow with magnitude and direction that adds to other vectors and scales by
