@@ -26,6 +26,13 @@ define its object and prove a property.
 Gold-standard files to imitate: `code/number/parity.tree`, `code/number/fibonacci.tree`,
 `code/number/divisibility.tree`, `code/space/lattice/e8.tree`, `code/octonion.tree`.
 
+## Generated files
+
+The analysis and hyperbolic files (`code/integral/*`, `code/number/completeness.tree`, `code/number/arithmetic.tree`,
+`code/space/hyperbolic/{order,archimedes,area,metric,polar,distance}.tree`) and their controls are WRITTEN by the
+Python generators in `task/gen/`. Edit the generator and rerun it (`python3 task/gen/<name>.py`), never the `.tree`.
+A rule may cite a rule proven above it with `cite <rule>` (the generators' `rule(..., cites=(...))`).
+
 ## Checking
 
 ```
