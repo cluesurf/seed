@@ -1,4 +1,4 @@
-# NEGATIVE CONTROL: the integer identities of coin. Every rule here must be refused.
+# NEGATIVE CONTROL: the integer identities of coin. Every rule here must be refused. Expected: 2.
 
 load @term/seed/vibe/eisenstein
   find eisenstein-norm

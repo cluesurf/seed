@@ -3,7 +3,7 @@
 # sixteen files `term make` runs in parallel and prints only the first diagnostic per file, so this links just the
 # named modules (and the shared atoms) into a fresh small package under tmp/runs and builds that.
 #
-# usage: sh control/check.sh law tone role heisenberg
+# usage: sh task/check.sh law tone role heisenberg
 root=$(cd "$(dirname "$0")/.." && pwd)
 pkg=$root/tmp/runs/check-$$
 mkdir -p $pkg/code/vibe

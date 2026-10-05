@@ -1,4 +1,4 @@
-# NEGATIVE CONTROL for space/hyperbolic/metric: 8 perturbed theorems, each must be refused.
+# NEGATIVE CONTROL for space/hyperbolic/metric: 8 perturbed theorems, each must be refused. Expected: 8.
 
 load @term/seed/space/hyperbolic/hyperboloid
   find lorentz-form

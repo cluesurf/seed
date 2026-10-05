@@ -235,7 +235,7 @@ def main():
                '\n# REFUSED. A prover that accepted these would prove nothing. Expected: 9 refusals.']
     for name, comment, marks, haves, show in CONTROLS:
         control.append(rule(name, comment, marks, haves, show))
-    path = _os.path.join(SEED, 'control/hyperbolic/order-control.tree')
+    path = _os.path.join(SEED, 'test/case/hyperbolic/order-control.tree')
     open(path, 'w').write('\n'.join(control) + '\n')
     print(f'wrote {path}, {len(CONTROLS)} controls')
 

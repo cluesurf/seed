@@ -1,4 +1,4 @@
-# NEGATIVE CONTROL: design, honeycomb, warp, growth, forced-dock-24-cell. Every rule here must be refused.
+# NEGATIVE CONTROL: design, honeycomb, warp, growth, forced-dock-24-cell. Every rule here must be refused. Expected: 8.
 
 load @term/seed/vibe/design
   find root-moment-4

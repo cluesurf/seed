@@ -100,7 +100,7 @@ CONTROLS = [
 def main():
     open(f'{ROOT}/code/integral/disk.tree', 'w').write(HEADER + '\n' + '\n\n'.join(RULES) + '\n')
     head = '# NEGATIVE CONTROLS for integral/disk: each must be REFUSED. Expected: 1.\n'
-    open(f'{ROOT}/control/number/disk-control.tree', 'w').write(head + '\n\n'.join(CONTROLS) + '\n')
+    open(f'{ROOT}/test/case/number/disk-control.tree', 'w').write(head + '\n\n'.join(CONTROLS) + '\n')
     print(len(RULES), 'rules', len(CONTROLS), 'controls')
 
 

@@ -1,4 +1,4 @@
-# NEGATIVE CONTROL: knit, line, clifford, boost. Every rule here must be refused.
+# NEGATIVE CONTROL: knit, line, clifford, boost. Every rule here must be refused. Expected: 6.
 
 load @term/seed/atom/flag
   find flag

@@ -75,7 +75,7 @@ CONTROLS = [
 def main():
     open(f'{ROOT}/code/space/hyperbolic/distance.tree', 'w').write(HEADER + '\n' + '\n\n'.join(RULES) + '\n')
     head = '# NEGATIVE CONTROLS for space/hyperbolic/distance: each must be REFUSED. Expected: 2.\n'
-    open(f'{ROOT}/control/hyperbolic/distance-control.tree', 'w').write(head + '\n\n'.join(CONTROLS) + '\n')
+    open(f'{ROOT}/test/case/hyperbolic/distance-control.tree', 'w').write(head + '\n\n'.join(CONTROLS) + '\n')
     print(len(RULES), 'rules', len(CONTROLS), 'controls')
 
 

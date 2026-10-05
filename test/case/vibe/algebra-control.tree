@@ -1,4 +1,4 @@
-# NEGATIVE CONTROL: coin, role, heisenberg. Every rule here is a perturbed true theorem and must be refused.
+# NEGATIVE CONTROL: coin, role, heisenberg. Every rule here is a perturbed true theorem and must be refused. Expected: 4.
 
 load @term/seed/atom/flag
   find flag

@@ -143,7 +143,7 @@ CONTROLS = [
 def main():
     open(f'{ROOT}/code/integral/hyperbolic-functions.tree', 'w').write(HEADER + '\n' + '\n\n'.join(RULES) + '\n')
     head = '# NEGATIVE CONTROLS for integral/hyperbolic-functions: each must be REFUSED. Expected: 3.\n'
-    open(f'{ROOT}/control/number/hyperbolic-functions-control.tree', 'w').write(head + '\n\n'.join(CONTROLS) + '\n')
+    open(f'{ROOT}/test/case/number/hyperbolic-functions-control.tree', 'w').write(head + '\n\n'.join(CONTROLS) + '\n')
     print(len(RULES), 'rules', len(CONTROLS), 'controls')
 
 

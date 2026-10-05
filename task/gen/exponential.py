@@ -161,7 +161,7 @@ CONTROLS = [
 def main():
     open(f'{ROOT}/code/integral/exponential.tree', 'w').write(HEADER + '\n' + '\n\n'.join(RULES) + '\n')
     head = '# NEGATIVE CONTROLS for integral/exponential: each must be REFUSED. Expected: 2.\n'
-    open(f'{ROOT}/control/number/exponential-control.tree', 'w').write(head + '\n\n'.join(CONTROLS) + '\n')
+    open(f'{ROOT}/test/case/number/exponential-control.tree', 'w').write(head + '\n\n'.join(CONTROLS) + '\n')
     print(len(RULES), 'rules', len(CONTROLS), 'controls')
 
 

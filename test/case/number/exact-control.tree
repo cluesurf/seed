@@ -1,7 +1,7 @@
 # NEGATIVE CONTROLS for integer exactness: two false identities whose coefficients pass 2^53, where a JavaScript
 # number rounds. Both were PROVEN before 2026-10-02 (the mill read literals with Number(), and the provers combined
 # coefficients in doubles). Expected: 2 refusals. Run: sh deck/term/deck/seed.tree/tmp/make-probe.sh
-# control/number/exact-control.tree
+# test/case/number/exact-control.tree
 
 # FALSE: 2^53 + 1 is not 2^53. A ring normalizer on doubles rounds the left coefficient onto the right one.
 rule probe-coefficient-beyond-two-to-the-fifty-three

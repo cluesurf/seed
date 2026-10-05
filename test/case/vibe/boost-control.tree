@@ -1,4 +1,4 @@
-# NEGATIVE CONTROL: boost. Every rule here must be refused.
+# NEGATIVE CONTROL: boost. Every rule here must be refused. Expected: 1.
 
 load @term/seed/vibe/boost
   find interval

@@ -115,7 +115,7 @@ def main():
     body = '\n'.join(HEADER.rstrip().split('\n')) + '\n' + '\n'.join(RULES) + '\n'
     open(f'{ROOT}/code/space/hyperbolic/area.tree', 'w').write(body)
     head = ('# NEGATIVE CONTROLS for space/hyperbolic/area: each perturbs one certificate and must be REFUSED. Expected: 3.\n')
-    open(f'{ROOT}/control/hyperbolic/area-control.tree', 'w').write(head + '\n'.join(CONTROLS) + '\n')
+    open(f'{ROOT}/test/case/hyperbolic/area-control.tree', 'w').write(head + '\n'.join(CONTROLS) + '\n')
     print(len(RULES), 'rules', len(CONTROLS), 'controls')
 
 

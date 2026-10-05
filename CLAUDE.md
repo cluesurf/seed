@@ -33,13 +33,33 @@ The analysis and hyperbolic files (`code/integral/*`, `code/number/completeness.
 Python generators in `task/gen/`. Edit the generator and rerun it (`python3 task/gen/<name>.py`), never the `.tree`.
 A rule may cite a rule proven above it with `cite <rule>` (the generators' `rule(..., cites=(...))`).
 
+## Controls: `test/case/`
+
+Every file of rules has a CONTROL beside it in `test/case/` (it was `control/` until 2026-10-05): the same theorems
+perturbed (a wrong constant, a dropped hypothesis, a reversed inequality), each of which must be REFUSED. A control
+states how many in its header, `Expected: N`. `term test` builds every file under `test/case/` and passes it only when
+the build refuses exactly N goals, for proof reasons. A control that builds means a false law was accepted. One refused
+for another reason (a typo, an unknown name) is reported broken, because it no longer tests anything.
+
+```
+node ../term/host/line.js test --filter test/case
+```
+
+A new file of rules is not done until its control is in `test/case/` and that command passes.
+
+## What to write next
+
+`../../../../note/term/foundations/` is the plan for the layers the library is missing (logic, sets, numbers,
+algebra, analysis, discrete mathematics), and `phases.md` there is the order. Phase 0 needs no kernel change.
+
 ## Checking
 
 ```
-node ../term/host/line.js scan code/<path>.tree
+node ../term/host/line.js make
 ```
 
-Green `✓` means the kernel accepted the definitions and proved every rule.
+`term make` is the only trustworthy compile signal. Green `✓` means the kernel accepted the definitions and proved
+every rule. `term scan` cannot resolve imports and reports valid code as broken.
 
 ## Prose in comments
 

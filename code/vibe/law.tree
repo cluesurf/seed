@@ -14,7 +14,7 @@
 # reading the definition of the structure.
 #
 # A law that is false for the operations given does not compile. The negative control for every template is
-# control/vibe/law-control.tree, which instantiates each one with an operation that breaks it; `sh control/run.sh`
+# test/case/vibe/law-control.tree, which instantiates each one with an operation that breaks it; `sh task/case.sh`
 # checks that all 17 are refused.
 
 # (a b) c = a (b c).

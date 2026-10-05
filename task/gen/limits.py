@@ -160,7 +160,7 @@ CONTROLS = [
 def main():
     open(f'{ROOT}/code/integral/limits.tree', 'w').write(HEADER + '\n' + '\n\n'.join(RULES) + '\n')
     head = '# NEGATIVE CONTROLS for integral/limits: each must be REFUSED. Expected: 5.\n'
-    open(f'{ROOT}/control/number/limits-control.tree', 'w').write(head + '\n\n'.join(CONTROLS) + '\n')
+    open(f'{ROOT}/test/case/number/limits-control.tree', 'w').write(head + '\n\n'.join(CONTROLS) + '\n')
     print(len(RULES), 'rules', len(CONTROLS), 'controls')
 
 

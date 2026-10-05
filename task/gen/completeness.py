@@ -183,7 +183,7 @@ CONTROLS = [
 def main():
     open(f'{ROOT}/code/number/completeness.tree', 'w').write(HEADER + '\n' + '\n\n'.join(RULES) + '\n')
     head = '# NEGATIVE CONTROLS for number/completeness: each must be REFUSED. Expected: 3.\n'
-    open(f'{ROOT}/control/number/completeness-control.tree', 'w').write(head + '\n\n'.join(CONTROLS) + '\n')
+    open(f'{ROOT}/test/case/number/completeness-control.tree', 'w').write(head + '\n\n'.join(CONTROLS) + '\n')
     print(len(RULES), 'rules', len(CONTROLS), 'controls')
 
 

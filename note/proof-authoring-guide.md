@@ -225,7 +225,7 @@ a proved ceiling theorem (`fold`), plus pure-constant dimension holds.
 
 The full package takes most of an hour. To check a handful of modules with every diagnostic printed, link them into
 a small package (below sixteen files `term make` is sequential and prints every diagnostic; above, it prints only the
-first per file): `sh control/check.sh law tone role`. The negative controls run with `sh control/run.sh`.
+first per file): `sh task/check.sh law tone role`. The negative controls run with `sh task/case.sh`.
 
 ## The test that decides if a file is real
 

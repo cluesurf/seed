@@ -1,4 +1,4 @@
-# NEGATIVE CONTROL: hurwitz, turn, dock, hopf. Every rule here must be refused.
+# NEGATIVE CONTROL: hurwitz, turn, dock, hopf. Every rule here must be refused. Expected: 7.
 
 load @term/seed/atom/flag
   find flag

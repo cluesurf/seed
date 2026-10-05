@@ -215,10 +215,10 @@ STEP_CONTROLS = [
 def main():
     open(f'{ROOT}/code/integral/angle.tree', 'w').write(HEADER + '\n' + '\n\n'.join(RULES) + '\n')
     head = '# NEGATIVE CONTROLS for integral/angle: each must be REFUSED. Expected: 5.\n'
-    open(f'{ROOT}/control/number/angle-control.tree', 'w').write(head + '\n\n'.join(CONTROLS) + '\n')
+    open(f'{ROOT}/test/case/number/angle-control.tree', 'w').write(head + '\n\n'.join(CONTROLS) + '\n')
     head = ('# NEGATIVE CONTROLS for integral/angle, false only in the induction step: each must be REFUSED. Expected: 2.\n'
             '# Needs the fast refusal in check/product.ts in the build that runs it.\n')
-    open(f'{ROOT}/control/number/angle-step-control.tree', 'w').write(head + '\n\n'.join(STEP_CONTROLS) + '\n')
+    open(f'{ROOT}/test/case/number/angle-step-control.tree', 'w').write(head + '\n\n'.join(STEP_CONTROLS) + '\n')
     print(len(RULES), 'rules', len(CONTROLS), 'controls', len(STEP_CONTROLS), 'step controls')
 
 

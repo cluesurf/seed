@@ -93,7 +93,7 @@ def main():
     open(path, 'w').write(text.rstrip() + '\n' + EXTRA)
     # the archimedes controls fail by kernel errors, which hide a file's unproven holds, so these two (refused as
     # unproven holds) live in a file of their own
-    cpath = f'{ROOT}/control/hyperbolic/archimedes-control.tree'
+    cpath = f'{ROOT}/test/case/hyperbolic/archimedes-control.tree'
     ctext = open(cpath).read()
     cut = '\n# false: n = C fails'
     if cut in ctext:
@@ -102,7 +102,7 @@ def main():
     open(cpath, 'w').write(ctext.rstrip() + '\n')
     head = ('# NEGATIVE CONTROLS for the coordinate rules of space/hyperbolic/archimedes: each must be REFUSED. Expected: 2.\n'
             '# Run: sh deck/term/deck/seed.tree/tmp/check-continuity-control.sh\n')
-    open(f'{ROOT}/control/hyperbolic/continuity-control.tree', 'w').write(head + CONTROLS)
+    open(f'{ROOT}/test/case/hyperbolic/continuity-control.tree', 'w').write(head + CONTROLS)
     print('written')
 
 

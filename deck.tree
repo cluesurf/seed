@@ -3,7 +3,7 @@ deck @term/seed
   head <The math library: machine-checked definitions and proofs>
   mark <1.0.0>
   sort tool
-  lock mit
+  lock <Apache-2.0>
   site <https://github.com/cluesurf/seed>
   view ./view/view.gif
   make <mathematics>

@@ -151,7 +151,7 @@ CONTROLS = [
 def main():
     open(f'{ROOT}/code/space/hyperbolic/polar.tree', 'w').write(HEADER + '\n' + '\n\n'.join(RULES) + '\n')
     head = '# NEGATIVE CONTROLS for space/hyperbolic/polar: each must be REFUSED. Expected: 4.\n'
-    open(f'{ROOT}/control/hyperbolic/polar-control.tree', 'w').write(head + '\n\n'.join(CONTROLS) + '\n')
+    open(f'{ROOT}/test/case/hyperbolic/polar-control.tree', 'w').write(head + '\n\n'.join(CONTROLS) + '\n')
     print(len(RULES), 'rules', len(CONTROLS), 'controls')
 
 

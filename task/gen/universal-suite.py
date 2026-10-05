@@ -23,7 +23,7 @@ def rules(path):
 lib, ctl = {}, {}
 for f in ['code/number/completeness.tree', 'code/integral/fundamental.tree', 'tmp/universal-probe.tree', 'tmp/fn-mark-probe.tree']:
     lib.update(rules(f'{ROOT}/{f}'))
-for f in ['control/number/completeness-control.tree', 'control/number/fundamental-control.tree']:
+for f in ['test/case/number/completeness-control.tree', 'test/case/number/fundamental-control.tree']:
     ctl.update(rules(f'{ROOT}/{f}'))
 
 CASES = [
