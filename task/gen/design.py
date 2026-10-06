@@ -118,7 +118,7 @@ NORM = call('norm-squared', *KS)
 
 def rule(name, lhs, rhs, marks=('k1', 'k2', 'k3', 'k4'), comment=None):
     head = [comment] if comment else []
-    body = [f'rule {name}'] + [f'  mark {m}, like integer' for m in marks] + [
+    body = [f'rule {name}'] + [f'  seat {m}, like integer' for m in marks] + [
         '  show hold', '    call is-equal', ind(lhs, 6), ind(rhs, 6)]
     return '\n'.join(head + body)
 

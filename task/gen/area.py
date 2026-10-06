@@ -30,7 +30,7 @@ pair = 'c * c - s * s - 1'
 def identity(name, comment, marks, left, right):
     out = [comment.rstrip(), f'rule {name}']
     for m in marks.split():
-        out.append(f'  mark {m}, like integer')
+        out.append(f'  seat {m}, like integer')
     out.append('  show hold')
     out.append(ind(call('is-equal', parse(left), parse(right)), 4))
     return '\n'.join(out)

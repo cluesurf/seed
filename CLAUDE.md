@@ -16,7 +16,8 @@ not optional. It explains the one rule and the anti-patterns that make a file wo
 - `form` = the inductive datatype (the object).
 - `task` = the recursive operation, by structural recursion (`fork case`).
 - `rule ... / show hold / calm hold` = a theorem discharged by computation.
-- `rule ... / mark v, like T / show hold / fold v / cite lemma` = a universal theorem by induction.
+- `rule ... / seat v, like T / show hold / fold v / cite lemma` = a universal theorem by induction. A `seat` is the
+  theorem's variable, for every value of `T`. It was spelled `mark` until 2026-10-05, and the build refuses that now.
 - `hold` = a machine-integer spot-check. **Garnish only.** A file made only of `hold` blocks is
   garbage: it checks arithmetic on constants you typed and models nothing. Do not write those.
 
@@ -65,17 +66,17 @@ Three things that are not guessable:
 - a case's fields may be `slot`s, so `make conjunction(p, q)` fills them by position. A `make` followed by a comma nests
   what follows into it (the comma rule), so put the formula LAST in an argument list (`evaluate(v, p)`), or stack the
   arguments on their own lines.
-- a form that aliases a task type (`form assignment / like task / take n, like natural / like flag`) types a mark that
-  is then called as the task: `mark v, like assignment` and `v(n)`.
+- a form that aliases a task type (`form assignment / like task / take n, like natural / like flag`) types a seat that
+  is then called as the task: `seat v, like assignment` and `v(n)`.
 - a goal over truth values (`flag`) DECIDES ITSELF by its truth table, with no step, even over values the kernel cannot
   compute (`evaluate(v, p)` is yes or no whatever `p` is). The same table closes each case of a `fold`, under the
   induction hypotheses, which is how `logic/soundness.tree` is one `fold`. A false one is refused with the values that
   break it: `it is FALSE in the case affirm, where evaluate(v, a) is no, evaluate(v, b) is yes`.
 - a value index of an indexed family keeps its `read` under `head` (`head` / `read a`): a bare word there is a type.
-- a rule may take a type parameter (`rule union-commutes / head a / mark s, like set a`), and an alias may too
+- a rule may take a type parameter (`rule union-commutes / head a / seat s, like set a`), and an alias may too
   (`form set / head a / like task / take x, like a / like flag`), so a law is stated once for every type.
-- a hypothesis that holds FOR EVERY element is a `have` with a `mark` of its own: `have symmetric / mark u, like a /
-  mark v, like a / is-equal r(u, v), r(v, u)`. The kernel uses it at each term of that type the goal, its guards and
+- a hypothesis that holds FOR EVERY element is a `have` with a `seat` of its own: `have symmetric / seat u, like a /
+  seat v, like a / is-equal r(u, v), r(v, u)`. The kernel uses it at each term of that type the goal, its guards and
   its `find` witnesses name, and nowhere else, so name the term it is needed at. Instances are decided by the truth
   table and by congruence closure (`f(x) == f(y)` with `g(f(u)) == u` gives `x == y`). See `relation/base.tree` and
   `function/property.tree`. A `fold` in such a theorem is not yet supported (math-foundations-0028).

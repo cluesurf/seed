@@ -30,7 +30,7 @@ def rule(name, lhs, rhs, marks=(), haves=(), comment=None):
         out.append(comment)
     out.append(f'rule {name}')
     for m in marks:
-        out.append(f'  mark {m}, like integer')
+        out.append(f'  seat {m}, like integer')
     for hn, (hl, hr) in haves:
         out.append(f'  have {hn}')
         out.append('    call is-equal')

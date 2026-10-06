@@ -39,7 +39,7 @@ def hamilton(a, b):
 def rule(name, lhs, rhs, marks=(), kind='integer', tactic=None):
     out = [f'rule {name}']
     for m in marks:
-        out.append(f'  mark {m}, like {kind}')
+        out.append(f'  seat {m}, like {kind}')
     out.append('  show hold')
     out.append('    call is-equal')
     out.append(ind(lhs, 6))

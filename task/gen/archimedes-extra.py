@@ -27,7 +27,7 @@ xt = [f'cb * {u[i]} + sb * {v[i]}' for i in range(3)]
 def identity(name, comment, marks, left, right):
     out = [comment.rstrip(), f'rule {name}']
     for m in marks.split():
-        out.append(f'  mark {m}, like integer')
+        out.append(f'  seat {m}, like integer')
     out.append('  show hold')
     out.append(ind(call('is-equal', parse(left), parse(right)), 4))
     return '\n'.join(out)
@@ -36,8 +36,8 @@ def identity(name, comment, marks, left, right):
 def archimedean(name, comment, witness):
     return f'''{comment.rstrip()}
 rule {name}
-  mark aa, like integer
-  mark cc, like integer
+  seat aa, like integer
+  seat cc, like integer
   have aa-is-positive
     call is-minimum
       read aa

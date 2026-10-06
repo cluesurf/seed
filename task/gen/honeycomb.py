@@ -101,7 +101,7 @@ def tridiagonal(n):
 
 def rule(name, lhs, rhs, marks=(), comment=None, kind='integer'):
     head = [comment] if comment else []
-    body = [f'rule {name}'] + [f'  mark {m}, like {kind}' for m in marks] + ['  show hold', '    call is-equal', ind(lhs, 6), ind(rhs, 6)]
+    body = [f'rule {name}'] + [f'  seat {m}, like {kind}' for m in marks] + ['  show hold', '    call is-equal', ind(lhs, 6), ind(rhs, 6)]
     return '\n'.join(head + body)
 
 

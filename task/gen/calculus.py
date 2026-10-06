@@ -17,13 +17,13 @@ ROOT = SEED
 
 def fn(name, arity):
     takes = '\n'.join(f'      take a{i}, like integer' for i in range(arity))
-    return f'  mark {name}\n    like task\n{takes}\n      like integer'
+    return f'  seat {name}\n    like task\n{takes}\n      like integer'
 
 
 def have(name, binders, text):
     lines = [f'  have {name}']
     for b in binders.split():
-        lines.append(f'    mark {b}, like integer')
+        lines.append(f'    seat {b}, like integer')
     lines.append(ind(prop(text), 4))
     return '\n'.join(lines)
 
@@ -32,7 +32,7 @@ def rule(name, comment, functions, marks, haves, goal, induction=None, cites=())
     out = [comment.rstrip(), f'rule {name}']
     out.extend(fn(f, a) for f, a in functions)
     for m in marks.split():
-        out.append(f'  mark {m}, like integer')
+        out.append(f'  seat {m}, like integer')
     out.extend(haves)
     out.append('  show hold')
     out.append(ind(prop(goal), 4))

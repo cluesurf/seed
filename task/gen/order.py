@@ -75,7 +75,7 @@ def claim(text):
 def rule(name, comment, marks, haves, show):
     out = [comment.rstrip(), f'rule {name}']
     for m in marks.split():
-        out.append(f'  mark {m}, like integer')
+        out.append(f'  seat {m}, like integer')
     for i, (label, h) in enumerate(haves):
         out.append(f'  have {label}')
         out.append(ind(claim(h), 4))

@@ -84,12 +84,12 @@ def prop(text):
     raise ValueError(text)
 
 
-FUNCTIONS = '''  mark x
+FUNCTIONS = '''  seat x
     like task
       take k, like integer
       take p, like integer
       like integer
-  mark e
+  seat e
     like task
       take t, like integer
       like integer'''
@@ -98,7 +98,7 @@ FUNCTIONS = '''  mark x
 def have(name, binders, text):
     lines = [f'  have {name}']
     for b in binders.split():
-        lines.append(f'    mark {b}, like integer')
+        lines.append(f'    seat {b}, like integer')
     lines.append(ind(prop(text), 4))
     return '\n'.join(lines)
 
@@ -116,7 +116,7 @@ CAUCHY = have('they-are-a-cauchy-sequence', 'k j p',
 def rule(name, comment, hyps, marks, plain, goal):
     out = [comment.rstrip(), f'rule {name}', FUNCTIONS]
     for m in marks.split():
-        out.append(f'  mark {m}, like integer')
+        out.append(f'  seat {m}, like integer')
     out.extend(hyps)
     for label, text in plain:
         out.append(f'  have {label}')
@@ -141,7 +141,7 @@ HEADER = '''# THE COMPLETENESS OF THE REAL NUMBERS, in Cauchy's form: a Cauchy s
 #   THE SEQUENCE CONVERGES    |x(k, p) - L(p)| <= e(k) + 2 e(p): |x_k - L| <= e(k) as reals, which tends to 0.
 #
 # Each is a chain of triangle inequalities, and the proof is the prover INSTANTIATING the universal hypotheses
-# (`have ... / mark k, like integer / ...`, each true for every value of its marks) at the terms the goal names, then
+# (`have ... / seat k, like integer / ...`, each true for every value of its seats) at the terms the goal names, then
 # a linear combination of the instances over an ordered field (check/product.ts, no integer rounding), so it holds
 # whatever field the approximations are drawn from. x and e are quantified functions: the theorems hold for every
 # sequence and every modulus satisfying the hypotheses.

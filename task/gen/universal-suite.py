@@ -49,7 +49,7 @@ CASES = [
 ]
 
 HEAD = '''// Quantified FUNCTIONS and UNIVERSAL hypotheses in theorems (check/holds.ts applicationKey, universalGoal,
-// universalInduction): a `mark x, like task` is a pure application, a `have h / mark t / P` holds for every t and is
+// universalInduction): a `seat x, like task` is a pure application, a `have h / seat t / P` holds for every t and is
 // instantiated at the terms the goal names, and `fold n` inducts over a goal whose recurrences are such hypotheses.
 // Every goal is decided over an ordered field. Run: npx tsx test/check/universal.ts
 //

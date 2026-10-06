@@ -68,7 +68,7 @@ form by unfolding definitions. This covers step lemmas and concrete evaluations.
 
 ```
 rule parity-succ-steps
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call parity
@@ -86,7 +86,7 @@ recurses on. Add `cite` children for the lemmas the inductive step needs.
 
 ```
 rule double-is-even
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call parity
@@ -129,7 +129,7 @@ the recurrence. A file whose entire content is `hold` blocks is the anti-pattern
 | `form X / case ... / link f, like Y` | inductive datatype (the object) |
 | `task f / take ... / like R / fork case, read a` | recursive function (the operation) |
 | `rule name / show hold / <tactic>` | named theorem |
-| `mark v, like T` | introduce a universally-quantified variable |
+| `seat v, like T` | introduce a universally-quantified variable |
 | `calm hold` | discharge by computation / definitional unfolding |
 | `fold v` | discharge by structural induction on `v` |
 | `cite lemma` | supply a lemma to an inductive step (child of `fold`) |
