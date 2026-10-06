@@ -1,0 +1,77 @@
+# NEGATIVE CONTROL for code/number/total.tree: each law about finite sums with one thing changed, false for some
+# function or some n. Every one must be refused.
+# Expected: 8 refusals.
+load @term/seed/number/total
+  find term
+  find total
+  find identity
+  find odd
+  find cube
+
+# false at n = 0 with f(1) nonzero: a step that forgets its last term
+rule control-a-step-without-its-term
+  mark f, like term
+  mark n, like natural-number
+  show hold, is-equal total(f, add(n, 1)), total(f, n)
+
+# false wherever g is not zero: linearity counting g twice
+rule control-linearity-counts-g-twice
+  mark f, like term
+  mark g, like term
+  mark h, like term
+  mark n, like natural-number
+  have h-is-f-plus-g
+    mark i, like integer
+    is-equal h(i), add(f(i), g(i))
+  show hold, is-equal total(h, n), add(total(f, n), multiply(2, total(g, n)))
+  fold n
+
+# false at n = 1: a sum of zeros taken for n
+rule control-zeros-sum-to-n
+  mark f, like term
+  mark n, like natural-number
+  have f-is-zero
+    mark i, like integer
+    is-equal f(i), 0
+  show hold, is-equal total(f, n), n
+  fold n
+
+# false wherever f(0) and f(1) differ: telescoping to the wrong start
+rule control-telescoping-off-by-one
+  mark f, like term
+  mark g, like term
+  mark n, like natural-number
+  have g-is-a-difference
+    mark i, like integer
+    is-equal g(i), subtract(f(i), f(subtract(i, 1)))
+  show hold, is-equal total(g, n), subtract(f(n), f(1))
+  fold n
+
+# false at r = 2, g(0) = 1, n = 0: the geometric sum without the factor on g(0)
+rule control-geometric-sum-loses-a-factor
+  mark g, like term
+  mark r, like integer
+  mark n, like natural-number
+  have g-grows-by-r
+    mark i, like integer
+    is-equal g(i), multiply(r, g(subtract(i, 1)))
+  show hold, is-equal multiply(subtract(r, 1), total(g, n)), subtract(multiply(r, g(n)), g(0))
+  fold n
+
+# false at n = 1: Gauss with n squared
+rule control-gauss-squared
+  mark n, like natural-number
+  show hold, is-equal multiply(2, total(identity, n)), multiply(n, n)
+  fold n
+
+# false at n = 0: the odd numbers one too many
+rule control-odd-numbers-one-more
+  mark n, like natural-number
+  show hold, is-equal total(odd, n), add(multiply(n, n), 1)
+  fold n
+
+# false at n = 2: the cubes taken for n times the sum
+rule control-nicomachus-wrong
+  mark n, like natural-number
+  show hold, is-equal total(cube, n), multiply(total(identity, n), n)
+  fold n

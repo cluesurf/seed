@@ -1,0 +1,109 @@
+# NEGATIVE CONTROL for code/logic/propositional.tree: each law there with one thing changed, still citing the law it
+# was. Each is false at some assignment, so no instance of the cited law can prove it, and every one must be refused.
+# A build that accepted one would mean the instantiating `cite` proves what the cited law does not say.
+# Expected: 8 refusals.
+load @term/seed/atom/flag
+  find flag
+  find not-flag-is-an-involution
+
+load @term/seed/number/peano
+  find natural
+
+load @term/seed/logic/boolean
+  find both-associates
+  find both-distributes-over-either
+  find both-absorbs-either
+  find excluded-middle
+  find not-both-is-either-not
+  find implies-is-not-or
+  find contraposition
+
+load @term/seed/logic/propositional
+  find proposition
+  find assignment
+  find evaluate
+
+# false where p is true: one negation dropped
+rule control-a-negation-is-its-body
+  mark v, like assignment
+  mark p, like proposition
+  show hold, is-equal evaluate(v, make negation(p)), evaluate(v, p)
+  cite not-flag-is-an-involution
+
+# false where p, r are true and q is false: the inner conjunction turned into a disjunction
+rule control-conjunction-associates-into-disjunction
+  mark v, like assignment
+  mark p, like proposition
+  mark q, like proposition
+  mark r, like proposition
+  show hold
+    is-equal
+      evaluate
+        v
+        make conjunction
+          make conjunction(p, q)
+          r
+      evaluate(v, make conjunction(p, make disjunction(q, r)))
+  cite both-associates
+
+# false where p is false and q, r are true: distributing over the wrong connective
+rule control-conjunction-distributes-into-conjunction
+  mark v, like assignment
+  mark p, like proposition
+  mark q, like proposition
+  mark r, like proposition
+  show hold
+    is-equal
+      evaluate(v, make conjunction(p, make disjunction(q, r)))
+      evaluate
+        v
+        make conjunction
+          make disjunction(p, q)
+          make disjunction(p, r)
+  cite both-distributes-over-either
+
+# false where p is false and q is true: absorption keeping the other formula
+rule control-absorption-keeps-q
+  mark v, like assignment
+  mark p, like proposition
+  mark q, like proposition
+  show hold, is-equal evaluate(v, make conjunction(p, make disjunction(p, q))), evaluate(v, q)
+  cite both-absorbs-either
+
+# false under every assignment: excluded middle with the wrong constant
+rule control-excluded-middle-is-false
+  mark v, like assignment
+  mark p, like proposition
+  show hold, is-equal evaluate(v, make disjunction(p, make negation(p))), make no
+  cite excluded-middle
+
+# false where p is true and q is false: De Morgan without swapping the connective
+rule control-de-morgan-without-the-swap
+  mark v, like assignment
+  mark p, like proposition
+  mark q, like proposition
+  show hold
+    is-equal
+      evaluate(v, make negation(make conjunction(p, q)))
+      evaluate
+        v
+        make conjunction
+          make negation(p)
+          make negation(q)
+  cite not-both-is-either-not
+
+# false where p and q are false: implication as `p or q`
+rule control-implication-without-the-negation
+  mark v, like assignment
+  mark p, like proposition
+  mark q, like proposition
+  show hold, is-equal evaluate(v, make implication(p, q)), evaluate(v, make disjunction(p, q))
+  cite implies-is-not-or
+
+# false where p is false and q is true: the converse in place of the contrapositive
+rule control-converse-is-not-contraposition
+  mark v, like assignment
+  mark p, like proposition
+  mark q, like proposition
+  show hold, is-equal evaluate(v, make implication(p, q)), evaluate(v, make implication(q, p))
+  cite contraposition

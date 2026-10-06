@@ -1,0 +1,135 @@
+# SOUNDNESS of a proof system for propositional logic: every formula it derives is true under every assignment.
+#
+# The system is Hilbert's, for the four connectives of logic/propositional.tree: nine axiom schemes and one rule,
+# modus ponens. A derivation is a family indexed by the formula it proves: `derivation p` holds the derivations of p,
+# each case states the formula it concludes, and modus ponens takes a derivation of a and one of `a implies b` to
+# conclude b. So a derivation cannot conclude what its steps do not give, and nothing has to check it.
+#
+# The theorem is one `fold` over the derivation. Each axiom case is decided by trying every truth value of the
+# formulas in it (the kernel's truth table: `evaluate(v, a)` is yes or no, whatever a is), and the modus ponens case by
+# the same table under the two induction hypotheses: a true and `a implies b` true leave b true.
+#
+# The axioms (a, b, c any formulas):
+#
+#   implies-self-weakens  a -> (b -> a)
+#   implies-distributes   (a -> (b -> c)) -> ((a -> b) -> (a -> c))
+#   contraposition        (not a -> not b) -> (b -> a)
+#   conjunction-forms     a -> (b -> a and b)
+#   conjunction-left      a and b -> a
+#   conjunction-right     a and b -> b
+#   disjunction-left      a -> a or b
+#   disjunction-right     b -> a or b
+#   disjunction-cases     (a -> c) -> ((b -> c) -> (a or b -> c))
+load @term/seed/atom/flag
+  find flag
+
+load @term/seed/logic/propositional
+  find proposition
+  find assignment
+  find evaluate
+
+form derivation
+  head p, like proposition
+
+  case implies-self-weakens
+    link a, like proposition
+    link b, like proposition
+    head
+      make implication
+        a
+        make implication(b, a)
+
+  case implies-distributes
+    link a, like proposition
+    link b, like proposition
+    link c, like proposition
+    head
+      make implication
+        make implication
+          a
+          make implication(b, c)
+        make implication
+          make implication(a, b)
+          make implication(a, c)
+
+  case contraposition
+    link a, like proposition
+    link b, like proposition
+    head
+      make implication
+        make implication
+          make negation(a)
+          make negation(b)
+        make implication(b, a)
+
+  case conjunction-forms
+    link a, like proposition
+    link b, like proposition
+    head
+      make implication
+        a
+        make implication(b, make conjunction(a, b))
+
+  case conjunction-left
+    link a, like proposition
+    link b, like proposition
+    head
+      make implication
+        make conjunction(a, b)
+        a
+
+  case conjunction-right
+    link a, like proposition
+    link b, like proposition
+    head
+      make implication
+        make conjunction(a, b)
+        b
+
+  case disjunction-left
+    link a, like proposition
+    link b, like proposition
+    head
+      make implication(a, make disjunction(a, b))
+
+  case disjunction-right
+    link a, like proposition
+    link b, like proposition
+    head
+      make implication(b, make disjunction(a, b))
+
+  case disjunction-cases
+    link a, like proposition
+    link b, like proposition
+    link c, like proposition
+    head
+      make implication
+        make implication(a, c)
+        make implication
+          make implication(b, c)
+          make implication
+            make disjunction(a, b)
+            c
+
+  # from a derivation of a and one of `a implies b`, b
+  case modus-ponens
+    link a, like proposition
+    link b, like proposition
+    link minor, like derivation
+      head
+        read a
+    link major, like derivation
+      head
+        make implication(a, b)
+    head
+      read b
+
+# SOUNDNESS: what the system derives is true, under every assignment.
+rule derivable-is-true
+  mark v, like assignment
+  mark p, like proposition
+  mark d, like derivation
+    head
+      read p
+  show hold, is-equal evaluate(v, p), make yes
+  fold d

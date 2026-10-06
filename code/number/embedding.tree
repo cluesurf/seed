@@ -1,0 +1,68 @@
+# THE BRIDGE from the Peano naturals (number/peano.tree) to the built-in integers: `count(n)` is the integer a natural
+# counts to, and it preserves zero, successor, addition, multiplication and powers, is never negative, and is
+# monotone along addition.
+#
+# Two kinds of proof meet here. A law about `natural` is proved by `fold`, one case per constructor, and a law about
+# the integers by the arithmetic provers. Each case of these folds is an integer identity in the counts of the smaller
+# naturals, which the kernel closes as a ring identity modulo the induction hypothesis. So a theorem proved about
+# `plus` on naturals can now be used as a theorem about `+` on integers, and the other way round.
+load @term/seed/number/peano
+  find natural
+  find plus
+  find times
+  find power
+  find one
+
+# the integer a natural counts to
+task count
+  take n, like natural
+
+  like integer
+
+  sift n
+    case zero
+      back 0
+    case succ
+      link prior
+      back add(count(prior), 1)
+
+# ZERO AND SUCCESSOR.
+rule count-of-zero
+  show hold, is-equal count(make zero), 0
+
+rule count-of-one
+  show hold, is-equal count(one()), 1
+
+rule count-of-succ
+  mark n, like natural
+  show hold, is-equal count(make succ(n)), add(count(n), 1)
+
+# A COUNT IS NEVER NEGATIVE.
+rule count-is-not-negative
+  mark n, like natural
+  show hold, is-minimum count(n), 0
+  fold n
+
+# ADDITION AND MULTIPLICATION go over to the integers' own.
+rule count-of-plus
+  mark a, like natural
+  mark b, like natural
+  show hold, is-equal count(plus(a, b)), add(count(a), count(b))
+  fold a
+
+rule count-of-times
+  mark a, like natural
+  mark b, like natural
+  show hold, is-equal count(times(a, b)), multiply(count(a), count(b))
+  fold a
+    cite count-of-plus
+
+# MONOTONE ALONG ADDITION: a natural counts to no more than itself plus another. The sum law and the count of b, which
+# is never negative (`find n, b` names the instance of that rule's mark n)
+rule count-of-plus-is-at-least-the-left
+  mark a, like natural
+  mark b, like natural
+  find n, b
+  show hold, is-minimum count(plus(a, b)), count(a)
+  cite count-of-plus
+  cite count-is-not-negative

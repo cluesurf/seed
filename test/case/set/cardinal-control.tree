@@ -1,0 +1,49 @@
+# NEGATIVE CONTROL for code/set/cardinal.tree: Cantor's diagonal argument with one thing changed. Both must be refused.
+# Expected: 2 refusals.
+load @term/seed/atom/flag
+  find flag
+
+load @term/seed/logic/boolean
+  find iff
+
+load @term/seed/set/base
+  find set
+  find has
+
+load @term/seed/set/cardinal
+  find diagonal
+
+# false everywhere: the diagonal AGREES with f(x) at x
+rule control-the-diagonal-agrees
+  head a
+  mark f
+    like task
+      take y, like a
+      like set a
+  mark x, like a
+  show hold, is-equal iff(has(diagonal(f), x), has(f(x), x)), make yes
+
+# false where x is in f(x): a diagonal without the negation is f's own diagonal, which f may reach
+task diagonal-without-negation
+  head a
+  take f
+    like task
+      take x, like a
+      like set a
+
+  like set a
+
+  back
+    task
+      take x, like a
+      like flag
+      back has(f(x), x)
+
+rule control-an-unnegated-diagonal-differs
+  head a
+  mark f
+    like task
+      take y, like a
+      like set a
+  mark x, like a
+  show hold, is-equal iff(has(diagonal-without-negation(f), x), has(f(x), x)), make no

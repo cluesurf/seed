@@ -1,0 +1,248 @@
+# Matrices of size two and three over the integers, as forms, with the product, the transpose, the determinant, the
+# trace, and their action on the vectors of vector/fixed.tree.
+#
+# An entry is named by its row and its column, `m/xy` the row x, column y entry. Every law is stated for every matrix
+# by name and decided by the ring normalizer on the entries, each an unknown of its own: the determinant of a product is
+# the product of the determinants, for every pair of 3-by-3 matrices, with no proof step.
+load @term/seed/vector/fixed
+  find vector-two
+  find vector-three
+
+form matrix-two
+  slot xx, like integer
+  slot xy, like integer
+  slot yx, like integer
+  slot yy, like integer
+
+form matrix-three
+  slot xx, like integer
+  slot xy, like integer
+  slot xz, like integer
+  slot yx, like integer
+  slot yy, like integer
+  slot yz, like integer
+  slot zx, like integer
+  slot zy, like integer
+  slot zz, like integer
+
+# ---- size two ----
+
+task product
+  take m, like matrix-two
+  take n, like matrix-two
+
+  like matrix-two
+
+  back
+    make matrix-two
+      bind xx, add(multiply(m/xx, n/xx), multiply(m/xy, n/yx))
+      bind xy, add(multiply(m/xx, n/xy), multiply(m/xy, n/yy))
+      bind yx, add(multiply(m/yx, n/xx), multiply(m/yy, n/yx))
+      bind yy, add(multiply(m/yx, n/xy), multiply(m/yy, n/yy))
+
+task total
+  take m, like matrix-two
+  take n, like matrix-two
+
+  like matrix-two
+
+  back make matrix-two(add(m/xx, n/xx), add(m/xy, n/xy), add(m/yx, n/yx), add(m/yy, n/yy))
+
+task transpose
+  take m, like matrix-two
+
+  like matrix-two
+
+  back make matrix-two(m/xx, m/yx, m/xy, m/yy)
+
+task determinant
+  take m, like matrix-two
+
+  like integer
+
+  back subtract(multiply(m/xx, m/yy), multiply(m/xy, m/yx))
+
+task trace
+  take m, like matrix-two
+
+  like integer
+
+  back add(m/xx, m/yy)
+
+task unit-two
+  like matrix-two
+
+  back make matrix-two(1, 0, 0, 1)
+
+# the matrix applied to a vector
+task apply
+  take m, like matrix-two
+  take v, like vector-two
+
+  like vector-two
+
+  back make vector-two(add(multiply(m/xx, v/x), multiply(m/xy, v/y)), add(multiply(m/yx, v/x), multiply(m/yy, v/y)))
+
+rule product-associates-two
+  mark m, like matrix-two
+  mark n, like matrix-two
+  mark p, like matrix-two
+  show hold, is-equal product(product(m, n), p), product(m, product(n, p))
+
+rule unit-is-identity-two
+  mark m, like matrix-two
+  show hold, is-equal product(unit-two(), m), m
+
+rule unit-is-identity-on-the-right-two
+  mark m, like matrix-two
+  show hold, is-equal product(m, unit-two()), m
+
+rule product-distributes-two
+  mark m, like matrix-two
+  mark n, like matrix-two
+  mark p, like matrix-two
+  show hold, is-equal product(m, total(n, p)), total(product(m, n), product(m, p))
+
+rule transpose-twice-two
+  mark m, like matrix-two
+  show hold, is-equal transpose(transpose(m)), m
+
+rule transpose-of-a-product-two
+  mark m, like matrix-two
+  mark n, like matrix-two
+  show hold, is-equal transpose(product(m, n)), product(transpose(n), transpose(m))
+
+rule determinant-of-a-product-two
+  mark m, like matrix-two
+  mark n, like matrix-two
+  show hold, is-equal determinant(product(m, n)), multiply(determinant(m), determinant(n))
+
+rule determinant-of-the-transpose-two
+  mark m, like matrix-two
+  show hold, is-equal determinant(transpose(m)), determinant(m)
+
+rule trace-of-a-product-commutes-two
+  mark m, like matrix-two
+  mark n, like matrix-two
+  show hold, is-equal trace(product(m, n)), trace(product(n, m))
+
+rule apply-a-product-two
+  mark m, like matrix-two
+  mark n, like matrix-two
+  mark v, like vector-two
+  show hold, is-equal apply(product(m, n), v), apply(m, apply(n, v))
+
+# CAYLEY-HAMILTON for size two: m^2 - trace(m) m + det(m) I = 0, read entry by entry as m^2 + det(m) I = trace(m) m.
+rule cayley-hamilton-two
+  mark m, like matrix-two
+  show hold
+    is-equal
+      total(product(m, m), make matrix-two(determinant(m), 0, 0, determinant(m)))
+      make matrix-two(multiply(trace(m), m/xx), multiply(trace(m), m/xy), multiply(trace(m), m/yx), multiply(trace(m), m/yy))
+
+# ---- size three ----
+
+task product
+  take m, like matrix-three
+  take n, like matrix-three
+
+  like matrix-three
+
+  back
+    make matrix-three
+      bind xx, add(add(multiply(m/xx, n/xx), multiply(m/xy, n/yx)), multiply(m/xz, n/zx))
+      bind xy, add(add(multiply(m/xx, n/xy), multiply(m/xy, n/yy)), multiply(m/xz, n/zy))
+      bind xz, add(add(multiply(m/xx, n/xz), multiply(m/xy, n/yz)), multiply(m/xz, n/zz))
+      bind yx, add(add(multiply(m/yx, n/xx), multiply(m/yy, n/yx)), multiply(m/yz, n/zx))
+      bind yy, add(add(multiply(m/yx, n/xy), multiply(m/yy, n/yy)), multiply(m/yz, n/zy))
+      bind yz, add(add(multiply(m/yx, n/xz), multiply(m/yy, n/yz)), multiply(m/yz, n/zz))
+      bind zx, add(add(multiply(m/zx, n/xx), multiply(m/zy, n/yx)), multiply(m/zz, n/zx))
+      bind zy, add(add(multiply(m/zx, n/xy), multiply(m/zy, n/yy)), multiply(m/zz, n/zy))
+      bind zz, add(add(multiply(m/zx, n/xz), multiply(m/zy, n/yz)), multiply(m/zz, n/zz))
+
+task transpose
+  take m, like matrix-three
+
+  like matrix-three
+
+  back make matrix-three(m/xx, m/yx, m/zx, m/xy, m/yy, m/zy, m/xz, m/yz, m/zz)
+
+# the determinant, by expansion along the first row
+task determinant
+  take m, like matrix-three
+
+  like integer
+
+  back
+    add
+      subtract
+        multiply(m/xx, subtract(multiply(m/yy, m/zz), multiply(m/yz, m/zy)))
+        multiply(m/xy, subtract(multiply(m/yx, m/zz), multiply(m/yz, m/zx)))
+      multiply(m/xz, subtract(multiply(m/yx, m/zy), multiply(m/yy, m/zx)))
+
+task trace
+  take m, like matrix-three
+
+  like integer
+
+  back add(add(m/xx, m/yy), m/zz)
+
+task unit-three
+  like matrix-three
+
+  back make matrix-three(1, 0, 0, 0, 1, 0, 0, 0, 1)
+
+task apply
+  take m, like matrix-three
+  take v, like vector-three
+
+  like vector-three
+
+  back
+    make vector-three
+      bind x, add(add(multiply(m/xx, v/x), multiply(m/xy, v/y)), multiply(m/xz, v/z))
+      bind y, add(add(multiply(m/yx, v/x), multiply(m/yy, v/y)), multiply(m/yz, v/z))
+      bind z, add(add(multiply(m/zx, v/x), multiply(m/zy, v/y)), multiply(m/zz, v/z))
+
+rule product-associates-three
+  mark m, like matrix-three
+  mark n, like matrix-three
+  mark p, like matrix-three
+  show hold, is-equal product(product(m, n), p), product(m, product(n, p))
+
+rule unit-is-identity-three
+  mark m, like matrix-three
+  show hold, is-equal product(unit-three(), m), m
+
+rule transpose-twice-three
+  mark m, like matrix-three
+  show hold, is-equal transpose(transpose(m)), m
+
+rule transpose-of-a-product-three
+  mark m, like matrix-three
+  mark n, like matrix-three
+  show hold, is-equal transpose(product(m, n)), product(transpose(n), transpose(m))
+
+# THE DETERMINANT IS MULTIPLICATIVE, for every pair of 3-by-3 matrices.
+rule determinant-of-a-product-three
+  mark m, like matrix-three
+  mark n, like matrix-three
+  show hold, is-equal determinant(product(m, n)), multiply(determinant(m), determinant(n))
+
+rule determinant-of-the-transpose-three
+  mark m, like matrix-three
+  show hold, is-equal determinant(transpose(m)), determinant(m)
+
+rule determinant-of-unit-three
+  show hold, is-equal determinant(unit-three()), 1
+
+rule trace-of-a-product-commutes-three
+  mark m, like matrix-three
+  mark n, like matrix-three
+  show hold, is-equal trace(product(m, n)), trace(product(n, m))
+
+rule apply-a-product-three
+  mark m, like matrix-three
+  mark n, like matrix-three
+  mark v, like vector-three
+  show hold, is-equal apply(product(m, n), v), apply(m, apply(n, v))

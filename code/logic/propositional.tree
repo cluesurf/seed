@@ -1,0 +1,270 @@
+# Propositional logic as a theory: formulas as a form, their meaning under an assignment of truth values to the
+# variables, and the laws of the connectives proven for every formula and every assignment.
+#
+# A formula is a variable (numbered by a natural), or a negation, conjunction, disjunction or implication of formulas.
+# An assignment gives each variable a flag. `evaluate(v, p)` is the flag of p under v, computed by the boolean
+# operations of atom/flag.tree. The assignment comes first so a formula built in place, `make conjunction(p, q)`, can
+# close the argument list.
+#
+# Each law is the matching law of logic/boolean.tree read through `evaluate`, and is proved by citing it: the two
+# sides compute to that law's two sides at the formulas' values, which is what an instance of it means.
+load @term/seed/atom/flag
+  find flag
+  find both
+  find either
+  find not-flag
+  find implies
+  find not-flag-is-an-involution
+
+load @term/seed/number/peano
+  find natural
+
+load @term/seed/logic/boolean
+  find both-commutes
+  find either-commutes
+  find both-associates
+  find either-associates
+  find both-is-idempotent
+  find either-is-idempotent
+  find both-distributes-over-either
+  find either-distributes-over-both
+  find both-absorbs-either
+  find either-absorbs-both
+  find excluded-middle
+  find non-contradiction
+  find not-both-is-either-not
+  find not-either-is-both-not
+  find implies-is-not-or
+  find contraposition
+  find implies-itself
+
+form proposition
+  case variable
+    slot index, like natural
+  case negation
+    slot body, like proposition
+  case conjunction
+    slot left, like proposition
+    slot right, like proposition
+  case disjunction
+    slot left, like proposition
+    slot right, like proposition
+  case implication
+    slot left, like proposition
+    slot right, like proposition
+
+# A truth value for each variable.
+form assignment
+  like task
+    take n, like natural
+    like flag
+
+# The flag of a formula when variable n is v(n).
+task evaluate
+  take v, like assignment
+  take p, like proposition
+
+  like flag
+
+  sift p
+    case variable
+      back v(index)
+    case negation
+      back not-flag(evaluate(v, body))
+    case conjunction
+      back both(evaluate(v, left), evaluate(v, right))
+    case disjunction
+      back either(evaluate(v, left), evaluate(v, right))
+    case implication
+      back implies(evaluate(v, left), evaluate(v, right))
+
+# DOUBLE NEGATION: not not p means p.
+rule double-negation
+  mark v, like assignment
+  mark p, like proposition
+  show hold, is-equal evaluate(v, make negation(make negation(p))), evaluate(v, p)
+  cite not-flag-is-an-involution
+
+# COMMUTATIVITY.
+rule conjunction-commutes
+  mark v, like assignment
+  mark p, like proposition
+  mark q, like proposition
+  show hold, is-equal evaluate(v, make conjunction(p, q)), evaluate(v, make conjunction(q, p))
+  cite both-commutes
+
+rule disjunction-commutes
+  mark v, like assignment
+  mark p, like proposition
+  mark q, like proposition
+  show hold, is-equal evaluate(v, make disjunction(p, q)), evaluate(v, make disjunction(q, p))
+  cite either-commutes
+
+# ASSOCIATIVITY.
+rule conjunction-associates
+  mark v, like assignment
+  mark p, like proposition
+  mark q, like proposition
+  mark r, like proposition
+  show hold
+    is-equal
+      evaluate
+        v
+        make conjunction
+          make conjunction(p, q)
+          r
+      evaluate(v, make conjunction(p, make conjunction(q, r)))
+  cite both-associates
+
+rule disjunction-associates
+  mark v, like assignment
+  mark p, like proposition
+  mark q, like proposition
+  mark r, like proposition
+  show hold
+    is-equal
+      evaluate
+        v
+        make disjunction
+          make disjunction(p, q)
+          r
+      evaluate(v, make disjunction(p, make disjunction(q, r)))
+  cite either-associates
+
+# IDEMPOTENCE: p and p means p, p or p means p.
+rule conjunction-is-idempotent
+  mark v, like assignment
+  mark p, like proposition
+  show hold, is-equal evaluate(v, make conjunction(p, p)), evaluate(v, p)
+  cite both-is-idempotent
+
+rule disjunction-is-idempotent
+  mark v, like assignment
+  mark p, like proposition
+  show hold, is-equal evaluate(v, make disjunction(p, p)), evaluate(v, p)
+  cite either-is-idempotent
+
+# DISTRIBUTIVITY, both ways.
+rule conjunction-distributes-over-disjunction
+  mark v, like assignment
+  mark p, like proposition
+  mark q, like proposition
+  mark r, like proposition
+  show hold
+    is-equal
+      evaluate(v, make conjunction(p, make disjunction(q, r)))
+      evaluate
+        v
+        make disjunction
+          make conjunction(p, q)
+          make conjunction(p, r)
+  cite both-distributes-over-either
+
+rule disjunction-distributes-over-conjunction
+  mark v, like assignment
+  mark p, like proposition
+  mark q, like proposition
+  mark r, like proposition
+  show hold
+    is-equal
+      evaluate(v, make disjunction(p, make conjunction(q, r)))
+      evaluate
+        v
+        make conjunction
+          make disjunction(p, q)
+          make disjunction(p, r)
+  cite either-distributes-over-both
+
+# ABSORPTION.
+rule conjunction-absorbs-disjunction
+  mark v, like assignment
+  mark p, like proposition
+  mark q, like proposition
+  show hold, is-equal evaluate(v, make conjunction(p, make disjunction(p, q))), evaluate(v, p)
+  cite both-absorbs-either
+
+rule disjunction-absorbs-conjunction
+  mark v, like assignment
+  mark p, like proposition
+  mark q, like proposition
+  show hold, is-equal evaluate(v, make disjunction(p, make conjunction(p, q))), evaluate(v, p)
+  cite either-absorbs-both
+
+# EXCLUDED MIDDLE and NON-CONTRADICTION: p or not p is true, p and not p is false, under every assignment.
+rule excluded-middle-holds
+  mark v, like assignment
+  mark p, like proposition
+  show hold, is-equal evaluate(v, make disjunction(p, make negation(p))), make yes
+  cite excluded-middle
+
+rule non-contradiction-holds
+  mark v, like assignment
+  mark p, like proposition
+  show hold, is-equal evaluate(v, make conjunction(p, make negation(p))), make no
+  cite non-contradiction
+
+# DE MORGAN, both ways.
+rule de-morgan-conjunction
+  mark v, like assignment
+  mark p, like proposition
+  mark q, like proposition
+  show hold
+    is-equal
+      evaluate(v, make negation(make conjunction(p, q)))
+      evaluate
+        v
+        make disjunction
+          make negation(p)
+          make negation(q)
+  cite not-both-is-either-not
+
+rule de-morgan-disjunction
+  mark v, like assignment
+  mark p, like proposition
+  mark q, like proposition
+  show hold
+    is-equal
+      evaluate(v, make negation(make disjunction(p, q)))
+      evaluate
+        v
+        make conjunction
+          make negation(p)
+          make negation(q)
+  cite not-either-is-both-not
+
+# IMPLICATION is `not p or q`.
+rule implication-is-disjunction
+  mark v, like assignment
+  mark p, like proposition
+  mark q, like proposition
+  show hold
+    is-equal
+      evaluate(v, make implication(p, q))
+      evaluate
+        v
+        make disjunction
+          make negation(p)
+          q
+  cite implies-is-not-or
+
+# CONTRAPOSITION: p implies q means not q implies not p.
+rule contraposition-holds
+  mark v, like assignment
+  mark p, like proposition
+  mark q, like proposition
+  show hold
+    is-equal
+      evaluate(v, make implication(p, q))
+      evaluate
+        v
+        make implication
+          make negation(q)
+          make negation(p)
+  cite contraposition
+
+# Every formula implies itself, under every assignment.
+rule implication-is-reflexive
+  mark v, like assignment
+  mark p, like proposition
+  show hold, is-equal evaluate(v, make implication(p, p)), make yes
+  cite implies-itself

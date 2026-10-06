@@ -1,0 +1,245 @@
+# Vectors of size two and three over the integers, as forms, with their operations and the laws of a vector space,
+# the dot product, the cross product, and Cauchy-Schwarz.
+#
+# Every law is stated for every vector, by name: `dot(u, v) == dot(v, u)`. The provers see through the tasks to the
+# coordinates (`u/x`, `u/y`, each an unknown of its own) and decide the identity there: an equation by the ring
+# normalizer, an inequality by the product prover. No law needs a proof step.
+form vector-two
+  slot x, like integer
+  slot y, like integer
+
+form vector-three
+  slot x, like integer
+  slot y, like integer
+  slot z, like integer
+
+# ---- size two ----
+
+task sum
+  take u, like vector-two
+  take v, like vector-two
+
+  like vector-two
+
+  back make vector-two(add(u/x, v/x), add(u/y, v/y))
+
+task scaled
+  take k, like integer
+  take v, like vector-two
+
+  like vector-two
+
+  back make vector-two(multiply(k, v/x), multiply(k, v/y))
+
+task opposite
+  take v, like vector-two
+
+  like vector-two
+
+  back make vector-two(subtract(0, v/x), subtract(0, v/y))
+
+task dot
+  take u, like vector-two
+  take v, like vector-two
+
+  like integer
+
+  back add(multiply(u/x, v/x), multiply(u/y, v/y))
+
+# the zero vector
+task origin-two
+  like vector-two
+
+  back make vector-two(0, 0)
+
+rule sum-commutes-two
+  mark u, like vector-two
+  mark v, like vector-two
+  show hold, is-equal sum(u, v), sum(v, u)
+
+rule sum-associates-two
+  mark u, like vector-two
+  mark v, like vector-two
+  mark w, like vector-two
+  show hold, is-equal sum(sum(u, v), w), sum(u, sum(v, w))
+
+rule origin-is-identity-two
+  mark v, like vector-two
+  show hold, is-equal sum(v, origin-two()), v
+
+rule opposite-cancels-two
+  mark v, like vector-two
+  show hold, is-equal sum(v, opposite(v)), origin-two()
+
+rule scaled-distributes-over-sum-two
+  mark k, like integer
+  mark u, like vector-two
+  mark v, like vector-two
+  show hold, is-equal scaled(k, sum(u, v)), sum(scaled(k, u), scaled(k, v))
+
+rule scaled-twice-two
+  mark j, like integer
+  mark k, like integer
+  mark v, like vector-two
+  show hold, is-equal scaled(j, scaled(k, v)), scaled(multiply(j, k), v)
+
+rule dot-is-symmetric-two
+  mark u, like vector-two
+  mark v, like vector-two
+  show hold, is-equal dot(u, v), dot(v, u)
+
+rule dot-distributes-two
+  mark u, like vector-two
+  mark v, like vector-two
+  mark w, like vector-two
+  show hold, is-equal dot(u, sum(v, w)), add(dot(u, v), dot(u, w))
+
+rule dot-scales-two
+  mark k, like integer
+  mark u, like vector-two
+  mark v, like vector-two
+  show hold, is-equal dot(scaled(k, u), v), multiply(k, dot(u, v))
+
+rule dot-with-itself-is-not-negative-two
+  mark v, like vector-two
+  show hold, is-minimum dot(v, v), 0
+
+# CAUCHY-SCHWARZ: the square of a dot product is at most the product of the squared lengths.
+rule cauchy-schwarz-two
+  mark u, like vector-two
+  mark v, like vector-two
+  show hold, is-maximum multiply(dot(u, v), dot(u, v)), multiply(dot(u, u), dot(v, v))
+
+# ---- size three ----
+
+task sum
+  take u, like vector-three
+  take v, like vector-three
+
+  like vector-three
+
+  back make vector-three(add(u/x, v/x), add(u/y, v/y), add(u/z, v/z))
+
+task scaled
+  take k, like integer
+  take v, like vector-three
+
+  like vector-three
+
+  back make vector-three(multiply(k, v/x), multiply(k, v/y), multiply(k, v/z))
+
+task opposite
+  take v, like vector-three
+
+  like vector-three
+
+  back make vector-three(subtract(0, v/x), subtract(0, v/y), subtract(0, v/z))
+
+task dot
+  take u, like vector-three
+  take v, like vector-three
+
+  like integer
+
+  back add(add(multiply(u/x, v/x), multiply(u/y, v/y)), multiply(u/z, v/z))
+
+# the vector perpendicular to u and v whose length is the area of the parallelogram they span
+task cross
+  take u, like vector-three
+  take v, like vector-three
+
+  like vector-three
+
+  back
+    make vector-three
+      bind x, subtract(multiply(u/y, v/z), multiply(u/z, v/y))
+      bind y, subtract(multiply(u/z, v/x), multiply(u/x, v/z))
+      bind z, subtract(multiply(u/x, v/y), multiply(u/y, v/x))
+
+task origin-three
+  like vector-three
+
+  back make vector-three(0, 0, 0)
+
+rule sum-commutes-three
+  mark u, like vector-three
+  mark v, like vector-three
+  show hold, is-equal sum(u, v), sum(v, u)
+
+rule sum-associates-three
+  mark u, like vector-three
+  mark v, like vector-three
+  mark w, like vector-three
+  show hold, is-equal sum(sum(u, v), w), sum(u, sum(v, w))
+
+rule origin-is-identity-three
+  mark v, like vector-three
+  show hold, is-equal sum(v, origin-three()), v
+
+rule opposite-cancels-three
+  mark v, like vector-three
+  show hold, is-equal sum(v, opposite(v)), origin-three()
+
+rule scaled-distributes-over-sum-three
+  mark k, like integer
+  mark u, like vector-three
+  mark v, like vector-three
+  show hold, is-equal scaled(k, sum(u, v)), sum(scaled(k, u), scaled(k, v))
+
+rule dot-is-symmetric-three
+  mark u, like vector-three
+  mark v, like vector-three
+  show hold, is-equal dot(u, v), dot(v, u)
+
+rule dot-distributes-three
+  mark u, like vector-three
+  mark v, like vector-three
+  mark w, like vector-three
+  show hold, is-equal dot(u, sum(v, w)), add(dot(u, v), dot(u, w))
+
+rule dot-with-itself-is-not-negative-three
+  mark v, like vector-three
+  show hold, is-minimum dot(v, v), 0
+
+rule cauchy-schwarz-three
+  mark u, like vector-three
+  mark v, like vector-three
+  show hold, is-maximum multiply(dot(u, v), dot(u, v)), multiply(dot(u, u), dot(v, v))
+
+# The cross product turns around when its sides do, and is perpendicular to each side.
+rule cross-anticommutes
+  mark u, like vector-three
+  mark v, like vector-three
+  show hold, is-equal cross(u, v), opposite(cross(v, u))
+
+rule cross-with-itself-is-origin
+  mark v, like vector-three
+  show hold, is-equal cross(v, v), origin-three()
+
+rule cross-is-perpendicular
+  mark u, like vector-three
+  mark v, like vector-three
+  show hold, is-equal dot(u, cross(u, v)), 0
+
+# LAGRANGE'S IDENTITY: the squared length of u x v is |u|^2 |v|^2 - (u . v)^2.
+rule lagrange-identity
+  mark u, like vector-three
+  mark v, like vector-three
+  show hold
+    is-equal
+      dot(cross(u, v), cross(u, v))
+      subtract(multiply(dot(u, u), dot(v, v)), multiply(dot(u, v), dot(u, v)))
+
+# THE TRIPLE PRODUCT EXPANSION: u x (v x w) = v (u . w) - w (u . v).
+rule triple-product-expansion
+  mark u, like vector-three
+  mark v, like vector-three
+  mark w, like vector-three
+  show hold, is-equal cross(u, cross(v, w)), sum(scaled(dot(u, w), v), opposite(scaled(dot(u, v), w)))
+
+# THE JACOBI IDENTITY: u x (v x w) + v x (w x u) + w x (u x v) = 0.
+rule jacobi-identity
+  mark u, like vector-three
+  mark v, like vector-three
+  mark w, like vector-three
+  show hold, is-equal sum(sum(cross(u, cross(v, w)), cross(v, cross(w, u))), cross(w, cross(u, v))), origin-three()

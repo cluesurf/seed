@@ -1,0 +1,208 @@
+# The boolean algebra laws on the library's truth value, `flag` (atom/flag.tree): `both` is and, `either` is or,
+# `not-flag` is not, `implies` is implication. Each law is stated for every value and proved by `fold`, which splits
+# a flag into `yes` and `no` and runs the definitions on each. The definitions are imported, never restated, so a
+# wrong `both` makes these rules fail rather than a private copy pass.
+#
+# Together the laws say `flag` is a boolean algebra: commutative and associative and and or, each distributing over
+# the other, absorption, identities, annihilators, complements, De Morgan, and implication as `not a or b`.
+load @term/seed/atom/flag
+  find flag
+  find both
+  find either
+  find not-flag
+  find implies
+
+# COMMUTATIVITY.
+rule both-commutes
+  mark a, like flag
+  mark b, like flag
+  show hold, is-equal both(a, b), both(b, a)
+  fold a, b
+
+rule either-commutes
+  mark a, like flag
+  mark b, like flag
+  show hold, is-equal either(a, b), either(b, a)
+  fold a, b
+
+# ASSOCIATIVITY.
+rule both-associates
+  mark a, like flag
+  mark b, like flag
+  mark c, like flag
+  show hold, is-equal both(both(a, b), c), both(a, both(b, c))
+  fold a, b, c
+
+rule either-associates
+  mark a, like flag
+  mark b, like flag
+  mark c, like flag
+  show hold, is-equal either(either(a, b), c), either(a, either(b, c))
+  fold a, b, c
+
+# IDEMPOTENCE: a and a is a, a or a is a.
+rule both-is-idempotent
+  mark a, like flag
+  show hold, is-equal both(a, a), a
+  fold a
+
+rule either-is-idempotent
+  mark a, like flag
+  show hold, is-equal either(a, a), a
+  fold a
+
+# IDENTITIES ON THE RIGHT. The left ones are in atom/flag.tree.
+rule both-yes-right-is-identity
+  mark a, like flag
+  show hold
+    is-equal
+      both
+        a
+        make yes
+      a
+  fold a
+
+rule either-no-right-is-identity
+  mark a, like flag
+  show hold
+    is-equal
+      either
+        a
+        make no
+      a
+  fold a
+
+# ANNIHILATORS: no absorbs and, yes absorbs or.
+rule both-no-is-no
+  mark a, like flag
+  show hold
+    is-equal
+      both
+        a
+        make no
+      make no
+  fold a
+
+rule either-yes-is-yes
+  mark a, like flag
+  show hold
+    is-equal
+      either
+        a
+        make yes
+      make yes
+  fold a
+
+# DISTRIBUTIVITY, both ways.
+rule both-distributes-over-either
+  mark a, like flag
+  mark b, like flag
+  mark c, like flag
+  show hold, is-equal both(a, either(b, c)), either(both(a, b), both(a, c))
+  fold a, b, c
+
+rule either-distributes-over-both
+  mark a, like flag
+  mark b, like flag
+  mark c, like flag
+  show hold, is-equal either(a, both(b, c)), both(either(a, b), either(a, c))
+  fold a, b, c
+
+# ABSORPTION.
+rule both-absorbs-either
+  mark a, like flag
+  mark b, like flag
+  show hold, is-equal both(a, either(a, b)), a
+  fold a, b
+
+rule either-absorbs-both
+  mark a, like flag
+  mark b, like flag
+  show hold, is-equal either(a, both(a, b)), a
+  fold a, b
+
+# COMPLEMENTS: a or not a is yes (excluded middle), a and not a is no (non-contradiction).
+rule excluded-middle
+  mark a, like flag
+  show hold, is-equal either(a, not-flag(a)), make yes
+  fold a
+
+rule non-contradiction
+  mark a, like flag
+  show hold, is-equal both(a, not-flag(a)), make no
+  fold a
+
+# DE MORGAN, both ways.
+rule not-both-is-either-not
+  mark a, like flag
+  mark b, like flag
+  show hold, is-equal not-flag(both(a, b)), either(not-flag(a), not-flag(b))
+  fold a, b
+
+rule not-either-is-both-not
+  mark a, like flag
+  mark b, like flag
+  show hold, is-equal not-flag(either(a, b)), both(not-flag(a), not-flag(b))
+  fold a, b
+
+# IMPLICATION is `not a or b`, and contraposition follows.
+rule implies-is-not-or
+  mark a, like flag
+  mark b, like flag
+  show hold, is-equal implies(a, b), either(not-flag(a), b)
+  fold a, b
+
+rule contraposition
+  mark a, like flag
+  mark b, like flag
+  show hold, is-equal implies(a, b), implies(not-flag(b), not-flag(a))
+  fold a, b
+
+# EQUIVALENCE: a and b are the same truth value.
+task iff
+  take a, like flag
+  take b, like flag
+
+  like flag
+
+  sift a
+    case yes
+      back b
+    case no
+      back not-flag(b)
+
+# Equivalence is reflexive and symmetric, and a value is never equivalent to its negation.
+rule iff-is-reflexive
+  mark a, like flag
+  show hold, is-equal iff(a, a), make yes
+
+rule iff-is-symmetric
+  mark a, like flag
+  mark b, like flag
+  show hold, is-equal iff(a, b), iff(b, a)
+
+rule iff-negation-is-no
+  mark a, like flag
+  show hold, is-equal iff(a, not-flag(a)), make no
+
+# Equivalence is implication both ways.
+rule iff-is-both-implications
+  mark a, like flag
+  mark b, like flag
+  show hold, is-equal iff(a, b), both(implies(a, b), implies(b, a))
+
+# Everything implies itself, and yes is implied by everything.
+rule implies-itself
+  mark a, like flag
+  show hold, is-equal implies(a, a), make yes
+  fold a
+
+rule yes-is-implied
+  mark a, like flag
+  show hold
+    is-equal
+      implies
+        a
+        make yes
+      make yes
+  fold a

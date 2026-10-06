@@ -1,0 +1,111 @@
+# THE REFLEXIVE-TRANSITIVE CLOSURE of a relation, as paths. y is reachable from x under r when some path leads from x
+# to y with every step related: x r p1, p1 r p2, ..., pn r y. A path is the list of the elements it passes through, and
+# `follows(r, x, p)` says whether every step from x along p is related.
+#
+# The closure is reflexive (the empty path stays at x), contains r (a path of one step follows r exactly when r
+# relates its ends), and is transitive (two paths that meet join into one that follows r exactly when both do). Each
+# law is about every path, by induction on it, decided case by case by the truth table.
+#
+# What is absent: that the closure is the LEAST reflexive transitive relation containing r. Its proof is an induction
+# on a path under hypotheses that hold for every element (math-foundations-0028).
+load @term/seed/atom/flag
+  find flag
+  find both
+
+load @term/seed/relation/base
+  find relation
+
+form path
+  head a
+  case stop
+  case through
+    slot next, like a
+    slot rest, like path a
+
+# where a path from x ends
+task finish
+  head a
+  take x, like a
+  take p, like path a
+
+  like a
+
+  sift p
+    case stop
+      back x
+    case through
+      back finish(next, rest)
+
+# whether every step of a path from x is related by r
+task follows
+  head a
+  take r, like relation a
+  take x, like a
+  take p, like path a
+
+  like flag
+
+  sift p
+    case stop
+      back make yes
+    case through
+      back both(r(x, next), follows(r, next, rest))
+
+# p, then q
+task join
+  head a
+  take p, like path a
+  take q, like path a
+
+  like path a
+
+  sift p
+    case stop
+      back q
+    case through
+      back make through(next, join(rest, q))
+
+# REFLEXIVE: the empty path follows every relation, and ends where it starts.
+rule stop-follows
+  head a
+  mark r, like relation a
+  mark x, like a
+  show hold, is-equal follows(r, x, make stop), make yes
+
+rule stop-finishes-at-start
+  head a
+  mark x, like a
+  show hold, is-equal finish(x, make stop), x
+
+# CONTAINS r: a path of one step follows r exactly when r relates its ends, and ends at its one element.
+rule one-step-follows-exactly-r
+  head a
+  mark r, like relation a
+  mark x, like a
+  mark y, like a
+  show hold, is-equal follows(r, x, make through(y, make stop)), r(x, y)
+
+rule one-step-finishes-there
+  head a
+  mark x, like a
+  mark y, like a
+  show hold, is-equal finish(x, make through(y, make stop)), y
+
+# TRANSITIVE: a joined path ends where its second part ends from where the first part does, and follows r exactly when
+# both parts do. So a path from x to y and one from y to z are one path from x to z.
+rule join-finishes
+  head a
+  mark x, like a
+  mark p, like path a
+  mark q, like path a
+  show hold, is-equal finish(x, join(p, q)), finish(finish(x, p), q)
+  fold p
+
+rule join-follows
+  head a
+  mark r, like relation a
+  mark x, like a
+  mark p, like path a
+  mark q, like path a
+  show hold, is-equal follows(r, x, join(p, q)), both(follows(r, x, p), follows(r, finish(x, p), q))
+  fold p

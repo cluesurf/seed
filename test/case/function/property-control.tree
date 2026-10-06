@@ -1,0 +1,166 @@
+# NEGATIVE CONTROL for code/function/property.tree: the inverse laws with one thing changed. Each must be refused.
+# Expected: 7 refusals.
+load @term/seed/function/property
+  find compose
+  find apply
+
+# composition in the wrong order: g after f is not f's image under g's input
+rule control-compose-backwards
+  head a
+  mark g
+    like task
+      take y, like a
+      like a
+  mark f
+    like task
+      take x, like a
+      like a
+  mark x, like a
+  show hold, is-equal apply(compose(g, f), x), f(g(x))
+
+# a SECTION does not make a function injective: f(s(v)) == v says nothing of f at two other points
+rule control-section-gives-injective
+  head a
+  head b
+  mark f
+    like task
+      take x, like a
+      like b
+  mark s
+    like task
+      take y, like b
+      like a
+  mark x, like a
+  mark y, like a
+  have f-undoes-s
+    mark v, like b
+    is-equal f(s(v)), v
+  have same-image, is-equal f(x), f(y)
+  show hold, is-equal x, y
+
+# a LEFT INVERSE does not make it surjective: g(z) is not an element f sends to z
+rule control-left-inverse-gives-surjective
+  head a
+  head b
+  mark f
+    like task
+      take x, like a
+      like b
+  mark g
+    like task
+      take y, like b
+      like a
+  mark z, like b
+  have g-undoes-f
+    mark u, like a
+    is-equal g(f(u)), u
+  find x, g(z)
+  show hold, is-equal f(x), z
+
+# left inverses compose in the OTHER order: q after r is not a left inverse of g after f
+rule control-left-inverses-same-order
+  head a
+  mark f
+    like task
+      take x, like a
+      like a
+  mark r
+    like task
+      take y, like a
+      like a
+  mark g
+    like task
+      take y, like a
+      like a
+  mark q
+    like task
+      take z, like a
+      like a
+  mark x, like a
+  have r-undoes-f
+    mark u, like a
+    is-equal r(f(u)), u
+  have q-undoes-g
+    mark v, like a
+    is-equal q(g(v)), v
+  show hold, is-equal q(r(g(f(x)))), x
+
+# the composite of two surjections is not reached from the witness in the wrong order
+rule control-surjections-wrong-witness
+  head a
+  mark f
+    like task
+      take x, like a
+      like a
+  mark s
+    like task
+      take y, like a
+      like a
+  mark g
+    like task
+      take y, like a
+      like a
+  mark t
+    like task
+      take z, like a
+      like a
+  mark z, like a
+  have f-undoes-s
+    mark v, like a
+    is-equal f(s(v)), v
+  have g-undoes-t
+    mark w, like a
+    is-equal g(t(w)), w
+  find x, t(s(z))
+  show hold, is-equal g(f(x)), z
+
+# cancellation on the wrong side: a left inverse of f does not cancel f on the right
+rule control-cancels-on-the-right
+  head a
+  mark f
+    like task
+      take x, like a
+      like a
+  mark e
+    like task
+      take z, like a
+      like a
+  mark g
+    like task
+      take w, like a
+      like a
+  mark h
+    like task
+      take w, like a
+      like a
+  mark x, like a
+  have e-undoes-f
+    mark u, like a
+    is-equal e(f(u)), u
+  have same-before-f, is-equal g(f(x)), h(f(x))
+  show hold, is-equal g(x), h(x)
+
+# two left inverses of one function need not agree: a left inverse is unique only when a section exists
+rule control-left-inverses-agree
+  head a
+  head b
+  mark f
+    like task
+      take x, like a
+      like b
+  mark g
+    like task
+      take y, like b
+      like a
+  mark h
+    like task
+      take y, like b
+      like a
+  mark y, like b
+  have g-undoes-f
+    mark u, like a
+    is-equal g(f(u)), u
+  have h-undoes-f
+    mark u, like a
+    is-equal h(f(u)), u
+  show hold, is-equal g(y), h(y)

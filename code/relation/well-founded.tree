@@ -1,0 +1,322 @@
+# WELL-FOUNDED INDUCTION on the naturals, through accessibility.
+#
+# A natural is ACCESSIBLE when every natural below it is: `reach` holds a step that, given any m and evidence that m is
+# below n, answers that m is accessible. An accessible value has no infinite descending chain below it, because a value
+# of the form is finitely deep, and that is all well-foundedness is.
+#
+# Every natural is accessible, proved by recursion on it. Zero is, because nothing is below zero (the evidence has no
+# case to match). The successor of k is, because what is below it is k itself or something below k.
+#
+# Then WELL-FOUNDED INDUCTION: a property that holds at n whenever it holds at every natural below n holds at every
+# natural. Its proof recurses on the accessibility of n, through the step's answers, which the checker credits as a
+# descent into the value matched. Each statement here is a claim, and the task of its name is its proof: the kernel
+# checks the task's whole body against the claim's type, and that it ends and is pure.
+load @term/seed/number/peano
+  find natural
+
+# m IS BELOW n, as evidence: n is m's successor, or the successor of something m is below.
+form below
+  head m, like natural
+  head n, like natural
+
+  case next
+    link k, like natural
+    head
+      read k
+    head
+      make succ
+        bind prior, k
+
+  case further
+    link x, like natural
+    link y, like natural
+    link nearer, like below
+      head
+        read x
+      head
+        read y
+    head
+      read x
+    head
+      make succ
+        bind prior, y
+
+form accessible
+  head n, like natural
+
+  case reach
+    link at, like natural
+    link step
+      like task
+        take m, like natural
+        take evidence
+          like below
+            head
+              read m
+            head
+              read at
+        like accessible
+          head
+            read m
+    head
+      read at
+
+# NOTHING IS BELOW ZERO, so zero is accessible: the step has no case of its evidence to answer.
+rule zero-is-accessible
+  like accessible
+    head
+      make zero
+
+task zero-is-accessible
+  back
+    make reach
+      bind at, make zero
+      bind step
+        task
+          take m, like natural
+          take evidence
+            like below
+              head
+                read m
+              head
+                make zero
+          like accessible
+            head
+              read m
+          sift evidence
+
+# WHAT IS BELOW AN ACCESSIBLE NATURAL IS ACCESSIBLE: its own step says so.
+rule below-accessible
+  take n, like natural
+  take a
+    like accessible
+      head
+        read n
+  take m, like natural
+  take evidence
+    like below
+      head
+        read m
+      head
+        read n
+  like accessible
+    head
+      read m
+
+task below-accessible
+  take n
+  take a
+  take m
+  take evidence
+  save answer, answers(n, a, m)
+  back answer(evidence)
+
+# THE CONVOY. Matching `a` makes n its own `at`, but `evidence : below m n` is already in scope and a match does not
+# rewrite what is in scope. So the match returns a FUNCTION of the evidence, whose type the match does rewrite.
+task answers
+  take n, like natural
+  take a
+    like accessible
+      head
+        read n
+  take m, like natural
+
+  like task
+    take evidence
+      like below
+        head
+          read m
+        head
+          read n
+    like accessible
+      head
+        read m
+
+  sift a
+    case reach
+      back
+        task
+          take evidence
+            like below
+              head
+                read m
+              head
+                read at
+          like accessible
+            head
+              read m
+          back step(m, evidence)
+
+# EVERY NATURAL IS ACCESSIBLE. Below the successor of k is k itself, accessible by recursion, or something below k,
+# accessible because k is.
+rule every-natural-is-accessible
+  take n, like natural
+  like accessible
+    head
+      read n
+
+task every-natural-is-accessible
+  take n
+  sift n
+    case zero
+      back zero-is-accessible()
+    case succ
+      back
+        make reach
+          bind at
+            make succ
+              bind prior, prior
+          bind step
+            task
+              take m, like natural
+              take evidence
+                like below
+                  head
+                    read m
+                  head
+                    make succ
+                      bind prior, prior
+              like accessible
+                head
+                  read m
+              save from-prior, below-successor(prior, m, evidence)
+              back from-prior(every-natural-is-accessible(prior))
+
+# BELOW THE SUCCESSOR of j is j, or below j: so from j accessible, what is below its successor is accessible. A convoy
+# again: matching the evidence teaches that m is j (or below it), which the result, a function of j's accessibility,
+# is rewritten to say.
+task below-successor
+  take j, like natural
+  take m, like natural
+  take evidence
+    like below
+      head
+        read m
+      head
+        make succ
+          bind prior, j
+
+  like task
+    take from
+      like accessible
+        head
+          read j
+    like accessible
+      head
+        read m
+
+  sift evidence
+    case next
+      back
+        task
+          take from
+            like accessible
+              head
+                read k
+          like accessible
+            head
+              read k
+          back from
+    case further
+      back
+        task
+          take from
+            like accessible
+              head
+                read y
+          like accessible
+            head
+              read x
+          back below-accessible(y, from, x, nearer)
+
+# WELL-FOUNDED INDUCTION from accessibility: the property holds at n when n is accessible. `rise` is the inductive
+# step: from the property below n, the property at n.
+rule induction-on-accessible
+  take p
+    like task
+      take n, like natural
+      like type
+  take rise
+    like task
+      take n, like natural
+      take below-hold
+        like task
+          take m, like natural
+          take evidence
+            like below
+              head
+                read m
+              head
+                read n
+          like p
+            head
+              read m
+      like p
+        head
+          read n
+  take n, like natural
+  take a
+    like accessible
+      head
+        read n
+  like p
+    head
+      read n
+
+task induction-on-accessible
+  take p
+  take rise
+  take n
+  take a
+  sift a
+    case reach
+      back
+        rise
+          read at
+          task
+            take m, like natural
+            take evidence
+              like below
+                head
+                  read m
+                head
+                  read at
+            like p
+              head
+                read m
+            back induction-on-accessible(p, rise, m, step(m, evidence))
+
+# WELL-FOUNDED INDUCTION ON THE NATURALS: a property that holds at n whenever it holds below n holds everywhere.
+rule well-founded-induction
+  take p
+    like task
+      take n, like natural
+      like type
+  take rise
+    like task
+      take n, like natural
+      take below-hold
+        like task
+          take m, like natural
+          take evidence
+            like below
+              head
+                read m
+              head
+                read n
+          like p
+            head
+              read m
+      like p
+        head
+          read n
+  take n, like natural
+  like p
+    head
+      read n
+
+task well-founded-induction
+  take p
+  take rise
+  take n
+  back induction-on-accessible(p, rise, n, every-natural-is-accessible(n))

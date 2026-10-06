@@ -47,10 +47,52 @@ node ../term/host/line.js test --filter test/case
 
 A new file of rules is not done until its control is in `test/case/` and that command passes.
 
+## New files are lean, and import, never redefine
+
+`role.tree` names the files written lean (`back x`, `<x>`, `f(a, b)`, see `../../../../note/term/lean.md`). A new
+file goes there, with its control. The rest of the library stays longhand until `pnpm term:lean-convert` reads it equal.
+
+Import the canonical definitions: `flag` and its operations from `atom/flag.tree`, `natural` and `plus`, `times`,
+`power` from `number/peano.tree`. A proof in one file runs a task and cites a rule of another when that file states
+rules (a THEORY): its definitions' bodies and its rules travel with it to every file that loads it, in the per-unit
+build as in the merged one. A file with no rules keeps its bodies to itself.
+
+Three things that are not guessable:
+
+- `cite <rule>` closes a goal that is an INSTANCE of a proven equation: `cite both-commutes` proves
+  `evaluate(v, make conjunction(p, q)) == evaluate(v, make conjunction(q, p))`, because the two sides compute to
+  `both(x, y)` and `both(y, x)`. One rewrite by the rule, either way round, must make the sides the same.
+- a case's fields may be `slot`s, so `make conjunction(p, q)` fills them by position. A `make` followed by a comma nests
+  what follows into it (the comma rule), so put the formula LAST in an argument list (`evaluate(v, p)`), or stack the
+  arguments on their own lines.
+- a form that aliases a task type (`form assignment / like task / take n, like natural / like flag`) types a mark that
+  is then called as the task: `mark v, like assignment` and `v(n)`.
+- a goal over truth values (`flag`) DECIDES ITSELF by its truth table, with no step, even over values the kernel cannot
+  compute (`evaluate(v, p)` is yes or no whatever `p` is). The same table closes each case of a `fold`, under the
+  induction hypotheses, which is how `logic/soundness.tree` is one `fold`. A false one is refused with the values that
+  break it: `it is FALSE in the case affirm, where evaluate(v, a) is no, evaluate(v, b) is yes`.
+- a value index of an indexed family keeps its `read` under `head` (`head` / `read a`): a bare word there is a type.
+- a rule may take a type parameter (`rule union-commutes / head a / mark s, like set a`), and an alias may too
+  (`form set / head a / like task / take x, like a / like flag`), so a law is stated once for every type.
+- a hypothesis that holds FOR EVERY element is a `have` with a `mark` of its own: `have symmetric / mark u, like a /
+  mark v, like a / is-equal r(u, v), r(v, u)`. The kernel uses it at each term of that type the goal, its guards and
+  its `find` witnesses name, and nowhere else, so name the term it is needed at. Instances are decided by the truth
+  table and by congruence closure (`f(x) == f(y)` with `g(f(u)) == u` gives `x == y`). See `relation/base.tree` and
+  `function/property.tree`. A `fold` in such a theorem is not yet supported (math-foundations-0028).
+- a claim (`rule` with no `show`) is proved by a `task` of its name, checked by the kernel as one term against the
+  claim's type, so a proof can BUILD evidence: `relation/well-founded.tree` proves every natural accessible that way.
+  A match there refines the result type (by the subject, and by a constructor-headed index), never a variable already
+  in scope, so match in a helper that returns a FUNCTION of that variable (the convoy, `answers` and
+  `below-successor` there).
+- a call cannot be applied to a call in lean (`compose(g, f)(x)` loses its arguments). Apply through a task:
+  `apply(compose(g, f), x)`, `relates(converse(r), x, y)`, `has(union(s, t), x)`.
+
 ## What to write next
 
 `../../../../note/term/foundations/` is the plan for the layers the library is missing (logic, sets, numbers,
-algebra, analysis, discrete mathematics), and `phases.md` there is the order. Phase 0 needs no kernel change.
+algebra, analysis, discrete mathematics), and `phases.md` there is the order. The checklist is
+`../../../../note/term/project/math-foundations.json`. Phase 0 began 2026-10-05 with `logic/boolean.tree` and
+`logic/propositional.tree`.
 
 ## Checking
 

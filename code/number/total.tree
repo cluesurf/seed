@@ -1,0 +1,136 @@
+# FINITE SUMS: one sum over a range, `total(f, n)` = f(1) + f(2) + ... + f(n), for any function f from the integers,
+# and the laws every sum obeys. The closed forms of number/sum.tree are corollaries of it here, each a line.
+#
+# A law about sums is proved by `fold n`: the provers read `total`'s own two equations (`total(f, 0) = 0`, and
+# `total(f, m) = total(f, m - 1) + f(m)` for m >= 1) at the arguments the law writes, and the induction does the rest.
+# A law relating two functions states the relation as a hypothesis for every i (`have` with a `mark`), which the
+# induction instantiates where it needs it.
+
+# a function from the integers to the integers: what a sum is of
+form term
+  like task
+    take i, like integer
+    like integer
+
+# f(1) + ... + f(n)
+task total
+  take f, like term
+  take n, like natural-number
+
+  like integer
+
+  fork test
+    is-equal(n, 0)
+    hold
+      back 0
+    miss
+      back add(total(f, subtract(n, 1)), f(n))
+
+# the terms the closed forms sum
+task identity
+  take i, like integer
+  like integer
+  back i
+
+task odd
+  take i, like integer
+  like integer
+  back subtract(multiply(2, i), 1)
+
+task square
+  take i, like integer
+  like integer
+  back multiply(i, i)
+
+task cube
+  take i, like integer
+  like integer
+  back multiply(i, multiply(i, i))
+
+# ONE STEP: the sum to n + 1 is the sum to n and one more term.
+rule total-steps
+  mark f, like term
+  mark n, like natural-number
+  show hold, is-equal total(f, add(n, 1)), add(total(f, n), f(add(n, 1)))
+
+# LINEARITY: the sum of a sum is the sum of the sums, and a constant factor comes out.
+rule total-of-a-sum
+  mark f, like term
+  mark g, like term
+  mark h, like term
+  mark n, like natural-number
+  have h-is-f-plus-g
+    mark i, like integer
+    is-equal h(i), add(f(i), g(i))
+  show hold, is-equal total(h, n), add(total(f, n), total(g, n))
+  fold n
+
+rule total-of-a-multiple
+  mark f, like term
+  mark g, like term
+  mark c, like integer
+  mark n, like natural-number
+  have g-is-c-times-f
+    mark i, like integer
+    is-equal g(i), multiply(c, f(i))
+  show hold, is-equal total(g, n), multiply(c, total(f, n))
+  fold n
+
+# A SUM OF ZEROS IS ZERO.
+rule total-of-zeros
+  mark f, like term
+  mark n, like natural-number
+  have f-is-zero
+    mark i, like integer
+    is-equal f(i), 0
+  show hold, is-equal total(f, n), 0
+  fold n
+
+# TELESCOPING: a sum of differences f(i) - f(i - 1) is the last value less the first.
+rule telescoping
+  mark f, like term
+  mark g, like term
+  mark n, like natural-number
+  have g-is-a-difference
+    mark i, like integer
+    is-equal g(i), subtract(f(i), f(subtract(i, 1)))
+  show hold, is-equal total(g, n), subtract(f(n), f(0))
+  fold n
+
+# THE GEOMETRIC SUM: if each term is r times the one before, (r - 1) times the sum is r g(n) - r g(0).
+rule geometric-sum
+  mark g, like term
+  mark r, like integer
+  mark n, like natural-number
+  have g-grows-by-r
+    mark i, like integer
+    is-equal g(i), multiply(r, g(subtract(i, 1)))
+  show hold, is-equal multiply(subtract(r, 1), total(g, n)), subtract(multiply(r, g(n)), multiply(r, g(0)))
+  fold n
+
+# ---- the closed forms, as corollaries ----
+
+# GAUSS: twice 1 + ... + n is n (n + 1).
+rule gauss
+  mark n, like natural-number
+  show hold, is-equal multiply(2, total(identity, n)), multiply(n, add(n, 1))
+  fold n
+
+# THE ODD NUMBERS: 1 + 3 + ... + (2n - 1) is n squared.
+rule odd-numbers-sum-to-a-square
+  mark n, like natural-number
+  show hold, is-equal total(odd, n), multiply(n, n)
+  fold n
+
+# THE SQUARES: six times 1 + 4 + ... + n^2 is n (n + 1) (2n + 1).
+rule squares
+  mark n, like natural-number
+  show hold, is-equal multiply(6, total(square, n)), multiply(multiply(n, add(n, 1)), add(multiply(2, n), 1))
+  fold n
+
+# NICOMACHUS: the sum of the first n cubes is the square of the sum of the first n numbers.
+rule nicomachus
+  mark n, like natural-number
+  show hold, is-equal total(cube, n), multiply(total(identity, n), total(identity, n))
+  fold n
+  cite gauss

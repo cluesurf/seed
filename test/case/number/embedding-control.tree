@@ -1,0 +1,54 @@
+# NEGATIVE CONTROL for code/number/embedding.tree: the bridge from the Peano naturals to the integers with one thing
+# changed in each law. Every one must be refused.
+# Expected: 6 refusals.
+load @term/seed/number/peano
+  find natural
+  find plus
+  find times
+
+load @term/seed/number/embedding
+  find count
+  find count-of-plus
+  find count-is-not-negative
+
+# false everywhere: a successor counted as two more
+rule control-succ-counts-two
+  mark n, like natural
+  show hold, is-equal count(make succ(n)), add(count(n), 2)
+
+# false at n = 0: a count at least one
+rule control-count-is-positive
+  mark n, like natural
+  show hold, is-minimum count(n), 1
+  fold n
+
+# false at a = 1, b = 1: a sum counted as a product
+rule control-plus-counts-as-times
+  mark a, like natural
+  mark b, like natural
+  show hold, is-equal count(plus(a, b)), multiply(count(a), count(b))
+  fold a
+
+# false at a = 0, b = 1: a sum counting b twice
+rule control-plus-counts-b-twice
+  mark a, like natural
+  mark b, like natural
+  show hold, is-equal count(plus(a, b)), add(count(a), multiply(2, count(b)))
+  fold a
+
+# false at a = 2, b = 2: a product counted as a sum
+rule control-times-counts-as-plus
+  mark a, like natural
+  mark b, like natural
+  show hold, is-equal count(times(a, b)), add(count(a), count(b))
+  fold a
+    cite count-of-plus
+
+# false wherever b is not zero: a sum counting no more than its left side
+rule control-plus-is-at-most-the-left
+  mark a, like natural
+  mark b, like natural
+  find n, b
+  show hold, is-maximum count(plus(a, b)), count(a)
+  cite count-of-plus
+  cite count-is-not-negative

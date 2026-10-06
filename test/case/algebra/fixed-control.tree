@@ -1,0 +1,66 @@
+# NEGATIVE CONTROL for code/vector/fixed.tree and code/matrix/fixed.tree: each law with one thing changed, false for
+# some vectors or matrices. Every one must be refused.
+# Expected: 8 refusals.
+load @term/seed/vector/fixed
+  find vector-two
+  find vector-three
+  find sum
+  find scaled
+  find dot
+  find cross
+
+load @term/seed/matrix/fixed
+  find matrix-two
+  find matrix-three
+  find product
+  find transpose
+  find determinant
+  find trace
+
+# false at u = (1, 0), v = (0, 1): a dot product taken for the sum of coordinates
+rule control-dot-is-a-sum
+  mark u, like vector-two
+  mark v, like vector-two
+  show hold, is-equal dot(u, v), add(add(u/x, v/x), add(u/y, v/y))
+
+# false at u = (1, 1), v = (1, -1): Cauchy-Schwarz the wrong way round
+rule control-cauchy-schwarz-reversed
+  mark u, like vector-two
+  mark v, like vector-two
+  show hold, is-minimum multiply(dot(u, v), dot(u, v)), multiply(dot(u, u), dot(v, v))
+
+# false at u = (1, 0, 0), v = (0, 1, 0): the cross product commutes
+rule control-cross-commutes
+  mark u, like vector-three
+  mark v, like vector-three
+  show hold, is-equal cross(u, v), cross(v, u)
+
+# false for most vectors: the triple product expanded with its terms swapped
+rule control-triple-product-swapped
+  mark u, like vector-three
+  mark v, like vector-three
+  mark w, like vector-three
+  show hold, is-equal cross(u, cross(v, w)), sum(scaled(dot(u, v), w), scaled(dot(u, w), v))
+
+# false at m = n = I: the determinant of a product as a sum
+rule control-determinant-adds
+  mark m, like matrix-two
+  mark n, like matrix-two
+  show hold, is-equal determinant(product(m, n)), add(determinant(m), determinant(n))
+
+# false for most pairs: the transpose of a product without reversing it
+rule control-transpose-without-reversing
+  mark m, like matrix-two
+  mark n, like matrix-two
+  show hold, is-equal transpose(product(m, n)), product(transpose(m), transpose(n))
+
+# false for most pairs: the 3-by-3 product commutes
+rule control-product-commutes-three
+  mark m, like matrix-three
+  mark n, like matrix-three
+  show hold, is-equal product(m, n), product(n, m)
+
+# false at m = 2 I: the determinant scales linearly
+rule control-determinant-is-linear-three
+  mark m, like matrix-three
+  show hold, is-equal determinant(product(m, m)), multiply(2, determinant(m))

@@ -1,0 +1,41 @@
+# CANTOR'S THEOREM: no task from a type to its sets reaches every set.
+#
+# For any f from `a` to sets of `a`, the DIAGONAL set holds x exactly when f(x) does not. It differs from f(x) at x,
+# for every x, so it is no f(x): f misses it. That is the whole argument, and the rule below states it at every x of
+# every type, decided by the kernel's truth table (`has(f(x), x)` is yes or no, whatever f is).
+load @term/seed/atom/flag
+  find flag
+  find not-flag
+
+load @term/seed/logic/boolean
+  find iff
+
+load @term/seed/set/base
+  find set
+  find has
+
+# The sets f misses: x is in it exactly when x is not in f(x).
+task diagonal
+  head a
+  take f
+    like task
+      take x, like a
+      like set a
+
+  like set a
+
+  back
+    task
+      take x, like a
+      like flag
+      back not-flag(has(f(x), x))
+
+# THE DIAGONAL DIFFERS FROM f(x) AT x, for every f and every x, so no f(x) is the diagonal.
+rule diagonal-differs-from-every-image
+  head a
+  mark f
+    like task
+      take y, like a
+      like set a
+  mark x, like a
+  show hold, is-equal iff(has(diagonal(f), x), has(f(x), x)), make no

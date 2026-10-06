@@ -1,0 +1,71 @@
+# NEGATIVE CONTROL for code/relation/well-founded.tree: the accessibility proofs with one thing changed. Each claim's
+# task must be refused by the kernel.
+# Expected: 4 refusals.
+load @term/seed/number/peano
+  find natural
+
+load @term/seed/relation/well-founded
+  find below
+  find accessible
+  find zero-is-accessible
+  find below-accessible
+
+# zero is not below zero: `next` puts its natural below that natural's successor
+rule control-zero-below-zero
+  like below
+    head
+      make zero
+    head
+      make zero
+
+task control-zero-below-zero
+  back
+    make next
+      bind k, make zero
+
+# accessibility at zero does not answer for every natural
+rule control-every-natural-from-zero
+  take n, like natural
+  like accessible
+    head
+      read n
+
+task control-every-natural-from-zero
+  take n
+  back zero-is-accessible()
+
+# what is below an accessible natural is accessible, not what is above it
+rule control-above-accessible
+  take m, like natural
+  take n, like natural
+  take evidence
+    like below
+      head
+        read m
+      head
+        read n
+  take a
+    like accessible
+      head
+        read m
+  like accessible
+    head
+      read n
+
+task control-above-accessible
+  take m
+  take n
+  take evidence
+  take a
+  back below-accessible(m, a, n, evidence)
+
+# a proof that calls itself at the same natural never ends, and proves nothing
+rule control-accessible-by-looping
+  take n, like natural
+  like accessible
+    head
+      read n
+
+task control-accessible-by-looping
+  take n
+  back control-accessible-by-looping(n)

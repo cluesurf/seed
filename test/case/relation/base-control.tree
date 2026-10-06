@@ -1,0 +1,98 @@
+# NEGATIVE CONTROL for code/relation/base.tree: the equivalence laws with one thing changed. Each must be refused.
+# Expected: 6 refusals.
+load @term/seed/atom/flag
+  find flag
+  find both
+  find implies
+
+load @term/seed/set/base
+  find set
+  find has
+
+load @term/seed/relation/base
+  find relation
+  find relates
+  find converse
+  find class
+
+# a relation that is not symmetric is not its own converse
+rule control-every-relation-is-own-converse
+  head a
+  mark r, like relation a
+  mark x, like a
+  mark y, like a
+  show hold, is-equal relates(converse(r), x, y), r(x, y)
+
+# without reflexivity an element need not be in its own class
+rule control-in-own-class-without-reflexive
+  head a
+  mark r, like relation a
+  mark x, like a
+  have symmetric
+    mark u, like a
+    mark v, like a
+    is-equal r(u, v), r(v, u)
+  show hold, is-equal has(class(r, x), x), make yes
+
+# without symmetry related elements need not share a class
+rule control-related-share-class-without-symmetric
+  head a
+  mark r, like relation a
+  mark x, like a
+  mark y, like a
+  mark w, like a
+  have transitive
+    mark u, like a
+    mark v, like a
+    mark t, like a
+    is-equal implies(both(r(u, v), r(v, t)), r(u, t)), make yes
+  have related, is-equal r(x, y), make yes
+  show hold, is-equal has(class(r, x), w), has(class(r, y), w)
+
+# without transitivity related elements need not share a class
+rule control-related-share-class-without-transitive
+  head a
+  mark r, like relation a
+  mark x, like a
+  mark y, like a
+  mark w, like a
+  have symmetric
+    mark u, like a
+    mark v, like a
+    is-equal r(u, v), r(v, u)
+  have related, is-equal r(x, y), make yes
+  show hold, is-equal has(class(r, x), w), has(class(r, y), w)
+
+# transitivity read backwards: r(u, w) does not give r(u, v)
+rule control-transitive-backwards
+  head a
+  mark r, like relation a
+  mark x, like a
+  mark y, like a
+  mark z, like a
+  have transitive
+    mark u, like a
+    mark v, like a
+    mark t, like a
+    is-equal implies(both(r(u, v), r(v, t)), r(u, t)), make yes
+  have far, is-equal r(x, z), make yes
+  show hold, is-equal r(x, y), make yes
+
+# the classes of RELATED elements are not disjoint, wherever one holds an element
+rule control-related-classes-are-disjoint
+  head a
+  mark r, like relation a
+  mark x, like a
+  mark y, like a
+  mark w, like a
+  have symmetric
+    mark u, like a
+    mark v, like a
+    is-equal r(u, v), r(v, u)
+  have transitive
+    mark u, like a
+    mark v, like a
+    mark t, like a
+    is-equal implies(both(r(u, v), r(v, t)), r(u, t)), make yes
+  have related, is-equal r(x, y), make yes
+  show hold, is-equal both(has(class(r, x), w), has(class(r, y), w)), make no

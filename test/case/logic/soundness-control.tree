@@ -1,0 +1,120 @@
+# NEGATIVE CONTROL for code/logic/soundness.tree: five UNSOUND proof systems, each with one axiom or rule changed so it
+# derives a formula some assignment makes false. Soundness must be refused for every one. A build that accepted one
+# would mean the kernel's truth table, or its induction over derivations, proves what is not true.
+# Expected: 5 refusals.
+load @term/seed/atom/flag
+  find flag
+
+load @term/seed/logic/propositional
+  find proposition
+  find assignment
+  find evaluate
+
+# false where a is yes and b is no: `a implies (a and b)`
+form adds-a-conjunct
+  head p, like proposition
+  case widen
+    link a, like proposition
+    link b, like proposition
+    head
+      make implication(a, make conjunction(a, b))
+
+rule control-a-conjunct-from-nothing
+  mark v, like assignment
+  mark p, like proposition
+  mark d, like adds-a-conjunct
+    head
+      read p
+  show hold, is-equal evaluate(v, p), make yes
+  fold d
+
+# false where a is no and b is yes: `(a or b) implies a`
+form keeps-the-left
+  head p, like proposition
+  case narrow
+    link a, like proposition
+    link b, like proposition
+    head
+      make implication
+        make disjunction(a, b)
+        a
+
+rule control-a-disjunct-is-not-the-left
+  mark v, like assignment
+  mark p, like proposition
+  mark d, like keeps-the-left
+    head
+      read p
+  show hold, is-equal evaluate(v, p), make yes
+  fold d
+
+# false where a is yes and b is no: contraposition the wrong way, `(not a -> not b) -> (a -> b)`
+form converse-contraposition
+  head p, like proposition
+  case turn
+    link a, like proposition
+    link b, like proposition
+    head
+      make implication
+        make implication
+          make negation(a)
+          make negation(b)
+        make implication(a, b)
+
+rule control-contraposition-the-wrong-way
+  mark v, like assignment
+  mark p, like proposition
+  mark d, like converse-contraposition
+    head
+      read p
+  show hold, is-equal evaluate(v, p), make yes
+  fold d
+
+# false wherever a is no: every formula is an axiom
+form anything-goes
+  head p, like proposition
+  case assume
+    link a, like proposition
+    head
+      read a
+
+rule control-every-formula-is-an-axiom
+  mark v, like assignment
+  mark p, like proposition
+  mark d, like anything-goes
+    head
+      read p
+  show hold, is-equal evaluate(v, p), make yes
+  fold d
+
+# false where a is no and b is yes: modus ponens backwards, from b and `a implies b` to a. Its axiom is sound
+# (`a implies (b implies a)`), so the refusal is the rule's
+form backwards-ponens
+  head p, like proposition
+  case weaken
+    link a, like proposition
+    link b, like proposition
+    head
+      make implication
+        a
+        make implication(b, a)
+  case affirm
+    link a, like proposition
+    link b, like proposition
+    link minor, like backwards-ponens
+      head
+        read b
+    link major, like backwards-ponens
+      head
+        make implication(a, b)
+    head
+      read a
+
+rule control-affirming-the-consequent
+  mark v, like assignment
+  mark p, like proposition
+  mark d, like backwards-ponens
+    head
+      read p
+  show hold, is-equal evaluate(v, p), make yes
+  fold d

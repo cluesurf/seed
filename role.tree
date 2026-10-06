@@ -1,0 +1,25 @@
+# The files written lean: `back x` returns, `<x>` is text, a bare word is a variable, `f(a, b)` is a call.
+# The rest of the library is longhand and stays so until `pnpm term:lean-convert` reads it equal. New files go here.
+# See note/term/lean.md.
+role code
+  mark lean
+  take @/code/logic/boolean.tree
+  take @/code/logic/propositional.tree
+  take @/code/logic/soundness.tree
+  take @/code/set/base.tree
+  take @/code/set/cardinal.tree
+  take @/code/function/property.tree
+  take @/code/relation/base.tree
+  take @/code/relation/closure.tree
+  take @/code/relation/well-founded.tree
+  take @/code/vector/fixed.tree
+  take @/code/matrix/fixed.tree
+  take @/code/number/total.tree
+  take @/code/number/embedding.tree
+  take @/test/case/number/total-control.tree
+  take @/test/case/number/embedding-control.tree
+  take @/test/case/logic/*.tree
+  take @/test/case/set/*.tree
+  take @/test/case/function/*.tree
+  take @/test/case/relation/*.tree
+  take @/test/case/algebra/*.tree

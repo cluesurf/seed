@@ -1,0 +1,157 @@
+# Relations on any type, as truth-valued tasks of two elements: r(x, y) is yes when x is related to y. The reading of
+# set/base.tree one place up, and the one every proof assistant uses (`a -> a -> Prop`), with `flag` for `Prop`.
+#
+# A property of a relation is a statement for every element, so it is a `have` with marks of its own:
+#
+#   reflexive    r(u, u) is yes for every u
+#   symmetric    r(u, v) is r(v, u) for every u and v
+#   transitive   r(u, v) and r(v, w) give r(u, w), for every u, v and w
+#
+# The kernel uses such a hypothesis at the elements the goal names, and decides the rest by the truth table.
+#
+# An EQUIVALENCE is all three, and its CLASSES partition the type: every element is in its own class, two related
+# elements have one class, two classes that share an element are one class, and the classes of unrelated elements
+# share nothing. A class is a set (set/base.tree), compared element by element at every w.
+load @term/seed/atom/flag
+  find flag
+  find both
+  find implies
+
+load @term/seed/set/base
+  find set
+  find has
+
+form relation
+  head a
+  like task
+    take x, like a
+    take y, like a
+    like flag
+
+# r AT x and y, for a relation that is itself computed (`relates(converse(r), x, y)`)
+task relates
+  head a
+  take r, like relation a
+  take x, like a
+  take y, like a
+
+  like flag
+
+  back r(x, y)
+
+# the CONVERSE relates y to x when r relates x to y
+task converse
+  head a
+  take r, like relation a
+
+  like relation a
+
+  back
+    task
+      take x, like a
+      take y, like a
+      like flag
+      back r(y, x)
+
+# the CLASS of x: the elements x is related to
+task class
+  head a
+  take r, like relation a
+  take x, like a
+
+  like set a
+
+  back
+    task
+      take y, like a
+      like flag
+      back r(x, y)
+
+# THE CONVERSE OF THE CONVERSE is the relation.
+rule converse-twice
+  head a
+  mark r, like relation a
+  mark x, like a
+  mark y, like a
+  show hold, is-equal relates(converse(converse(r)), x, y), r(x, y)
+
+# A SYMMETRIC RELATION IS ITS OWN CONVERSE.
+rule symmetric-is-own-converse
+  head a
+  mark r, like relation a
+  mark x, like a
+  mark y, like a
+  have symmetric
+    mark u, like a
+    mark v, like a
+    is-equal r(u, v), r(v, u)
+  show hold, is-equal relates(converse(r), x, y), r(x, y)
+
+# EVERY ELEMENT IS IN ITS OWN CLASS, under a reflexive relation.
+rule in-own-class
+  head a
+  mark r, like relation a
+  mark x, like a
+  have reflexive
+    mark u, like a
+    is-equal r(u, u), make yes
+  show hold, is-equal has(class(r, x), x), make yes
+
+# RELATED ELEMENTS HAVE ONE CLASS. Symmetry and transitivity are enough.
+rule related-share-class
+  head a
+  mark r, like relation a
+  mark x, like a
+  mark y, like a
+  mark w, like a
+  have symmetric
+    mark u, like a
+    mark v, like a
+    is-equal r(u, v), r(v, u)
+  have transitive
+    mark u, like a
+    mark v, like a
+    mark t, like a
+    is-equal implies(both(r(u, v), r(v, t)), r(u, t)), make yes
+  have related, is-equal r(x, y), make yes
+  show hold, is-equal has(class(r, x), w), has(class(r, y), w)
+
+# TWO CLASSES THAT SHARE AN ELEMENT ARE ONE CLASS.
+rule overlapping-classes-agree
+  head a
+  mark r, like relation a
+  mark x, like a
+  mark y, like a
+  mark z, like a
+  mark w, like a
+  have symmetric
+    mark u, like a
+    mark v, like a
+    is-equal r(u, v), r(v, u)
+  have transitive
+    mark u, like a
+    mark v, like a
+    mark t, like a
+    is-equal implies(both(r(u, v), r(v, t)), r(u, t)), make yes
+  have z-in-x, is-equal has(class(r, x), z), make yes
+  have z-in-y, is-equal has(class(r, y), z), make yes
+  show hold, is-equal has(class(r, x), w), has(class(r, y), w)
+
+# THE CLASSES OF UNRELATED ELEMENTS SHARE NOTHING.
+rule unrelated-classes-are-disjoint
+  head a
+  mark r, like relation a
+  mark x, like a
+  mark y, like a
+  mark w, like a
+  have symmetric
+    mark u, like a
+    mark v, like a
+    is-equal r(u, v), r(v, u)
+  have transitive
+    mark u, like a
+    mark v, like a
+    mark t, like a
+    is-equal implies(both(r(u, v), r(v, t)), r(u, t)), make yes
+  have unrelated, is-equal r(x, y), make no
+  show hold, is-equal both(has(class(r, x), w), has(class(r, y), w)), make no

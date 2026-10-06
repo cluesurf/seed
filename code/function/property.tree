@@ -1,0 +1,321 @@
+# Functions between any two types: composition, and the properties a function can have, injective, surjective and
+# bijective, through the inverses that witness them.
+#
+# A property that holds "for every u" is a `have` with a `mark` of its own: `have g-undoes-f / mark u, like a /
+# is-equal g(f(u)), u` holds for every u, and the kernel uses it at each term of type `a` the goal names. A conclusion
+# that holds for every x is a rule over `mark x`, so the rule is the property itself.
+#
+# A LEFT INVERSE g of f undoes it: g(f(u)) == u for every u. Every function with one is injective. A SECTION s of f is
+# undone by it: f(s(v)) == v for every v. Every function with one is surjective, with s(v) the element that reaches v.
+# The converses need choice (K3): a program cannot pick a preimage it has no way to find, so an injective or a
+# surjective function with no inverse to name is outside this file.
+#
+# Images are absent too: "y is in the image of s" is "there is an x in s with f(x) == y", which no task computes and
+# no rule can yet state as a hypothesis (K7). Preimages are in set/base.tree.
+
+task compose
+  head a
+  head b
+  head c
+  take g
+    like task
+      take y, like b
+      like c
+  take f
+    like task
+      take x, like a
+      like b
+
+  like task
+    take x, like a
+    like c
+
+  back
+    task
+      take x, like a
+      like c
+      back g(f(x))
+
+# f AT x, for a function that is itself computed (`apply(compose(g, f), x)`)
+task apply
+  head a
+  head b
+  take f
+    like task
+      take x, like a
+      like b
+  take x, like a
+
+  like b
+
+  back f(x)
+
+# COMPOSITION applies f, then g, and is associative.
+rule compose-applies-in-turn
+  head a
+  head b
+  head c
+  mark g
+    like task
+      take y, like b
+      like c
+  mark f
+    like task
+      take x, like a
+      like b
+  mark x, like a
+  show hold, is-equal apply(compose(g, f), x), g(f(x))
+
+rule compose-associates
+  head a
+  head b
+  head c
+  head d
+  mark h
+    like task
+      take z, like c
+      like d
+  mark g
+    like task
+      take y, like b
+      like c
+  mark f
+    like task
+      take x, like a
+      like b
+  mark x, like a
+  show hold, is-equal apply(compose(h, compose(g, f)), x), apply(compose(compose(h, g), f), x)
+
+# A LEFT INVERSE MAKES IT INJECTIVE: two elements with one image are one element.
+rule left-inverse-gives-injective
+  head a
+  head b
+  mark f
+    like task
+      take x, like a
+      like b
+  mark g
+    like task
+      take y, like b
+      like a
+  mark x, like a
+  mark y, like a
+  have g-undoes-f
+    mark u, like a
+    is-equal g(f(u)), u
+  have same-image, is-equal f(x), f(y)
+  show hold, is-equal x, y
+
+# A function with a left inverse CANCELS on the left: f after g and f after h agree only where g and h do.
+rule left-inverse-cancels
+  head a
+  head b
+  head c
+  mark f
+    like task
+      take x, like b
+      like c
+  mark e
+    like task
+      take z, like c
+      like b
+  mark g
+    like task
+      take w, like a
+      like b
+  mark h
+    like task
+      take w, like a
+      like b
+  mark x, like a
+  have e-undoes-f
+    mark u, like b
+    is-equal e(f(u)), u
+  have same-after-f, is-equal f(g(x)), f(h(x))
+  show hold, is-equal g(x), h(x)
+
+# LEFT INVERSES COMPOSE, the other way round: r after q undoes g after f. So injections compose.
+rule left-inverses-compose
+  head a
+  head b
+  head c
+  mark f
+    like task
+      take x, like a
+      like b
+  mark r
+    like task
+      take y, like b
+      like a
+  mark g
+    like task
+      take y, like b
+      like c
+  mark q
+    like task
+      take z, like c
+      like b
+  mark x, like a
+  have r-undoes-f
+    mark u, like a
+    is-equal r(f(u)), u
+  have q-undoes-g
+    mark v, like b
+    is-equal q(g(v)), v
+  show hold, is-equal r(q(g(f(x)))), x
+
+rule injections-compose
+  head a
+  head b
+  head c
+  mark f
+    like task
+      take x, like a
+      like b
+  mark r
+    like task
+      take y, like b
+      like a
+  mark g
+    like task
+      take y, like b
+      like c
+  mark q
+    like task
+      take z, like c
+      like b
+  mark x, like a
+  mark y, like a
+  have r-undoes-f
+    mark u, like a
+    is-equal r(f(u)), u
+  have q-undoes-g
+    mark v, like b
+    is-equal q(g(v)), v
+  have same-image, is-equal g(f(x)), g(f(y))
+  show hold, is-equal x, y
+
+# A SECTION MAKES IT SURJECTIVE: every z is reached, from s(z).
+rule section-gives-surjective
+  head a
+  head b
+  mark f
+    like task
+      take x, like a
+      like b
+  mark s
+    like task
+      take y, like b
+      like a
+  mark z, like b
+  have f-undoes-s
+    mark v, like b
+    is-equal f(s(v)), v
+  find x, s(z)
+  show hold, is-equal f(x), z
+
+# SECTIONS COMPOSE: s after t is a section of g after f. So surjections compose.
+rule sections-compose
+  head a
+  head b
+  head c
+  mark f
+    like task
+      take x, like a
+      like b
+  mark s
+    like task
+      take y, like b
+      like a
+  mark g
+    like task
+      take y, like b
+      like c
+  mark t
+    like task
+      take z, like c
+      like b
+  mark z, like c
+  have f-undoes-s
+    mark v, like b
+    is-equal f(s(v)), v
+  have g-undoes-t
+    mark w, like c
+    is-equal g(t(w)), w
+  show hold, is-equal g(f(s(t(z)))), z
+
+rule surjections-compose
+  head a
+  head b
+  head c
+  mark f
+    like task
+      take x, like a
+      like b
+  mark s
+    like task
+      take y, like b
+      like a
+  mark g
+    like task
+      take y, like b
+      like c
+  mark t
+    like task
+      take z, like c
+      like b
+  mark z, like c
+  have f-undoes-s
+    mark v, like b
+    is-equal f(s(v)), v
+  have g-undoes-t
+    mark w, like c
+    is-equal g(t(w)), w
+  find x, s(t(z))
+  show hold, is-equal g(f(x)), z
+
+# A SECTION IS INJECTIVE: f is a left inverse of it.
+rule section-is-injective
+  head a
+  head b
+  mark f
+    like task
+      take x, like a
+      like b
+  mark s
+    like task
+      take y, like b
+      like a
+  mark v, like b
+  mark w, like b
+  have f-undoes-s
+    mark y, like b
+    is-equal f(s(y)), y
+  have same-image, is-equal s(v), s(w)
+  show hold, is-equal v, w
+
+# A BIJECTION HAS ONE INVERSE: a left inverse and a section of the same function agree everywhere. So a function with
+# both is a bijection, and its inverse is unique.
+rule left-inverse-is-the-section
+  head a
+  head b
+  mark f
+    like task
+      take x, like a
+      like b
+  mark g
+    like task
+      take y, like b
+      like a
+  mark s
+    like task
+      take y, like b
+      like a
+  mark y, like b
+  have g-undoes-f
+    mark u, like a
+    is-equal g(f(u)), u
+  have f-undoes-s
+    mark v, like b
+    is-equal f(s(v)), v
+  show hold, is-equal g(y), s(y)
