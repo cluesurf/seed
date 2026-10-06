@@ -34,7 +34,7 @@ task complement
 # COMPLEMENTATION IS AN INVOLUTION: complementing a weight class twice returns it, complement (complement w) = w, for every
 # class, so the weight enumerator is symmetric. Proved by induction over the three weight classes.
 rule complementation-is-an-involution
-  mark w, like weight-class
+  seat w, like weight-class
   show hold
     call is-equal
       call complement

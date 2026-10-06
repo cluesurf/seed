@@ -36,7 +36,7 @@ task monus
             read prior
 
 rule pred-succ-is-prior
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call pred
@@ -47,7 +47,7 @@ rule pred-succ-is-prior
   calm hold
 
 rule monus-zero-right-is-self
-  mark a, like natural
+  seat a, like natural
   show hold
     call is-equal
       call monus
@@ -57,8 +57,8 @@ rule monus-zero-right-is-self
   calm hold
 
 rule monus-succ-right-steps
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call monus
@@ -73,7 +73,7 @@ rule monus-succ-right-steps
   calm hold
 
 rule monus-zero-left-is-zero
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call monus
@@ -84,8 +84,8 @@ rule monus-zero-left-is-zero
     cite monus-succ-right-steps
 
 rule monus-succ-succ-cancels
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call monus
@@ -103,7 +103,7 @@ rule monus-succ-succ-cancels
     cite pred-succ-is-prior
 
 rule monus-self-is-zero
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call monus
@@ -131,7 +131,7 @@ task plus
               read b
 
 rule plus-zero-right
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call plus
@@ -141,8 +141,8 @@ rule plus-zero-right
   fold n
 
 rule plus-succ-right
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call plus
@@ -161,8 +161,8 @@ rule plus-succ-right
 # successor case pulls the successor out of the sum, cancels it against the subtraction (the succ-succ law), and the
 # hypothesis closes. This is the defining relation that makes subtraction the partial inverse of addition.
 rule monus-plus-cancel
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call monus
@@ -181,9 +181,9 @@ rule monus-plus-cancel
 # same as subtracting their sum. Proved by induction on c, using the monus and plus successor step laws. This is a
 # defining law of truncated subtraction and the bridge from iterated `monus` to a single subtraction by a sum.
 rule monus-monus-is-monus-plus
-  mark a, like natural
-  mark b, like natural
-  mark c, like natural
+  seat a, like natural
+  seat b, like natural
+  seat c, like natural
   show hold
     call is-equal
       call monus

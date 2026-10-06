@@ -68,44 +68,44 @@ task join
 # REFLEXIVE: the empty path follows every relation, and ends where it starts.
 rule stop-follows
   head a
-  mark r, like relation a
-  mark x, like a
+  seat r, like relation a
+  seat x, like a
   show hold, is-equal follows(r, x, make stop), make yes
 
 rule stop-finishes-at-start
   head a
-  mark x, like a
+  seat x, like a
   show hold, is-equal finish(x, make stop), x
 
 # CONTAINS r: a path of one step follows r exactly when r relates its ends, and ends at its one element.
 rule one-step-follows-exactly-r
   head a
-  mark r, like relation a
-  mark x, like a
-  mark y, like a
+  seat r, like relation a
+  seat x, like a
+  seat y, like a
   show hold, is-equal follows(r, x, make through(y, make stop)), r(x, y)
 
 rule one-step-finishes-there
   head a
-  mark x, like a
-  mark y, like a
+  seat x, like a
+  seat y, like a
   show hold, is-equal finish(x, make through(y, make stop)), y
 
 # TRANSITIVE: a joined path ends where its second part ends from where the first part does, and follows r exactly when
 # both parts do. So a path from x to y and one from y to z are one path from x to z.
 rule join-finishes
   head a
-  mark x, like a
-  mark p, like path a
-  mark q, like path a
+  seat x, like a
+  seat p, like path a
+  seat q, like path a
   show hold, is-equal finish(x, join(p, q)), finish(finish(x, p), q)
   fold p
 
 rule join-follows
   head a
-  mark r, like relation a
-  mark x, like a
-  mark p, like path a
-  mark q, like path a
+  seat r, like relation a
+  seat x, like a
+  seat p, like path a
+  seat q, like path a
   show hold, is-equal follows(r, x, join(p, q)), both(follows(r, x, p), follows(r, finish(x, p), q))
   fold p

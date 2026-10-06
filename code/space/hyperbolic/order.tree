@@ -30,8 +30,8 @@
 # ORDERED FIELD. A squared inequality between a quantity and a non-negative one gives the inequality itself: from
 # y >= 0 and x^2 <= y^2, x <= y. (With x = -2, y = 1 the sign hypothesis is what fails: it cannot be dropped.)
 rule square-root-step
-  mark x, like integer
-  mark y, like integer
+  seat x, like integer
+  seat y, like integer
   have y-is-non-negative
     call is-minimum
       read y
@@ -51,8 +51,8 @@ rule square-root-step
 
 # A positive product with one positive factor has a positive other factor.
 rule sign-of-a-factor
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   have product-is-positive
     call is-above
       call multiply
@@ -70,8 +70,8 @@ rule sign-of-a-factor
 
 # Opposite signs multiply to a negative.
 rule opposite-signs-give-a-negative-product
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   have a-is-positive
     call is-above
       read a
@@ -90,10 +90,10 @@ rule opposite-signs-give-a-negative-product
 # ADDITION. (p, s) and (q, t) are points of the hyperbola X^2 - Y^2 = 1, and so is their product
 # (p q + s t, p t + q s): the hyperbolic addition law, so p q + s t is the cosh of a distance, the sum of the two.
 rule the-sum-of-two-distances-is-on-the-hyperbola
-  mark p, like integer
-  mark q, like integer
-  mark s, like integer
-  mark t, like integer
+  seat p, like integer
+  seat q, like integer
+  seat s, like integer
+  seat t, like integer
   have first-pair
     call is-equal
       call subtract
@@ -151,10 +151,10 @@ rule the-sum-of-two-distances-is-on-the-hyperbola
 
 # And it is at least 1, as a cosh must be: from p, q >= 1 (a cosh) and s, t >= 0.
 rule the-cosh-of-a-sum-is-at-least-one
-  mark p, like integer
-  mark q, like integer
-  mark s, like integer
-  mark t, like integer
+  seat p, like integer
+  seat q, like integer
+  seat s, like integer
+  seat t, like integer
   have p-is-a-cosh
     call is-minimum
       read p
@@ -186,11 +186,11 @@ rule the-cosh-of-a-sum-is-at-least-one
 # Gram determinant's sign, (p^2 - 1)(q^2 - 1) - (r - p q)^2 >= 0, which metric proves for any three points (it is
 # det(x, y, z)^2). Since cosh is increasing on the distances, this is the inequality of the distances.
 rule the-triangle-inequality
-  mark p, like integer
-  mark q, like integer
-  mark r, like integer
-  mark s, like integer
-  mark t, like integer
+  seat p, like integer
+  seat q, like integer
+  seat r, like integer
+  seat s, like integer
+  seat t, like integer
   have s-is-a-sinh
     call is-minimum
       read s
@@ -258,11 +258,11 @@ rule the-triangle-inequality
 
 # And the other side, cosh(a - b) = p q - s t <= cosh c: a side is at least the difference of the other two.
 rule the-reverse-triangle-inequality
-  mark p, like integer
-  mark q, like integer
-  mark r, like integer
-  mark s, like integer
-  mark t, like integer
+  seat p, like integer
+  seat q, like integer
+  seat r, like integer
+  seat s, like integer
+  seat t, like integer
   have s-is-a-sinh
     call is-minimum
       read s
@@ -331,11 +331,11 @@ rule the-reverse-triangle-inequality
 # EQUALITY: when cosh c = cosh(a + b) the Gram determinant is 0, which metric shows is det(x, y, z)^2, so the three
 # points are collinear and y lies between: the triangle inequality is strict for every genuine triangle.
 rule equality-in-the-triangle-inequality-is-degenerate
-  mark p, like integer
-  mark q, like integer
-  mark r, like integer
-  mark s, like integer
-  mark t, like integer
+  seat p, like integer
+  seat q, like integer
+  seat r, like integer
+  seat s, like integer
+  seat t, like integer
   have s-squared
     call is-equal
       call multiply
@@ -397,9 +397,9 @@ rule equality-in-the-triangle-inequality-is-degenerate
 # (u v < 0, and metric shows B is linear along the segment, so the crossing point is on it). With c off the line
 # (w^2 > 0) it cannot cross both a c and b c: that would make u w < 0 and v w < 0, hence u v w^2 > 0, so u v > 0.
 rule pasch-the-line-does-not-cross-both-other-sides
-  mark u, like integer
-  mark v, like integer
-  mark w, like integer
+  seat u, like integer
+  seat v, like integer
+  seat w, like integer
   have crosses-a-c
     call is-below
       call multiply
@@ -427,9 +427,9 @@ rule pasch-the-line-does-not-cross-both-other-sides
 
 # And it crosses at least one: if it crosses a b and c is off the line, it crosses a c or b c.
 rule pasch-the-line-crosses-one-other-side
-  mark u, like integer
-  mark v, like integer
-  mark w, like integer
+  seat u, like integer
+  seat v, like integer
+  seat w, like integer
   have crosses-a-b
     call is-below
       call multiply
@@ -461,12 +461,12 @@ rule pasch-the-line-crosses-one-other-side
 # quarter discriminant is m |v|^2 - (a1 v2 - a2 v1)^2. When a is inside (|a|^2 <= m) it is >= 0, so the root exists.
 # The proof is Lagrange's identity |a|^2 |v|^2 = d^2 + (a1 v2 - a2 v1)^2 with d = a . v, then |a|^2 <= m.
 rule line-circle-continuity
-  mark a1, like integer
-  mark a2, like integer
-  mark v1, like integer
-  mark v2, like integer
-  mark m, like integer
-  mark d, like integer
+  seat a1, like integer
+  seat a2, like integer
+  seat v1, like integer
+  seat v2, like integer
+  seat m, like integer
+  seat d, like integer
   have a-is-inside
     call is-maximum
       call add

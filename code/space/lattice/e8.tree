@@ -67,7 +67,7 @@ task flip-coordinate
 
 # FLIPPING A COORDINATE IS AN INVOLUTION: flip-coordinate (flip-coordinate c) = c.
 rule flip-coordinate-is-an-involution
-  mark c, like coordinate
+  seat c, like coordinate
   show hold
     call is-equal
       call flip-coordinate
@@ -273,7 +273,7 @@ task flip-parity
 # FLIPPING PARITY IS AN INVOLUTION: flip-parity (flip-parity p) = p. The parity group has order two, so two flips return the
 # starting parity.
 rule flip-parity-is-an-involution
-  mark p, like parity
+  seat p, like parity
   show hold
     call is-equal
       call flip-parity
@@ -363,14 +363,14 @@ task is-half-integer-root
 # over all eight coordinates by flipping the first one, the same argument applying to each axis. This is the statement that
 # both signs of each axis pair give minimal vectors, the four sign patterns per axis pair that build the one hundred twelve.
 rule is-integer-root-is-preserved-by-flipping-a-coordinate
-  mark a, like coordinate
-  mark b, like coordinate
-  mark c, like coordinate
-  mark d, like coordinate
-  mark e, like coordinate
-  mark f, like coordinate
-  mark g, like coordinate
-  mark h, like coordinate
+  seat a, like coordinate
+  seat b, like coordinate
+  seat c, like coordinate
+  seat d, like coordinate
+  seat e, like coordinate
+  seat f, like coordinate
+  seat g, like coordinate
+  seat h, like coordinate
   show hold
     call is-equal
       call is-integer-root
@@ -400,14 +400,14 @@ rule is-integer-root-is-preserved-by-flipping-a-coordinate
 # eight coordinates: every assignment with exactly two nonzero coordinates yields an even count, so the conjunction agrees
 # with is-integer-root on every vector.
 rule a-minimal-integer-vector-lies-in-e8
-  mark a, like coordinate
-  mark b, like coordinate
-  mark c, like coordinate
-  mark d, like coordinate
-  mark e, like coordinate
-  mark f, like coordinate
-  mark g, like coordinate
-  mark h, like coordinate
+  seat a, like coordinate
+  seat b, like coordinate
+  seat c, like coordinate
+  seat d, like coordinate
+  seat e, like coordinate
+  seat f, like coordinate
+  seat g, like coordinate
+  seat h, like coordinate
   show hold
     call is-equal
       call both
@@ -458,14 +458,14 @@ task flip-sign
 # membership. Proved over all eight signs. The double flip is an even sign change, and the even-minus-sign family is closed
 # under the even sign changes that connect its one hundred twenty-eight members.
 rule is-half-integer-root-is-preserved-by-flipping-one-sign-twice
-  mark s1, like sign
-  mark s2, like sign
-  mark s3, like sign
-  mark s4, like sign
-  mark s5, like sign
-  mark s6, like sign
-  mark s7, like sign
-  mark s8, like sign
+  seat s1, like sign
+  seat s2, like sign
+  seat s3, like sign
+  seat s4, like sign
+  seat s5, like sign
+  seat s6, like sign
+  seat s7, like sign
+  seat s8, like sign
   show hold
     call is-equal
       call is-half-integer-root

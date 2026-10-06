@@ -21,27 +21,27 @@
 
 # THE THEOREM, by induction on the number of strips n.
 rule the-riemann-sums-of-a-derivative-approach-its-difference
-  mark bigf
+  seat bigf
     like task
       take a0, like integer
       like integer
-  mark f
+  seat f
     like task
       take a0, like integer
       like integer
-  mark pt
+  seat pt
     like task
       take a0, like integer
       like integer
-  mark sum
+  seat sum
     like task
       take a0, like integer
       like integer
-  mark n, like integer
-  mark w, like integer
-  mark eps, like integer
+  seat n, like integer
+  seat w, like integer
+  seat eps, like integer
   have the-points-are-evenly-spaced
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -56,7 +56,7 @@ rule the-riemann-sums-of-a-derivative-approach-its-difference
             read i
         read w
   have bigf-has-derivative-f-at-the-mesh
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -106,7 +106,7 @@ rule the-riemann-sums-of-a-derivative-approach-its-difference
         code 0
       code 0
   have the-riemann-sum-adds-a-strip
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -176,10 +176,10 @@ rule the-riemann-sums-of-a-derivative-approach-its-difference
 # THE STRIP OF THE DISK. For pairs on the hyperbola (cosh, sinh), cosh(a + b) - cosh(a - b) = 2 sinh a sinh b: with
 # a = (i + 1/2) h and b = h / 2 this is C(i + 1) - C(i) = 2 sinh(h/2) M(i).
 rule the-addition-formula-gives-the-strip
-  mark ca, like integer
-  mark sa, like integer
-  mark cb, like integer
-  mark sb, like integer
+  seat ca, like integer
+  seat sa, like integer
+  seat cb, like integer
+  seat sb, like integer
   show hold
     call is-equal
       call subtract
@@ -207,22 +207,22 @@ rule the-addition-formula-gives-the-strip
 # THE DISK AREA SUM, exactly: if each strip obeys C(i + 1) - C(i) = 2 s M(i) (s = sinh(h/2)), the sum of the strips
 # 2 s M(i) is C(n) - C(0) = cosh(n h) - 1, for every n: the midpoint area sum, times the factor 2 s / h.
 rule the-disk-area-sum-telescopes
-  mark cc
+  seat cc
     like task
       take a0, like integer
       like integer
-  mark mid
+  seat mid
     like task
       take a0, like integer
       like integer
-  mark acc
+  seat acc
     like task
       take a0, like integer
       like integer
-  mark n, like integer
-  mark s, like integer
+  seat n, like integer
+  seat s, like integer
   have each-strip-is-a-difference
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -247,7 +247,7 @@ rule the-disk-area-sum-telescopes
         code 0
       code 0
   have the-sum-adds-a-strip
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -293,20 +293,20 @@ rule the-disk-area-sum-telescopes
 #   big w^2 + big w^3 - [..] = (big - cosh x)(cosh w - 1) + big (w^2 - cosh w + 1)
 #                              + (big - sinh x)(sinh w - w) + big (w^3 - sinh w + w).
 rule cosh-has-derivative-sinh
-  mark cc
+  seat cc
     like task
       take a0, like integer
       like integer
-  mark ss
+  seat ss
     like task
       take a0, like integer
       like integer
-  mark x, like integer
-  mark w, like integer
-  mark big, like integer
+  seat x, like integer
+  seat w, like integer
+  seat big, like integer
   have the-addition-formula
-    mark a, like integer
-    mark b, like integer
+    seat a, like integer
+    seat b, like integer
     call is-equal
       call cc
         call add
@@ -324,7 +324,7 @@ rule cosh-has-derivative-sinh
           call ss
             read b
   have cosh-near-zero
-    mark u, like integer
+    seat u, like integer
     meet or
       call is-below
         read u
@@ -348,7 +348,7 @@ rule cosh-has-derivative-sinh
             read u
             read u
   have sinh-near-zero
-    mark u, like integer
+    seat u, like integer
     meet or
       call is-below
         read u
@@ -461,39 +461,39 @@ rule cosh-has-derivative-sinh
 # difference of two with a vertex at a chosen point, and defect is additive (space/hyperbolic/metric), so it holds for
 # all. Here c(i) is cosh r at step i, and ia, ip, it are the increments.
 rule area-equals-defect
-  mark ar
+  seat ar
     like task
       take a0, like integer
       like integer
-  mark ps
+  seat ps
     like task
       take a0, like integer
       like integer
-  mark th
+  seat th
     like task
       take a0, like integer
       like integer
-  mark c
+  seat c
     like task
       take a0, like integer
       like integer
-  mark ia
+  seat ia
     like task
       take a0, like integer
       like integer
-  mark ip
+  seat ip
     like task
       take a0, like integer
       like integer
-  mark it
+  seat it
     like task
       take a0, like integer
       like integer
-  mark n, like integer
-  mark w, like integer
-  mark eps, like integer
+  seat n, like integer
+  seat w, like integer
+  seat eps, like integer
   have the-area-follows-its-increment
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -528,7 +528,7 @@ rule area-equals-defect
             read eps
             read w
   have psi-follows-its-increment
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -563,7 +563,7 @@ rule area-equals-defect
             read eps
             read w
   have theta-follows-its-increment
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -598,7 +598,7 @@ rule area-equals-defect
             read eps
             read w
   have the-area-element
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -615,7 +615,7 @@ rule area-equals-defect
           call it
             read i
   have the-turning
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -702,12 +702,12 @@ rule area-equals-defect
 # THE SERIES OF COSH, toward proving the bounds the cosh rule assumes. Its terms are t(k) = w^(2k) / (2k)!, so
 # (2k + 1)(2k + 2) t(k + 1) = w^2 t(k) with t(0) = 1. On [0, 1] each term is at most half the one before.
 rule each-cosh-term-is-at-most-half-the-last
-  mark t
+  seat t
     like task
       take a0, like integer
       like integer
-  mark k, like integer
-  mark w, like integer
+  seat k, like integer
+  seat w, like integer
   have the-term-from-the-last
     call is-equal
       call multiply
@@ -764,16 +764,16 @@ rule each-cosh-term-is-at-most-half-the-last
 # rule takes as a hypothesis, for every partial sum; for cosh itself it passes to the limit once the partial sums are
 # shown to converge.
 rule the-partial-sums-of-cosh-are-bounded
-  mark t
+  seat t
     like task
       take a0, like integer
       like integer
-  mark psum
+  seat psum
     like task
       take a0, like integer
       like integer
-  mark n, like integer
-  mark w, like integer
+  seat n, like integer
+  seat w, like integer
   have the-first-term
     call is-equal
       call t
@@ -789,7 +789,7 @@ rule the-partial-sums-of-cosh-are-bounded
         read w
         read w
   have each-term-is-at-most-half-the-last
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -804,7 +804,7 @@ rule the-partial-sums-of-cosh-are-bounded
         call t
           read k
   have each-term-is-not-negative
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -819,7 +819,7 @@ rule the-partial-sums-of-cosh-are-bounded
         code 0
       code 1
   have each-partial-sum-adds-a-term
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -870,12 +870,12 @@ rule the-partial-sums-of-cosh-are-bounded
 
 # CONVERGENCE. Halving makes each term at most 1 / N: (N + 1) t(N + 1) <= 1, by induction from t(1) = w^2 / 2.
 rule the-terms-are-at-most-one-over-their-index
-  mark t
+  seat t
     like task
       take a0, like integer
       like integer
-  mark n, like integer
-  mark w, like integer
+  seat n, like integer
+  seat w, like integer
   have the-second-term
     call is-equal
       call multiply
@@ -892,7 +892,7 @@ rule the-terms-are-at-most-one-over-their-index
         read w
       code 1
   have each-term-is-at-most-half-the-last
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -907,7 +907,7 @@ rule the-terms-are-at-most-one-over-their-index
         call t
           read k
   have each-term-is-not-negative
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -937,18 +937,18 @@ rule the-terms-are-at-most-one-over-their-index
 # A TAIL of the series from term big on is at most twice that term, and the partial sums never fall:
 # P(big + m) - P(big) + 2 t(big + m) <= 2 t(big), and P(big + m) >= P(big), by induction on m.
 rule a-tail-is-small-and-not-negative
-  mark t
+  seat t
     like task
       take a0, like integer
       like integer
-  mark psum
+  seat psum
     like task
       take a0, like integer
       like integer
-  mark big, like integer
-  mark m, like integer
+  seat big, like integer
+  seat m, like integer
   have each-term-is-at-most-half-the-last
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -963,7 +963,7 @@ rule a-tail-is-small-and-not-negative
         call t
           read k
   have each-term-is-not-negative
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -973,7 +973,7 @@ rule a-tail-is-small-and-not-negative
           read k
         code 0
   have each-partial-sum-adds-a-term
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -1033,15 +1033,15 @@ rule a-tail-is-small-and-not-negative
 
 # With the modulus e(k) = 2 / k (k e(k) = 2), twice a term is at most the modulus at its index.
 rule twice-a-term-is-at-most-the-modulus
-  mark t
+  seat t
     like task
       take a0, like integer
       like integer
-  mark e
+  seat e
     like task
       take a0, like integer
       like integer
-  mark k, like integer
+  seat k, like integer
   have the-term-is-at-most-one-over-k
     call is-maximum
       call multiply
@@ -1075,23 +1075,23 @@ rule twice-a-term-is-at-most-the-modulus
 # approximation lies in [1, 1 + w^2] (the-partial-sums-of-cosh-are-bounded), so cosh(w) does: THE BOUND THE COSH RULE
 # ASSUMES HOLDS OF THE SERIES.
 rule the-partial-sums-of-cosh-are-a-real
-  mark t
+  seat t
     like task
       take a0, like integer
       like integer
-  mark psum
+  seat psum
     like task
       take a0, like integer
       like integer
-  mark e
+  seat e
     like task
       take a0, like integer
       like integer
-  mark p, like integer
-  mark m, like integer
+  seat p, like integer
+  seat m, like integer
   have a-tail-is-small-and-not-negative
-    mark b, like integer
-    mark j, like integer
+    seat b, like integer
+    seat j, like integer
     meet or
       call is-below
         read b
@@ -1129,7 +1129,7 @@ rule the-partial-sums-of-cosh-are-a-real
               read b
           code 0
   have twice-a-term-is-at-most-the-modulus
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -1142,7 +1142,7 @@ rule the-partial-sums-of-cosh-are-a-real
         call e
           read k
   have the-modulus-is-positive
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -1152,7 +1152,7 @@ rule the-partial-sums-of-cosh-are-a-real
           read k
         code 0
   have each-term-is-not-negative
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -1206,12 +1206,12 @@ rule the-partial-sums-of-cosh-are-a-real
 # THE SERIES OF SINH: terms s(k) = w^(2k + 1) / (2k + 1)!, so (2k + 2)(2k + 3) s(k + 1) = w^2 s(k), s(0) = w. On
 # [0, 1] each term is at most half the one before.
 rule each-sinh-term-is-at-most-half-the-last
-  mark t
+  seat t
     like task
       take a0, like integer
       like integer
-  mark k, like integer
-  mark w, like integer
+  seat k, like integer
+  seat w, like integer
   have the-term-from-the-last
     call is-equal
       call multiply
@@ -1267,16 +1267,16 @@ rule each-sinh-term-is-at-most-half-the-last
 # from 6 s(1) = w^3. With the same convergence lemmas (they use only the halving and the signs), sinh(w) is a real in
 # [w, w + w^3]: the other bound the cosh rule assumes.
 rule the-partial-sums-of-sinh-are-bounded
-  mark t
+  seat t
     like task
       take a0, like integer
       like integer
-  mark psum
+  seat psum
     like task
       take a0, like integer
       like integer
-  mark n, like integer
-  mark w, like integer
+  seat n, like integer
+  seat w, like integer
   have the-first-term
     call is-equal
       call t
@@ -1298,7 +1298,7 @@ rule the-partial-sums-of-sinh-are-bounded
       read w
       code 0
   have each-term-is-at-most-half-the-last
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -1313,7 +1313,7 @@ rule the-partial-sums-of-sinh-are-bounded
         call t
           read k
   have each-term-is-not-negative
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -1328,7 +1328,7 @@ rule the-partial-sums-of-sinh-are-bounded
         code 0
       read w
   have each-partial-sum-adds-a-term
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k

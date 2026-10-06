@@ -255,7 +255,7 @@ task image-hits
 # Proved by exhaustive induction over the eight strips, each resolving by computation. This is the content of the
 # Curtis-Hedlund-Lyndon characterization carried here, the statement that the rule is uniform across the lattice.
 rule step-commutes-with-shift
-  mark s, like strip
+  seat s, like strip
   show hold
     call is-equal
       call step
@@ -349,9 +349,9 @@ task shift-hits
 # unreachable. Proved by exhaustive induction over the eight strips, each finding its preimage by computation. This ties
 # reversibility to the absence of Gardens of Eden: an invertible rule loses no configurations, so none are left orphaned.
 rule reversible-rule-has-no-garden-of-eden
-  mark a, like cell
-  mark b, like cell
-  mark c, like cell
+  seat a, like cell
+  seat b, like cell
+  seat c, like cell
   show hold
     call is-equal
       call has-predecessor-by-shift

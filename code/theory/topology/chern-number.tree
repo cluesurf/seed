@@ -30,7 +30,7 @@ task partner
 # are matched, their Chern numbers plus one and minus one cancelling to zero over the Brillouin torus. Proved by induction
 # over the two bands.
 rule the-band-pairing-is-an-involution
-  mark b, like band
+  seat b, like band
   show hold
     call is-equal
       call partner

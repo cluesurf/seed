@@ -45,8 +45,8 @@ task some
         make on
 
 rule both-is-commutative
-  mark a, like bit
-  mark b, like bit
+  seat a, like bit
+  seat b, like bit
   show hold
     call is-equal
       call both
@@ -58,8 +58,8 @@ rule both-is-commutative
   fold a, b
 
 rule some-is-commutative
-  mark a, like bit
-  mark b, like bit
+  seat a, like bit
+  seat b, like bit
   show hold
     call is-equal
       call some
@@ -71,9 +71,9 @@ rule some-is-commutative
   fold a, b
 
 rule both-is-associative
-  mark a, like bit
-  mark b, like bit
-  mark c, like bit
+  seat a, like bit
+  seat b, like bit
+  seat c, like bit
   show hold
     call is-equal
       call both
@@ -89,9 +89,9 @@ rule both-is-associative
   fold a, b, c
 
 rule some-is-associative
-  mark a, like bit
-  mark b, like bit
-  mark c, like bit
+  seat a, like bit
+  seat b, like bit
+  seat c, like bit
   show hold
     call is-equal
       call some
@@ -107,9 +107,9 @@ rule some-is-associative
   fold a, b, c
 
 rule both-distributes-over-some
-  mark a, like bit
-  mark b, like bit
-  mark c, like bit
+  seat a, like bit
+  seat b, like bit
+  seat c, like bit
   show hold
     call is-equal
       call both
@@ -127,8 +127,8 @@ rule both-distributes-over-some
   fold a, b, c
 
 rule absorption-both-some
-  mark a, like bit
-  mark b, like bit
+  seat a, like bit
+  seat b, like bit
   show hold
     call is-equal
       call both
@@ -140,8 +140,8 @@ rule absorption-both-some
   fold a, b
 
 rule de-morgan-both
-  mark a, like bit
-  mark b, like bit
+  seat a, like bit
+  seat b, like bit
   show hold
     call is-equal
       call flip

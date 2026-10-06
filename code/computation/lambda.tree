@@ -322,7 +322,7 @@ task reduce
 
 # UNIVERSAL: zero fuel reduces nothing. reduce zero t = t, for every term t. The base of the normalizer, definitional.
 rule reduce-zero-is-identity
-  mark t, like term
+  seat t, like term
   show hold
     call is-equal
       call reduce
@@ -362,7 +362,7 @@ rule identity-applied-returns-its-argument
 # law `(lambda x . x) y = y` in full generality, not just a concrete instance: the body `variable 0` substitutes to the
 # argument unchanged for every x.
 rule identity-beta-reduces-any-argument
-  mark x, like term
+  seat x, like term
   show hold
     call is-equal
       call step

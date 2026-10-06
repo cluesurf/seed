@@ -3,8 +3,8 @@
 
 # false: x = 1, y = -1
 rule control-square-root-without-the-sign
-  mark x, like integer
-  mark y, like integer
+  seat x, like integer
+  seat y, like integer
   have squares
     call is-maximum
       call multiply
@@ -20,8 +20,8 @@ rule control-square-root-without-the-sign
 
 # false: x = y
 rule control-square-root-strict
-  mark x, like integer
-  mark y, like integer
+  seat x, like integer
+  seat y, like integer
   have y-is-non-negative
     call is-minimum
       read y
@@ -41,8 +41,8 @@ rule control-square-root-strict
 
 # false: a = b = -1
 rule control-sign-of-a-factor-without-a-sign
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   have product-is-positive
     call is-above
       call multiply
@@ -56,10 +56,10 @@ rule control-sign-of-a-factor-without-a-sign
 
 # false: the difference pair is (p q - s t, p t - q s), not this
 rule control-addition-wrong-sign
-  mark p, like integer
-  mark q, like integer
-  mark s, like integer
-  mark t, like integer
+  seat p, like integer
+  seat q, like integer
+  seat s, like integer
+  seat t, like integer
   have first-pair
     call is-equal
       call subtract
@@ -117,11 +117,11 @@ rule control-addition-wrong-sign
 
 # false: a third side longer than the sum
 rule control-triangle-without-the-gram-sign
-  mark p, like integer
-  mark q, like integer
-  mark r, like integer
-  mark s, like integer
-  mark t, like integer
+  seat p, like integer
+  seat q, like integer
+  seat r, like integer
+  seat s, like integer
+  seat t, like integer
   have s-is-a-sinh
     call is-minimum
       read s
@@ -163,11 +163,11 @@ rule control-triangle-without-the-gram-sign
 
 # false: a degenerate triangle attains it
 rule control-triangle-strict
-  mark p, like integer
-  mark q, like integer
-  mark r, like integer
-  mark s, like integer
-  mark t, like integer
+  seat p, like integer
+  seat q, like integer
+  seat r, like integer
+  seat s, like integer
+  seat t, like integer
   have s-is-a-sinh
     call is-minimum
       read s
@@ -235,11 +235,11 @@ rule control-triangle-strict
 
 # false: s = -sinh a reverses the bound
 rule control-triangle-without-the-sinh-sign
-  mark p, like integer
-  mark q, like integer
-  mark r, like integer
-  mark s, like integer
-  mark t, like integer
+  seat p, like integer
+  seat q, like integer
+  seat r, like integer
+  seat s, like integer
+  seat t, like integer
   have t-is-a-sinh
     call is-minimum
       read t
@@ -303,9 +303,9 @@ rule control-triangle-without-the-sinh-sign
 
 # false: w = 0
 rule control-pasch-with-c-on-the-line
-  mark u, like integer
-  mark v, like integer
-  mark w, like integer
+  seat u, like integer
+  seat v, like integer
+  seat w, like integer
   have crosses-a-b
     call is-below
       call multiply
@@ -327,12 +327,12 @@ rule control-pasch-with-c-on-the-line
 
 # false: a point outside, a line missing the circle
 rule control-continuity-from-outside
-  mark a1, like integer
-  mark a2, like integer
-  mark v1, like integer
-  mark v2, like integer
-  mark m, like integer
-  mark d, like integer
+  seat a1, like integer
+  seat a2, like integer
+  seat v1, like integer
+  seat v2, like integer
+  seat m, like integer
+  seat d, like integer
   have d-is-the-dot-product
     call is-equal
       read d

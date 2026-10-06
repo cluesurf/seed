@@ -34,14 +34,14 @@ task lorentz-form-four
         read v4
 
 rule control-the-ball-distance-formula-in-four-dimensions
-  mark p1, like integer
-  mark p2, like integer
-  mark p3, like integer
-  mark p4, like integer
-  mark q1, like integer
-  mark q2, like integer
-  mark q3, like integer
-  mark q4, like integer
+  seat p1, like integer
+  seat p2, like integer
+  seat p3, like integer
+  seat p4, like integer
+  seat q1, like integer
+  seat q2, like integer
+  seat q3, like integer
+  seat q4, like integer
   show hold
     call is-equal
       call subtract
@@ -174,21 +174,21 @@ rule control-the-ball-distance-formula-in-four-dimensions
                 read q4
 
 rule control-a-reflection-keeps-the-lorentz-form-in-four-dimensions
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark x3, like integer
-  mark x4, like integer
-  mark y0, like integer
-  mark y1, like integer
-  mark y2, like integer
-  mark y3, like integer
-  mark y4, like integer
-  mark n0, like integer
-  mark n1, like integer
-  mark n2, like integer
-  mark n3, like integer
-  mark n4, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat x3, like integer
+  seat x4, like integer
+  seat y0, like integer
+  seat y1, like integer
+  seat y2, like integer
+  seat y3, like integer
+  seat y4, like integer
+  seat n0, like integer
+  seat n1, like integer
+  seat n2, like integer
+  seat n3, like integer
+  seat n4, like integer
   have hyperplane
     call is-equal
       call lorentz-form-four
@@ -389,10 +389,10 @@ rule control-a-reflection-keeps-the-lorentz-form-in-four-dimensions
         read y4
 
 rule control-the-ball-lift-lands-on-hyperbolic-four-space
-  mark p1, like integer
-  mark p2, like integer
-  mark p3, like integer
-  mark p4, like integer
+  seat p1, like integer
+  seat p2, like integer
+  seat p3, like integer
+  seat p4, like integer
   show hold
     call is-equal
       call lorentz-form-four

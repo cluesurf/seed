@@ -16,11 +16,11 @@ load @term/seed/set/cardinal
 # false everywhere: the diagonal AGREES with f(x) at x
 rule control-the-diagonal-agrees
   head a
-  mark f
+  seat f
     like task
       take y, like a
       like set a
-  mark x, like a
+  seat x, like a
   show hold, is-equal iff(has(diagonal(f), x), has(f(x), x)), make yes
 
 # false where x is in f(x): a diagonal without the negation is f's own diagonal, which f may reach
@@ -41,9 +41,9 @@ task diagonal-without-negation
 
 rule control-an-unnegated-diagonal-differs
   head a
-  mark f
+  seat f
     like task
       take y, like a
       like set a
-  mark x, like a
+  seat x, like a
   show hold, is-equal iff(has(diagonal-without-negation(f), x), has(f(x), x)), make no

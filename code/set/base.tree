@@ -135,217 +135,217 @@ task within
 # NOTHING IS IN THE EMPTY SET, AND EVERYTHING IS IN THE FULL ONE.
 rule nothing-is-in-empty
   head a
-  mark x, like a
+  seat x, like a
   show hold, is-equal has(empty(), x), make no
 
 rule everything-is-in-full
   head a
-  mark x, like a
+  seat x, like a
   show hold, is-equal has(full(), x), make yes
 
 # COMMUTATIVITY.
 rule union-commutes
   head a
-  mark s, like set a
-  mark t, like set a
-  mark x, like a
+  seat s, like set a
+  seat t, like set a
+  seat x, like a
   show hold, is-equal has(union(s, t), x), has(union(t, s), x)
 
 rule intersection-commutes
   head a
-  mark s, like set a
-  mark t, like set a
-  mark x, like a
+  seat s, like set a
+  seat t, like set a
+  seat x, like a
   show hold, is-equal has(intersection(s, t), x), has(intersection(t, s), x)
 
 # ASSOCIATIVITY.
 rule union-associates
   head a
-  mark s, like set a
-  mark t, like set a
-  mark r, like set a
-  mark x, like a
+  seat s, like set a
+  seat t, like set a
+  seat r, like set a
+  seat x, like a
   show hold, is-equal has(union(union(s, t), r), x), has(union(s, union(t, r)), x)
 
 rule intersection-associates
   head a
-  mark s, like set a
-  mark t, like set a
-  mark r, like set a
-  mark x, like a
+  seat s, like set a
+  seat t, like set a
+  seat r, like set a
+  seat x, like a
   show hold, is-equal has(intersection(intersection(s, t), r), x), has(intersection(s, intersection(t, r)), x)
 
 # IDEMPOTENCE.
 rule union-is-idempotent
   head a
-  mark s, like set a
-  mark x, like a
+  seat s, like set a
+  seat x, like a
   show hold, is-equal has(union(s, s), x), has(s, x)
 
 rule intersection-is-idempotent
   head a
-  mark s, like set a
-  mark x, like a
+  seat s, like set a
+  seat x, like a
   show hold, is-equal has(intersection(s, s), x), has(s, x)
 
 # IDENTITIES AND ANNIHILATORS: the empty set and the full set.
 rule union-with-empty
   head a
-  mark s, like set a
-  mark x, like a
+  seat s, like set a
+  seat x, like a
   show hold, is-equal has(union(s, empty()), x), has(s, x)
 
 rule intersection-with-full
   head a
-  mark s, like set a
-  mark x, like a
+  seat s, like set a
+  seat x, like a
   show hold, is-equal has(intersection(s, full()), x), has(s, x)
 
 rule union-with-full
   head a
-  mark s, like set a
-  mark x, like a
+  seat s, like set a
+  seat x, like a
   show hold, is-equal has(union(s, full()), x), make yes
 
 rule intersection-with-empty
   head a
-  mark s, like set a
-  mark x, like a
+  seat s, like set a
+  seat x, like a
   show hold, is-equal has(intersection(s, empty()), x), make no
 
 # DISTRIBUTIVITY, both ways.
 rule intersection-distributes-over-union
   head a
-  mark s, like set a
-  mark t, like set a
-  mark r, like set a
-  mark x, like a
+  seat s, like set a
+  seat t, like set a
+  seat r, like set a
+  seat x, like a
   show hold, is-equal has(intersection(s, union(t, r)), x), has(union(intersection(s, t), intersection(s, r)), x)
 
 rule union-distributes-over-intersection
   head a
-  mark s, like set a
-  mark t, like set a
-  mark r, like set a
-  mark x, like a
+  seat s, like set a
+  seat t, like set a
+  seat r, like set a
+  seat x, like a
   show hold, is-equal has(union(s, intersection(t, r)), x), has(intersection(union(s, t), union(s, r)), x)
 
 # ABSORPTION.
 rule intersection-absorbs-union
   head a
-  mark s, like set a
-  mark t, like set a
-  mark x, like a
+  seat s, like set a
+  seat t, like set a
+  seat x, like a
   show hold, is-equal has(intersection(s, union(s, t)), x), has(s, x)
 
 rule union-absorbs-intersection
   head a
-  mark s, like set a
-  mark t, like set a
-  mark x, like a
+  seat s, like set a
+  seat t, like set a
+  seat x, like a
   show hold, is-equal has(union(s, intersection(s, t)), x), has(s, x)
 
 # COMPLEMENTS: a set and its complement cover everything and share nothing, and the complement of the complement is
 # the set.
 rule union-with-complement
   head a
-  mark s, like set a
-  mark x, like a
+  seat s, like set a
+  seat x, like a
   show hold, is-equal has(union(s, complement(s)), x), make yes
 
 rule intersection-with-complement
   head a
-  mark s, like set a
-  mark x, like a
+  seat s, like set a
+  seat x, like a
   show hold, is-equal has(intersection(s, complement(s)), x), make no
 
 rule complement-twice
   head a
-  mark s, like set a
-  mark x, like a
+  seat s, like set a
+  seat x, like a
   show hold, is-equal has(complement(complement(s)), x), has(s, x)
 
 # DE MORGAN, both ways.
 rule complement-of-union
   head a
-  mark s, like set a
-  mark t, like set a
-  mark x, like a
+  seat s, like set a
+  seat t, like set a
+  seat x, like a
   show hold, is-equal has(complement(union(s, t)), x), has(intersection(complement(s), complement(t)), x)
 
 rule complement-of-intersection
   head a
-  mark s, like set a
-  mark t, like set a
-  mark x, like a
+  seat s, like set a
+  seat t, like set a
+  seat x, like a
   show hold, is-equal has(complement(intersection(s, t)), x), has(union(complement(s), complement(t)), x)
 
 # DIFFERENCE is intersection with the complement.
 rule difference-is-intersection-with-complement
   head a
-  mark s, like set a
-  mark t, like set a
-  mark x, like a
+  seat s, like set a
+  seat t, like set a
+  seat x, like a
   show hold, is-equal has(difference(s, t), x), has(intersection(s, complement(t)), x)
 
 # PREIMAGES commute with every operation.
 rule preimage-of-union
   head a
   head b
-  mark f
+  seat f
     like task
       take y, like a
       like b
-  mark s, like set b
-  mark t, like set b
-  mark x, like a
+  seat s, like set b
+  seat t, like set b
+  seat x, like a
   show hold, is-equal has(preimage(f, union(s, t)), x), has(union(preimage(f, s), preimage(f, t)), x)
 
 rule preimage-of-intersection
   head a
   head b
-  mark f
+  seat f
     like task
       take y, like a
       like b
-  mark s, like set b
-  mark t, like set b
-  mark x, like a
+  seat s, like set b
+  seat t, like set b
+  seat x, like a
   show hold, is-equal has(preimage(f, intersection(s, t)), x), has(intersection(preimage(f, s), preimage(f, t)), x)
 
 rule preimage-of-complement
   head a
   head b
-  mark f
+  seat f
     like task
       take y, like a
       like b
-  mark s, like set b
-  mark x, like a
+  seat s, like set b
+  seat x, like a
   show hold, is-equal has(preimage(f, complement(s)), x), has(complement(preimage(f, s)), x)
 
 # SUBSET IS A PARTIAL ORDER: reflexive, transitive, and antisymmetric, where subset both ways is equality.
 rule within-is-reflexive
   head a
-  mark s, like set a
-  mark x, like a
+  seat s, like set a
+  seat x, like a
   show hold, is-equal within(s, s, x), make yes
 
 rule within-is-transitive
   head a
-  mark s, like set a
-  mark t, like set a
-  mark r, like set a
-  mark x, like a
+  seat s, like set a
+  seat t, like set a
+  seat r, like set a
+  seat x, like a
   have s-within-t, is-equal within(s, t, x), make yes
   have t-within-r, is-equal within(t, r, x), make yes
   show hold, is-equal within(s, r, x), make yes
 
 rule within-both-ways-is-equal
   head a
-  mark s, like set a
-  mark t, like set a
-  mark x, like a
+  seat s, like set a
+  seat t, like set a
+  seat x, like a
   have s-within-t, is-equal within(s, t, x), make yes
   have t-within-s, is-equal within(t, s, x), make yes
   show hold, is-equal has(s, x), has(t, x)
@@ -353,26 +353,26 @@ rule within-both-ways-is-equal
 # A union contains each side, an intersection is contained in each, and the empty and full sets are the bottom and top.
 rule within-union
   head a
-  mark s, like set a
-  mark t, like set a
-  mark x, like a
+  seat s, like set a
+  seat t, like set a
+  seat x, like a
   show hold, is-equal within(s, union(s, t), x), make yes
 
 rule intersection-within
   head a
-  mark s, like set a
-  mark t, like set a
-  mark x, like a
+  seat s, like set a
+  seat t, like set a
+  seat x, like a
   show hold, is-equal within(intersection(s, t), s, x), make yes
 
 rule empty-is-within
   head a
-  mark s, like set a
-  mark x, like a
+  seat s, like set a
+  seat x, like a
   show hold, is-equal within(empty(), s, x), make yes
 
 rule within-full
   head a
-  mark s, like set a
-  mark x, like a
+  seat s, like set a
+  seat x, like a
   show hold, is-equal within(s, full(), x), make yes

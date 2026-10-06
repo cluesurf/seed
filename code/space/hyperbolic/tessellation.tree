@@ -329,7 +329,7 @@ task flip
 # DUALITY IS AN INVOLUTION: flip (flip t) = t, for every tiling. The dual of the dual is the original symbol, since
 # swapping p and q twice restores them. Proved over all fifteen tilings by the kernel.
 rule flip-is-an-involution
-  mark t, like tiling
+  seat t, like tiling
   show hold
     call is-equal
       call flip
@@ -343,7 +343,7 @@ rule flip-is-an-involution
 # {p, q} and {q, p} land in the same kind. Proved as a universal statement by induction over the enum, not as a table of
 # checked instances.
 rule classification-is-self-dual
-  mark t, like tiling
+  seat t, like tiling
   show hold
     call is-equal
       call classify

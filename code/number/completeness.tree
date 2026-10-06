@@ -13,7 +13,7 @@
 #   THE SEQUENCE CONVERGES    |x(k, p) - L(p)| <= e(k) + 2 e(p): |x_k - L| <= e(k) as reals, which tends to 0.
 #
 # Each is a chain of triangle inequalities, and the proof is the prover INSTANTIATING the universal hypotheses
-# (`have ... / mark k, like integer / ...`, each true for every value of its marks) at the terms the goal names, then
+# (`have ... / seat k, like integer / ...`, each true for every value of its marks) at the terms the goal names, then
 # a linear combination of the instances over an ordered field (check/product.ts, no integer rounding), so it holds
 # whatever field the approximations are drawn from. x and e are quantified functions: the theorems hold for every
 # sequence and every modulus satisfying the hypotheses.
@@ -28,19 +28,19 @@
 # |x(4m, 4m) - x(4n, 4m)| <= 3 e(4m) + e(4n) (Cauchy at p = 4m) and |x(4n, 4m) - x(4n, 4n)| <= e(4m) + e(4n)
 # (the 4n-th real is regular), summing to 4 e(4m) + 2 e(4n) = e(m) + e(n) / 2.
 rule the-limit-is-a-real
-  mark x
+  seat x
     like task
       take k, like integer
       take p, like integer
       like integer
-  mark e
+  seat e
     like task
       take t, like integer
       like integer
-  mark m, like integer
-  mark n, like integer
+  seat m, like integer
+  seat n, like integer
   have the-modulus-is-positive
-    mark t, like integer
+    seat t, like integer
     meet or
       call is-below
         read t
@@ -50,7 +50,7 @@ rule the-limit-is-a-real
           read t
         code 0
   have the-modulus-quarters
-    mark t, like integer
+    seat t, like integer
     meet or
       call is-below
         read t
@@ -65,9 +65,9 @@ rule the-limit-is-a-real
         call e
           read t
   have each-is-a-real
-    mark k, like integer
-    mark p, like integer
-    mark q, like integer
+    seat k, like integer
+    seat p, like integer
+    seat q, like integer
     meet or
       call is-below
         read k
@@ -106,9 +106,9 @@ rule the-limit-is-a-real
             call e
               read q
   have they-are-a-cauchy-sequence
-    mark k, like integer
-    mark j, like integer
-    mark p, like integer
+    seat k, like integer
+    seat j, like integer
+    seat p, like integer
     meet or
       call is-below
         read k
@@ -214,19 +214,19 @@ rule the-limit-is-a-real
 # |x(k, p) - x(k, 4p)| <= e(p) + e(4p) (regular) and |x(k, 4p) - x(4p, 4p)| <= e(k) + 3 e(4p) (Cauchy), summing to
 # e(k) + e(p) + 4 e(4p) = e(k) + 2 e(p).
 rule the-sequence-converges-to-its-limit
-  mark x
+  seat x
     like task
       take k, like integer
       take p, like integer
       like integer
-  mark e
+  seat e
     like task
       take t, like integer
       like integer
-  mark k, like integer
-  mark p, like integer
+  seat k, like integer
+  seat p, like integer
   have the-modulus-is-positive
-    mark t, like integer
+    seat t, like integer
     meet or
       call is-below
         read t
@@ -236,7 +236,7 @@ rule the-sequence-converges-to-its-limit
           read t
         code 0
   have the-modulus-quarters
-    mark t, like integer
+    seat t, like integer
     meet or
       call is-below
         read t
@@ -251,9 +251,9 @@ rule the-sequence-converges-to-its-limit
         call e
           read t
   have each-is-a-real
-    mark k, like integer
-    mark p, like integer
-    mark q, like integer
+    seat k, like integer
+    seat p, like integer
+    seat q, like integer
     meet or
       call is-below
         read k
@@ -292,9 +292,9 @@ rule the-sequence-converges-to-its-limit
             call e
               read q
   have they-are-a-cauchy-sequence
-    mark k, like integer
-    mark j, like integer
-    mark p, like integer
+    seat k, like integer
+    seat j, like integer
+    seat p, like integer
     meet or
       call is-below
         read k

@@ -231,8 +231,8 @@ task three
 # local hidden variable theory cannot exceed, and the one entangled quantum players beat (Tsirelson, near eighty-five
 # percent), which is Bell's theorem.
 rule no-local-strategy-wins-all-four
-  mark alice, like strategy
-  mark bob, like strategy
+  seat alice, like strategy
+  seat bob, like strategy
   show hold
     call is-equal
       call at-most

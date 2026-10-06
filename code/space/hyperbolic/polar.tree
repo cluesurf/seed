@@ -21,10 +21,10 @@
 
 # THE MODEL: B(P, P) = 1.
 rule the-geodesic-point-is-a-point
-  mark cc, like integer
-  mark ss, like integer
-  mark cd, like integer
-  mark sd, like integer
+  seat cc, like integer
+  seat ss, like integer
+  seat cd, like integer
+  seat sd, like integer
   have the-step-is-on-the-hyperbola
     call is-equal
       call subtract
@@ -71,10 +71,10 @@ rule the-geodesic-point-is-a-point
 
 # B(T, T) = -1 and B(T, P) = 0.
 rule the-geodesic-velocity-is-a-unit-tangent
-  mark cc, like integer
-  mark ss, like integer
-  mark cd, like integer
-  mark sd, like integer
+  seat cc, like integer
+  seat ss, like integer
+  seat cd, like integer
+  seat sd, like integer
   have the-step-is-on-the-hyperbola
     call is-equal
       call subtract
@@ -145,11 +145,11 @@ rule the-geodesic-velocity-is-a-unit-tangent
 
 # cosh r = B(P, O) = cd cc, and sinh^2 r = cosh^2 r - 1 = sd^2 cc^2 + ss^2 = cd^2 ss^2 + sd^2.
 rule the-radius-from-the-foot
-  mark cc, like integer
-  mark ss, like integer
-  mark cd, like integer
-  mark sd, like integer
-  mark rr2, like integer
+  seat cc, like integer
+  seat ss, like integer
+  seat cd, like integer
+  seat sd, like integer
+  seat rr2, like integer
   have the-step-is-on-the-hyperbola
     call is-equal
       call subtract
@@ -214,10 +214,10 @@ rule the-radius-from-the-foot
 
 # THE RADIAL ANGLE: sinh r u = cosh r P - O, and -B(T, sinh r u) = B(T, O) - cosh r B(T, P) = cd ss.
 rule the-radial-cosine
-  mark cc, like integer
-  mark ss, like integer
-  mark cd, like integer
-  mark sd, like integer
+  seat cc, like integer
+  seat ss, like integer
+  seat cd, like integer
+  seat sd, like integer
   have the-step-is-on-the-hyperbola
     call is-equal
       call subtract
@@ -276,11 +276,11 @@ rule the-radial-cosine
 
 # THE POLAR ANGLE: with k = sd cc and z k = ss, ss^2 = z^2 k^2.
 rule the-polar-tangent-squared
-  mark z, like integer
-  mark k, like integer
-  mark ss, like integer
-  mark sd, like integer
-  mark cc, like integer
+  seat z, like integer
+  seat k, like integer
+  seat ss, like integer
+  seat sd, like integer
+  seat cc, like integer
   have k-is-the-foot-part
     call is-equal
       read k
@@ -310,12 +310,12 @@ rule the-polar-tangent-squared
 # THE RATES. An angle's rate is f z' with f g = 1, g = 1 + z^2 for its tangent z; where sinh^2 r = qq g, the rate
 # times sinh^2 r is z' qq.
 rule a-rate-times-the-radius
-  mark th, like integer
-  mark f, like integer
-  mark zd, like integer
-  mark g, like integer
-  mark qq, like integer
-  mark rr2, like integer
+  seat th, like integer
+  seat f, like integer
+  seat zd, like integer
+  seat g, like integer
+  seat qq, like integer
+  seat rr2, like integer
   have f-inverts
     call is-equal
       call multiply
@@ -347,12 +347,12 @@ rule a-rate-times-the-radius
 # THE POLAR ANGLE has tangent z = tanh t / sd, so z' k cc = 1 with k = sd cc, and sinh^2 r = k^2 (1 + z^2): theta'
 # sinh^2 r = z' k^2 = sd.
 rule the-polar-rate
-  mark th, like integer
-  mark zd, like integer
-  mark k, like integer
-  mark cc, like integer
-  mark sd, like integer
-  mark rr2, like integer
+  seat th, like integer
+  seat zd, like integer
+  seat k, like integer
+  seat cc, like integer
+  seat sd, like integer
+  seat rr2, like integer
   have the-rate-times-the-radius
     call is-equal
       call multiply
@@ -387,10 +387,10 @@ rule the-polar-rate
 
 # The radius in the polar tangent: sinh^2 r = k^2 + ss^2 = k^2 (1 + z^2).
 rule the-radius-in-the-polar-tangent
-  mark z, like integer
-  mark k, like integer
-  mark ss, like integer
-  mark rr2, like integer
+  seat z, like integer
+  seat k, like integer
+  seat ss, like integer
+  seat rr2, like integer
   have the-radius
     call is-equal
       read rr2
@@ -430,11 +430,11 @@ rule the-radius-in-the-polar-tangent
 # The complement of psi has tangent z2 = cd ss / sd, so sd z2 = cd ss and sinh^2 r = cd^2 ss^2 + sd^2 =
 # sd^2 (1 + z2^2).
 rule the-radius-in-the-turning-tangent
-  mark z2, like integer
-  mark ss, like integer
-  mark cd, like integer
-  mark sd, like integer
-  mark rr2, like integer
+  seat z2, like integer
+  seat ss, like integer
+  seat cd, like integer
+  seat sd, like integer
+  seat rr2, like integer
   have the-radius
     call is-equal
       read rr2
@@ -474,12 +474,12 @@ rule the-radius-in-the-turning-tangent
 # THE TURNING ANGLE's complement has tangent z2 = cd sinh t / sd, so sd z2' = cd cc, and sinh^2 r = sd^2 (1 + z2^2):
 # psi_c' sinh^2 r = z2' sd^2 = cd cc sd.
 rule the-turning-rate
-  mark pc, like integer
-  mark zd2, like integer
-  mark cc, like integer
-  mark cd, like integer
-  mark sd, like integer
-  mark rr2, like integer
+  seat pc, like integer
+  seat zd2, like integer
+  seat cc, like integer
+  seat cd, like integer
+  seat sd, like integer
+  seat rr2, like integer
   have the-rate-times-the-radius
     call is-equal
       call multiply
@@ -512,11 +512,11 @@ rule the-turning-rate
 
 # THE TURNING: from theta' sinh^2 r = sd and psi_c' sinh^2 r = cosh r sd, with sinh^2 r > 0, psi_c' = cosh r theta'.
 rule the-turning-is-cosh-r-times-the-polar-rate
-  mark th, like integer
-  mark pc, like integer
-  mark ch, like integer
-  mark sd, like integer
-  mark rr2, like integer
+  seat th, like integer
+  seat pc, like integer
+  seat ch, like integer
+  seat sd, like integer
+  seat rr2, like integer
   have the-polar-rate
     call is-equal
       call multiply
@@ -546,10 +546,10 @@ rule the-turning-is-cosh-r-times-the-polar-rate
 # THE COMPLEMENT: psi = pi/2 - psi_c, as angle(z) + angle(1/z) has rate 0. First, with yy = y^2 and zz = z^2 for
 # y = 1/z, y^2 f2 = f1 for f1 (1 + z^2) = 1 and f2 (1 + y^2) = 1.
 rule the-integrand-at-the-reciprocal
-  mark yy, like integer
-  mark zz, like integer
-  mark f1, like integer
-  mark f2, like integer
+  seat yy, like integer
+  seat zz, like integer
+  seat f1, like integer
+  seat f2, like integer
   have the-squares-invert
     call is-equal
       call multiply
@@ -587,11 +587,11 @@ rule the-integrand-at-the-reciprocal
 # With y' = -z' y^2 (the reciprocal rule), f1 z' + f2 y' = 0, so by the fundamental theorem the sum is constant and
 # d(psi) = -d(psi_c).
 rule complementary-angles-have-opposite-rates
-  mark zd, like integer
-  mark yd, like integer
-  mark yy, like integer
-  mark f1, like integer
-  mark f2, like integer
+  seat zd, like integer
+  seat yd, like integer
+  seat yy, like integer
+  seat f1, like integer
+  seat f2, like integer
   have yd-is-the-rate-of-y
     call is-equal
       read yd
@@ -622,10 +622,10 @@ rule complementary-angles-have-opposite-rates
 # whose areas are (cosh r - 1) dth and (cosh (r + dr) - 1) dth (the disk, integral/fundamental, by rotation), so with
 # area monotone its increment da is (cosh r - 1) dth up to the change dch of cosh r times dth.
 rule the-swept-area-is-squeezed
-  mark da, like integer
-  mark dth, like integer
-  mark ch, like integer
-  mark dch, like integer
+  seat da, like integer
+  seat dth, like integer
+  seat ch, like integer
+  seat dch, like integer
   have the-area-is-between-the-sectors
     meet and
       call is-minimum

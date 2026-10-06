@@ -37,7 +37,7 @@ task rotate
 # every node, a symmetry of the complete graph on four nodes whose vertices are fully interchangeable. Proved by induction
 # over the four nodes.
 rule the-cyclic-automorphism-has-order-four
-  mark x, like node
+  seat x, like node
   show hold
     call is-equal
       call rotate

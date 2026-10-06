@@ -41,7 +41,7 @@ task flip-grade
 
 # FLIPPING A GRADE IS AN INVOLUTION: two unit-vector factors return the original parity, flip (flip g) = g.
 rule flip-grade-is-an-involution
-  mark g, like grade
+  seat g, like grade
   show hold
     call is-equal
       call flip-grade
@@ -67,7 +67,7 @@ task mul-grade
 
 # THE EVEN GRADE IS THE IDENTITY OF THE GRADING: even times any grade is that grade, so even words form a submonoid.
 rule even-is-the-grade-identity
-  mark g, like grade
+  seat g, like grade
   show hold
     call is-equal
       call mul-grade
@@ -583,7 +583,7 @@ rule spin3-is-quaternion-unit-group
 # THE SCALAR ONE IS THE IDENTITY of Spin(3), over every element of the algebra: one times x is x. The group identity of
 # the unit quaternions, proved by induction over all eight blades and both signs.
 rule one-is-the-identity-of-spin
-  mark x, like cliff
+  seat x, like cliff
   show hold
     call is-equal
       call mul
@@ -717,7 +717,7 @@ task step4
 # generators the Clifford clock returns to where it started, so the Morita type of Cl(n+8) equals that of Cl(n). Proved
 # by induction over the eight clock positions: stepping eight times is the identity on the clock, so the types agree.
 rule clifford-type-period-is-eight
-  mark c, like clock
+  seat c, like clock
   show hold
     call is-equal
       call clifford-type
@@ -729,7 +729,7 @@ rule clifford-type-period-is-eight
 
 # THE CLOCK RETURNS AFTER EIGHT STEPS: step8 c = c, the identity on the clock, the structural fact behind the period.
 rule eight-steps-return-to-start
-  mark c, like clock
+  seat c, like clock
   show hold
     call is-equal
       call step8

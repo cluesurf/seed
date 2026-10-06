@@ -266,7 +266,7 @@ task ket-a
 # THE STEP IS INVERTIBLE: untick (tick p) = p, for every phase. The unitary evolution can be run backward a beat, the
 # discrete statement that U has an inverse U-dagger. Proved by case analysis over the four phases.
 rule step-is-invertible
-  mark p, like phase
+  seat p, like phase
   show hold
     call is-equal
       call untick
@@ -278,7 +278,7 @@ rule step-is-invertible
 # THE CLOCK CLOSES AFTER FOUR BEATS: tick four times returns every phase to itself, evolve p 4 = p. Four quarter turns is
 # a full turn, i^4 = 1, the periodicity of a pure phase evolution. Proved by case analysis over the four phases.
 rule four-beats-return-to-start
-  mark p, like phase
+  seat p, like phase
   show hold
     call is-equal
       call evolve
@@ -298,8 +298,8 @@ rule four-beats-return-to-start
 # DEFINITIONAL STEP of evolution: evolve p (n+1) = tick (evolve p n). One unitary step peeled off the front. Used to drive
 # the induction in the group law.
 rule evolve-succ-steps
-  mark p, like phase
-  mark n, like beat
+  seat p, like phase
+  seat n, like beat
   show hold
     call is-equal
       call evolve
@@ -320,9 +320,9 @@ rule evolve-succ-steps
 # evolution by the definitional recurrence (add-beat m (n+1) = (add-beat m n)+1) and applies the induction hypothesis
 # underneath it.
 rule evolution-composes-additively
-  mark p, like phase
-  mark m, like beat
-  mark n, like beat
+  seat p, like phase
+  seat m, like beat
+  seat n, like beat
   show hold
     call is-equal
       call evolve
@@ -341,7 +341,7 @@ rule evolution-composes-additively
 # ZERO IS THE IDENTITY OF OCCUPATION ADDITION ON THE RIGHT: add-count m zero = m. Add-count cases on its first argument,
 # so this is not definitional and is proved by induction on m. Used as the base of commutativity.
 rule add-count-zero-right-is-identity
-  mark m, like count
+  seat m, like count
   show hold
     call is-equal
       call add-count
@@ -353,8 +353,8 @@ rule add-count-zero-right-is-identity
 # ADD-COUNT carries the successor on the RIGHT: add-count m (more n) = more (add-count m n), for every pair. The successor
 # steps out of the second argument. Proved by induction on m. The commutativity step uses it as a rewrite.
 rule add-count-succ-right
-  mark m, like count
-  mark n, like count
+  seat m, like count
+  seat n, like count
   show hold
     call is-equal
       call add-count
@@ -373,9 +373,9 @@ rule add-count-succ-right
 # total when the shift cyclically rotates the order of the summands. Proved by induction on m, each side recursing on m so
 # the successor cases align through the hypothesis. No lemma needed.
 rule add-count-is-associative
-  mark m, like count
-  mark n, like count
-  mark k, like count
+  seat m, like count
+  seat n, like count
+  seat k, like count
   show hold
     call is-equal
       call add-count
@@ -395,8 +395,8 @@ rule add-count-is-associative
 # to be order-independent. Proved by induction on m, citing the right identity at the base and the right-successor step in
 # the inductive case.
 rule add-count-is-commutative
-  mark m, like count
-  mark n, like count
+  seat m, like count
+  seat n, like count
   show hold
     call is-equal
       call add-count
@@ -415,9 +415,9 @@ rule add-count-is-commutative
 # see it. Proved by induction, with the sum normalized modulo associativity and commutativity (both cited) so the two
 # bracketings collapse to one normal form.
 rule add-count-rotate
-  mark a, like count
-  mark b, like count
-  mark c, like count
+  seat a, like count
+  seat b, like count
+  seat c, like count
   show hold
     call is-equal
       call add-count
@@ -437,9 +437,9 @@ rule add-count-rotate
 # BRIDGE: the norm after a shift unfolds to the rotated sum, norm (shift (kets a b c)) = add-count (add-count c a) b. The
 # shift sends a, b, c to c, a, b and the norm totals them in order, so the wrapped form reduces to a bare sum. Definitional.
 rule norm-of-shift-is-rotated-sum
-  mark a, like count
-  mark b, like count
-  mark c, like count
+  seat a, like count
+  seat b, like count
+  seat c, like count
   show hold
     call is-equal
       call norm
@@ -461,9 +461,9 @@ rule norm-of-shift-is-rotated-sum
 # BRIDGE: the norm unfolds to the plain sum, norm (kets a b c) = add-count (add-count a b) c. Definitional. With the bridge
 # above, the two wrapped sides of norm preservation both unfold to bare sums that the AC normalization equates.
 rule norm-of-kets-is-sum
-  mark a, like count
-  mark b, like count
-  mark c, like count
+  seat a, like count
+  seat b, like count
+  seat c, like count
   show hold
     call is-equal
       call norm
@@ -487,7 +487,7 @@ rule norm-of-kets-is-sum
 # on the register: splitting it exposes the three occupations, the two bridge lemmas unfold both norms to bare sums, and
 # commutativity and associativity (cited so the sum normalizes modulo AC) collapse the two bracketings to one.
 rule one-step-preserves-the-norm
-  mark r, like register
+  seat r, like register
   show hold
     call is-equal
       call norm
@@ -503,8 +503,8 @@ rule one-step-preserves-the-norm
 
 # DEFINITIONAL STEP of register evolution: step-register r (n+1) = shift (step-register r n). One unitary step peeled off.
 rule step-register-succ-steps
-  mark r, like register
-  mark n, like beat
+  seat r, like register
+  seat n, like beat
   show hold
     call is-equal
       call step-register
@@ -523,8 +523,8 @@ rule step-register-succ-steps
 # by induction on the beat count n: the base is zero beats (no change), and the step pulls one shift outside by the
 # definitional recurrence, applies one-step norm preservation to strip it, then the induction hypothesis.
 rule evolution-preserves-the-norm
-  mark r, like register
-  mark n, like beat
+  seat r, like register
+  seat n, like beat
   show hold
     call is-equal
       call norm
@@ -542,7 +542,7 @@ rule evolution-preserves-the-norm
 # probability density does not move in time. Here the norm, the total probability, is exactly the conserved quantity, so
 # the stationary density is time-invariant. This is the norm-preservation law specialized to read as the eigenstate fact.
 rule stationary-state-probability-is-conserved
-  mark n, like beat
+  seat n, like beat
   show hold
     call is-equal
       call norm

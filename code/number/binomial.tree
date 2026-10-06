@@ -6,8 +6,8 @@
 
 # The fourth power of a sum: (a + b)^4 = a^4 + 4 a^3 b + 6 a^2 b^2 + 4 a b^3 + b^4, the coefficients 1 4 6 4 1.
 rule fourth-power-of-sum-expands-by-pascal-s-row-1-4-6-4-1
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   show hold
     call is-equal
       call multiply
@@ -74,8 +74,8 @@ rule fourth-power-of-sum-expands-by-pascal-s-row-1-4-6-4-1
 # The difference of fourth powers factors fully: a^4 - b^4 = (a - b)(a + b)(a^2 + b^2). Two steps of the difference of
 # squares.
 rule difference-of-fourth-powers-factors-into-three-terms
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   show hold
     call is-equal
       call subtract

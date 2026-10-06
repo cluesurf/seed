@@ -2,11 +2,11 @@
 
 # false: with cw = 1 and sx = 0 cosh does not move
 rule control-cosh-steps-up-from-a-flat-step
-  mark cx, like integer
-  mark sx, like integer
-  mark cw, like integer
-  mark sw, like integer
-  mark cs, like integer
+  seat cx, like integer
+  seat sx, like integer
+  seat cw, like integer
+  seat sw, like integer
+  seat cs, like integer
   have the-addition-formula
     call is-equal
       read cs
@@ -41,15 +41,15 @@ rule control-cosh-steps-up-from-a-flat-step
 
 # false: monotonicity alone bounds nothing
 rule control-the-triangle-inequality-without-the-cosh-form
-  mark ch
+  seat ch
     like task
       take a0, like integer
       like integer
-  mark dac, like integer
-  mark s, like integer
+  seat dac, like integer
+  seat s, like integer
   have cosh-is-increasing
-    mark x, like integer
-    mark y, like integer
+    seat x, like integer
+    seat y, like integer
     meet or
       call is-maximum
         read x

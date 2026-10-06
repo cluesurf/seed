@@ -88,7 +88,7 @@ load @term/seed/atom/flag
 # THE HALF-TURN IS AN INVOLUTION: half-turn (half-turn s) = s, for every clock direction. Two half turns are a full turn,
 # the identity. This is why the antipode pairs the roots cleanly.
 rule half-turn-is-an-involution
-  mark s, like clock
+  seat s, like clock
   show hold
     call is-equal
       call half-turn
@@ -100,8 +100,8 @@ rule half-turn-is-an-involution
 # THE ANTIPODE IS AN INVOLUTION: negate (negate r) = r, for every one of the 12 roots. The root set is symmetric about
 # the origin, splitting into 6 antipodal lines.
 rule negate-is-an-involution
-  mark length-of, like length
-  mark spin-of, like clock
+  seat length-of, like length
+  seat spin-of, like clock
   show hold
     call is-equal
       call negate
@@ -122,8 +122,8 @@ rule negate-is-an-involution
 # of a short root is short, so the long hexagon and the short hexagon are each closed under the antipode, the two Weyl
 # orbits of G2.
 rule negate-preserves-length
-  mark length-of, like length
-  mark spin-of, like clock
+  seat length-of, like length
+  seat spin-of, like clock
   show hold
     call is-equal
       call is-long

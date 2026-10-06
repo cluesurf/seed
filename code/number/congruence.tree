@@ -26,7 +26,7 @@ task plus
               read b
 
 rule equal-is-reflexive
-  mark a, like natural
+  seat a, like natural
   show hold
     call is-equal
       read a
@@ -34,8 +34,8 @@ rule equal-is-reflexive
   calm hold
 
 rule equal-is-symmetric
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   have h
     call is-equal
       read a
@@ -47,9 +47,9 @@ rule equal-is-symmetric
   calm hold
 
 rule equal-is-transitive
-  mark a, like natural
-  mark b, like natural
-  mark c, like natural
+  seat a, like natural
+  seat b, like natural
+  seat c, like natural
   have h1
     call is-equal
       read a
@@ -65,8 +65,8 @@ rule equal-is-transitive
   calm hold
 
 rule succ-respects-equal
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   have h
     call is-equal
       read a
@@ -82,9 +82,9 @@ rule succ-respects-equal
   calm hold
 
 rule plus-respects-equal-left
-  mark a, like natural
-  mark b, like natural
-  mark c, like natural
+  seat a, like natural
+  seat b, like natural
+  seat c, like natural
   have h
     call is-equal
       read a
@@ -100,9 +100,9 @@ rule plus-respects-equal-left
   calm hold
 
 rule plus-respects-equal-right
-  mark a, like natural
-  mark b, like natural
-  mark c, like natural
+  seat a, like natural
+  seat b, like natural
+  seat c, like natural
   have h
     call is-equal
       read a

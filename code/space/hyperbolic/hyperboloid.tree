@@ -113,12 +113,12 @@ task lorentz-cross-y
 
 # THE CROSS PRODUCT IS ORTHOGONAL TO BOTH FACTORS, so x * y is the normal of a plane containing x and y.
 rule the-cross-product-is-orthogonal-to-its-first-factor
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark y0, like integer
-  mark y1, like integer
-  mark y2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat y0, like integer
+  seat y1, like integer
+  seat y2, like integer
   show hold
     call is-equal
       call lorentz-form
@@ -149,12 +149,12 @@ rule the-cross-product-is-orthogonal-to-its-first-factor
       code 0
 
 rule the-cross-product-is-orthogonal-to-its-second-factor
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark y0, like integer
-  mark y1, like integer
-  mark y2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat y0, like integer
+  seat y1, like integer
+  seat y2, like integer
   show hold
     call is-equal
       call lorentz-form
@@ -186,12 +186,12 @@ rule the-cross-product-is-orthogonal-to-its-second-factor
 
 # THE NORM OF THE CROSS PRODUCT: B(x * y, x * y) = B(x, x) B(y, y) - B(x, y)^2, for all x, y.
 rule the-norm-of-a-cross-product
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark y0, like integer
-  mark y1, like integer
-  mark y2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat y0, like integer
+  seat y1, like integer
+  seat y2, like integer
   show hold
     call is-equal
       call lorentz-form
@@ -274,15 +274,15 @@ rule the-norm-of-a-cross-product
 # x * y, and the plane through x and y is the only one.
 
 rule the-double-cross-product-expands-t
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark y0, like integer
-  mark y1, like integer
-  mark y2, like integer
-  mark n0, like integer
-  mark n1, like integer
-  mark n2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat y0, like integer
+  seat y1, like integer
+  seat y2, like integer
+  seat n0, like integer
+  seat n1, like integer
+  seat n2, like integer
   show hold
     call is-equal
       call lorentz-cross-t
@@ -331,15 +331,15 @@ rule the-double-cross-product-expands-t
           read x0
 
 rule the-double-cross-product-expands-x
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark y0, like integer
-  mark y1, like integer
-  mark y2, like integer
-  mark n0, like integer
-  mark n1, like integer
-  mark n2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat y0, like integer
+  seat y1, like integer
+  seat y2, like integer
+  seat n0, like integer
+  seat n1, like integer
+  seat n2, like integer
   show hold
     call is-equal
       call lorentz-cross-x
@@ -388,15 +388,15 @@ rule the-double-cross-product-expands-x
           read x1
 
 rule the-double-cross-product-expands-y
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark y0, like integer
-  mark y1, like integer
-  mark y2, like integer
-  mark n0, like integer
-  mark n1, like integer
-  mark n2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat y0, like integer
+  seat y1, like integer
+  seat y2, like integer
+  seat n0, like integer
+  seat n1, like integer
+  seat n2, like integer
   show hold
     call is-equal
       call lorentz-cross-y
@@ -447,12 +447,12 @@ rule the-double-cross-product-expands-y
 # TWO POINTS SPAN A LINE: for points (B = 1), the normal x * y has norm 1 - cosh^2 d = -sinh^2 d, which is
 # negative (a genuine line) exactly when the points are distinct.
 rule two-points-span-a-line-of-norm-minus-sinh-squared
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark y0, like integer
-  mark y1, like integer
-  mark y2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat y0, like integer
+  seat y1, like integer
+  seat y2, like integer
   have x-point
     call is-equal
       call lorentz-form
@@ -540,12 +540,12 @@ rule two-points-span-a-line-of-norm-minus-sinh-squared
 # So the lines MEET in a point when B(n, m)^2 < 1, are LIMITING PARALLEL when it is 1 (p on the light cone, a point at
 # infinity), and are ULTRAPARALLEL when it exceeds 1 (p spacelike, the normal of their common perpendicular).
 rule two-lines-meet-where-their-cross-product-points
-  mark n0, like integer
-  mark n1, like integer
-  mark n2, like integer
-  mark m0, like integer
-  mark m1, like integer
-  mark m2, like integer
+  seat n0, like integer
+  seat n1, like integer
+  seat n2, like integer
+  seat m0, like integer
+  seat m1, like integer
+  seat m2, like integer
   have n-line
     call is-equal
       call lorentz-form
@@ -630,12 +630,12 @@ rule two-lines-meet-where-their-cross-product-points
             read m2
 
 rule the-meeting-point-lies-on-the-first-line
-  mark n0, like integer
-  mark n1, like integer
-  mark n2, like integer
-  mark m0, like integer
-  mark m1, like integer
-  mark m2, like integer
+  seat n0, like integer
+  seat n1, like integer
+  seat n2, like integer
+  seat m0, like integer
+  seat m1, like integer
+  seat m2, like integer
   show hold
     call is-equal
       call lorentz-form
@@ -666,12 +666,12 @@ rule the-meeting-point-lies-on-the-first-line
       code 0
 
 rule the-meeting-point-lies-on-the-second-line
-  mark n0, like integer
-  mark n1, like integer
-  mark n2, like integer
-  mark m0, like integer
-  mark m1, like integer
-  mark m2, like integer
+  seat n0, like integer
+  seat n1, like integer
+  seat n2, like integer
+  seat m0, like integer
+  seat m1, like integer
+  seat m2, like integer
   show hold
     call is-equal
       call lorentz-form
@@ -948,14 +948,14 @@ rule the-third-sample-is-off-the-line-of-the-first-two
 
 # ISOMETRIES. A rotation about o by (c, s), c^2 + s^2 = 1, keeps B.
 rule a-rotation-keeps-the-lorentz-form
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark y0, like integer
-  mark y1, like integer
-  mark y2, like integer
-  mark c, like integer
-  mark s, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat y0, like integer
+  seat y1, like integer
+  seat y2, like integer
+  seat c, like integer
+  seat s, like integer
   have unit
     call is-equal
       call add
@@ -1009,14 +1009,14 @@ rule a-rotation-keeps-the-lorentz-form
 
 # A boost by (a, b), a^2 - b^2 = 1 (a = cosh, b = sinh of the translation length), keeps B.
 rule a-boost-keeps-the-lorentz-form
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark y0, like integer
-  mark y1, like integer
-  mark y2, like integer
-  mark a, like integer
-  mark b, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat y0, like integer
+  seat y1, like integer
+  seat y2, like integer
+  seat a, like integer
+  seat b, like integer
   have unit
     call is-equal
       call subtract
@@ -1071,15 +1071,15 @@ rule a-boost-keeps-the-lorentz-form
 # THE REFLECTION IN A LINE n (B(n, n) = -1): x -> x + 2 B(x, n) n. It keeps B, it is an involution, and it fixes
 # every point of the line. Reflections generate the isometry group (Cartan-Dieudonne), as mirrors generate the tilings.
 rule a-reflection-keeps-the-lorentz-form
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark y0, like integer
-  mark y1, like integer
-  mark y2, like integer
-  mark n0, like integer
-  mark n1, like integer
-  mark n2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat y0, like integer
+  seat y1, like integer
+  seat y2, like integer
+  seat n0, like integer
+  seat n1, like integer
+  seat n2, like integer
   have line
     call is-equal
       call lorentz-form
@@ -1180,12 +1180,12 @@ rule a-reflection-keeps-the-lorentz-form
         read y2
 
 rule a-reflection-is-an-involution-t
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark n0, like integer
-  mark n1, like integer
-  mark n2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat n0, like integer
+  seat n1, like integer
+  seat n2, like integer
   have line
     call is-equal
       call lorentz-form
@@ -1262,12 +1262,12 @@ rule a-reflection-is-an-involution-t
       read x0
 
 rule a-reflection-is-an-involution-x
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark n0, like integer
-  mark n1, like integer
-  mark n2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat n0, like integer
+  seat n1, like integer
+  seat n2, like integer
   have line
     call is-equal
       call lorentz-form
@@ -1344,12 +1344,12 @@ rule a-reflection-is-an-involution-x
       read x1
 
 rule a-reflection-is-an-involution-y
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark n0, like integer
-  mark n1, like integer
-  mark n2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat n0, like integer
+  seat n1, like integer
+  seat n2, like integer
   have line
     call is-equal
       call lorentz-form
@@ -1426,12 +1426,12 @@ rule a-reflection-is-an-involution-y
       read x2
 
 rule a-reflection-fixes-its-line-t
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark n0, like integer
-  mark n1, like integer
-  mark n2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat n0, like integer
+  seat n1, like integer
+  seat n2, like integer
   have on-line
     call is-equal
       call lorentz-form
@@ -1460,12 +1460,12 @@ rule a-reflection-fixes-its-line-t
       read x0
 
 rule a-reflection-fixes-its-line-x
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark n0, like integer
-  mark n1, like integer
-  mark n2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat n0, like integer
+  seat n1, like integer
+  seat n2, like integer
   have on-line
     call is-equal
       call lorentz-form
@@ -1494,12 +1494,12 @@ rule a-reflection-fixes-its-line-x
       read x1
 
 rule a-reflection-fixes-its-line-y
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark n0, like integer
-  mark n1, like integer
-  mark n2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat n0, like integer
+  seat n1, like integer
+  seat n2, like integer
   have on-line
     call is-equal
       call lorentz-form
@@ -1538,15 +1538,15 @@ rule a-reflection-fixes-its-line-y
 # kernel's ideal reduction does not find the chain through these degree-six hypotheses, so the theorem is the
 # identity, from which both follow by substitution.)
 rule the-law-of-cosines
-  mark a0, like integer
-  mark a1, like integer
-  mark a2, like integer
-  mark b0, like integer
-  mark b1, like integer
-  mark b2, like integer
-  mark v0, like integer
-  mark v1, like integer
-  mark v2, like integer
+  seat a0, like integer
+  seat a1, like integer
+  seat a2, like integer
+  seat b0, like integer
+  seat b1, like integer
+  seat b2, like integer
+  seat v0, like integer
+  seat v1, like integer
+  seat v2, like integer
   have vertex
     call is-equal
       call lorentz-form
@@ -1651,12 +1651,12 @@ rule the-law-of-cosines
             read v2
 
 rule a-tangent-direction-has-norm-minus-sinh-squared
-  mark a0, like integer
-  mark a1, like integer
-  mark a2, like integer
-  mark v0, like integer
-  mark v1, like integer
-  mark v2, like integer
+  seat a0, like integer
+  seat a1, like integer
+  seat a2, like integer
+  seat v0, like integer
+  seat v1, like integer
+  seat v2, like integer
   have vertex
     call is-equal
       call lorentz-form
@@ -1768,12 +1768,12 @@ rule a-tangent-direction-has-norm-minus-sinh-squared
 # perpendicular bisector) sends o to x: B(n, n) R(o) = B(n, n) o - 2 B(o, n) n = B(n, n) x, written without the
 # division so that it holds for every pair of points (n is spacelike whenever x is not o).
 rule any-point-reflects-onto-any-other-t
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark o0, like integer
-  mark o1, like integer
-  mark o2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat o0, like integer
+  seat o1, like integer
+  seat o2, like integer
   have x-point
     call is-equal
       call lorentz-form
@@ -1860,12 +1860,12 @@ rule any-point-reflects-onto-any-other-t
         read x0
 
 rule any-point-reflects-onto-any-other-x
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark o0, like integer
-  mark o1, like integer
-  mark o2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat o0, like integer
+  seat o1, like integer
+  seat o2, like integer
   have x-point
     call is-equal
       call lorentz-form
@@ -1952,12 +1952,12 @@ rule any-point-reflects-onto-any-other-x
         read x1
 
 rule any-point-reflects-onto-any-other-y
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark o0, like integer
-  mark o1, like integer
-  mark o2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat o0, like integer
+  seat o1, like integer
+  seat o2, like integer
   have x-point
     call is-equal
       call lorentz-form
@@ -2046,8 +2046,8 @@ rule any-point-reflects-onto-any-other-y
 # THE POINCARE DISK. A point p of the unit disk lifts to x = (1 + |p|^2, 2 p) / (1 - |p|^2) on the hyperboloid: with
 # X = (1 + |p|^2, 2 p1, 2 p2) and s = 1 - |p|^2, B(X, X) = s^2.
 rule the-disk-lift-lands-on-the-hyperboloid
-  mark p1, like integer
-  mark p2, like integer
+  seat p1, like integer
+  seat p2, like integer
   show hold
     call is-equal
       call lorentz-form
@@ -2104,10 +2104,10 @@ rule the-disk-lift-lands-on-the-hyperboloid
 # THE DISTANCE IN THE DISK: B(X, Y) - s t = 2 |p - q|^2, so cosh d = 1 + 2 |p - q|^2 / ((1 - |p|^2)(1 - |q|^2)).
 # Inside the disk s, t > 0, so cosh d >= 1, the distance is real and positive, and it is 0 only at p = q.
 rule the-disk-distance-formula
-  mark p1, like integer
-  mark p2, like integer
-  mark q1, like integer
-  mark q2, like integer
+  seat p1, like integer
+  seat p2, like integer
+  seat q1, like integer
+  seat q2, like integer
   show hold
     call is-equal
       call subtract
@@ -2180,10 +2180,10 @@ rule the-disk-distance-formula
               read q2
 
 rule the-disk-distance-is-at-least-one-in-cosh
-  mark p1, like integer
-  mark p2, like integer
-  mark q1, like integer
-  mark q2, like integer
+  seat p1, like integer
+  seat p2, like integer
+  seat q1, like integer
+  seat q2, like integer
   show hold
     call is-minimum
       call subtract
@@ -2242,8 +2242,8 @@ rule the-disk-distance-is-at-least-one-in-cosh
 # THE KLEIN DISK: the same point is k = 2 p / (1 + |p|^2), and (1 + |p|^2)^2 (1 - |k|^2) = (1 - |p|^2)^2, so the
 # Klein point lies in the unit disk too, and the two disks are maps of one plane.
 rule the-klein-point-lies-in-the-disk
-  mark p1, like integer
-  mark p2, like integer
+  seat p1, like integer
+  seat p2, like integer
   show hold
     call is-equal
       call subtract
@@ -2300,11 +2300,11 @@ rule the-klein-point-lies-in-the-disk
 # condition for meeting the unit circle at right angles (a diameter when n0 = 0). Its radius^2 is
 # (n1^2 + n2^2 - n0^2) / n0^2 = -B(n, n) / n0^2 > 0 exactly because n is spacelike.
 rule a-line-in-the-disk-is-a-circle
-  mark p1, like integer
-  mark p2, like integer
-  mark n0, like integer
-  mark n1, like integer
-  mark n2, like integer
+  seat p1, like integer
+  seat p2, like integer
+  seat n0, like integer
+  seat n1, like integer
+  seat n2, like integer
   show hold
     call is-equal
       call lorentz-form
@@ -2372,12 +2372,12 @@ task complex-product-imaginary
         read v1
 
 rule a-mobius-map-keeps-the-imaginary-part
-  mark ma, like integer
-  mark mb, like integer
-  mark mc, like integer
-  mark md, like integer
-  mark zr, like integer
-  mark zi, like integer
+  seat ma, like integer
+  seat mb, like integer
+  seat mc, like integer
+  seat md, like integer
+  seat zr, like integer
+  seat zi, like integer
   have unimodular
     call is-equal
       call subtract
@@ -2412,12 +2412,12 @@ rule a-mobius-map-keeps-the-imaginary-part
       read zi
 
 rule a-mobius-map-scales-differences
-  mark ma, like integer
-  mark mb, like integer
-  mark mc, like integer
-  mark md, like integer
-  mark z, like integer
-  mark w, like integer
+  seat ma, like integer
+  seat mb, like integer
+  seat mc, like integer
+  seat md, like integer
+  seat z, like integer
+  seat w, like integer
   show hold
     call is-equal
       call subtract
@@ -2493,10 +2493,10 @@ task lorentz-form-four
         read v4
 
 rule the-ball-lift-lands-on-hyperbolic-four-space
-  mark p1, like integer
-  mark p2, like integer
-  mark p3, like integer
-  mark p4, like integer
+  seat p1, like integer
+  seat p2, like integer
+  seat p3, like integer
+  seat p4, like integer
   show hold
     call is-equal
       call lorentz-form-four
@@ -2595,14 +2595,14 @@ rule the-ball-lift-lands-on-hyperbolic-four-space
                 read p4
 
 rule the-ball-distance-formula-in-four-dimensions
-  mark p1, like integer
-  mark p2, like integer
-  mark p3, like integer
-  mark p4, like integer
-  mark q1, like integer
-  mark q2, like integer
-  mark q3, like integer
-  mark q4, like integer
+  seat p1, like integer
+  seat p2, like integer
+  seat p3, like integer
+  seat p4, like integer
+  seat q1, like integer
+  seat q2, like integer
+  seat q3, like integer
+  seat q4, like integer
   show hold
     call is-equal
       call subtract
@@ -2735,21 +2735,21 @@ rule the-ball-distance-formula-in-four-dimensions
                 read q4
 
 rule a-reflection-keeps-the-lorentz-form-in-four-dimensions
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark x3, like integer
-  mark x4, like integer
-  mark y0, like integer
-  mark y1, like integer
-  mark y2, like integer
-  mark y3, like integer
-  mark y4, like integer
-  mark n0, like integer
-  mark n1, like integer
-  mark n2, like integer
-  mark n3, like integer
-  mark n4, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat x3, like integer
+  seat x4, like integer
+  seat y0, like integer
+  seat y1, like integer
+  seat y2, like integer
+  seat y3, like integer
+  seat y4, like integer
+  seat n0, like integer
+  seat n1, like integer
+  seat n2, like integer
+  seat n3, like integer
+  seat n4, like integer
   have hyperplane
     call is-equal
       call lorentz-form-four
@@ -2954,12 +2954,12 @@ rule a-reflection-keeps-the-lorentz-form-in-four-dimensions
 # spacelike. In the disk every one of them is a Euclidean circle: B(X, g) - k s = (g0 + k)|p|^2 - 2 (g1 p1 + g2 p2)
 # + (g0 - k), a quadratic with equal coefficients on p1^2 and p2^2.
 rule every-curve-of-constant-distance-is-a-circle-in-the-disk
-  mark p1, like integer
-  mark p2, like integer
-  mark g0, like integer
-  mark g1, like integer
-  mark g2, like integer
-  mark k, like integer
+  seat p1, like integer
+  seat p2, like integer
+  seat g0, like integer
+  seat g1, like integer
+  seat g2, like integer
+  seat k, like integer
   show hold
     call is-equal
       call subtract

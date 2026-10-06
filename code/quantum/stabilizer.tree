@@ -135,8 +135,8 @@ task strings-commute
 # SINGLE-QUBIT COMMUTATION IS SYMMETRIC: commutes a b = commutes b a, for every pair of operators. Commutation is a
 # relation, not an ordered operation, so the table is symmetric across its diagonal. Proved over all sixteen pairs.
 rule commutes-is-symmetric
-  mark a, like pauli
-  mark b, like pauli
+  seat a, like pauli
+  seat b, like pauli
   show hold
     call is-equal
       call commutes
@@ -150,7 +150,7 @@ rule commutes-is-symmetric
 # THE IDENTITY COMMUTES WITH EVERY PAULI: commutes identity p = yes, for every operator. The identity is in the center
 # of the Pauli group, so it never obstructs a stabilizer measurement. Proved over all four operators.
 rule identity-commutes-with-everything
-  mark p, like pauli
+  seat p, like pauli
   show hold
     call is-equal
       call commutes
@@ -162,7 +162,7 @@ rule identity-commutes-with-everything
 # EVERY PAULI COMMUTES WITH ITSELF: commutes p p = yes, for every operator. The diagonal of the table is all yes, which
 # is why a single stabilizer generator is always consistent with itself. Proved over all four operators.
 rule every-pauli-commutes-with-itself
-  mark p, like pauli
+  seat p, like pauli
   show hold
     call is-equal
       call commutes
@@ -175,10 +175,10 @@ rule every-pauli-commutes-with-itself
 # proof ranges over the two strings, that is over four single-qubit Paulis, sixteen times sixteen pairs in all, and
 # follows from the symmetry of the single-qubit table together with the symmetry of agreement.
 rule strings-commute-is-symmetric
-  mark a, like pauli
-  mark b, like pauli
-  mark c, like pauli
-  mark d, like pauli
+  seat a, like pauli
+  seat b, like pauli
+  seat c, like pauli
+  seat d, like pauli
   show hold
     call is-equal
       call strings-commute

@@ -124,7 +124,7 @@ task same-vertex
 
 # The ANTIPODE is an INVOLUTION: antipode (antipode v) = v, for every vertex. The opposite of the opposite is the start.
 rule antipode-is-an-involution
-  mark v, like vertex
+  seat v, like vertex
   show hold
     call is-equal
       call antipode
@@ -135,7 +135,7 @@ rule antipode-is-an-involution
 
 # A sign and its flip always differ: same-sign s (flip-sign s) = no. The seed of the antipode having no fixed point.
 rule flip-sign-differs
-  mark s, like sign
+  seat s, like sign
   show hold
     call is-equal
       call same-sign
@@ -149,7 +149,7 @@ rule flip-sign-differs
 # antipode flips both signs and a flipped sign always differs. This is what makes the twenty-four vertices pair into
 # twelve genuine lines (antipodal pairs), with none its own partner.
 rule antipode-has-no-fixed-point
-  mark v, like vertex
+  seat v, like vertex
   show hold
     call is-equal
       call same-vertex
@@ -170,8 +170,8 @@ rule antipode-has-no-fixed-point
 # DISTINCTNESS: the sign-choices of an axis-pair give DIFFERENT vertices, so the construction has no collisions. A vertex
 # and the one with its first sign flipped are distinct, shown by refutation over the sign.
 rule sign-flip-gives-distinct-vertex
-  mark a, like duo
-  mark s, like sign
+  seat a, like duo
+  seat s, like sign
   show hold
     call is-equal
       call same-vertex

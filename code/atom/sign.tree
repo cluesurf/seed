@@ -19,7 +19,7 @@ task flip-sign
 
 # FLIPPING IS AN INVOLUTION: flip-sign (flip-sign s) = s, the order-two symmetry of the sign.
 rule flip-sign-is-an-involution
-  mark s, like sign
+  seat s, like sign
   show hold
     call is-equal
       call flip-sign
@@ -56,7 +56,7 @@ task same-sign
 
 # A SIGN AND ITS FLIP ALWAYS DIFFER: same-sign s (flip-sign s) = no.
 rule flip-sign-differs
-  mark s, like sign
+  seat s, like sign
   show hold
     call is-equal
       call same-sign

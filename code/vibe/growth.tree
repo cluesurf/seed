@@ -69,7 +69,7 @@ task total-after-two
 
 # THE CHARACTERISTIC POLYNOMIAL of (2 1 ; 1 1) is x^2 - 3x + 1: (x - 2)(x - 1) - 1.
 rule the-splitting-matrix-has-characteristic-polynomial-x-squared-minus-three-x-plus-one
-  mark x, like integer
+  seat x, like integer
   show hold
     call is-equal
       call subtract
@@ -93,8 +93,8 @@ rule the-splitting-matrix-has-characteristic-polynomial-x-squared-minus-three-x-
 
 # EVERY LEVEL OBEYS t(n + 2) = 3 t(n + 1) - t(n), whatever the mix of white and black.
 rule every-level-obeys-the-splitting-recurrence
-  mark w, like integer
-  mark b, like integer
+  seat w, like integer
+  seat b, like integer
   show hold
     call is-equal
       call total-after-two
@@ -113,10 +113,10 @@ rule every-level-obeys-the-splitting-recurrence
 # THE STEP ADVANCES FIBONACCI PAIRS BY TWO: for four consecutive Fibonacci numbers f0, f1, f2 = f1 + f0,
 # f3 = f2 + f1, the step sends (w, b) = (f1, f0) to (f3, f2).
 rule the-step-advances-a-fibonacci-pair-by-two-white
-  mark f0, like integer
-  mark f1, like integer
-  mark f2, like integer
-  mark f3, like integer
+  seat f0, like integer
+  seat f1, like integer
+  seat f2, like integer
+  seat f3, like integer
   have second
     call is-equal
       read f2
@@ -137,9 +137,9 @@ rule the-step-advances-a-fibonacci-pair-by-two-white
       read f3
 
 rule the-step-advances-a-fibonacci-pair-by-two-black
-  mark f0, like integer
-  mark f1, like integer
-  mark f2, like integer
+  seat f0, like integer
+  seat f1, like integer
+  seat f2, like integer
   have second
     call is-equal
       read f2

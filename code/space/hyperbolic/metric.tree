@@ -39,24 +39,24 @@ load @term/seed/space/hyperbolic/hyperboloid
 # them, every bracket is 0 and the third sides agree. SIDE-SIDE-SIDE: read for the angles, three equal sides make the
 # angle difference 0.
 rule side-angle-side-and-side-side-side
-  mark a0, like integer
-  mark a1, like integer
-  mark a2, like integer
-  mark b0, like integer
-  mark b1, like integer
-  mark b2, like integer
-  mark c0, like integer
-  mark c1, like integer
-  mark c2, like integer
-  mark p0, like integer
-  mark p1, like integer
-  mark p2, like integer
-  mark q0, like integer
-  mark q1, like integer
-  mark q2, like integer
-  mark r0, like integer
-  mark r1, like integer
-  mark r2, like integer
+  seat a0, like integer
+  seat a1, like integer
+  seat a2, like integer
+  seat b0, like integer
+  seat b1, like integer
+  seat b2, like integer
+  seat c0, like integer
+  seat c1, like integer
+  seat c2, like integer
+  seat p0, like integer
+  seat p1, like integer
+  seat p2, like integer
+  seat q0, like integer
+  seat q1, like integer
+  seat q2, like integer
+  seat r0, like integer
+  seat r1, like integer
+  seat r2, like integer
   show hold
     call is-equal
       call subtract
@@ -403,15 +403,15 @@ task gram-determinant
 
 # THE GRAM DETERMINANT of three vectors under B is det(x, y, z)^2 (det J = 1), for all vectors.
 rule the-gram-determinant-is-the-square-of-the-determinant
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark y0, like integer
-  mark y1, like integer
-  mark y2, like integer
-  mark z0, like integer
-  mark z1, like integer
-  mark z2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat y0, like integer
+  seat y1, like integer
+  seat y2, like integer
+  seat z0, like integer
+  seat z1, like integer
+  seat z2, like integer
   show hold
     call is-equal
       call gram-determinant
@@ -483,15 +483,15 @@ rule the-gram-determinant-is-the-square-of-the-determinant
 # (p^2 - 1)(q^2 - 1) - (r - p q)^2 = det(x, y, z)^2 >= 0, so r <= p q + sqrt((p^2 - 1)(q^2 - 1)) = cosh(d(x, y) + d(y, z)),
 # and d(x, z) <= d(x, y) + d(y, z) since cosh increases on [0, oo). Equality exactly when det = 0.
 rule the-triangle-inequality
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark y0, like integer
-  mark y1, like integer
-  mark y2, like integer
-  mark z0, like integer
-  mark z1, like integer
-  mark z2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat y0, like integer
+  seat y1, like integer
+  seat y2, like integer
+  seat z0, like integer
+  seat z1, like integer
+  seat z2, like integer
   have x-point
     call is-equal
       call lorentz-form
@@ -633,18 +633,18 @@ rule the-triangle-inequality
 # points on the line n make every B(., n) zero, so det(x, y, z) J n = 0 and det = 0: for collinear points the triangle
 # inequality is an equality, one distance the sum of the other two.
 rule three-points-on-a-line-have-zero-determinant-t
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark y0, like integer
-  mark y1, like integer
-  mark y2, like integer
-  mark z0, like integer
-  mark z1, like integer
-  mark z2, like integer
-  mark n0, like integer
-  mark n1, like integer
-  mark n2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat y0, like integer
+  seat y1, like integer
+  seat y2, like integer
+  seat z0, like integer
+  seat z1, like integer
+  seat z2, like integer
+  seat n0, like integer
+  seat n1, like integer
+  seat n2, like integer
   show hold
     call is-equal
       call multiply
@@ -708,18 +708,18 @@ rule three-points-on-a-line-have-zero-determinant-t
               read y1
 
 rule three-points-on-a-line-have-zero-determinant-x
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark y0, like integer
-  mark y1, like integer
-  mark y2, like integer
-  mark z0, like integer
-  mark z1, like integer
-  mark z2, like integer
-  mark n0, like integer
-  mark n1, like integer
-  mark n2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat y0, like integer
+  seat y1, like integer
+  seat y2, like integer
+  seat z0, like integer
+  seat z1, like integer
+  seat z2, like integer
+  seat n0, like integer
+  seat n1, like integer
+  seat n2, like integer
   show hold
     call is-equal
       call multiply
@@ -785,18 +785,18 @@ rule three-points-on-a-line-have-zero-determinant-x
               read y2
 
 rule three-points-on-a-line-have-zero-determinant-y
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark y0, like integer
-  mark y1, like integer
-  mark y2, like integer
-  mark z0, like integer
-  mark z1, like integer
-  mark z2, like integer
-  mark n0, like integer
-  mark n1, like integer
-  mark n2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat y0, like integer
+  seat y1, like integer
+  seat y2, like integer
+  seat z0, like integer
+  seat z1, like integer
+  seat z2, like integer
+  seat n0, like integer
+  seat n1, like integer
+  seat n2, like integer
   show hold
     call is-equal
       call multiply
@@ -867,14 +867,14 @@ rule three-points-on-a-line-have-zero-determinant-y
 # from x to z through y is the sum. Hilbert's II.1 (y between x and z exactly when between z and x) is the symmetry
 # of this identity in (x, l) and (z, m).
 rule between-is-additive
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark z0, like integer
-  mark z1, like integer
-  mark z2, like integer
-  mark lam, like integer
-  mark mu, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat z0, like integer
+  seat z1, like integer
+  seat z2, like integer
+  seat lam, like integer
+  seat mu, like integer
   show hold
     call is-equal
       call subtract
@@ -1019,11 +1019,11 @@ rule between-is-additive
 # ISOMETRY CLASSES. A fixed point of z -> (a z + b) / (c z + d) solves c z^2 + (d - a) z - b = 0, and the
 # discriminant of that quadratic is (a + d)^2 - 4 (a d - b c), the trace squared minus four for a determinant-1 map.
 rule a-mobius-fixed-point-solves-a-quadratic
-  mark ma, like integer
-  mark mb, like integer
-  mark mc, like integer
-  mark md, like integer
-  mark z, like integer
+  seat ma, like integer
+  seat mb, like integer
+  seat mc, like integer
+  seat md, like integer
+  seat z, like integer
   show hold
     call is-equal
       call subtract
@@ -1056,10 +1056,10 @@ rule a-mobius-fixed-point-solves-a-quadratic
           read mb
 
 rule the-fixed-point-discriminant-is-the-trace-squared-minus-four
-  mark ma, like integer
-  mark mb, like integer
-  mark mc, like integer
-  mark md, like integer
+  seat ma, like integer
+  seat mb, like integer
+  seat mc, like integer
+  seat md, like integer
   show hold
     call is-equal
       call add
@@ -1099,9 +1099,9 @@ rule the-fixed-point-discriminant-is-the-trace-squared-minus-four
 # 2 |w1 - w2|^2 / ((1 - |w1|^2)(1 - |w2|^2)) = |z1 - z2|^2 / (2 Im z1 Im z2): the disk's distance formula
 # (space/hyperbolic/hyperboloid) becomes the half plane's, so the Cayley map is an isometry.
 rule the-cayley-map-scales-differences
-  mark z1, like integer
-  mark z2, like integer
-  mark i, like integer
+  seat z1, like integer
+  seat z2, like integer
+  seat i, like integer
   show hold
     call is-equal
       call subtract
@@ -1128,8 +1128,8 @@ rule the-cayley-map-scales-differences
           read z2
 
 rule the-cayley-map-sends-the-half-plane-into-the-disk
-  mark u, like integer
-  mark v, like integer
+  seat u, like integer
+  seat v, like integer
   show hold
     call is-equal
       call subtract
@@ -1165,8 +1165,8 @@ rule the-cayley-map-sends-the-half-plane-into-the-disk
 # cosh^2 d cos^2 t = 1. Then the angle P it makes with the perpendicular has cos P = |B(m, m_perp)| = |sin t|, and
 # cosh^2 d sin^2 t = sinh^2 d: cos P = tanh d, Lobachevsky's formula (equivalently tan(P / 2) = e^-d).
 rule the-line-at-distance-d-is-a-line
-  mark ch, like integer
-  mark sh, like integer
+  seat ch, like integer
+  seat sh, like integer
   have hyperbolic-unit
     call is-equal
       call subtract
@@ -1189,8 +1189,8 @@ rule the-line-at-distance-d-is-a-line
       code -1
 
 rule the-point-is-at-distance-d-from-the-line
-  mark ch, like integer
-  mark sh, like integer
+  seat ch, like integer
+  seat sh, like integer
   show hold
     call is-equal
       call lorentz-form
@@ -1203,8 +1203,8 @@ rule the-point-is-at-distance-d-from-the-line
       read sh
 
 rule the-perpendicular-from-the-point-meets-the-line-at-right-angles
-  mark ch, like integer
-  mark sh, like integer
+  seat ch, like integer
+  seat sh, like integer
   show hold
     call is-equal
       call lorentz-form
@@ -1232,10 +1232,10 @@ rule the-perpendicular-passes-through-the-point
 # + [cosh^2 d - sinh^2 d - 1]. Under the three hypotheses (unit direction, limiting, cosh^2 - sinh^2 = 1) every bracket
 # is 0, so cosh^2 d sin^2 t = sinh^2 d and cos P = |sin t| = tanh d.
 rule lobachevsky-cos-of-the-angle-of-parallelism-is-tanh-d
-  mark ch, like integer
-  mark sh, like integer
-  mark co, like integer
-  mark si, like integer
+  seat ch, like integer
+  seat sh, like integer
+  seat co, like integer
+  seat si, like integer
   show hold
     call is-equal
       call subtract
@@ -1287,10 +1287,10 @@ rule lobachevsky-cos-of-the-angle-of-parallelism-is-tanh-d
 # Its velocity (0, -sinh r sin f, sinh r cos f) has squared length -B = sinh^2 r: it is traced at speed sinh r, so its
 # circumference is 2 pi sinh r (and a disk's area, the integral of that, is 2 pi (cosh r - 1)).
 rule a-circle-of-radius-r-lies-on-the-plane
-  mark cr, like integer
-  mark sr, like integer
-  mark co, like integer
-  mark si, like integer
+  seat cr, like integer
+  seat sr, like integer
+  seat co, like integer
+  seat si, like integer
   have hyperbolic-unit
     call is-equal
       call subtract
@@ -1331,10 +1331,10 @@ rule a-circle-of-radius-r-lies-on-the-plane
       code 1
 
 rule a-circle-of-radius-r-is-at-distance-r
-  mark cr, like integer
-  mark sr, like integer
-  mark co, like integer
-  mark si, like integer
+  seat cr, like integer
+  seat sr, like integer
+  seat co, like integer
+  seat si, like integer
   show hold
     call is-equal
       call lorentz-form
@@ -1351,9 +1351,9 @@ rule a-circle-of-radius-r-is-at-distance-r
       read cr
 
 rule a-circle-is-traced-at-speed-sinh-r
-  mark sr, like integer
-  mark co, like integer
-  mark si, like integer
+  seat sr, like integer
+  seat co, like integer
+  seat si, like integer
   have unit-direction
     call is-equal
       call add
@@ -1395,17 +1395,17 @@ rule a-circle-is-traced-at-speed-sinh-r
 # B(l a + m b, n) = l B(a, n) + m B(b, n). So the segment crosses the line exactly when B(a, n) and B(b, n) have
 # opposite signs (the sign of B(x, n) is the side of n the point x is on).
 rule a-point-of-a-segment-sits-between-its-ends-sides
-  mark a0, like integer
-  mark a1, like integer
-  mark a2, like integer
-  mark b0, like integer
-  mark b1, like integer
-  mark b2, like integer
-  mark n0, like integer
-  mark n1, like integer
-  mark n2, like integer
-  mark lam, like integer
-  mark mu, like integer
+  seat a0, like integer
+  seat a1, like integer
+  seat a2, like integer
+  seat b0, like integer
+  seat b1, like integer
+  seat b2, like integer
+  seat n0, like integer
+  seat n1, like integer
+  seat n2, like integer
+  seat lam, like integer
+  seat mu, like integer
   show hold
     call is-equal
       call lorentz-form
@@ -1457,18 +1457,18 @@ rule a-point-of-a-segment-sits-between-its-ends-sides
 # If the line crosses side ab (ab < 0) and misses c (c not on it), then (ac)(bc) <= 0 with neither zero, so exactly one
 # of the sides ac, bc is crossed: a line entering a triangle through one side leaves through exactly one other.
 rule pasch
-  mark a0, like integer
-  mark a1, like integer
-  mark a2, like integer
-  mark b0, like integer
-  mark b1, like integer
-  mark b2, like integer
-  mark c0, like integer
-  mark c1, like integer
-  mark c2, like integer
-  mark n0, like integer
-  mark n1, like integer
-  mark n2, like integer
+  seat a0, like integer
+  seat a1, like integer
+  seat a2, like integer
+  seat b0, like integer
+  seat b1, like integer
+  seat b2, like integer
+  seat c0, like integer
+  seat c1, like integer
+  seat c2, like integer
+  seat n0, like integer
+  seat n1, like integer
+  seat n2, like integer
   show hold
     call is-equal
       call multiply
@@ -1572,14 +1572,14 @@ rule pasch
 # the defect is additive, and it is invariant under isometries (they keep angles), which are the defining properties of
 # an area. Up to scale it is the hyperbolic area (Gauss-Bonnet, curvature -1).
 rule the-angle-defect-is-additive
-  mark alpha, like integer
-  mark beta-one, like integer
-  mark beta-two, like integer
-  mark gamma, like integer
-  mark delta-one, like integer
-  mark delta-two, like integer
-  mark pi, like integer
-  mark beta, like integer
+  seat alpha, like integer
+  seat beta-one, like integer
+  seat beta-two, like integer
+  seat gamma, like integer
+  seat delta-one, like integer
+  seat delta-two, like integer
+  seat pi, like integer
+  seat beta, like integer
   have split-angle
     call is-equal
       read beta

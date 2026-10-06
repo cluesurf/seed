@@ -14,11 +14,11 @@
 
 # THE STEP: with the addition formula cs = cx cw + sx sw, cw > 1, cx >= 1 and sx, sw >= 0, cs > cx.
 rule cosh-steps-up
-  mark cx, like integer
-  mark sx, like integer
-  mark cw, like integer
-  mark sw, like integer
-  mark cs, like integer
+  seat cx, like integer
+  seat sx, like integer
+  seat cw, like integer
+  seat sw, like integer
+  seat cs, like integer
   have the-addition-formula
     call is-equal
       read cs
@@ -54,9 +54,9 @@ rule cosh-steps-up
 # cosh = (E + 1/E) / 2 with E between its second- and third-order parts on [0, 1] (integral/hyperbolic-functions):
 # 2 cosh w - 2 >= w^2 / 2, as (E - 1)^2 >= (w + w^2 / 2)^2 exceeds E w^2 / 2.
 rule cosh-is-a-quarter-square-past-one
-  mark w, like integer
-  mark ee, like integer
-  mark rr, like integer
+  seat w, like integer
+  seat ee, like integer
+  seat rr, like integer
   have w-is-in-the-unit-interval
     meet and
       call is-minimum
@@ -131,8 +131,8 @@ rule cosh-is-a-quarter-square-past-one
 
 # so cosh w > 1 for w > 0.
 rule cosh-is-past-one-off-zero
-  mark w, like integer
-  mark cw, like integer
+  seat w, like integer
+  seat cw, like integer
   have cosh-near-zero
     call is-minimum
       call multiply
@@ -156,15 +156,15 @@ rule cosh-is-past-one-off-zero
 # THE INEQUALITY: d(a, c) = dac and s = d(a, b) + d(b, c). cosh (ch) is strictly increasing, so x <= y or
 # ch(x) > ch(y), and order.tree gives ch(dac) <= ch(s), so dac <= s.
 rule the-triangle-inequality-for-distances
-  mark ch
+  seat ch
     like task
       take a0, like integer
       like integer
-  mark dac, like integer
-  mark s, like integer
+  seat dac, like integer
+  seat s, like integer
   have cosh-is-increasing
-    mark x, like integer
-    mark y, like integer
+    seat x, like integer
+    seat y, like integer
     meet or
       call is-maximum
         read x

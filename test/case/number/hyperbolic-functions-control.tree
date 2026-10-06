@@ -2,9 +2,9 @@
 
 # false: cosh(w) - 1 is about w^2 / 2, not below w^2 / 4
 rule control-cosh-near-zero-too-tight
-  mark w, like integer
-  mark ee, like integer
-  mark rr, like integer
+  seat w, like integer
+  seat ee, like integer
+  seat rr, like integer
   have w-is-in-the-unit-interval
     meet and
       call is-minimum
@@ -81,8 +81,8 @@ rule control-cosh-near-zero-too-tight
 
 # false: an inverse of a number below 1 exceeds 1
 rule control-an-inverse-without-a-lower-bound
-  mark ee, like integer
-  mark rr, like integer
+  seat ee, like integer
+  seat rr, like integer
   have rr-inverts
     call is-equal
       call multiply
@@ -101,14 +101,14 @@ rule control-an-inverse-without-a-lower-bound
 
 # false: the reciprocal part adds its own delta
 rule control-cosh-addition-with-half-the-error
-  mark ex, like integer
-  mark ew, like integer
-  mark es, like integer
-  mark rs, like integer
-  mark pp, like integer
-  mark q, like integer
-  mark dd, like integer
-  mark delta, like integer
+  seat ex, like integer
+  seat ew, like integer
+  seat es, like integer
+  seat rs, like integer
+  seat pp, like integer
+  seat q, like integer
+  seat dd, like integer
+  seat delta, like integer
   have dd-is-the-error-of-e
     call is-equal
       read dd

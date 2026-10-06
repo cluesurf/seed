@@ -67,8 +67,8 @@ task combine
 # is one precisely when c equals b, combine(vacuum, b, c) = same-anyon(b, c), for all b and c. Proved by induction over the
 # anyon labels.
 rule vacuum-is-the-fusion-unit
-  mark b, like anyon
-  mark c, like anyon
+  seat b, like anyon
+  seat c, like anyon
   show hold
     call is-equal
       call combine
@@ -83,9 +83,9 @@ rule vacuum-is-the-fusion-unit
 # FUSION IS COMMUTATIVE: the multiplicity is unchanged when the two fused anyons are swapped, combine(a, b, c) = combine(b, a,
 # c), for all a, b and c, so the fusion ring is commutative. Proved by simultaneous induction over the three anyon labels.
 rule fusion-is-commutative
-  mark a, like anyon
-  mark b, like anyon
-  mark c, like anyon
+  seat a, like anyon
+  seat b, like anyon
+  seat c, like anyon
   show hold
     call is-equal
       call combine

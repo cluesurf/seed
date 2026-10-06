@@ -57,7 +57,7 @@ task cube-sum
 # numbers is n times n plus one, 2 * sum(n) = n * (n + 1), for every n. So the sum of the first n numbers is the n-th
 # triangular number.
 rule twice-the-sum-is-n-times-n-plus-one
-  mark n, like natural-number
+  seat n, like natural-number
   show hold
     call is-equal
       call multiply
@@ -77,7 +77,7 @@ rule twice-the-sum-is-n-times-n-plus-one
 # the square of the triangular number. It is the finite power-sum identity at the cube, the shadow of zeta at the third
 # power, and the cubes it governs are exactly what the eight-dimensional theta series counts.
 rule four-times-sum-of-cubes-is-n-times-n-plus-one-squared
-  mark n, like natural-number
+  seat n, like natural-number
   show hold
     call is-equal
       call multiply

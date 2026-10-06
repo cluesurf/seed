@@ -8,11 +8,11 @@
 
 # The modulus halves: from t e(t) = 1 and 2t e(2t) = 1, 2 e(2t) = e(t).
 rule the-modulus-halves
-  mark e
+  seat e
     like task
       take a0, like integer
       like integer
-  mark t, like integer
+  seat t, like integer
   have at-t
     call is-equal
       call multiply
@@ -49,23 +49,23 @@ rule the-modulus-halves
 
 # THE SUM IS A REAL: x(2m) + y(2m) and x(2n) + y(2n) differ by at most 2 e(2m) + 2 e(2n) = e(m) + e(n).
 rule the-sum-of-reals-is-a-real
-  mark x
+  seat x
     like task
       take a0, like integer
       like integer
-  mark y
+  seat y
     like task
       take a0, like integer
       like integer
-  mark e
+  seat e
     like task
       take a0, like integer
       like integer
-  mark m, like integer
-  mark n, like integer
+  seat m, like integer
+  seat n, like integer
   have x-is-a-real
-    mark p, like integer
-    mark q, like integer
+    seat p, like integer
+    seat q, like integer
     meet or
       call is-below
         read p
@@ -97,8 +97,8 @@ rule the-sum-of-reals-is-a-real
             call e
               read q
   have y-is-a-real
-    mark p, like integer
-    mark q, like integer
+    seat p, like integer
+    seat q, like integer
     meet or
       call is-below
         read p
@@ -130,7 +130,7 @@ rule the-sum-of-reals-is-a-real
             call e
               read q
   have the-modulus-halves
-    mark t, like integer
+    seat t, like integer
     meet or
       call is-below
         read t
@@ -209,10 +209,10 @@ rule the-sum-of-reals-is-a-real
 # THE PRODUCT, first its step: |x Dy| <= K E from |x| <= K and |Dy| <= E, with the certificate
 # K E - x Dy = ((K - x)(E + Dy) + (K + x)(E - Dy)) / 2.
 rule a-bounded-factor-times-a-small-one
-  mark x, like integer
-  mark dy, like integer
-  mark big, like integer
-  mark eps, like integer
+  seat x, like integer
+  seat dy, like integer
+  seat big, like integer
+  seat eps, like integer
   have x-is-bounded
     meet and
       call is-maximum
@@ -255,21 +255,21 @@ rule a-bounded-factor-times-a-small-one
 
 # At two indices: x(p) y(p) - x(q) y(q) = x(p) (y(p) - y(q)) + y(q) (x(p) - x(q)) is at most 2 K (e(p) + e(q)).
 rule the-product-step
-  mark x
+  seat x
     like task
       take a0, like integer
       like integer
-  mark y
+  seat y
     like task
       take a0, like integer
       like integer
-  mark e
+  seat e
     like task
       take a0, like integer
       like integer
-  mark p, like integer
-  mark q, like integer
-  mark big, like integer
+  seat p, like integer
+  seat q, like integer
+  seat big, like integer
   have x-at-p-is-bounded
     meet and
       call is-maximum
@@ -368,24 +368,24 @@ rule the-product-step
 
 # THE PRODUCT IS A REAL: at p = 2 K m and q = 2 K n the step gives 2 K (e(2 K m) + e(2 K n)) = e(m) + e(n).
 rule the-product-of-reals-is-a-real
-  mark x
+  seat x
     like task
       take a0, like integer
       like integer
-  mark y
+  seat y
     like task
       take a0, like integer
       like integer
-  mark e
+  seat e
     like task
       take a0, like integer
       like integer
-  mark m, like integer
-  mark n, like integer
-  mark big, like integer
+  seat m, like integer
+  seat n, like integer
+  seat big, like integer
   have the-product-step
-    mark p, like integer
-    mark q, like integer
+    seat p, like integer
+    seat q, like integer
     meet or
       call is-below
         read p
@@ -415,7 +415,7 @@ rule the-product-of-reals-is-a-real
             call e
               read q
   have the-modulus-scales
-    mark t, like integer
+    seat t, like integer
     meet or
       call is-below
         read t

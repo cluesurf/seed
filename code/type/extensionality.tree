@@ -83,7 +83,7 @@ task add-zero-right
       make zero
 
 rule add-zero-right-pointwise
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call add-zero-right

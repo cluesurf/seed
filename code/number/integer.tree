@@ -53,7 +53,7 @@ task from-natural
             read p
 
 rule negate-involution
-  mark z, like rung
+  seat z, like rung
   show hold
     call is-equal
       call negate
@@ -167,7 +167,7 @@ task back
 # predecessor undoes successor: back (next z) = z, for every integer. Proved by case analysis on z AND, where the
 # operation matches a field (the magnitude inside a sign), a further split on that field. This is the field-case tactic.
 rule back-next-cancels
-  mark z, like rung
+  seat z, like rung
   show hold
     call is-equal
       call back
@@ -178,7 +178,7 @@ rule back-next-cancels
 
 # successor undoes predecessor: next (back z) = z.
 rule next-back-cancels
-  mark z, like rung
+  seat z, like rung
   show hold
     call is-equal
       call next
@@ -245,7 +245,7 @@ task combine
           read p
 
 rule combine-zero-right-is-self
-  mark z, like rung
+  seat z, like rung
   show hold
     call is-equal
       call combine
@@ -256,8 +256,8 @@ rule combine-zero-right-is-self
 
 # definitional recurrence: climb z (succ p) = next (climb z p).
 rule climb-succ-steps
-  mark z, like rung
-  mark p, like natural
+  seat z, like rung
+  seat p, like natural
   show hold
     call is-equal
       call climb
@@ -272,8 +272,8 @@ rule climb-succ-steps
   calm hold
 
 rule drop-succ-steps
-  mark z, like rung
-  mark p, like natural
+  seat z, like rung
+  seat p, like natural
   show hold
     call is-equal
       call drop
@@ -289,7 +289,7 @@ rule drop-succ-steps
 
 # climb from zero builds the positive integer: climb zero-int p = possucc p.
 rule climb-from-zero-is-possucc
-  mark p, like natural
+  seat p, like natural
   show hold
     call is-equal
       call climb
@@ -303,7 +303,7 @@ rule climb-from-zero-is-possucc
 
 # drop from zero builds the negative integer: drop zero-int p = negsucc p.
 rule drop-from-zero-is-negsucc
-  mark p, like natural
+  seat p, like natural
   show hold
     call is-equal
       call drop
@@ -317,8 +317,8 @@ rule drop-from-zero-is-negsucc
 
 # definitional: combine z (possucc p) = climb z p, and combine z (negsucc p) = drop z p.
 rule combine-possucc-steps
-  mark z, like rung
-  mark p, like natural
+  seat z, like rung
+  seat p, like natural
   show hold
     call is-equal
       call combine
@@ -332,8 +332,8 @@ rule combine-possucc-steps
   calm hold
 
 rule combine-negsucc-steps
-  mark z, like rung
-  mark p, like natural
+  seat z, like rung
+  seat p, like natural
   show hold
     call is-equal
       call combine
@@ -348,7 +348,7 @@ rule combine-negsucc-steps
 
 # 0 + z = z. Proved by case on z, citing the two builder lemmas for the positive and negative cases.
 rule combine-zero-left-is-self
-  mark z, like rung
+  seat z, like rung
   show hold
     call is-equal
       call combine
@@ -364,7 +364,7 @@ rule combine-zero-left-is-self
 # Adding the integer one is the successor: z + 1 = next z. Definitional (combine on possucc zero reduces to climb z
 # zero, which is next z). This grounds integer addition in the successor operation.
 rule combine-one-is-next
-  mark z, like rung
+  seat z, like rung
   show hold
     call is-equal
       call combine
@@ -378,7 +378,7 @@ rule combine-one-is-next
 
 # Adding the integer minus-one is the predecessor: z + (-1) = back z. Definitional.
 rule combine-neg-one-is-back
-  mark z, like rung
+  seat z, like rung
   show hold
     call is-equal
       call combine
@@ -393,8 +393,8 @@ rule combine-neg-one-is-back
 # The successor of the embedded natural is the embedded successor: next (from-natural n) = from-natural (succ n)? No --
 # rather, adding one to a positive steps it up: z + (succ p as positive) = next (z + (p as positive)). Definitional step.
 rule combine-possucc-succ-steps
-  mark z, like rung
-  mark p, like natural
+  seat z, like rung
+  seat p, like natural
   show hold
     call is-equal
       call combine
@@ -414,7 +414,7 @@ rule combine-possucc-succ-steps
 
 # definitional: drop z 0 = back z (drop subtracts one then iterates; subtracting the integer one is the predecessor).
 rule drop-zero-steps
-  mark z, like rung
+  seat z, like rung
   show hold
     call is-equal
       call drop
@@ -426,8 +426,8 @@ rule drop-zero-steps
 
 # climbing commutes with the successor: climb (next z) p = next (climb z p). By induction on p.
 rule climb-next-commute
-  mark z, like rung
-  mark p, like natural
+  seat z, like rung
+  seat p, like natural
   show hold
     call is-equal
       call climb
@@ -443,8 +443,8 @@ rule climb-next-commute
 
 # dropping commutes with the successor: drop (next z) p = next (drop z p). Uses that `next` and `back` cancel both ways.
 rule drop-next-commute
-  mark z, like rung
-  mark p, like natural
+  seat z, like rung
+  seat p, like natural
   show hold
     call is-equal
       call drop
@@ -465,8 +465,8 @@ rule drop-next-commute
 # on w's sign, using that climb and drop each commute with `next`. This is the key homomorphism law of integer addition
 # (the integers are a torsor over their successor), the bridge to commutativity and associativity.
 rule combine-next-left
-  mark z, like rung
-  mark w, like rung
+  seat z, like rung
+  seat w, like rung
   show hold
     call is-equal
       call combine
@@ -485,7 +485,7 @@ rule combine-next-left
 
 # definitional: climb z 0 = next z (climbing by the integer one is the successor).
 rule climb-zero-steps
-  mark z, like rung
+  seat z, like rung
   show hold
     call is-equal
       call climb
@@ -497,8 +497,8 @@ rule climb-zero-steps
 
 # climbing commutes with the predecessor: climb (back z) p = next iterated over (back z) = back of the climb.
 rule climb-back-commute
-  mark z, like rung
-  mark p, like natural
+  seat z, like rung
+  seat p, like natural
   show hold
     call is-equal
       call climb
@@ -517,8 +517,8 @@ rule climb-back-commute
 
 # dropping commutes with the predecessor: drop (back z) p = back (drop z p).
 rule drop-back-commute
-  mark z, like rung
-  mark p, like natural
+  seat z, like rung
+  seat p, like natural
   show hold
     call is-equal
       call drop
@@ -538,8 +538,8 @@ rule drop-back-commute
 # Addition commutes with the predecessor on the LEFT: combine (back z) w = back (combine z w). The companion of the
 # successor homomorphism; together they make integer addition a translation, the structure commutativity rests on.
 rule combine-back-left
-  mark z, like rung
-  mark w, like rung
+  seat z, like rung
+  seat w, like rung
   show hold
     call is-equal
       call combine
@@ -560,8 +560,8 @@ rule combine-back-left
 # field split in the negative case, where `next` steps the magnitude down), using the combine/drop step laws and the
 # next/back cancellation. With combine-next-left this is full successor translation-invariance on both arguments.
 rule combine-next-right
-  mark z, like rung
-  mark w, like rung
+  seat z, like rung
+  seat w, like rung
   show hold
     call is-equal
       call combine
@@ -584,8 +584,8 @@ rule combine-next-right
 # translation-invariance law. With the other three, integer addition is fully invariant under successor/predecessor in
 # either argument -- the structure from which commutativity and associativity are assembled.
 rule combine-back-right
-  mark z, like rung
-  mark w, like rung
+  seat z, like rung
+  seat w, like rung
   show hold
     call is-equal
       call combine
@@ -659,8 +659,8 @@ fuse cons-succ-step, negsucc-succ-is-back-negsucc, negsucc, back
 # rewrites possucc zero to next zero-int and uses left-translation, the step rewrites possucc (succ q) to next (possucc q)
 # and applies the induction hypothesis under the next.
 rule combine-possucc-commutes
-  mark p, like natural
-  mark z, like rung
+  seat p, like natural
+  seat z, like rung
   show hold
     call is-equal
       call combine
@@ -681,8 +681,8 @@ rule combine-possucc-commutes
 
 # Negative commute: combine (negsucc p) z = drop z p, the mirror, peeling a `back` each step.
 rule combine-negsucc-commutes
-  mark p, like natural
-  mark z, like rung
+  seat p, like natural
+  seat z, like rung
   show hold
     call is-equal
       call combine
@@ -705,8 +705,8 @@ rule combine-negsucc-commutes
 # by the two identity laws, and each signed case collapses both orders to the same iterate (climb or drop) using the
 # definitional step on one side and the positive/negative commute lemma on the other.
 rule combine-is-commutative
-  mark z, like rung
-  mark w, like rung
+  seat z, like rung
+  seat w, like rung
   show hold
     call is-equal
       call combine
@@ -727,9 +727,9 @@ rule combine-is-commutative
 # climbed second operand. By induction on the natural p, using right-translation (combine z (next w) = next (combine z w))
 # to move each `next` outside the addition.
 rule climb-combine-right
-  mark p, like natural
-  mark z, like rung
-  mark w, like rung
+  seat p, like natural
+  seat z, like rung
+  seat w, like rung
   show hold
     call is-equal
       call climb
@@ -749,9 +749,9 @@ rule climb-combine-right
 
 # The `drop` mirror: drop (combine z w) p = combine z (drop w p), moving each `back` outside the addition.
 rule drop-combine-right
-  mark p, like natural
-  mark z, like rung
-  mark w, like rung
+  seat p, like natural
+  seat z, like rung
+  seat w, like rung
   show hold
     call is-equal
       call drop
@@ -773,9 +773,9 @@ rule drop-combine-right
 # third operand u: zero by the identity law, and each signed case reduces both groupings to the same iterate of the sum
 # via the climb/drop-past-addition lemmas above.
 rule combine-is-associative
-  mark z, like rung
-  mark w, like rung
-  mark u, like rung
+  seat z, like rung
+  seat w, like rung
+  seat u, like rung
   show hold
     call is-equal
       call combine
@@ -798,8 +798,8 @@ rule combine-is-associative
 # drop undoes climb at equal count: drop (climb z p) p = z. The two iterations are inverse. By induction on p, moving the
 # inner `next` out through drop (drop-next-commute) so the induction hypothesis applies, then cancelling back/next.
 rule drop-climb-cancels
-  mark p, like natural
-  mark z, like rung
+  seat p, like natural
+  seat z, like rung
   show hold
     call is-equal
       call drop
@@ -818,8 +818,8 @@ rule drop-climb-cancels
 
 # climb undoes drop at equal count: climb (drop z p) p = z. The mirror.
 rule climb-drop-cancels
-  mark p, like natural
-  mark z, like rung
+  seat p, like natural
+  seat z, like rung
   show hold
     call is-equal
       call climb
@@ -839,7 +839,7 @@ rule climb-drop-cancels
 # A positive integer dropped by its own magnitude returns to zero: drop (possucc p) p = zero-int. By induction on p,
 # rewriting possucc (succ q) to next (possucc q) so a `back` cancels the `next` after the induction hypothesis.
 rule drop-possucc-self
-  mark p, like natural
+  seat p, like natural
   show hold
     call is-equal
       call drop
@@ -857,7 +857,7 @@ rule drop-possucc-self
 
 # A negative integer climbed by its own magnitude returns to zero: climb (negsucc p) p = zero-int. The mirror.
 rule climb-negsucc-self
-  mark p, like natural
+  seat p, like natural
   show hold
     call is-equal
       call climb
@@ -877,7 +877,7 @@ rule climb-negsucc-self
 # By case on z: zero is immediate, the positive case becomes a self-drop and the negative case a self-climb, each landing
 # on zero. With identity, associativity, and commutativity, the integers are an ABELIAN GROUP under addition.
 rule combine-negate-right-is-zero
-  mark z, like rung
+  seat z, like rung
   show hold
     call is-equal
       call combine

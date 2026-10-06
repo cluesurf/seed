@@ -55,8 +55,8 @@ task f
 # THE HOMOMORPHISM LAW: f respects the operation, f (op a b) = op (f a) (f b), over all nine pairs. Negation distributes
 # over addition because the group is abelian. This single law is the definition of a homomorphism.
 rule f-is-a-homomorphism
-  mark a, like z3
-  mark b, like z3
+  seat a, like z3
+  seat b, like z3
   show hold
     call is-equal
       call f
@@ -82,7 +82,7 @@ rule f-preserves-identity
 # f IS BIJECTIVE (its own inverse): f (f a) = a, over the three elements. An invertible homomorphism is an ISOMORPHISM, so
 # negation is an automorphism of Z/3, a symmetry of the group with itself.
 rule f-is-an-isomorphism
-  mark a, like z3
+  seat a, like z3
   show hold
     call is-equal
       call f
@@ -94,7 +94,7 @@ rule f-is-an-isomorphism
 # A HOMOMORPHISM PRESERVES INVERSES: the inverse of a in Z/3 is f a (negation IS the inverse map), and f sends a to its
 # inverse, so f respects inversion. Here a + f(a) = e0 for every a, the defining property of an inverse, proved for all.
 rule f-sends-element-to-its-inverse
-  mark a, like z3
+  seat a, like z3
   show hold
     call is-equal
       call op

@@ -233,8 +233,8 @@ task is-at-least-two
 # COXETER IS SYMMETRIC: m(a, b) = m(b, a), over all nine node pairs. The order of s_a s_b equals the order of s_b s_a, so
 # the Coxeter matrix is symmetric. Proved by induction over both nodes.
 rule coxeter-is-symmetric
-  mark a, like node
-  mark b, like node
+  seat a, like node
+  seat b, like node
   show hold
     call is-equal
       call coxeter-entry
@@ -248,7 +248,7 @@ rule coxeter-is-symmetric
 # COXETER DIAGONAL IS ONE: m(a, a) = order-one, for every node. A generator squared is the identity, so its product with
 # itself has order one. This is the involution rule written on the diagonal. Proved over all three nodes.
 rule coxeter-diagonal-is-one
-  mark a, like node
+  seat a, like node
   show hold
     call is-equal
       call coxeter-entry
@@ -261,8 +261,8 @@ rule coxeter-diagonal-is-one
 # order at least two. The law is stated as an implication: when a and b are different (same-node is no), is-at-least-two
 # of their entry is yes. The diagonal case is excluded by the antecedent. Proved over all nine pairs.
 rule off-diagonal-is-at-least-two
-  mark a, like node
-  mark b, like node
+  seat a, like node
+  seat b, like node
   show hold
     call is-equal
       call either
@@ -297,8 +297,8 @@ task pick-commute-or-bond
 # with itself, so both report no there and still agree. Proved over all nine pairs by checking commute a b equals the
 # flipped bond a b everywhere except where same-node holds, captured by the implication below.
 rule commute-iff-no-bond
-  mark a, like node
-  mark b, like node
+  seat a, like node
+  seat b, like node
   show hold
     call is-equal
       call either
@@ -375,8 +375,8 @@ rule a3-has-two-bonds-and-no-cycle
 # THE DIAGRAM IS UNDIRECTED: bond a b = bond b a, over all nine pairs. The edges have no direction, so the bond test is
 # symmetric. This follows from the symmetry of the matrix. Proved by induction over both nodes.
 rule bond-is-symmetric
-  mark a, like node
-  mark b, like node
+  seat a, like node
+  seat b, like node
   show hold
     call is-equal
       call bond

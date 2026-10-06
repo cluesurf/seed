@@ -16,10 +16,10 @@ form complex
 # Brahmagupta-Fibonacci identity says (a*a + b*b) (c*c + d*d) = (ac - bd)^2 + (ad + bc)^2. A universal law over all
 # a, b, c, d, proved by the commutative-ring normalizer.
 rule complex-norm-is-multiplicative
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
-  mark d, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
+  seat d, like integer
   show hold
     call is-equal
       call multiply

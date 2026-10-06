@@ -91,7 +91,7 @@ task on-the-i-circle
 
 # THE IMAGE IS THE SIX CORNERS OF AN OCTAHEDRON.
 rule the-hopf-map-lands-on-an-imaginary-unit
-  mark g, like hurwitz-element
+  seat g, like hurwitz-element
   show hold
     call is-equal
       call is-imaginary-unit
@@ -102,7 +102,7 @@ rule the-hopf-map-lands-on-an-imaginary-unit
 
 # THE MAP IS CONSTANT ALONG A CIRCLE: g and g i land together, and so do g and -g.
 rule the-hopf-map-is-constant-along-i
-  mark g, like hurwitz-element
+  seat g, like hurwitz-element
   show hold
     call is-equal
       call hopf
@@ -114,7 +114,7 @@ rule the-hopf-map-is-constant-along-i
   fold g
 
 rule the-hopf-map-is-constant-under-negation
-  mark g, like hurwitz-element
+  seat g, like hurwitz-element
   show hold
     call is-equal
       call hopf
@@ -127,8 +127,8 @@ rule the-hopf-map-is-constant-under-negation
 
 # THE FIBERS ARE EXACTLY THE CIRCLES: two units landing on the same point differ by an element of {1, i, -1, -i}.
 rule units-on-one-point-differ-by-the-i-circle
-  mark g, like hurwitz-element
-  mark h, like hurwitz-element
+  seat g, like hurwitz-element
+  seat h, like hurwitz-element
   have same-point
     call is-equal
       call same-hurwitz
@@ -163,7 +163,7 @@ task axis-of-frame
         make j-axis
 
 rule each-frame-is-the-pair-of-circles-over-one-axis
-  mark g, like hurwitz-element
+  seat g, like hurwitz-element
   show hold
     call is-equal
       call q8-axis

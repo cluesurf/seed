@@ -85,8 +85,8 @@ task complement
 
 # UNION IS COMMUTATIVE: union p q = union q p, over all sixteen pairs.
 rule union-is-commutative
-  mark p, like subset
-  mark q, like subset
+  seat p, like subset
+  seat q, like subset
   show hold
     call is-equal
       call union
@@ -99,8 +99,8 @@ rule union-is-commutative
 
 # INTERSECTION IS COMMUTATIVE: intersect p q = intersect q p.
 rule intersect-is-commutative
-  mark p, like subset
-  mark q, like subset
+  seat p, like subset
+  seat q, like subset
   show hold
     call is-equal
       call intersect
@@ -113,7 +113,7 @@ rule intersect-is-commutative
 
 # COMPLEMENT IS AN INVOLUTION: complement (complement p) = p. The complement of the complement is the original set.
 rule complement-is-an-involution
-  mark p, like subset
+  seat p, like subset
   show hold
     call is-equal
       call complement
@@ -125,8 +125,8 @@ rule complement-is-an-involution
 # DE MORGAN: the complement of a union is the intersection of the complements, complement (union p q) = intersect
 # (complement p) (complement q), over all sixteen pairs. The duality at the heart of Boolean algebra and set theory.
 rule de-morgan-union
-  mark p, like subset
-  mark q, like subset
+  seat p, like subset
+  seat q, like subset
   show hold
     call is-equal
       call complement

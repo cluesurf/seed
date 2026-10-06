@@ -52,7 +52,7 @@ task flip-coordinate
 
 # FLIPPING A COORDINATE IS AN INVOLUTION: flip-coordinate (flip-coordinate c) = c.
 rule flip-coordinate-is-an-involution
-  mark c, like coordinate
+  seat c, like coordinate
   show hold
     call is-equal
       call flip-coordinate
@@ -241,10 +241,10 @@ task is-minimal
 # by simultaneous induction over the four coordinates: each coordinate is flipped twice and returns to itself, so the whole
 # vector returns to itself.
 rule negate-is-an-involution
-  mark a, like coordinate
-  mark b, like coordinate
-  mark c, like coordinate
-  mark d, like coordinate
+  seat a, like coordinate
+  seat b, like coordinate
+  seat c, like coordinate
+  seat d, like coordinate
   show hold
     call is-equal
       call negate
@@ -275,10 +275,10 @@ rule negate-is-an-involution
 # Proved by simultaneous induction over the four coordinates: every assignment of nonzero coordinates yielding a count of
 # two also yields an even count, so the conjunction agrees with is-minimal on every vector.
 rule a-minimal-vector-lies-in-d4
-  mark a, like coordinate
-  mark b, like coordinate
-  mark c, like coordinate
-  mark d, like coordinate
+  seat a, like coordinate
+  seat b, like coordinate
+  seat c, like coordinate
+  seat d, like coordinate
   show hold
     call is-equal
       call both
@@ -318,10 +318,10 @@ rule a-minimal-vector-lies-in-d4
 # are nonzero, so it preserves the count of nonzero coordinates, its parity, and therefore membership in the lattice.
 # Proved by simultaneous induction over the four coordinates: flipping a coordinate preserves whether it is nonzero.
 rule d4-is-closed-under-negation
-  mark a, like coordinate
-  mark b, like coordinate
-  mark c, like coordinate
-  mark d, like coordinate
+  seat a, like coordinate
+  seat b, like coordinate
+  seat c, like coordinate
+  seat d, like coordinate
   show hold
     call is-equal
       call in-d4
@@ -351,10 +351,10 @@ rule d4-is-closed-under-negation
 # minimal vectors by the antipode, the pairing into twelve lines respecting the minimal set. Proved by simultaneous
 # induction over the four coordinates: flipping a coordinate preserves whether it is nonzero, hence the count of two.
 rule is-minimal-is-preserved-by-negation
-  mark a, like coordinate
-  mark b, like coordinate
-  mark c, like coordinate
-  mark d, like coordinate
+  seat a, like coordinate
+  seat b, like coordinate
+  seat c, like coordinate
+  seat d, like coordinate
   show hold
     call is-equal
       call is-minimal
@@ -628,7 +628,7 @@ task vector-of-direction
 # numeral asserted. (Distinctness of the twenty-four is plain from the table: the six axis pairs and four sign patterns are
 # pairwise different rows.)
 rule every-kissing-direction-is-minimal
-  mark d, like kissing-direction
+  seat d, like kissing-direction
   show hold
     call is-equal
       call is-minimal
@@ -640,7 +640,7 @@ rule every-kissing-direction-is-minimal
 # EVERY KISSING DIRECTION LIES IN D4: in-d4 (vector-of-direction d) = yes, for every direction. The twenty-four nearest
 # neighbors are all genuine lattice points, two nonzero coordinates giving an even coordinate sum.
 rule every-kissing-direction-lies-in-d4
-  mark d, like kissing-direction
+  seat d, like kissing-direction
   show hold
     call is-equal
       call in-d4

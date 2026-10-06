@@ -69,7 +69,7 @@ task invert3
 
 # MULTIPLICATION IDENTITY: one is the left identity, times3 f1 a = a.
 rule times3-one-left
-  mark a, like f3
+  seat a, like f3
   show hold
     call is-equal
       call times3
@@ -80,7 +80,7 @@ rule times3-one-left
 
 # times3 one on the right, times3 a f1 = a.
 rule times3-one-right
-  mark a, like f3
+  seat a, like f3
   show hold
     call is-equal
       call times3
@@ -91,8 +91,8 @@ rule times3-one-right
 
 # MULTIPLICATION COMMUTATIVE: times3 a b = times3 b a.
 rule times3-is-commutative
-  mark a, like f3
-  mark b, like f3
+  seat a, like f3
+  seat b, like f3
   show hold
     call is-equal
       call times3
@@ -105,9 +105,9 @@ rule times3-is-commutative
 
 # MULTIPLICATION ASSOCIATIVE: times3 (times3 a b) c = times3 a (times3 b c).
 rule times3-is-associative
-  mark a, like f3
-  mark b, like f3
-  mark c, like f3
+  seat a, like f3
+  seat b, like f3
+  seat c, like f3
   show hold
     call is-equal
       call times3
@@ -125,9 +125,9 @@ rule times3-is-associative
 # DISTRIBUTIVITY: multiplication distributes over addition, times3 a (plus3 b c) = plus3 (times3 a b) (times3 a c). This
 # is the law that ties the two operations into a ring.
 rule times3-distributes-over-plus3
-  mark a, like f3
-  mark b, like f3
-  mark c, like f3
+  seat a, like f3
+  seat b, like f3
+  seat c, like f3
   show hold
     call is-equal
       call times3
@@ -146,7 +146,7 @@ rule times3-distributes-over-plus3
 
 # ZERO ANNIHILATES: times3 f0 a = f0, the additive identity is a multiplicative zero.
 rule times3-zero-left
-  mark a, like f3
+  seat a, like f3
   show hold
     call is-equal
       call times3

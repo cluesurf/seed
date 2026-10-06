@@ -130,8 +130,8 @@ task parity-of
 # THE 16-CELL ANTIPODE IS AN INVOLUTION: negate-spike (negate-spike s) = s, for every one of the eight vertices. The
 # cross-polytope is centrally symmetric, its eight vertices in four antipodal pairs.
 rule cross-polytope-antipode-is-an-involution
-  mark s, like sign
-  mark x, like axis
+  seat s, like sign
+  seat x, like axis
   show hold
     call is-equal
       call negate-spike
@@ -151,10 +151,10 @@ rule cross-polytope-antipode-is-an-involution
 # THE TESSERACT ANTIPODE IS AN INVOLUTION: negate-quad (negate-quad q) = q, for every one of the sixteen vertices. Flipping
 # all four signs twice returns the vertex, so the hypercube is centrally symmetric.
 rule hypercube-antipode-is-an-involution
-  mark a, like sign
-  mark b, like sign
-  mark c, like sign
-  mark d, like sign
+  seat a, like sign
+  seat b, like sign
+  seat c, like sign
+  seat d, like sign
   show hold
     call is-equal
       call negate-quad
@@ -183,10 +183,10 @@ rule hypercube-antipode-is-an-involution
 # signs toggles parity four times, which is the identity. So the demitesseract (the even-parity vertices) is closed under
 # the antipode, exactly as the 16-cell is, which is why the demitesseract IS a 16-cell.
 rule antipode-preserves-parity
-  mark a, like sign
-  mark b, like sign
-  mark c, like sign
-  mark d, like sign
+  seat a, like sign
+  seat b, like sign
+  seat c, like sign
+  seat d, like sign
   show hold
     call is-equal
       call parity-of

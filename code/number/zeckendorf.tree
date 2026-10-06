@@ -265,7 +265,7 @@ rule rejects-adjacent-ones
 # code. Prepending an off bit cannot create a new adjacency, so validity is preserved. (The off-bit branch resets the
 # previous-on flag, the same state the scan starts in, so both sides reduce to the same scan.)
 rule is-valid-closed-under-leading-zero
-  mark xs, like bits
+  seat xs, like bits
   show hold
     call is-equal
       call is-valid
@@ -279,7 +279,7 @@ rule is-valid-closed-under-leading-zero
 # A LEADING ON BIT AFTER AN ON BIT ALWAYS REJECTS: once the previous bit is on, an on bit fails the scan no matter what
 # follows, for EVERY tail. This is the heart of the non-adjacency rule.
 rule on-after-on-always-rejects
-  mark xs, like bits
+  seat xs, like bits
   show hold
     call is-equal
       call valid-from
@@ -368,7 +368,7 @@ rule different-codes-carry-different-values
 # induction on n: the empty code has none, and adding one more off bit adds none. This is why trailing or leading zero
 # padding leaves a Fibonacci address unchanged.
 rule zeros-have-no-on-bits
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call count-on
@@ -381,7 +381,7 @@ rule zeros-have-no-on-bits
 # the empty code is valid, and prepending an off bit preserves validity. The vacuous address (no Fibonacci numbers used)
 # is always a legal coordinate.
 rule zeros-are-valid
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call is-valid

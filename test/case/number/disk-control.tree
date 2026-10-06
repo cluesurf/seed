@@ -2,15 +2,15 @@
 
 # false: the error carries the mesh term 2 p
 rule control-the-disk-area-without-the-mesh-error
-  mark ss, like integer
-  mark dd, like integer
-  mark nt, like integer
-  mark q, like integer
-  mark r, like integer
-  mark w, like integer
-  mark nd, like integer
-  mark eps, like integer
-  mark p, like integer
+  seat ss, like integer
+  seat dd, like integer
+  seat nt, like integer
+  seat q, like integer
+  seat r, like integer
+  seat w, like integer
+  seat nd, like integer
+  seat eps, like integer
+  seat p, like integer
   have the-sums-are-within-n-tol
     meet and
       call is-maximum

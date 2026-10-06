@@ -176,7 +176,7 @@ task multiply-lipschitz
 
 # A handle on the four-coordinate negate-involution, proved once and reused. flip-sign undoes itself on every sign.
 rule flip-sign-is-an-involution
-  mark s, like sign
+  seat s, like sign
   show hold
     call is-equal
       call flip-sign
@@ -188,8 +188,8 @@ rule flip-sign-is-an-involution
 # THE ANTIPODE IS AN INVOLUTION on the LIPSCHITZ sector: negate (negate u) = u over all eight Lipschitz units. The sign
 # flips twice and the axis is untouched, so the eight Lipschitz units pair into four antipodal lines.
 rule negate-is-an-involution-on-lipschitz
-  mark s, like sign
-  mark p, like axis
+  seat s, like sign
+  seat p, like axis
   show hold
     call is-equal
       call negate
@@ -210,10 +210,10 @@ rule negate-is-an-involution-on-lipschitz
 # coordinate signs flips twice. Proved by simultaneous induction over the four signs, the full sixteen-element grid, so
 # the sixteen half units pair into eight antipodal lines. With the four Lipschitz lines this is the twelve lines of D4.
 rule negate-is-an-involution-on-half
-  mark a, like sign
-  mark b, like sign
-  mark c, like sign
-  mark d, like sign
+  seat a, like sign
+  seat b, like sign
+  seat c, like sign
+  seat d, like sign
   show hold
     call is-equal
       call negate
@@ -241,8 +241,8 @@ rule negate-is-an-involution-on-half
 # CONJUGATION IS AN INVOLUTION on the LIPSCHITZ sector: conjugate (conjugate u) = u over all eight Lipschitz units. The
 # real unit is fixed throughout, and an imaginary unit's sign flips twice. Proved over the sign and the axis.
 rule conjugate-is-an-involution-on-lipschitz
-  mark s, like sign
-  mark p, like axis
+  seat s, like sign
+  seat p, like axis
   show hold
     call is-equal
       call conjugate
@@ -262,10 +262,10 @@ rule conjugate-is-an-involution-on-lipschitz
 # CONJUGATION IS AN INVOLUTION on the HALF sector: conjugate (conjugate u) = u over all sixteen half units. The first
 # coordinate is fixed and the other three flip twice. Proved over the full sixteen-element sign grid.
 rule conjugate-is-an-involution-on-half
-  mark a, like sign
-  mark b, like sign
-  mark c, like sign
-  mark d, like sign
+  seat a, like sign
+  seat b, like sign
+  seat c, like sign
+  seat d, like sign
   show hold
     call is-equal
       call conjugate

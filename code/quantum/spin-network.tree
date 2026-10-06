@@ -342,7 +342,7 @@ task couple-max
 # COUPLING WITH SPIN 0 LEAVES THE HIGHEST CHANNEL UNCHANGED: couple-max j 0 = j, since j + 0 = j. The trivial
 # representation is the unit of fusion. Proved by induction on the spin, citing the right identity of addition.
 rule plus-zero-right
-  mark n, like spin
+  seat n, like spin
   show hold
     call is-equal
       call plus
@@ -352,7 +352,7 @@ rule plus-zero-right
   fold n
 
 rule couple-max-with-zero-is-self
-  mark j, like spin
+  seat j, like spin
   show hold
     call is-equal
       call couple-max
@@ -365,7 +365,7 @@ rule couple-max-with-zero-is-self
 # COUPLING WITH SPIN 0 LEAVES THE LOWEST CHANNEL UNCHANGED: couple-min j 0 = |j - 0| = j. So coupling with spin 0 leaves
 # the spin unchanged, the trivial representation acting as the identity of the tensor product. Proved by induction.
 rule couple-min-with-zero-is-self
-  mark j, like spin
+  seat j, like spin
   show hold
     call is-equal
       call couple-min
@@ -378,8 +378,8 @@ rule couple-min-with-zero-is-self
 # integer-sum half of the fusion rule. bit-is-off (parity (j + j)) = yes, for every spin j. Proved by induction on the
 # spin, chaining the addition and parity step lemmas and the involution flip (flip b) = b.
 rule plus-succ-left-steps
-  mark a, like spin
-  mark b, like spin
+  seat a, like spin
+  seat b, like spin
   show hold
     call is-equal
       call plus
@@ -395,8 +395,8 @@ rule plus-succ-left-steps
   calm hold
 
 rule plus-succ-right-steps
-  mark a, like spin
-  mark b, like spin
+  seat a, like spin
+  seat b, like spin
   show hold
     call is-equal
       call plus
@@ -412,7 +412,7 @@ rule plus-succ-right-steps
   fold a
 
 rule parity-succ-steps
-  mark n, like spin
+  seat n, like spin
   show hold
     call is-equal
       call parity
@@ -425,7 +425,7 @@ rule parity-succ-steps
   calm hold
 
 rule flip-flip-is-identity
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call flip
@@ -435,7 +435,7 @@ rule flip-flip-is-identity
   fold b
 
 rule double-is-integer
-  mark j, like spin
+  seat j, like spin
   show hold
     call is-equal
       call bit-is-off

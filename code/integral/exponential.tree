@@ -22,17 +22,17 @@
 
 # An equation times any quantity is an equation: the recurrence of u, times a term of v.
 rule u-recurrence-times-v
-  mark u
+  seat u
     like task
       take a0, like integer
       like integer
-  mark v
+  seat v
     like task
       take a0, like integer
       like integer
-  mark k, like integer
-  mark j, like integer
-  mark a, like integer
+  seat k, like integer
+  seat j, like integer
+  seat a, like integer
   have u-recurrence
     call is-equal
       call multiply
@@ -72,26 +72,26 @@ rule u-recurrence-times-v
 # THE INNER IDENTITY, by induction on m up to n. The new term (n + 1) u(m + 1) v(n - m) splits as
 # (m + 1) u(m + 1) v(n - m) = a u(m) v(n - m) and (n - m) u(m + 1) v(n - m) = b u(m + 1) v(n - m - 1).
 rule the-inner-identity
-  mark u
+  seat u
     like task
       take a0, like integer
       like integer
-  mark v
+  seat v
     like task
       take a0, like integer
       like integer
-  mark c
+  seat c
     like task
       take a0, like integer
       take a1, like integer
       like integer
-  mark n, like integer
-  mark m, like integer
-  mark a, like integer
-  mark b, like integer
+  seat n, like integer
+  seat m, like integer
+  seat a, like integer
+  seat b, like integer
   have u-times-v
-    mark k, like integer
-    mark j, like integer
+    seat k, like integer
+    seat j, like integer
     meet or
       call is-below
         read k
@@ -119,8 +119,8 @@ rule the-inner-identity
           call v
             read j
   have v-times-u
-    mark k, like integer
-    mark j, like integer
+    seat k, like integer
+    seat j, like integer
     meet or
       call is-below
         read k
@@ -148,7 +148,7 @@ rule the-inner-identity
           call v
             read j
   have c-starts
-    mark q, like integer
+    seat q, like integer
     meet or
       call is-below
         read q
@@ -163,8 +163,8 @@ rule the-inner-identity
           call v
             read q
   have c-adds
-    mark q, like integer
-    mark r, like integer
+    seat q, like integer
+    seat r, like integer
     meet or
       call is-below
         read q
@@ -234,25 +234,25 @@ rule the-inner-identity
 
 # THE STEP: at m = n the inner identity, the last term u(n + 1) v(0), and the recurrence of u close it.
 rule the-convolution-steps
-  mark u
+  seat u
     like task
       take a0, like integer
       like integer
-  mark v
+  seat v
     like task
       take a0, like integer
       like integer
-  mark c
+  seat c
     like task
       take a0, like integer
       take a1, like integer
       like integer
-  mark n, like integer
-  mark a, like integer
-  mark b, like integer
+  seat n, like integer
+  seat a, like integer
+  seat b, like integer
   have the-inner-identity
-    mark q, like integer
-    mark r, like integer
+    seat q, like integer
+    seat r, like integer
     meet or
       call is-below
         read q
@@ -291,8 +291,8 @@ rule the-convolution-steps
                 read q
                 read r
   have u-times-v
-    mark k, like integer
-    mark j, like integer
+    seat k, like integer
+    seat j, like integer
     meet or
       call is-below
         read k
@@ -320,8 +320,8 @@ rule the-convolution-steps
           call v
             read j
   have c-adds
-    mark q, like integer
-    mark r, like integer
+    seat q, like integer
+    seat r, like integer
     meet or
       call is-below
         read q
@@ -379,20 +379,20 @@ rule the-convolution-steps
 # THE BINOMIAL IDENTITY for exponential terms, by induction on n: the convolution and w obey one recurrence from one
 # start, so they are equal.
 rule the-binomial-identity
-  mark c
+  seat c
     like task
       take a0, like integer
       take a1, like integer
       like integer
-  mark w
+  seat w
     like task
       take a0, like integer
       like integer
-  mark n, like integer
-  mark a, like integer
-  mark b, like integer
+  seat n, like integer
+  seat a, like integer
+  seat b, like integer
   have the-convolution-steps
-    mark q, like integer
+    seat q, like integer
     meet or
       call is-below
         read q
@@ -417,7 +417,7 @@ rule the-binomial-identity
             read q
             read q
   have w-recurrence
-    mark q, like integer
+    seat q, like integer
     meet or
       call is-below
         read q
@@ -463,20 +463,20 @@ rule the-binomial-identity
 # identity), is reordered as r(N, N) = u(0) bb(N) + u(1) bb(N - 1) + ... + u(N) bb(0): a single sum over the terms of
 # a. First, the recurrence of bb times a term of u.
 rule b-recurrence-times-u
-  mark u
+  seat u
     like task
       take a0, like integer
       like integer
-  mark v
+  seat v
     like task
       take a0, like integer
       like integer
-  mark bb
+  seat bb
     like task
       take a0, like integer
       like integer
-  mark k, like integer
-  mark l, like integer
+  seat k, like integer
+  seat l, like integer
   have b-recurrence
     call is-equal
       call bb
@@ -516,33 +516,33 @@ rule b-recurrence-times-u
 
 # r(N + 1, m) - r(N, m) = c(N + 1, m) for 0 <= m <= N, by induction on m: each new term adds u(m + 1) v(N - m).
 rule each-column-adds-a-diagonal
-  mark u
+  seat u
     like task
       take a0, like integer
       like integer
-  mark v
+  seat v
     like task
       take a0, like integer
       like integer
-  mark c
-    like task
-      take a0, like integer
-      take a1, like integer
-      like integer
-  mark bb
-    like task
-      take a0, like integer
-      like integer
-  mark r
+  seat c
     like task
       take a0, like integer
       take a1, like integer
       like integer
-  mark n, like integer
-  mark m, like integer
+  seat bb
+    like task
+      take a0, like integer
+      like integer
+  seat r
+    like task
+      take a0, like integer
+      take a1, like integer
+      like integer
+  seat n, like integer
+  seat m, like integer
   have b-times-u
-    mark k, like integer
-    mark l, like integer
+    seat k, like integer
+    seat l, like integer
     meet or
       call is-below
         read k
@@ -572,7 +572,7 @@ rule each-column-adds-a-diagonal
                 read l
                 code 1
   have c-starts
-    mark q, like integer
+    seat q, like integer
     meet or
       call is-below
         read q
@@ -587,8 +587,8 @@ rule each-column-adds-a-diagonal
           call v
             read q
   have c-adds
-    mark q, like integer
-    mark p, like integer
+    seat q, like integer
+    seat p, like integer
     meet or
       call is-below
         read q
@@ -618,7 +618,7 @@ rule each-column-adds-a-diagonal
                   read p
                 code 1
   have r-starts
-    mark q, like integer
+    seat q, like integer
     meet or
       call is-below
         read q
@@ -633,8 +633,8 @@ rule each-column-adds-a-diagonal
           call bb
             read q
   have r-adds
-    mark q, like integer
-    mark p, like integer
+    seat q, like integer
+    seat p, like integer
     meet or
       call is-below
         read q
@@ -692,32 +692,32 @@ rule each-column-adds-a-diagonal
 
 # At m = N, with the last term u(N + 1) bb(0) = u(N + 1) v(0): r(N + 1, N + 1) - r(N, N) = c(N + 1, N + 1).
 rule the-reordering-steps
-  mark u
+  seat u
     like task
       take a0, like integer
       like integer
-  mark v
+  seat v
     like task
       take a0, like integer
       like integer
-  mark c
-    like task
-      take a0, like integer
-      take a1, like integer
-      like integer
-  mark bb
-    like task
-      take a0, like integer
-      like integer
-  mark r
+  seat c
     like task
       take a0, like integer
       take a1, like integer
       like integer
-  mark n, like integer
+  seat bb
+    like task
+      take a0, like integer
+      like integer
+  seat r
+    like task
+      take a0, like integer
+      take a1, like integer
+      like integer
+  seat n, like integer
   have each-column-adds-a-diagonal
-    mark q, like integer
-    mark p, like integer
+    seat q, like integer
+    seat p, like integer
     meet or
       call is-below
         read q
@@ -750,7 +750,7 @@ rule the-reordering-steps
       call v
         code 0
   have b-starts-times-u
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -767,8 +767,8 @@ rule the-reordering-steps
           call v
             code 0
   have c-adds
-    mark q, like integer
-    mark p, like integer
+    seat q, like integer
+    seat p, like integer
     meet or
       call is-below
         read q
@@ -798,8 +798,8 @@ rule the-reordering-steps
                   read p
                 code 1
   have r-adds
-    mark q, like integer
-    mark p, like integer
+    seat q, like integer
+    seat p, like integer
     meet or
       call is-below
         read q
@@ -856,23 +856,23 @@ rule the-reordering-steps
 
 # So the reordered sum is the triangle: r(N, N) = T(N), by induction on N.
 rule the-triangle-is-reordered
-  mark c
+  seat c
     like task
       take a0, like integer
       take a1, like integer
       like integer
-  mark r
+  seat r
     like task
       take a0, like integer
       take a1, like integer
       like integer
-  mark tt
+  seat tt
     like task
       take a0, like integer
       like integer
-  mark n, like integer
+  seat n, like integer
   have the-reordering-steps
-    mark q, like integer
+    seat q, like integer
     meet or
       call is-below
         read q
@@ -904,7 +904,7 @@ rule the-triangle-is-reordered
         code 0
         code 0
   have t-adds
-    mark q, like integer
+    seat q, like integer
     meet or
       call is-below
         read q
@@ -951,20 +951,20 @@ rule the-triangle-is-reordered
 # d(N, N) = u(0) (bb(N) - bb(N)) + u(1) (bb(N) - bb(N - 1)) + ... + u(N) (bb(N) - bb(0)): the terms with k + l > N.
 # First, the recurrence of aa times a partial sum of b.
 rule a-recurrence-times-b
-  mark u
+  seat u
     like task
       take a0, like integer
       like integer
-  mark aa
+  seat aa
     like task
       take a0, like integer
       like integer
-  mark bb
+  seat bb
     like task
       take a0, like integer
       like integer
-  mark k, like integer
-  mark n, like integer
+  seat k, like integer
+  seat n, like integer
   have a-recurrence
     call is-equal
       call aa
@@ -1004,33 +1004,33 @@ rule a-recurrence-times-b
 
 # aa(m) bb(N) - r(N, m) = d(N, m) for 0 <= m <= N, by induction on m.
 rule the-square-minus-the-triangle
-  mark u
+  seat u
     like task
       take a0, like integer
       like integer
-  mark aa
+  seat aa
     like task
       take a0, like integer
       like integer
-  mark bb
+  seat bb
     like task
       take a0, like integer
       like integer
-  mark r
-    like task
-      take a0, like integer
-      take a1, like integer
-      like integer
-  mark d
+  seat r
     like task
       take a0, like integer
       take a1, like integer
       like integer
-  mark n, like integer
-  mark m, like integer
+  seat d
+    like task
+      take a0, like integer
+      take a1, like integer
+      like integer
+  seat n, like integer
+  seat m, like integer
   have a-times-b
-    mark k, like integer
-    mark q, like integer
+    seat k, like integer
+    seat q, like integer
     meet or
       call is-below
         read k
@@ -1060,7 +1060,7 @@ rule the-square-minus-the-triangle
             call bb
               read q
   have a-starts-times-b
-    mark q, like integer
+    seat q, like integer
     meet or
       call is-below
         read q
@@ -1077,7 +1077,7 @@ rule the-square-minus-the-triangle
           call bb
             read q
   have r-starts
-    mark q, like integer
+    seat q, like integer
     meet or
       call is-below
         read q
@@ -1092,8 +1092,8 @@ rule the-square-minus-the-triangle
           call bb
             read q
   have r-adds
-    mark q, like integer
-    mark p, like integer
+    seat q, like integer
+    seat p, like integer
     meet or
       call is-below
         read q
@@ -1123,7 +1123,7 @@ rule the-square-minus-the-triangle
                   read p
                 code 1
   have d-starts
-    mark q, like integer
+    seat q, like integer
     meet or
       call is-below
         read q
@@ -1134,8 +1134,8 @@ rule the-square-minus-the-triangle
           code 0
         code 0
   have d-adds
-    mark q, like integer
-    mark p, like integer
+    seat q, like integer
+    seat p, like integer
     meet or
       call is-below
         read q
@@ -1200,20 +1200,20 @@ rule the-square-minus-the-triangle
 # Each term of the difference is small: a tail of b's series is at most twice its first term (integral/fundamental,
 # a-tail-is-small-and-not-negative), and u(k) >= 0, so u(k) (bb(N) - bb(N - k)) <= 2 u(k) v(N - k).
 rule a-difference-term-is-small
-  mark u
+  seat u
     like task
       take a0, like integer
       like integer
-  mark v
+  seat v
     like task
       take a0, like integer
       like integer
-  mark bb
+  seat bb
     like task
       take a0, like integer
       like integer
-  mark k, like integer
-  mark n, like integer
+  seat k, like integer
+  seat n, like integer
   have the-tail-of-b
     call is-maximum
       call subtract
@@ -1265,33 +1265,33 @@ rule a-difference-term-is-small
 # u(N) (bb(N) - bb(0)), is at most u(N) times a bound on bb, and u(N) tends to 0 too. So the product of the partial
 # sums of e^a and e^b and the partial sum of e^(a + b) differ by at most 2 w(N) + u(N) bb(N): E(a) E(b) = E(a + b).
 rule the-difference-is-small
-  mark u
+  seat u
     like task
       take a0, like integer
       like integer
-  mark v
+  seat v
     like task
       take a0, like integer
       like integer
-  mark c
-    like task
-      take a0, like integer
-      take a1, like integer
-      like integer
-  mark bb
-    like task
-      take a0, like integer
-      like integer
-  mark d
+  seat c
     like task
       take a0, like integer
       take a1, like integer
       like integer
-  mark n, like integer
-  mark m, like integer
+  seat bb
+    like task
+      take a0, like integer
+      like integer
+  seat d
+    like task
+      take a0, like integer
+      take a1, like integer
+      like integer
+  seat n, like integer
+  seat m, like integer
   have each-difference-term-is-small
-    mark k, like integer
-    mark q, like integer
+    seat k, like integer
+    seat q, like integer
     meet or
       call is-below
         read k
@@ -1323,7 +1323,7 @@ rule the-difference-is-small
               read q
               read k
   have c-starts
-    mark q, like integer
+    seat q, like integer
     meet or
       call is-below
         read q
@@ -1338,8 +1338,8 @@ rule the-difference-is-small
           call v
             read q
   have c-adds
-    mark q, like integer
-    mark p, like integer
+    seat q, like integer
+    seat p, like integer
     meet or
       call is-below
         read q
@@ -1369,7 +1369,7 @@ rule the-difference-is-small
                   read p
                 code 1
   have d-starts
-    mark q, like integer
+    seat q, like integer
     meet or
       call is-below
         read q
@@ -1380,8 +1380,8 @@ rule the-difference-is-small
           code 0
         code 0
   have d-adds
-    mark q, like integer
-    mark p, like integer
+    seat q, like integer
+    seat p, like integer
     meet or
       call is-below
         read q
@@ -1419,7 +1419,7 @@ rule the-difference-is-small
                   read p
                 code 1
   have the-first-c-term-is-not-negative
-    mark q, like integer
+    seat q, like integer
     meet or
       call is-below
         read q

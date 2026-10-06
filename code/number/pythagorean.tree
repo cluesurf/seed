@@ -6,8 +6,8 @@
 # Euclid's parametrization: (m^2 - n^2)^2 + (2 m n)^2 = (m^2 + n^2)^2, for every m and n. So every choice of m and n
 # yields a Pythagorean triple, and the squares of the two legs sum to the square of the hypotenuse.
 rule euclid-s-formula-yields-pythagorean-triple
-  mark m, like integer
-  mark n, like integer
+  seat m, like integer
+  seat n, like integer
   show hold
     call is-equal
       call add

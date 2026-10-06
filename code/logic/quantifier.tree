@@ -4,7 +4,7 @@
 
 # FOR ALL (mark): every integer is below its successor. The binder is universally quantified.
 rule successor-exceeds-every-integer
-  mark n, like integer
+  seat n, like integer
   show hold
     call is-below
       read n
@@ -26,7 +26,7 @@ rule integer-exists-with-successor-five
 # CONJUNCTION (meet and): for every integer, its successor exceeds it AND its predecessor is below it. Both conjuncts
 # must hold.
 rule successor-above-and-predecessor-below
-  mark n, like integer
+  seat n, like integer
   show hold
     meet and
       call is-above
@@ -44,7 +44,7 @@ rule successor-above-and-predecessor-below
 # the hypothesis, and one true disjunct discharges the whole. (A disjunctive TAUTOLOGY like n < 0 or n >= 0 with no
 # hypothesis needs case analysis, the `case` build, not one-disjunct proving.)
 rule at-least-five-is-below-or-at-least-zero
-  mark n, like integer
+  seat n, like integer
   have h
     call is-minimum
       read n
@@ -60,7 +60,7 @@ rule at-least-five-is-below-or-at-least-zero
 
 # IMPLICATION with a hypothesis (have): if n is at least one then n is at least zero.
 rule at-least-one-implies-at-least-zero
-  mark n, like integer
+  seat n, like integer
   have h
     call is-minimum
       read n
@@ -72,7 +72,7 @@ rule at-least-one-implies-at-least-zero
 
 # NEGATION (show miss): no integer is strictly below itself.
 rule no-integer-is-below-itself
-  mark n, like integer
+  seat n, like integer
   show miss
     call is-below
       read n
@@ -81,7 +81,7 @@ rule no-integer-is-below-itself
 # DISJUNCTIVE TAUTOLOGY (excluded middle): every integer is below zero OR at least zero, with NO hypothesis. Proved by
 # the sound case-split, since not(n < 0) is exactly n >= 0. This is the trichotomy on zero.
 rule integer-is-below-or-at-least-zero
-  mark n, like integer
+  seat n, like integer
   show hold
     meet or
       call is-below

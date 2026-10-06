@@ -27,7 +27,7 @@ task step
 # every vertex. Adding one three times in Z/3 is the identity, so the Cayley graph closes into a triangle of length three,
 # the order of the group. (Casing happens on the IMPORTED zmod3 type, so the de-duplication works: one group, many uses.)
 rule cayley-graph-is-a-three-cycle
-  mark g, like zmod3
+  seat g, like zmod3
   show hold
     call is-equal
       call step

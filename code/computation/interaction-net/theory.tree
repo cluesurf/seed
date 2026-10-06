@@ -101,8 +101,8 @@ task interaction
 # THE INTERACTION IS SYMMETRIC: an active pair is unordered, so reading it either way gives the same rule. interaction of
 # (a then b) equals interaction of (b then a), over all nine agent pairs. Proved by induction on both agents.
 rule interaction-is-symmetric
-  mark a, like agent
-  mark b, like agent
+  seat a, like agent
+  seat b, like agent
   show hold
     call is-equal
       call same-kind
@@ -116,7 +116,7 @@ rule interaction-is-symmetric
 # EQUAL AGENTS ANNIHILATE: an active pair of two agents of the same kind always takes the annihilation rule, for every
 # agent. This is the diagonal of the rule table, the rewrites that erase rather than duplicate.
 rule equal-agents-annihilate
-  mark a, like agent
+  seat a, like agent
   show hold
     call is-equal
       call same-kind
@@ -235,8 +235,8 @@ task reduce-there
 # own active pair, the two reductions are independent and commute. With determinism (interaction is a function) this gives
 # unique normal forms: the result of running an interaction net never depends on the order of reduction.
 rule reduction-is-strongly-confluent
-  mark here-pair, like clash
-  mark there-pair, like clash
+  seat here-pair, like clash
+  seat there-pair, like clash
   show hold
     call is-equal
       call reduce-here

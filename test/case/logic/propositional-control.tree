@@ -25,17 +25,17 @@ load @term/seed/logic/propositional
 
 # false where p is true: one negation dropped
 rule control-a-negation-is-its-body
-  mark v, like assignment
-  mark p, like proposition
+  seat v, like assignment
+  seat p, like proposition
   show hold, is-equal evaluate(v, make negation(p)), evaluate(v, p)
   cite not-flag-is-an-involution
 
 # false where p, r are true and q is false: the inner conjunction turned into a disjunction
 rule control-conjunction-associates-into-disjunction
-  mark v, like assignment
-  mark p, like proposition
-  mark q, like proposition
-  mark r, like proposition
+  seat v, like assignment
+  seat p, like proposition
+  seat q, like proposition
+  seat r, like proposition
   show hold
     is-equal
       evaluate
@@ -48,10 +48,10 @@ rule control-conjunction-associates-into-disjunction
 
 # false where p is false and q, r are true: distributing over the wrong connective
 rule control-conjunction-distributes-into-conjunction
-  mark v, like assignment
-  mark p, like proposition
-  mark q, like proposition
-  mark r, like proposition
+  seat v, like assignment
+  seat p, like proposition
+  seat q, like proposition
+  seat r, like proposition
   show hold
     is-equal
       evaluate(v, make conjunction(p, make disjunction(q, r)))
@@ -64,24 +64,24 @@ rule control-conjunction-distributes-into-conjunction
 
 # false where p is false and q is true: absorption keeping the other formula
 rule control-absorption-keeps-q
-  mark v, like assignment
-  mark p, like proposition
-  mark q, like proposition
+  seat v, like assignment
+  seat p, like proposition
+  seat q, like proposition
   show hold, is-equal evaluate(v, make conjunction(p, make disjunction(p, q))), evaluate(v, q)
   cite both-absorbs-either
 
 # false under every assignment: excluded middle with the wrong constant
 rule control-excluded-middle-is-false
-  mark v, like assignment
-  mark p, like proposition
+  seat v, like assignment
+  seat p, like proposition
   show hold, is-equal evaluate(v, make disjunction(p, make negation(p))), make no
   cite excluded-middle
 
 # false where p is true and q is false: De Morgan without swapping the connective
 rule control-de-morgan-without-the-swap
-  mark v, like assignment
-  mark p, like proposition
-  mark q, like proposition
+  seat v, like assignment
+  seat p, like proposition
+  seat q, like proposition
   show hold
     is-equal
       evaluate(v, make negation(make conjunction(p, q)))
@@ -94,16 +94,16 @@ rule control-de-morgan-without-the-swap
 
 # false where p and q are false: implication as `p or q`
 rule control-implication-without-the-negation
-  mark v, like assignment
-  mark p, like proposition
-  mark q, like proposition
+  seat v, like assignment
+  seat p, like proposition
+  seat q, like proposition
   show hold, is-equal evaluate(v, make implication(p, q)), evaluate(v, make disjunction(p, q))
   cite implies-is-not-or
 
 # false where p is false and q is true: the converse in place of the contrapositive
 rule control-converse-is-not-contraposition
-  mark v, like assignment
-  mark p, like proposition
-  mark q, like proposition
+  seat v, like assignment
+  seat p, like proposition
+  seat q, like proposition
   show hold, is-equal evaluate(v, make implication(p, q)), evaluate(v, make implication(q, p))
   cite contraposition

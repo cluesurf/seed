@@ -27,12 +27,12 @@
 # THE EXPONENTIAL's terms t(k) = w^k / k! obey (k + 1) t(k + 1) = w t(k): on [0, 1], from the second on, each is at most
 # half the last.
 rule each-exp-term-is-at-most-half-the-last
-  mark t
+  seat t
     like task
       take a0, like integer
       like integer
-  mark k, like integer
-  mark w, like integer
+  seat k, like integer
+  seat w, like integer
   have the-term-from-the-last
     call is-equal
       call multiply
@@ -79,16 +79,16 @@ rule each-exp-term-is-at-most-half-the-last
 # Every partial sum from the third, E_(n + 3), lies in [1 + w + w^2/2, 1 + w + w^2/2 + w^3/3], by induction with the
 # invariant 6 E + 6 t <= 6 + 6 w + 3 w^2 + 2 w^3.
 rule the-exp-partial-sums-are-bounded
-  mark t
+  seat t
     like task
       take a0, like integer
       like integer
-  mark psum
+  seat psum
     like task
       take a0, like integer
       like integer
-  mark n, like integer
-  mark w, like integer
+  seat n, like integer
+  seat w, like integer
   have the-third-term
     call is-equal
       call multiply
@@ -101,7 +101,7 @@ rule the-exp-partial-sums-are-bounded
           read w
         read w
   have each-term-is-at-most-half-the-last
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -116,7 +116,7 @@ rule the-exp-partial-sums-are-bounded
         call t
           read k
   have each-term-is-not-negative
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -146,7 +146,7 @@ rule the-exp-partial-sums-are-bounded
           call t
             code 3
   have each-partial-sum-adds-a-term
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -225,9 +225,9 @@ rule the-exp-partial-sums-are-bounded
 
 # THE LOCAL BOUNDS of cosh = (E + R)/2, R = 1/E: 0 <= cosh(w) - 1 <= w^2, written for 2 cosh.
 rule cosh-near-zero
-  mark w, like integer
-  mark ee, like integer
-  mark rr, like integer
+  seat w, like integer
+  seat ee, like integer
+  seat rr, like integer
   have w-is-in-the-unit-interval
     meet and
       call is-minimum
@@ -311,9 +311,9 @@ rule cosh-near-zero
 # and of sinh = (E - R)/2: 0 <= sinh(w) - w <= w^3. (The lower side rests on (1 + w + w^2/2)^2 - 1 - 2 w (1 + w + w^2/2)
 # = w^4 / 4.)
 rule sinh-near-zero
-  mark w, like integer
-  mark ee, like integer
-  mark rr, like integer
+  seat w, like integer
+  seat ee, like integer
+  seat rr, like integer
   have w-is-in-the-unit-interval
     meet and
       call is-minimum
@@ -402,10 +402,10 @@ rule sinh-near-zero
 
 # THE ADDITION FORMULA, through the reciprocals. First: 1/x times 1/w inverts x w.
 rule the-product-of-inverses-inverts-the-product
-  mark ex, like integer
-  mark ew, like integer
-  mark rx, like integer
-  mark rw, like integer
+  seat ex, like integer
+  seat ew, like integer
+  seat rx, like integer
+  seat rw, like integer
   have rx-inverts
     call is-equal
       call multiply
@@ -432,11 +432,11 @@ rule the-product-of-inverses-inverts-the-product
 
 # 1/s - 1/(x w) = (x w - s) / (s x w), as rs - pp = rs pp (x w - s).
 rule the-reciprocal-difference
-  mark ex, like integer
-  mark ew, like integer
-  mark es, like integer
-  mark rs, like integer
-  mark pp, like integer
+  seat ex, like integer
+  seat ew, like integer
+  seat es, like integer
+  seat rs, like integer
+  seat pp, like integer
   have rs-inverts
     call is-equal
       call multiply
@@ -469,8 +469,8 @@ rule the-reciprocal-difference
 
 # An inverse of a number at least 1 is at most 1 (so rs pp is in [0, 1]).
 rule an-inverse-of-at-least-one-is-at-most-one
-  mark ee, like integer
-  mark rr, like integer
+  seat ee, like integer
+  seat rr, like integer
   have ee-is-at-least-one
     call is-minimum
       read ee
@@ -493,9 +493,9 @@ rule an-inverse-of-at-least-one-is-at-most-one
 
 # A difference within delta, times a factor in [0, 1], is within delta.
 rule a-small-difference-scaled-by-at-most-one
-  mark dd, like integer
-  mark q, like integer
-  mark delta, like integer
+  seat dd, like integer
+  seat q, like integer
+  seat delta, like integer
   have dd-is-small
     meet and
       call is-maximum
@@ -533,14 +533,14 @@ rule a-small-difference-scaled-by-at-most-one
 # So 2 cosh(x + w) = es + rs is within 2 delta of 2 (cosh x cosh w + sinh x sinh w) = ex ew + rx rw: the addition
 # formula, up to the exponential's own error.
 rule cosh-addition-up-to-the-error-of-e
-  mark ex, like integer
-  mark ew, like integer
-  mark es, like integer
-  mark rs, like integer
-  mark pp, like integer
-  mark q, like integer
-  mark dd, like integer
-  mark delta, like integer
+  seat ex, like integer
+  seat ew, like integer
+  seat es, like integer
+  seat rs, like integer
+  seat pp, like integer
+  seat q, like integer
+  seat dd, like integer
+  seat delta, like integer
   have dd-is-the-error-of-e
     call is-equal
       read dd
@@ -613,14 +613,14 @@ rule cosh-addition-up-to-the-error-of-e
 
 # THE DERIVATIVE, with the addition formula's error: a step of w changes cosh by sinh x w up to big (w^2 + w^3) + delta.
 rule cosh-has-derivative-sinh-up-to-an-error
-  mark cx, like integer
-  mark sx, like integer
-  mark cw, like integer
-  mark sw, like integer
-  mark cs, like integer
-  mark w, like integer
-  mark big, like integer
-  mark delta, like integer
+  seat cx, like integer
+  seat sx, like integer
+  seat cw, like integer
+  seat sw, like integer
+  seat cs, like integer
+  seat w, like integer
+  seat big, like integer
+  seat delta, like integer
   have the-addition-up-to-delta
     meet and
       call is-maximum
@@ -744,27 +744,27 @@ rule cosh-has-derivative-sinh-up-to-an-error
 # THE AREA: the fundamental theorem with a per-step tolerance. If each step of F is f times the step up to tol, the
 # Riemann sum of f over n strips is within n tol of F(b) - F(a).
 rule the-riemann-sums-with-a-tolerance
-  mark bigf
+  seat bigf
     like task
       take a0, like integer
       like integer
-  mark f
+  seat f
     like task
       take a0, like integer
       like integer
-  mark pt
+  seat pt
     like task
       take a0, like integer
       like integer
-  mark sum
+  seat sum
     like task
       take a0, like integer
       like integer
-  mark n, like integer
-  mark w, like integer
-  mark tol, like integer
+  seat n, like integer
+  seat w, like integer
+  seat tol, like integer
   have bigf-steps-like-f
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -810,7 +810,7 @@ rule the-riemann-sums-with-a-tolerance
         code 0
       code 0
   have the-riemann-sum-adds-a-strip
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i

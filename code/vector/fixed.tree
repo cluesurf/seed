@@ -53,61 +53,61 @@ task origin-two
   back make vector-two(0, 0)
 
 rule sum-commutes-two
-  mark u, like vector-two
-  mark v, like vector-two
+  seat u, like vector-two
+  seat v, like vector-two
   show hold, is-equal sum(u, v), sum(v, u)
 
 rule sum-associates-two
-  mark u, like vector-two
-  mark v, like vector-two
-  mark w, like vector-two
+  seat u, like vector-two
+  seat v, like vector-two
+  seat w, like vector-two
   show hold, is-equal sum(sum(u, v), w), sum(u, sum(v, w))
 
 rule origin-is-identity-two
-  mark v, like vector-two
+  seat v, like vector-two
   show hold, is-equal sum(v, origin-two()), v
 
 rule opposite-cancels-two
-  mark v, like vector-two
+  seat v, like vector-two
   show hold, is-equal sum(v, opposite(v)), origin-two()
 
 rule scaled-distributes-over-sum-two
-  mark k, like integer
-  mark u, like vector-two
-  mark v, like vector-two
+  seat k, like integer
+  seat u, like vector-two
+  seat v, like vector-two
   show hold, is-equal scaled(k, sum(u, v)), sum(scaled(k, u), scaled(k, v))
 
 rule scaled-twice-two
-  mark j, like integer
-  mark k, like integer
-  mark v, like vector-two
+  seat j, like integer
+  seat k, like integer
+  seat v, like vector-two
   show hold, is-equal scaled(j, scaled(k, v)), scaled(multiply(j, k), v)
 
 rule dot-is-symmetric-two
-  mark u, like vector-two
-  mark v, like vector-two
+  seat u, like vector-two
+  seat v, like vector-two
   show hold, is-equal dot(u, v), dot(v, u)
 
 rule dot-distributes-two
-  mark u, like vector-two
-  mark v, like vector-two
-  mark w, like vector-two
+  seat u, like vector-two
+  seat v, like vector-two
+  seat w, like vector-two
   show hold, is-equal dot(u, sum(v, w)), add(dot(u, v), dot(u, w))
 
 rule dot-scales-two
-  mark k, like integer
-  mark u, like vector-two
-  mark v, like vector-two
+  seat k, like integer
+  seat u, like vector-two
+  seat v, like vector-two
   show hold, is-equal dot(scaled(k, u), v), multiply(k, dot(u, v))
 
 rule dot-with-itself-is-not-negative-two
-  mark v, like vector-two
+  seat v, like vector-two
   show hold, is-minimum dot(v, v), 0
 
 # CAUCHY-SCHWARZ: the square of a dot product is at most the product of the squared lengths.
 rule cauchy-schwarz-two
-  mark u, like vector-two
-  mark v, like vector-two
+  seat u, like vector-two
+  seat v, like vector-two
   show hold, is-maximum multiply(dot(u, v), dot(u, v)), multiply(dot(u, u), dot(v, v))
 
 # ---- size three ----
@@ -162,69 +162,69 @@ task origin-three
   back make vector-three(0, 0, 0)
 
 rule sum-commutes-three
-  mark u, like vector-three
-  mark v, like vector-three
+  seat u, like vector-three
+  seat v, like vector-three
   show hold, is-equal sum(u, v), sum(v, u)
 
 rule sum-associates-three
-  mark u, like vector-three
-  mark v, like vector-three
-  mark w, like vector-three
+  seat u, like vector-three
+  seat v, like vector-three
+  seat w, like vector-three
   show hold, is-equal sum(sum(u, v), w), sum(u, sum(v, w))
 
 rule origin-is-identity-three
-  mark v, like vector-three
+  seat v, like vector-three
   show hold, is-equal sum(v, origin-three()), v
 
 rule opposite-cancels-three
-  mark v, like vector-three
+  seat v, like vector-three
   show hold, is-equal sum(v, opposite(v)), origin-three()
 
 rule scaled-distributes-over-sum-three
-  mark k, like integer
-  mark u, like vector-three
-  mark v, like vector-three
+  seat k, like integer
+  seat u, like vector-three
+  seat v, like vector-three
   show hold, is-equal scaled(k, sum(u, v)), sum(scaled(k, u), scaled(k, v))
 
 rule dot-is-symmetric-three
-  mark u, like vector-three
-  mark v, like vector-three
+  seat u, like vector-three
+  seat v, like vector-three
   show hold, is-equal dot(u, v), dot(v, u)
 
 rule dot-distributes-three
-  mark u, like vector-three
-  mark v, like vector-three
-  mark w, like vector-three
+  seat u, like vector-three
+  seat v, like vector-three
+  seat w, like vector-three
   show hold, is-equal dot(u, sum(v, w)), add(dot(u, v), dot(u, w))
 
 rule dot-with-itself-is-not-negative-three
-  mark v, like vector-three
+  seat v, like vector-three
   show hold, is-minimum dot(v, v), 0
 
 rule cauchy-schwarz-three
-  mark u, like vector-three
-  mark v, like vector-three
+  seat u, like vector-three
+  seat v, like vector-three
   show hold, is-maximum multiply(dot(u, v), dot(u, v)), multiply(dot(u, u), dot(v, v))
 
 # The cross product turns around when its sides do, and is perpendicular to each side.
 rule cross-anticommutes
-  mark u, like vector-three
-  mark v, like vector-three
+  seat u, like vector-three
+  seat v, like vector-three
   show hold, is-equal cross(u, v), opposite(cross(v, u))
 
 rule cross-with-itself-is-origin
-  mark v, like vector-three
+  seat v, like vector-three
   show hold, is-equal cross(v, v), origin-three()
 
 rule cross-is-perpendicular
-  mark u, like vector-three
-  mark v, like vector-three
+  seat u, like vector-three
+  seat v, like vector-three
   show hold, is-equal dot(u, cross(u, v)), 0
 
 # LAGRANGE'S IDENTITY: the squared length of u x v is |u|^2 |v|^2 - (u . v)^2.
 rule lagrange-identity
-  mark u, like vector-three
-  mark v, like vector-three
+  seat u, like vector-three
+  seat v, like vector-three
   show hold
     is-equal
       dot(cross(u, v), cross(u, v))
@@ -232,14 +232,14 @@ rule lagrange-identity
 
 # THE TRIPLE PRODUCT EXPANSION: u x (v x w) = v (u . w) - w (u . v).
 rule triple-product-expansion
-  mark u, like vector-three
-  mark v, like vector-three
-  mark w, like vector-three
+  seat u, like vector-three
+  seat v, like vector-three
+  seat w, like vector-three
   show hold, is-equal cross(u, cross(v, w)), sum(scaled(dot(u, w), v), opposite(scaled(dot(u, v), w)))
 
 # THE JACOBI IDENTITY: u x (v x w) + v x (w x u) + w x (u x v) = 0.
 rule jacobi-identity
-  mark u, like vector-three
-  mark v, like vector-three
-  mark w, like vector-three
+  seat u, like vector-three
+  seat v, like vector-three
+  seat w, like vector-three
   show hold, is-equal sum(sum(cross(u, cross(v, w)), cross(v, cross(w, u))), cross(w, cross(u, v))), origin-three()

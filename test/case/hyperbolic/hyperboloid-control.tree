@@ -93,12 +93,12 @@ task complex-product-imaginary
         read v1
 
 rule control-the-norm-of-a-cross-product
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark y0, like integer
-  mark y1, like integer
-  mark y2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat y0, like integer
+  seat y1, like integer
+  seat y2, like integer
   show hold
     call is-equal
       call lorentz-form
@@ -177,10 +177,10 @@ rule control-the-norm-of-a-cross-product
             read y2
 
 rule control-the-disk-distance-formula
-  mark p1, like integer
-  mark p2, like integer
-  mark q1, like integer
-  mark q2, like integer
+  seat p1, like integer
+  seat p2, like integer
+  seat q1, like integer
+  seat q2, like integer
   show hold
     call is-equal
       call subtract
@@ -253,15 +253,15 @@ rule control-the-disk-distance-formula
               read q2
 
 rule control-the-law-of-cosines
-  mark a0, like integer
-  mark a1, like integer
-  mark a2, like integer
-  mark b0, like integer
-  mark b1, like integer
-  mark b2, like integer
-  mark v0, like integer
-  mark v1, like integer
-  mark v2, like integer
+  seat a0, like integer
+  seat a1, like integer
+  seat a2, like integer
+  seat b0, like integer
+  seat b1, like integer
+  seat b2, like integer
+  seat v0, like integer
+  seat v1, like integer
+  seat v2, like integer
   have vertex
     call is-equal
       call lorentz-form
@@ -366,15 +366,15 @@ rule control-the-law-of-cosines
             read v2
 
 rule control-a-reflection-keeps-the-lorentz-form
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark y0, like integer
-  mark y1, like integer
-  mark y2, like integer
-  mark n0, like integer
-  mark n1, like integer
-  mark n2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat y0, like integer
+  seat y1, like integer
+  seat y2, like integer
+  seat n0, like integer
+  seat n1, like integer
+  seat n2, like integer
   have line
     call is-equal
       call lorentz-form
@@ -511,12 +511,12 @@ rule control-the-second-parallel-is-ultraparallel
       code 0
 
 rule control-a-mobius-map-keeps-the-imaginary-part
-  mark ma, like integer
-  mark mb, like integer
-  mark mc, like integer
-  mark md, like integer
-  mark zr, like integer
-  mark zi, like integer
+  seat ma, like integer
+  seat mb, like integer
+  seat mc, like integer
+  seat md, like integer
+  seat zr, like integer
+  seat zi, like integer
   have unimodular
     call is-equal
       call subtract
@@ -551,12 +551,12 @@ rule control-a-mobius-map-keeps-the-imaginary-part
       read zi
 
 rule control-two-lines-meet-where-their-cross-product-points
-  mark n0, like integer
-  mark n1, like integer
-  mark n2, like integer
-  mark m0, like integer
-  mark m1, like integer
-  mark m2, like integer
+  seat n0, like integer
+  seat n1, like integer
+  seat n2, like integer
+  seat m0, like integer
+  seat m1, like integer
+  seat m2, like integer
   have n-line
     call is-equal
       call lorentz-form

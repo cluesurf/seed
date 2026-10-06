@@ -39,7 +39,7 @@ task double
 # REFLEXIVE: every element is related to itself, double a = double a. The first setoid law, immediate by reflexivity of
 # equality.
 rule relation-is-reflexive
-  mark a, like natural
+  seat a, like natural
   show hold
     call is-equal
       call double
@@ -51,8 +51,8 @@ rule relation-is-reflexive
 # SYMMETRIC: if a is related to b then b is related to a. From double a = double b, conclude double b = double a. Proved
 # by assuming the antecedent on the branch and rewriting it into the goal.
 rule relation-is-symmetric
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   have h
     call is-equal
       call double
@@ -71,9 +71,9 @@ rule relation-is-symmetric
 # double b = double c, conclude double a = double c. The two antecedents chain through the shared middle fingerprint.
 # With the two laws above this proves the relation is an EQUIVALENCE, so the carrier is a genuine setoid.
 rule relation-is-transitive
-  mark a, like natural
-  mark b, like natural
-  mark c, like natural
+  seat a, like natural
+  seat b, like natural
+  seat c, like natural
   have h1
     call is-equal
       call double
@@ -99,8 +99,8 @@ rule relation-is-transitive
 # double a = double b conclude double (succ a) = double (succ b), since double of a successor is two more than double,
 # and adding the same amount to equal fingerprints keeps them equal. A respecting function is well-defined on classes.
 rule successor-respects-relation
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   have h
     call is-equal
       call double
@@ -128,8 +128,8 @@ rule successor-respects-relation
 # fingerprint, so members that are related (equal fingerprints) name one class. This is reflexivity of equality on the
 # fingerprint, the witness that the relation refines to class equality.
 rule class-of-related-is-one
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   have h
     call is-equal
       call double
@@ -149,8 +149,8 @@ rule class-of-related-is-one
 # results, so the induced map on classes is well-defined and the descended map agrees with the original on every member.
 # This is the defining property of the quotient: respecting functions factor uniquely through it.
 rule respecting-function-descends
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   have h
     call is-equal
       call double

@@ -142,9 +142,9 @@ tree probe-target
 # through, and the target is flipped by the same control product twice, which cancels. So the gate is reversible and a
 # computer built from it can always be run backward, losing no information. Proved by induction over all three bits.
 rule toffoli-is-its-own-inverse
-  mark a, like bit
-  mark b, like bit
-  mark c, like bit
+  seat a, like bit
+  seat b, like bit
+  seat c, like bit
   show hold
     call is-equal
       call toffoli
@@ -169,8 +169,8 @@ rule toffoli-is-its-own-inverse
 # conjunction of the two controls, so the universal reversible gate contains the AND gate. Proved over all four control
 # settings.
 rule toffoli-computes-and
-  mark a, like bit
-  mark b, like bit
+  seat a, like bit
+  seat b, like bit
   show hold
     call is-equal
       fuse probe-target, off
@@ -183,8 +183,8 @@ rule toffoli-computes-and
 # universal for ordinary circuits, so this single setting already witnesses classical universality. Proved over all four
 # control settings.
 rule toffoli-computes-nand
-  mark a, like bit
-  mark b, like bit
+  seat a, like bit
+  seat b, like bit
   show hold
     call is-equal
       fuse probe-target, on
@@ -196,7 +196,7 @@ rule toffoli-computes-nand
 # TOFFOLI COMPUTES NOT: with both controls on, the target is flipped, so the target output is not c. Driving the controls
 # high turns the gate into the NOT gate acting on the target. Proved over both target values.
 rule toffoli-computes-not
-  mark c, like bit
+  seat c, like bit
   show hold
     call is-equal
       call target-of
@@ -216,7 +216,7 @@ rule toffoli-computes-not
 # control. A blank wire receives a copy of the control, the FANOUT a reversible circuit needs to reuse a value. Proved over
 # both values of the copied bit.
 rule toffoli-fans-out
-  mark a, like bit
+  seat a, like bit
   show hold
     call is-equal
       call target-of
@@ -235,9 +235,9 @@ rule toffoli-fans-out
 # are. This is the structural reason the gate is reversible (the inputs are recoverable from the outputs) and the reason
 # the control lines can carry data straight through a circuit. Proved over all eight inputs.
 rule toffoli-preserves-the-first-control
-  mark a, like bit
-  mark b, like bit
-  mark c, like bit
+  seat a, like bit
+  seat b, like bit
+  seat c, like bit
   show hold
     call is-equal
       call first-of
@@ -257,8 +257,8 @@ rule toffoli-preserves-the-first-control
 # the two pieces compose, building NAND by hand from the gate's AND output and the gate's NOT equals the direct NAND, for
 # all four control settings. This closes the loop from the single reversible gate to all of classical computation.
 rule and-then-not-is-nand
-  mark a, like bit
-  mark b, like bit
+  seat a, like bit
+  seat b, like bit
   show hold
     call is-equal
       call target-of

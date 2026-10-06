@@ -99,7 +99,7 @@ task phase
 # PHI-PLUS IS PERFECTLY CORRELATED: partner phi-plus b = b, for every outcome b. Measuring one qubit of phi-plus forces
 # the other to the SAME value, so the two results always agree. Proved by induction over the outcome.
 rule phi-plus-is-perfectly-correlated
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call partner
@@ -112,7 +112,7 @@ rule phi-plus-is-perfectly-correlated
 # psi-minus forces the other to the OPPOSITE value, so the two results always disagree. This is the singlet correlation,
 # the one that violates the classical bound the hardest. Proved by induction over the outcome.
 rule psi-minus-is-perfectly-anticorrelated
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call partner
@@ -126,7 +126,7 @@ rule psi-minus-is-perfectly-anticorrelated
 # partner's outcome and applying the same correlation recovers the original outcome. The shared link is consistent and
 # symmetric: it does not matter which qubit is measured first. Proved by induction over the outcome.
 rule correlated-partner-is-an-involution
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call partner
@@ -142,7 +142,7 @@ rule correlated-partner-is-an-involution
 # the original outcome. Together with the correlated case this is the full consistency of the shared correlation: whoever
 # measures first, both qubits agree on the same joint result. Proved by induction over the outcome.
 rule anticorrelated-partner-is-an-involution
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call partner

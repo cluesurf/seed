@@ -2,23 +2,23 @@
 
 # false: x(m) + y(m) is regular only with 2 e, not e
 rule control-the-sum-without-reindexing
-  mark x
+  seat x
     like task
       take a0, like integer
       like integer
-  mark y
+  seat y
     like task
       take a0, like integer
       like integer
-  mark e
+  seat e
     like task
       take a0, like integer
       like integer
-  mark m, like integer
-  mark n, like integer
+  seat m, like integer
+  seat n, like integer
   have x-is-a-real
-    mark p, like integer
-    mark q, like integer
+    seat p, like integer
+    seat q, like integer
     meet or
       call is-below
         read p
@@ -50,8 +50,8 @@ rule control-the-sum-without-reindexing
             call e
               read q
   have y-is-a-real
-    mark p, like integer
-    mark q, like integer
+    seat p, like integer
+    seat q, like integer
     meet or
       call is-below
         read p
@@ -83,7 +83,7 @@ rule control-the-sum-without-reindexing
             call e
               read q
   have the-modulus-halves
-    mark t, like integer
+    seat t, like integer
     meet or
       call is-below
         read t
@@ -127,21 +127,21 @@ rule control-the-sum-without-reindexing
 
 # false: without a bound on x the step is unbounded
 rule control-a-product-step-without-a-bound
-  mark x
+  seat x
     like task
       take a0, like integer
       like integer
-  mark y
+  seat y
     like task
       take a0, like integer
       like integer
-  mark e
+  seat e
     like task
       take a0, like integer
       like integer
-  mark p, like integer
-  mark q, like integer
-  mark big, like integer
+  seat p, like integer
+  seat q, like integer
+  seat big, like integer
   have y-at-q-is-bounded
     meet and
       call is-maximum

@@ -2,18 +2,18 @@
 
 # false: d(a b) carries da db
 rule control-the-product-rule-without-the-cross-term
-  mark a, like integer
-  mark b, like integer
-  mark da, like integer
-  mark db, like integer
-  mark ad, like integer
-  mark bd, like integer
-  mark h, like integer
-  mark ea, like integer
-  mark eb, like integer
-  mark m, like integer
-  mark ba, like integer
-  mark bb, like integer
+  seat a, like integer
+  seat b, like integer
+  seat da, like integer
+  seat db, like integer
+  seat ad, like integer
+  seat bd, like integer
+  seat h, like integer
+  seat ea, like integer
+  seat eb, like integer
+  seat m, like integer
+  seat ba, like integer
+  seat bb, like integer
   have da-follows-the-derivative
     meet and
       call is-maximum
@@ -156,12 +156,12 @@ rule control-the-product-rule-without-the-cross-term
 
 # false: the derivative of 1/c is -c'/c^2
 rule control-the-reciprocal-identity-with-the-wrong-sign
-  mark c, like integer
-  mark dc, like integer
-  mark cd, like integer
-  mark h, like integer
-  mark q, like integer
-  mark q2, like integer
+  seat c, like integer
+  seat dc, like integer
+  seat cd, like integer
+  seat h, like integer
+  seat q, like integer
+  seat q2, like integer
   have q-inverts
     call is-equal
       call multiply
@@ -216,15 +216,15 @@ rule control-the-reciprocal-identity-with-the-wrong-sign
 
 # false: the error of dz passes through
 rule control-the-chain-rule-without-the-derivative-error
-  mark f, like integer
-  mark z, like integer
-  mark dz, like integer
-  mark zd, like integer
-  mark h, like integer
-  mark ez, like integer
-  mark dth, like integer
-  mark bz, like integer
-  mark bdz, like integer
+  seat f, like integer
+  seat z, like integer
+  seat dz, like integer
+  seat zd, like integer
+  seat h, like integer
+  seat ez, like integer
+  seat dth, like integer
+  seat bz, like integer
+  seat bdz, like integer
   have the-angle-increment
     meet and
       call is-maximum

@@ -159,7 +159,7 @@ task weighted-charge
 # so their disagreement is total. Proved by induction over all four species. This is the clean color split of the matter
 # content.
 rule every-particle-is-quark-or-lepton
-  mark p, like particle
+  seat p, like particle
   show hold
     call is-equal
       call is-quark
@@ -335,7 +335,7 @@ task count-generation
 # EVERY GENERATION IS COUNTED ONCE: count-generation g = 1 for each of the three constructed families, proved by
 # induction over the whole form generation. The sum of these three ones is the three generations.
 rule each-generation-is-counted-once
-  mark g, like generation
+  seat g, like generation
   show hold
     call is-equal
       call count-generation
@@ -370,8 +370,8 @@ task charge-in-generation
 # Proved by induction over both the three generations and the four species. The whole charge structure is identical
 # across the three families.
 rule charge-is-generation-independent
-  mark g, like generation
-  mark p, like particle
+  seat g, like generation
+  seat p, like particle
   show hold
     call is-equal
       call charge-in-generation

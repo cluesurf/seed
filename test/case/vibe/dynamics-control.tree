@@ -34,7 +34,7 @@ load @term/seed/vibe/boost
 
 # the store does not keep the content (a pair is stored, two vibes leave the slots)
 rule control-the-store-keeps-the-content
-  mark l, like dock-line
+  seat l, like dock-line
   show hold
     call is-equal
       call line-content
@@ -46,7 +46,7 @@ rule control-the-store-keeps-the-content
 
 # the pair collision is not an involution
 rule control-the-pair-collision-is-an-involution
-  mark l, like dock-line
+  seat l, like dock-line
   show hold
     call is-equal
       call pair-collide
@@ -57,7 +57,7 @@ rule control-the-pair-collision-is-an-involution
 
 # the stream alone does not undo the beat
 rule control-unstream-undoes-the-beat
-  mark w, like line-ring
+  seat w, like line-ring
   show hold
     call is-equal
       call unstream-ring
@@ -68,7 +68,7 @@ rule control-unstream-undoes-the-beat
 
 # the velocity flip does not commute with the stream
 rule control-the-flip-commutes-with-the-stream
-  mark w, like line-ring
+  seat w, like line-ring
   show hold
     call is-equal
       call flip-velocities
@@ -81,8 +81,8 @@ rule control-the-flip-commutes-with-the-stream
 
 # Cl(4) is not commutative
 rule control-blades-commute
-  mark x, like cl4-blade
-  mark y, like cl4-blade
+  seat x, like cl4-blade
+  seat y, like cl4-blade
   show hold
     call is-equal
       call blade-product

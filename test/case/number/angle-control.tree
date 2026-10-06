@@ -2,10 +2,10 @@
 
 # false: 1 / (1 + s^2) falls on s >= 0
 rule control-the-integrand-rises
-  mark f1, like integer
-  mark f2, like integer
-  mark pp, like integer
-  mark g, like integer
+  seat f1, like integer
+  seat f2, like integer
+  seat pp, like integer
+  seat g, like integer
   have the-integrand-difference
     call is-equal
       call subtract
@@ -30,10 +30,10 @@ rule control-the-integrand-rises
 
 # false: pp may be near 1
 rule control-the-integrand-falls-by-at-most-half-the-growth
-  mark f1, like integer
-  mark f2, like integer
-  mark pp, like integer
-  mark g, like integer
+  seat f1, like integer
+  seat f2, like integer
+  seat pp, like integer
+  seat g, like integer
   have the-integrand-difference
     call is-equal
       call subtract
@@ -66,20 +66,20 @@ rule control-the-integrand-falls-by-at-most-half-the-growth
 
 # false: at n = 0 both sums are 0, so the difference is not the fall plus 1
 rule control-the-upper-sum-equals-the-lower-sum
-  mark fl
+  seat fl
     like task
       take a0, like integer
       like integer
-  mark up
+  seat up
     like task
       take a0, like integer
       like integer
-  mark lo
+  seat lo
     like task
       take a0, like integer
       like integer
-  mark n, like integer
-  mark w, like integer
+  seat n, like integer
+  seat w, like integer
   have up-starts-at-zero
     call is-equal
       call up
@@ -91,7 +91,7 @@ rule control-the-upper-sum-equals-the-lower-sum
         code 0
       code 0
   have up-adds-a-left-strip
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -109,7 +109,7 @@ rule control-the-upper-sum-equals-the-lower-sum
               read i
             read w
   have lo-adds-a-right-strip
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -153,11 +153,11 @@ rule control-the-upper-sum-equals-the-lower-sum
 
 # false without the slow fall: the increment may sit at h f2
 rule control-the-angle-with-a-first-order-error
-  mark t, like integer
-  mark h, like integer
-  mark f1, like integer
-  mark f2, like integer
-  mark dt, like integer
+  seat t, like integer
+  seat h, like integer
+  seat f1, like integer
+  seat f2, like integer
+  seat dt, like integer
   have the-increment-is-squeezed
     meet and
       call is-maximum
@@ -194,26 +194,26 @@ rule control-the-angle-with-a-first-order-error
 
 # false: at n = 0 both sums are 0, and refining never lowers the lower sum
 rule control-halving-the-mesh-lowers-the-lower-sum
-  mark fp
+  seat fp
     like task
       take a0, like integer
       like integer
-  mark fo
+  seat fo
     like task
       take a0, like integer
       like integer
-  mark ll
+  seat ll
     like task
       take a0, like integer
       like integer
-  mark mm
+  seat mm
     like task
       take a0, like integer
       like integer
-  mark n, like integer
-  mark w, like integer
+  seat n, like integer
+  seat w, like integer
   have ll-adds-a-strip
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -233,7 +233,7 @@ rule control-halving-the-mesh-lowers-the-lower-sum
                 code 1
             read w
   have mm-adds-two-half-strips
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -262,7 +262,7 @@ rule control-halving-the-mesh-lowers-the-lower-sum
                 code 1
             read w
   have the-odd-strip-is-at-least-the-right-end
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i

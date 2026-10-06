@@ -175,7 +175,7 @@ task redshift-at-least-one
 
 # 0 <= n, always. Definitional.
 rule at-most-zero-left-is-on
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call at-most
@@ -186,8 +186,8 @@ rule at-most-zero-left-is-on
 
 # (succ a) <= (succ b) iff a <= b. Definitional.
 rule at-most-succ-both
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call at-most
@@ -204,7 +204,7 @@ rule at-most-succ-both
 
 # n <= n, always (reflexivity of the order). By induction on n.
 rule at-most-reflexive
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call at-most
@@ -215,8 +215,8 @@ rule at-most-reflexive
 
 # (succ a) + b = succ (a + b). Definitional, the recurrence of plus.
 rule plus-succ-left-steps
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call plus
@@ -233,7 +233,7 @@ rule plus-succ-left-steps
 
 # n + 0 = n (zero is a right identity). By induction on n.
 rule plus-zero-right-is-identity
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call plus
@@ -244,8 +244,8 @@ rule plus-zero-right-is-identity
 
 # a + (succ b) = succ (a + b) (the successor steps out on the right). By induction on a.
 rule plus-succ-right-steps-out
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call plus
@@ -262,9 +262,9 @@ rule plus-succ-right-steps-out
 
 # Addition is associative: (a + b) + c = a + (b + c). By induction on a.
 rule plus-is-associative
-  mark a, like natural
-  mark b, like natural
-  mark c, like natural
+  seat a, like natural
+  seat b, like natural
+  seat c, like natural
   show hold
     call is-equal
       call plus
@@ -281,8 +281,8 @@ rule plus-is-associative
 
 # Addition is commutative: a + b = b + a. By induction on a, chaining the right identity and right step lemmas.
 rule plus-is-commutative
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call plus
@@ -297,8 +297,8 @@ rule plus-is-commutative
 
 # (succ a) * b = b + (a * b). Definitional, the recurrence of times.
 rule times-succ-left-steps-out
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call times
@@ -316,8 +316,8 @@ rule times-succ-left-steps-out
 # a * (succ b) = a + (a * b) (the successor steps out on the right of a product). By induction on a, normalizing the
 # additive chain modulo associativity and commutativity.
 rule times-succ-right-is-plus
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call times
@@ -338,9 +338,9 @@ rule times-succ-right-is-plus
 
 # Left distributivity: a * (b + c) = a*b + a*c. By induction on a, normalizing modulo associativity and commutativity.
 rule times-distributes-left
-  mark a, like natural
-  mark b, like natural
-  mark c, like natural
+  seat a, like natural
+  seat b, like natural
+  seat c, like natural
   show hold
     call is-equal
       call times
@@ -363,8 +363,8 @@ rule times-distributes-left
 # Anything is at most itself plus more: at-most a (a + c) = on, for every a and c. By induction on a. This is the order
 # fact that adding a nonnegative amount never decreases a value, the engine behind Hubble's law and the compounding.
 rule at-most-self-plus
-  mark a, like natural
-  mark c, like natural
+  seat a, like natural
+  seat c, like natural
   show hold
     call is-equal
       call at-most
@@ -379,8 +379,8 @@ rule at-most-self-plus
 
 # Anything is at most more plus itself: at-most a (c + a) = on. The commuted form, peeling the right summand.
 rule at-most-plus-self
-  mark a, like natural
-  mark c, like natural
+  seat a, like natural
+  seat c, like natural
   show hold
     call is-equal
       call at-most
@@ -398,9 +398,9 @@ rule at-most-plus-self
 # Scaling preserves the order when a gap is added to the right factor: at-most (k*a) (k*(a + c)) = on. By induction on
 # k, distributing k over the sum and then applying self-plus. This is the monotonicity that becomes Hubble's law.
 rule at-most-times-self-plus
-  mark k, like natural
-  mark a, like natural
-  mark c, like natural
+  seat k, like natural
+  seat a, like natural
+  seat c, like natural
   show hold
     call is-equal
       call at-most
@@ -420,8 +420,8 @@ rule at-most-times-self-plus
 # Bumping the right factor by one preserves the order: at-most (k*m) (k*(succ m)) = on. By induction on m, stepping the
 # product out on the right and applying plus-self. This is the monotonicity that becomes the compounding of expansion.
 rule at-most-times-succ-right
-  mark k, like natural
-  mark m, like natural
+  seat k, like natural
+  seat m, like natural
   show hold
     call is-equal
       call at-most
@@ -441,7 +441,7 @@ rule at-most-times-succ-right
 # The scale factor at the next tick is the successor of the scale factor now: a(tick e) = succ (a e). Definitional, the
 # one-step recurrence of the expansion. The kernel unfolds cosmic-time and scale-factor to see it.
 rule scale-factor-tick-is-succ
-  mark e, like epoch
+  seat e, like epoch
   show hold
     call is-equal
       call scale-factor
@@ -459,7 +459,7 @@ rule scale-factor-tick-is-succ
 # THE UNIVERSE EXPANDS: the scale factor now is at most the scale factor at the next tick, a(e) <= a(tick e), for every
 # epoch. The universe never shrinks. With the strict law below this is one-way growth, the arrow of cosmic time.
 rule scale-factor-grows-each-tick
-  mark e, like epoch
+  seat e, like epoch
   show hold
     call is-equal
       call at-most
@@ -479,7 +479,7 @@ rule scale-factor-grows-each-tick
 # Together with the law above this is strict expansion: a(e) < a(tick e), never equal, never reversed. The universe never
 # shrinks back and never holds still.
 rule scale-factor-strictly-grows
-  mark e, like epoch
+  seat e, like epoch
   show hold
     call is-equal
       call at-most
@@ -498,7 +498,7 @@ rule scale-factor-strictly-grows
 # THE BIG BANG IS THE MINIMUM: the scale factor at the big bang is at most the scale factor at any epoch, a(bang) <= a(e),
 # for every epoch. Nothing precedes the big bang. Its scale factor (one) is the smallest the universe ever has.
 rule big-bang-is-the-minimum
-  mark e, like epoch
+  seat e, like epoch
   show hold
     call is-equal
       call at-most
@@ -518,9 +518,9 @@ rule big-bang-is-the-minimum
 # separation, holding for the scale factor at every epoch (the scale factor is one such value). By induction on the
 # scale factor, distributing it over the sum and applying self-plus.
 rule hubble-law-farther-is-farther
-  mark scale, like natural
-  mark near, like natural
-  mark gap, like natural
+  seat scale, like natural
+  seat near, like natural
+  seat gap, like natural
   show hold
     call is-equal
       call at-most
@@ -541,7 +541,7 @@ rule hubble-law-farther-is-farther
 # least one. redshift-at-least-one bang e = on, for every epoch. The earliest light is stretched the most as the universe
 # expands from its minimum scale factor.
 rule redshift-from-the-big-bang
-  mark e, like epoch
+  seat e, like epoch
   show hold
     call is-equal
       call redshift-at-least-one
@@ -556,7 +556,7 @@ rule redshift-from-the-big-bang
 # = on, for every epoch. Each tick of cosmic time stretches the wavelength a little more, the redshift factor staying at
 # least one because the scale factor only grows.
 rule redshift-across-one-tick
-  mark e, like epoch
+  seat e, like epoch
   show hold
     call is-equal
       call redshift-at-least-one
@@ -576,8 +576,8 @@ rule redshift-across-one-tick
 # as space itself grows, the same comoving separation mapping to an ever larger physical distance with each tick. By
 # induction on the scale factor, stepping the product out on the right and applying plus-self.
 rule expansion-compounds
-  mark d, like natural
-  mark scale, like natural
+  seat d, like natural
+  seat scale, like natural
   show hold
     call is-equal
       call at-most

@@ -8,12 +8,12 @@
 # minus (a1 b1 + a2 b2 + a3 b3)^2. This is what ties the cross product's magnitude to the sine of the angle between the
 # vectors, the dot product's to the cosine. A universal law over all six coordinates.
 rule squared-cross-product-is-squared-length-product-minus-squared-dot-product
-  mark a1, like integer
-  mark a2, like integer
-  mark a3, like integer
-  mark b1, like integer
-  mark b2, like integer
-  mark b3, like integer
+  seat a1, like integer
+  seat a2, like integer
+  seat a3, like integer
+  seat b1, like integer
+  seat b2, like integer
+  seat b3, like integer
   show hold
     call is-equal
       call add

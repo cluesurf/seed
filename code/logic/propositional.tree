@@ -80,32 +80,32 @@ task evaluate
 
 # DOUBLE NEGATION: not not p means p.
 rule double-negation
-  mark v, like assignment
-  mark p, like proposition
+  seat v, like assignment
+  seat p, like proposition
   show hold, is-equal evaluate(v, make negation(make negation(p))), evaluate(v, p)
   cite not-flag-is-an-involution
 
 # COMMUTATIVITY.
 rule conjunction-commutes
-  mark v, like assignment
-  mark p, like proposition
-  mark q, like proposition
+  seat v, like assignment
+  seat p, like proposition
+  seat q, like proposition
   show hold, is-equal evaluate(v, make conjunction(p, q)), evaluate(v, make conjunction(q, p))
   cite both-commutes
 
 rule disjunction-commutes
-  mark v, like assignment
-  mark p, like proposition
-  mark q, like proposition
+  seat v, like assignment
+  seat p, like proposition
+  seat q, like proposition
   show hold, is-equal evaluate(v, make disjunction(p, q)), evaluate(v, make disjunction(q, p))
   cite either-commutes
 
 # ASSOCIATIVITY.
 rule conjunction-associates
-  mark v, like assignment
-  mark p, like proposition
-  mark q, like proposition
-  mark r, like proposition
+  seat v, like assignment
+  seat p, like proposition
+  seat q, like proposition
+  seat r, like proposition
   show hold
     is-equal
       evaluate
@@ -117,10 +117,10 @@ rule conjunction-associates
   cite both-associates
 
 rule disjunction-associates
-  mark v, like assignment
-  mark p, like proposition
-  mark q, like proposition
-  mark r, like proposition
+  seat v, like assignment
+  seat p, like proposition
+  seat q, like proposition
+  seat r, like proposition
   show hold
     is-equal
       evaluate
@@ -133,23 +133,23 @@ rule disjunction-associates
 
 # IDEMPOTENCE: p and p means p, p or p means p.
 rule conjunction-is-idempotent
-  mark v, like assignment
-  mark p, like proposition
+  seat v, like assignment
+  seat p, like proposition
   show hold, is-equal evaluate(v, make conjunction(p, p)), evaluate(v, p)
   cite both-is-idempotent
 
 rule disjunction-is-idempotent
-  mark v, like assignment
-  mark p, like proposition
+  seat v, like assignment
+  seat p, like proposition
   show hold, is-equal evaluate(v, make disjunction(p, p)), evaluate(v, p)
   cite either-is-idempotent
 
 # DISTRIBUTIVITY, both ways.
 rule conjunction-distributes-over-disjunction
-  mark v, like assignment
-  mark p, like proposition
-  mark q, like proposition
-  mark r, like proposition
+  seat v, like assignment
+  seat p, like proposition
+  seat q, like proposition
+  seat r, like proposition
   show hold
     is-equal
       evaluate(v, make conjunction(p, make disjunction(q, r)))
@@ -161,10 +161,10 @@ rule conjunction-distributes-over-disjunction
   cite both-distributes-over-either
 
 rule disjunction-distributes-over-conjunction
-  mark v, like assignment
-  mark p, like proposition
-  mark q, like proposition
-  mark r, like proposition
+  seat v, like assignment
+  seat p, like proposition
+  seat q, like proposition
+  seat r, like proposition
   show hold
     is-equal
       evaluate(v, make disjunction(p, make conjunction(q, r)))
@@ -177,37 +177,37 @@ rule disjunction-distributes-over-conjunction
 
 # ABSORPTION.
 rule conjunction-absorbs-disjunction
-  mark v, like assignment
-  mark p, like proposition
-  mark q, like proposition
+  seat v, like assignment
+  seat p, like proposition
+  seat q, like proposition
   show hold, is-equal evaluate(v, make conjunction(p, make disjunction(p, q))), evaluate(v, p)
   cite both-absorbs-either
 
 rule disjunction-absorbs-conjunction
-  mark v, like assignment
-  mark p, like proposition
-  mark q, like proposition
+  seat v, like assignment
+  seat p, like proposition
+  seat q, like proposition
   show hold, is-equal evaluate(v, make disjunction(p, make conjunction(p, q))), evaluate(v, p)
   cite either-absorbs-both
 
 # EXCLUDED MIDDLE and NON-CONTRADICTION: p or not p is true, p and not p is false, under every assignment.
 rule excluded-middle-holds
-  mark v, like assignment
-  mark p, like proposition
+  seat v, like assignment
+  seat p, like proposition
   show hold, is-equal evaluate(v, make disjunction(p, make negation(p))), make yes
   cite excluded-middle
 
 rule non-contradiction-holds
-  mark v, like assignment
-  mark p, like proposition
+  seat v, like assignment
+  seat p, like proposition
   show hold, is-equal evaluate(v, make conjunction(p, make negation(p))), make no
   cite non-contradiction
 
 # DE MORGAN, both ways.
 rule de-morgan-conjunction
-  mark v, like assignment
-  mark p, like proposition
-  mark q, like proposition
+  seat v, like assignment
+  seat p, like proposition
+  seat q, like proposition
   show hold
     is-equal
       evaluate(v, make negation(make conjunction(p, q)))
@@ -219,9 +219,9 @@ rule de-morgan-conjunction
   cite not-both-is-either-not
 
 rule de-morgan-disjunction
-  mark v, like assignment
-  mark p, like proposition
-  mark q, like proposition
+  seat v, like assignment
+  seat p, like proposition
+  seat q, like proposition
   show hold
     is-equal
       evaluate(v, make negation(make disjunction(p, q)))
@@ -234,9 +234,9 @@ rule de-morgan-disjunction
 
 # IMPLICATION is `not p or q`.
 rule implication-is-disjunction
-  mark v, like assignment
-  mark p, like proposition
-  mark q, like proposition
+  seat v, like assignment
+  seat p, like proposition
+  seat q, like proposition
   show hold
     is-equal
       evaluate(v, make implication(p, q))
@@ -249,9 +249,9 @@ rule implication-is-disjunction
 
 # CONTRAPOSITION: p implies q means not q implies not p.
 rule contraposition-holds
-  mark v, like assignment
-  mark p, like proposition
-  mark q, like proposition
+  seat v, like assignment
+  seat p, like proposition
+  seat q, like proposition
   show hold
     is-equal
       evaluate(v, make implication(p, q))
@@ -264,7 +264,7 @@ rule contraposition-holds
 
 # Every formula implies itself, under every assignment.
 rule implication-is-reflexive
-  mark v, like assignment
-  mark p, like proposition
+  seat v, like assignment
+  seat p, like proposition
   show hold, is-equal evaluate(v, make implication(p, p)), make yes
   cite implies-itself

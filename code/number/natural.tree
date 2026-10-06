@@ -8,7 +8,7 @@
 
 # Zero is a right identity for addition: n + 0 = n, for every n.
 rule zero-is-right-identity-for-addition
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call add
@@ -18,8 +18,8 @@ rule zero-is-right-identity-for-addition
 
 # Addition commutes: a + b = b + a, for every a and b.
 rule addition-commutes
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call add
@@ -31,9 +31,9 @@ rule addition-commutes
 
 # Addition associates: (a + b) + c = a + (b + c), for every a, b, c.
 rule addition-associates
-  mark a, like natural
-  mark b, like natural
-  mark c, like natural
+  seat a, like natural
+  seat b, like natural
+  seat c, like natural
   show hold
     call is-equal
       call add
@@ -50,7 +50,7 @@ rule addition-associates
 # Every natural is non-negative: n >= 0, for every n. This is the base of the order, the floor the arrow runs up from.
 # (The `natural-number` refinement is what carries the n >= 0 assumption to the prover.)
 rule every-natural-is-at-least-zero
-  mark n, like natural-number
+  seat n, like natural-number
   show hold
     call is-minimum
       read n
@@ -60,9 +60,9 @@ rule every-natural-is-at-least-zero
 # proved by the commutative-ring normalizer. With commutativity and associativity of addition above, this makes the
 # naturals a commutative semiring, the algebraic floor the integers and the whole tower are built on.
 rule multiplication-distributes-over-addition
-  mark a, like natural
-  mark b, like natural
-  mark c, like natural
+  seat a, like natural
+  seat b, like natural
+  seat c, like natural
   show hold
     call is-equal
       call multiply
@@ -80,8 +80,8 @@ rule multiplication-distributes-over-addition
 
 # Multiplication commutes: a b = b a, for every a and b. The semiring is commutative.
 rule multiplication-commutes
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call multiply
@@ -93,9 +93,9 @@ rule multiplication-commutes
 
 # Multiplication associates: (a b) c = a (b c), for every a, b, c.
 rule multiplication-associates
-  mark a, like natural
-  mark b, like natural
-  mark c, like natural
+  seat a, like natural
+  seat b, like natural
+  seat c, like natural
   show hold
     call is-equal
       call multiply

@@ -152,7 +152,7 @@ task bracket
 # THE BRACKET IS ALTERNATING: an element brackets to zero with itself, [a,a] = 0. A generator induces no turn against its
 # own axis. Proved over every element.
 rule bracket-is-alternating
-  mark a, like elem
+  seat a, like elem
   show hold
     call is-equal
       call bracket
@@ -167,10 +167,10 @@ rule bracket-is-alternating
 # equality holds case by case. The zero element is the additive identity, not a basis element, and brackets to zero on
 # either side, where antisymmetry is immediate.
 rule bracket-is-antisymmetric
-  mark sign-a, like sign
-  mark gen-a, like gen
-  mark sign-b, like sign
-  mark gen-b, like gen
+  seat sign-a, like sign
+  seat gen-a, like gen
+  seat sign-b, like sign
+  seat gen-b, like gen
   show hold
     call is-equal
       call bracket

@@ -52,9 +52,9 @@ rule double-turn-returns
 
 # The turn composition is ASSOCIATIVE, with even the identity and every element its own inverse: Z/2 is a group.
 rule turn-add-is-associative
-  mark a, like parity
-  mark b, like parity
-  mark c, like parity
+  seat a, like parity
+  seat b, like parity
+  seat c, like parity
   show hold
     call is-equal
       call turn-add
@@ -70,7 +70,7 @@ rule turn-add-is-associative
   fold a, b, c
 
 rule turn-even-is-identity
-  mark a, like parity
+  seat a, like parity
   show hold
     call is-equal
       call turn-add
@@ -81,7 +81,7 @@ rule turn-even-is-identity
 
 # every turn is its own inverse (Z/2): turn-add a a = even.
 rule turn-self-inverse
-  mark a, like parity
+  seat a, like parity
   show hold
     call is-equal
       call turn-add

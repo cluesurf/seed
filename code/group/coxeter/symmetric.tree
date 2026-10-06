@@ -46,7 +46,7 @@ task s2
 # s1 IS AN INVOLUTION: s1 (s1 x) = x. A reflection done twice is the identity, the defining property of a Coxeter
 # generator.
 rule s1-is-an-involution
-  mark x, like point
+  seat x, like point
   show hold
     call is-equal
       call s1
@@ -57,7 +57,7 @@ rule s1-is-an-involution
 
 # s2 IS AN INVOLUTION: s2 (s2 x) = x.
 rule s2-is-an-involution
-  mark x, like point
+  seat x, like point
   show hold
     call is-equal
       call s2
@@ -70,7 +70,7 @@ rule s2-is-an-involution
 # send each point the same way (they equal the reflection swapping points one and three). This single relation, with the
 # two involutions, presents the whole group S3. Proved over all three points.
 rule braid-relation-of-a-two
-  mark x, like point
+  seat x, like point
   show hold
     call is-equal
       call s1

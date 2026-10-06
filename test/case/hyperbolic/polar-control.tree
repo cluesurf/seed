@@ -2,11 +2,11 @@
 
 # false: sinh^2 r carries sd^2 cc^2, not cc^2
 rule control-the-radius-without-the-foot
-  mark cc, like integer
-  mark ss, like integer
-  mark cd, like integer
-  mark sd, like integer
-  mark rr2, like integer
+  seat cc, like integer
+  seat ss, like integer
+  seat cd, like integer
+  seat sd, like integer
+  seat rr2, like integer
   have the-step-is-on-the-hyperbola
     call is-equal
       call subtract
@@ -53,11 +53,11 @@ rule control-the-radius-without-the-foot
 
 # false: the turning is cosh r times the polar rate
 rule control-the-turning-equals-the-polar-rate
-  mark th, like integer
-  mark pc, like integer
-  mark ch, like integer
-  mark sd, like integer
-  mark rr2, like integer
+  seat th, like integer
+  seat pc, like integer
+  seat ch, like integer
+  seat sd, like integer
+  seat rr2, like integer
   have the-polar-rate
     call is-equal
       call multiply
@@ -84,12 +84,12 @@ rule control-the-turning-equals-the-polar-rate
 
 # false: theta' sinh^2 r is sd, not 1
 rule control-the-polar-rate-without-the-foot
-  mark th, like integer
-  mark zd, like integer
-  mark k, like integer
-  mark cc, like integer
-  mark sd, like integer
-  mark rr2, like integer
+  seat th, like integer
+  seat zd, like integer
+  seat k, like integer
+  seat cc, like integer
+  seat sd, like integer
+  seat rr2, like integer
   have the-rate-times-the-radius
     call is-equal
       call multiply
@@ -124,11 +124,11 @@ rule control-the-polar-rate-without-the-foot
 
 # false: the rates are opposite
 rule control-complementary-angles-have-equal-rates
-  mark zd, like integer
-  mark yd, like integer
-  mark yy, like integer
-  mark f1, like integer
-  mark f2, like integer
+  seat zd, like integer
+  seat yd, like integer
+  seat yy, like integer
+  seat f1, like integer
+  seat f2, like integer
   have yd-is-the-rate-of-y
     call is-equal
       read yd

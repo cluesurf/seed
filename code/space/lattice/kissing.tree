@@ -28,7 +28,7 @@ task negate
 # vectors come in antipodal pairs, a root and its opposite, and the kissing number is even. Proved by induction over the
 # two signs.
 rule negation-is-an-involution
-  mark s, like sign
+  seat s, like sign
   show hold
     call is-equal
       call negate

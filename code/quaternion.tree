@@ -23,14 +23,14 @@ hold quaternions-have-dimension-four
 # and r = e + f i + g j + h k, the squared norm of the product equals the product of the squared norms. A universal
 # law over all eight coordinates, proved by the commutative-ring normalizer.
 rule quaternion-norm-is-multiplicative
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
-  mark d, like integer
-  mark e, like integer
-  mark f, like integer
-  mark g, like integer
-  mark h, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
+  seat d, like integer
+  seat e, like integer
+  seat f, like integer
+  seat g, like integer
+  seat h, like integer
   show hold
     call is-equal
       call multiply

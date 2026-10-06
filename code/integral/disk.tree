@@ -19,12 +19,12 @@
 # THE DISK. With q = big w, the step error is tol = q w + q w^2 + delta (big w^2 + big w^3 + delta), and over n strips
 # with n w = r it sums to n tol = q r + q r w + n delta.
 rule the-step-errors-sum
-  mark n, like integer
-  mark w, like integer
-  mark r, like integer
-  mark q, like integer
-  mark delta, like integer
-  mark tol, like integer
+  seat n, like integer
+  seat w, like integer
+  seat r, like integer
+  seat q, like integer
+  seat delta, like integer
+  seat tol, like integer
   have tol-is-the-step-error
     call is-equal
       read tol
@@ -67,11 +67,11 @@ rule the-step-errors-sum
 
 # The exponential's errors, each delta <= eps w (integral/limits), sum to n delta <= eps r.
 rule the-exponential-errors-sum-to-eps-r
-  mark n, like integer
-  mark w, like integer
-  mark r, like integer
-  mark delta, like integer
-  mark eps, like integer
+  seat n, like integer
+  seat w, like integer
+  seat r, like integer
+  seat delta, like integer
+  seat eps, like integer
   have delta-is-small
     call is-maximum
       read delta
@@ -100,10 +100,10 @@ rule the-exponential-errors-sum-to-eps-r
 
 # The mesh errors q r + q r w are at most 2 p, p = q r = big w r, as w <= 1.
 rule the-mesh-errors-sum-to-twice-big-w-r
-  mark q, like integer
-  mark r, like integer
-  mark w, like integer
-  mark p, like integer
+  seat q, like integer
+  seat r, like integer
+  seat w, like integer
+  seat p, like integer
   have p-is-q-times-the-radius
     meet and
       call is-equal
@@ -141,15 +141,15 @@ rule the-mesh-errors-sum-to-twice-big-w-r
 # So the Riemann sum S of sinh_N, within n tol of D = cosh_N(r) - 1, is within 2 big w r + eps r of it: the error tends
 # to 0 with the mesh w and the tolerance eps.
 rule the-disk-area-within-an-error
-  mark ss, like integer
-  mark dd, like integer
-  mark nt, like integer
-  mark q, like integer
-  mark r, like integer
-  mark w, like integer
-  mark nd, like integer
-  mark eps, like integer
-  mark p, like integer
+  seat ss, like integer
+  seat dd, like integer
+  seat nt, like integer
+  seat q, like integer
+  seat r, like integer
+  seat w, like integer
+  seat nd, like integer
+  seat eps, like integer
+  seat p, like integer
   have the-sums-are-within-n-tol
     meet and
       call is-maximum
@@ -230,16 +230,16 @@ rule the-disk-area-within-an-error
 # Each citation proves the cited rule's hypotheses here and uses its conclusion, at this rule's n, w, r, q, delta, tol,
 # eps and p (a cited rule's marks are read by name).
 rule the-disk-area-from-the-steps
-  mark ss, like integer
-  mark dd, like integer
-  mark n, like integer
-  mark w, like integer
-  mark r, like integer
-  mark q, like integer
-  mark delta, like integer
-  mark tol, like integer
-  mark eps, like integer
-  mark p, like integer
+  seat ss, like integer
+  seat dd, like integer
+  seat n, like integer
+  seat w, like integer
+  seat r, like integer
+  seat q, like integer
+  seat delta, like integer
+  seat tol, like integer
+  seat eps, like integer
+  seat p, like integer
   have the-sums-are-within-n-tol
     meet and
       call is-maximum
@@ -341,12 +341,12 @@ rule the-disk-area-from-the-steps
 # [ch - 1, ch + dch - 1], lies in [(ch - 1) dth, (ch + dch - 1) dth]: a-riemann-sum-lies-between-its-ends at
 # fa = ch + dch - 1 and fb = ch - 1, for an increasing integrand.
 rule the-swept-area-sum-is-squeezed
-  mark sm, like integer
-  mark m, like integer
-  mark w, like integer
-  mark dth, like integer
-  mark ch, like integer
-  mark dch, like integer
+  seat sm, like integer
+  seat m, like integer
+  seat w, like integer
+  seat dth, like integer
+  seat ch, like integer
+  seat dch, like integer
   have the-riemann-sum-bound
     meet and
       call is-maximum

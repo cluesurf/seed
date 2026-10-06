@@ -33,7 +33,7 @@ task coxeter-element
 # identity, for every root. So the Coxeter number of A2 is three, the order of its Coxeter element. Proved by induction
 # over the three roots.
 rule the-coxeter-element-has-order-three
-  mark r, like a-two-root
+  seat r, like a-two-root
   show hold
     call is-equal
       call coxeter-element

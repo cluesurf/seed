@@ -104,7 +104,7 @@ rule zero-plus-three-is-three
 # Zero is a left identity for addition: 0 + n = n, for every natural n. (The zero branch of plus returns its second
 # argument directly, so plus zero n reduces to n even when n is an arbitrary variable.)
 rule plus-zero-left-is-identity
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call plus
@@ -116,8 +116,8 @@ rule plus-zero-left-is-identity
 # The successor steps out of a sum: (succ a) + b = succ (a + b), for every a and b. (This is the recursion equation of
 # plus, definitionally true.)
 rule plus-succ-steps-out
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call plus
@@ -136,7 +136,7 @@ rule plus-succ-steps-out
 # so plus n zero is stuck on a variable n), and is proved by structural induction on n: the base n = 0 holds by
 # computation, and the successor case closes using the induction hypothesis. This is the type's eliminator at work.
 rule plus-zero-right-is-identity
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call plus
@@ -148,8 +148,8 @@ rule plus-zero-right-is-identity
 # The successor steps out on the RIGHT: a + (succ b) = succ (a + b), for every a and b. Proved by induction on a (each
 # side recurses on a, and the hypothesis aligns the successor cases).
 rule plus-succ-right-steps-out
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call plus
@@ -167,9 +167,9 @@ rule plus-succ-right-steps-out
 # Addition is associative: (a + b) + c = a + (b + c), for every a, b, c. Proved by induction on a (each side recurses on
 # a, and the successor cases align through the hypothesis). No lemma needed: the recurrence alone closes it.
 rule plus-is-associative
-  mark a, like natural
-  mark b, like natural
-  mark c, like natural
+  seat a, like natural
+  seat b, like natural
+  seat c, like natural
   show hold
     call is-equal
       call plus
@@ -188,8 +188,8 @@ rule plus-is-associative
 # lemmas: the base case a = 0 needs n + 0 = n (right identity), and the successor case needs a + succ b = succ (a + b)
 # (the successor steps out on the right). The `cite`s name those lemmas, which the induction applies as rewrites.
 rule plus-is-commutative
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call plus
@@ -222,7 +222,7 @@ task times
 
 # Zero is a left absorber for multiplication: 0 * n = 0, for every n. Definitional.
 rule times-zero-left-is-zero
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call times
@@ -234,7 +234,7 @@ rule times-zero-left-is-zero
 # Zero is ALSO a right absorber: n * 0 = 0, for every n. Not definitional (times recurses on its first argument), so
 # proved by induction on n: the successor case 0 + (k * 0) reduces to k * 0, which the hypothesis sends to zero.
 rule times-zero-right-is-zero
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call times
@@ -246,7 +246,7 @@ rule times-zero-right-is-zero
 # One is a right identity: n * 1 = n, for every n. The successor case 1 + (k * 1) reduces to succ (k * 1), which the
 # hypothesis closes. Proved by induction on n.
 rule times-one-right-is-identity
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call times
@@ -260,8 +260,8 @@ rule times-one-right-is-identity
 # The successor steps out on the LEFT of a product: (succ a) * b = b + (a * b). This is the recurrence of `times`,
 # definitionally true, and the lemma the ring proofs below rewrite with to expose the recursive call.
 rule times-succ-left-steps-out
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call times
@@ -280,9 +280,9 @@ rule times-succ-left-steps-out
 # definitional step lemmas (which rewrite the recurrence into view) with associativity of addition (which realigns the
 # two sides). The induction hypothesis fires automatically on the recursive call.
 rule times-distributes-right
-  mark a, like natural
-  mark b, like natural
-  mark c, like natural
+  seat a, like natural
+  seat b, like natural
+  seat c, like natural
   show hold
     call is-equal
       call times
@@ -305,9 +305,9 @@ rule times-distributes-right
 # Multiplication is associative: (a * b) * c = a * (b * c), for every a, b, c. Proved by induction on a, citing the
 # left step lemma (to expose the recurrence) and right distributivity (to split the product over the sum it unfolds to).
 rule times-is-associative
-  mark a, like natural
-  mark b, like natural
-  mark c, like natural
+  seat a, like natural
+  seat b, like natural
+  seat c, like natural
   show hold
     call is-equal
       call times
@@ -328,8 +328,8 @@ rule times-is-associative
 # first argument), so proved by induction on a. The step needs to commute and reassociate a sum, so the proof cites
 # addition's commutativity and associativity, which the prover handles by normalizing the additive chains modulo AC.
 rule times-succ-right-is-plus
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call times
@@ -352,8 +352,8 @@ rule times-succ-right-is-plus
 # right absorber n * 0 = 0, and the successor case rewrites both sides through the two product step lemmas, the induction
 # hypothesis closing k * b = b * k.
 rule times-is-commutative
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call times
@@ -402,7 +402,7 @@ task power
 
 # b to the zero is one. Definitional.
 rule power-zero-is-one
-  mark b, like natural
+  seat b, like natural
   show hold
     call is-equal
       call power
@@ -415,8 +415,8 @@ rule power-zero-is-one
 
 # the exponent step: b^(succ d) = b * b^d. Definitional (the recurrence of power).
 rule power-succ-steps-out
-  mark b, like natural
-  mark d, like natural
+  seat b, like natural
+  seat d, like natural
   show hold
     call is-equal
       call power
@@ -435,9 +435,9 @@ rule power-succ-steps-out
 # step lemma, the multiplicative step lemma, associativity of multiplication, and (in the base) the right identity of
 # addition. This is the general law behind "doubling the search depth squares the reach": b^(2d) = (b^d)^2.
 rule power-adds-exponents
-  mark b, like natural
-  mark d, like natural
-  mark e, like natural
+  seat b, like natural
+  seat d, like natural
+  seat e, like natural
   show hold
     call is-equal
       call power
@@ -466,9 +466,9 @@ rule power-adds-exponents
 # the product over the sum and the two sides agree after commuting and reassociating the additive terms (AC). With right
 # distributivity this completes the distributive law of the semiring on both sides.
 rule times-distributes-left
-  mark a, like natural
-  mark b, like natural
-  mark c, like natural
+  seat a, like natural
+  seat b, like natural
+  seat c, like natural
   show hold
     call is-equal
       call times
@@ -491,7 +491,7 @@ rule times-distributes-left
 # One is a LEFT identity for multiplication: 1 * n = n, for every n. (Right identity n * 1 = n is proved above; this
 # completes the multiplicative identity on both sides.) The single product step unfolds 1 * n to n + 0*n = n + 0 = n.
 rule times-one-left-is-identity
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call times
@@ -507,7 +507,7 @@ rule times-one-left-is-identity
 
 # Two times n is n doubled: n * 2 = n + n, for every n. Connects multiplication by two to addition.
 rule times-two-is-double
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call times
@@ -531,8 +531,8 @@ rule times-two-is-double
 # identity, proved by spreading the product over the sum on both sides (both distributive laws) and commuting the cross
 # term, with addition AND multiplication normalized modulo associativity-commutativity. Exercises the whole semiring.
 rule square-of-sum
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call times

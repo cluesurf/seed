@@ -155,7 +155,7 @@ task extract-phase
 # EVERY PAULI SQUARES TO THE IDENTITY: pauli-multiply p p = the identity with phase one, for every operator. This is the
 # involution property X squared = Y squared = Z squared = identity, proved over all four operators.
 rule every-pauli-squares-to-identity
-  mark p, like pauli
+  seat p, like pauli
   show hold
     call is-equal
       call pauli-multiply

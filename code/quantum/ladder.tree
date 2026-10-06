@@ -38,7 +38,7 @@ task annihilate
 # ANNIHILATION UNDOES CREATION: annihilate (create n) = n, for every occupation. A quantum added and immediately removed
 # leaves the mode exactly as it was. This is a a-dagger acting as the identity on any state.
 rule annihilate-undoes-create
-  mark n, like mode
+  seat n, like mode
   show hold
     call is-equal
       call annihilate
@@ -72,7 +72,7 @@ rule commutator-asymmetry-at-vacuum
 # The NUMBER operator reads the occupation, and creation raises it by one: the number after creation is one more than
 # before. number (create n) = succ of number n, here the occupation IS the number, so creating adds one quantum.
 rule creation-raises-the-number
-  mark n, like mode
+  seat n, like mode
   show hold
     call is-equal
       call create

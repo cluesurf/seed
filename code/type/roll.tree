@@ -80,7 +80,7 @@ rule length-of-nil-is-zero
 
 # UNIVERSAL: nil is a left identity for append. append nil ys = ys, for every roll ys. Definitional.
 rule append-nil-left-is-identity
-  mark ys, like roll
+  seat ys, like roll
   show hold
     call is-equal
       call append
@@ -91,8 +91,8 @@ rule append-nil-left-is-identity
 
 # UNIVERSAL: length steps through a cons. length (cons h t) = succ (length t), for every head h and tail t. Definitional.
 rule length-of-cons-steps
-  mark h, like natural
-  mark t, like roll
+  seat h, like natural
+  seat t, like roll
   show hold
     call is-equal
       call length
@@ -109,9 +109,9 @@ rule length-of-cons-steps
 
 # UNIVERSAL: append steps through a cons. append (cons h t) ys = cons h (append t ys), for every h, t, ys. Definitional.
 rule append-of-cons-steps
-  mark h, like natural
-  mark t, like roll
-  mark ys, like roll
+  seat h, like natural
+  seat t, like roll
+  seat ys, like roll
   show hold
     call is-equal
       call append
@@ -137,7 +137,7 @@ rule append-of-cons-steps
 
 # nil is ALSO a right identity for append: append xs nil = xs, for every roll xs.
 rule append-nil-right-is-identity
-  mark xs, like roll
+  seat xs, like roll
   show hold
     call is-equal
       call append
@@ -148,9 +148,9 @@ rule append-nil-right-is-identity
 
 # append is associative: append (append xs ys) zs = append xs (append ys zs), for every xs, ys, zs.
 rule append-is-associative
-  mark xs, like roll
-  mark ys, like roll
-  mark zs, like roll
+  seat xs, like roll
+  seat ys, like roll
+  seat zs, like roll
   show hold
     call is-equal
       call append
@@ -167,8 +167,8 @@ rule append-is-associative
 
 # length is a monoid homomorphism from append to plus: length (append xs ys) = length xs + length ys, for every xs, ys.
 rule length-of-append-adds
-  mark xs, like roll
-  mark ys, like roll
+  seat xs, like roll
+  seat ys, like roll
   show hold
     call is-equal
       call length
@@ -210,8 +210,8 @@ rule reverse-nil-is-nil
   calm hold
 
 rule reverse-cons-steps
-  mark h, like natural
-  mark t, like roll
+  seat h, like natural
+  seat t, like roll
   show hold
     call is-equal
       call reverse
@@ -233,8 +233,8 @@ rule reverse-cons-steps
 # reverse is an anti-homomorphism on append: reverse (append xs ys) = append (reverse ys) (reverse xs). By induction on
 # xs, using the reverse and append step laws and associativity of append.
 rule reverse-of-append
-  mark xs, like roll
-  mark ys, like roll
+  seat xs, like roll
+  seat ys, like roll
   show hold
     call is-equal
       call append
@@ -256,7 +256,7 @@ rule reverse-of-append
 # reverse is an INVOLUTION: reverse (reverse xs) = xs, for every list. The canonical list theorem, by induction on xs
 # citing the reverse-append anti-homomorphism.
 rule reverse-reverse-is-identity
-  mark xs, like roll
+  seat xs, like roll
   show hold
     call is-equal
       call reverse, read xs
@@ -269,7 +269,7 @@ rule reverse-reverse-is-identity
 
 # helper plus laws (over the lengths) for the length-of-reverse theorem.
 rule plus-zero-right-on-length
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call plus
@@ -279,8 +279,8 @@ rule plus-zero-right-on-length
   fold n
 
 rule plus-succ-right-on-length
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call plus
@@ -298,7 +298,7 @@ rule plus-succ-right-on-length
 # reverse preserves length: length (reverse xs) = length xs, for every list. By induction on xs, using the reverse step
 # law, the length-of-append homomorphism, and the plus step laws.
 rule length-of-reverse-is-length
-  mark xs, like roll
+  seat xs, like roll
   show hold
     call is-equal
       call reverse, read xs

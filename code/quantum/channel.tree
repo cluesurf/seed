@@ -216,9 +216,9 @@ task entropy
 # the composition (the homomorphism from the channel monoid to maps on states), the bridge that makes the abstract group
 # law a fact about the evolutions. Proved by simultaneous induction over the two channels and the state.
 rule unitary-composes-in-sequence
-  mark f, like unitary
-  mark g, like unitary
-  mark s, like state
+  seat f, like unitary
+  seat g, like unitary
+  seat s, like state
   show hold
     call is-equal
       call act
@@ -236,9 +236,9 @@ rule unitary-composes-in-sequence
 # COMPOSITION OF UNITARY CHANNELS IS ASSOCIATIVE: compose (compose f g) h = compose f (compose g h), for every f, g, h.
 # Grouping a pipeline of unitary channels does not matter. Proved by simultaneous induction over the three channels.
 rule composition-is-associative
-  mark f, like unitary
-  mark g, like unitary
-  mark h, like unitary
+  seat f, like unitary
+  seat g, like unitary
+  seat h, like unitary
   show hold
     call is-equal
       call compose
@@ -256,7 +256,7 @@ rule composition-is-associative
 # THE IDENTITY CHANNEL IS A LEFT UNIT: compose identity g = g, for every g. Prepending the identity changes nothing.
 # Definitional (the identity branch of compose returns its second argument).
 rule identity-is-left-unit
-  mark g, like unitary
+  seat g, like unitary
   show hold
     call is-equal
       call compose
@@ -269,7 +269,7 @@ rule identity-is-left-unit
 # Proved by induction over g (compose recurses on its first argument, so the right unit is not definitional). With the
 # left unit and associativity, the unitary channels form a MONOID under composition with identity as the unit.
 rule identity-is-right-unit
-  mark g, like unitary
+  seat g, like unitary
   show hold
     call is-equal
       call compose
@@ -282,7 +282,7 @@ rule identity-is-right-unit
 # original state, so the flip is its own inverse, the group fact that makes the unitary channels a group. Proved by
 # induction over the state.
 rule flip-is-involution
-  mark s, like state
+  seat s, like state
   show hold
     call is-equal
       call act
@@ -307,8 +307,8 @@ task trace
 # normalized state to a normalized state, so the total probability is conserved. This is the completeness relation
 # (K dagger) K = identity read as conservation of probability. Proved by simultaneous induction over the channel and state.
 rule unitary-preserves-trace
-  mark u, like unitary
-  mark s, like state
+  seat u, like unitary
+  seat s, like state
   show hold
     call is-equal
       call trace
@@ -323,7 +323,7 @@ rule unitary-preserves-trace
 # destroys coherence, probability is conserved (the completeness P0 dagger P0 + P1 dagger P1 = identity). Proved by
 # induction over the state.
 rule measure-preserves-trace
-  mark s, like state
+  seat s, like state
   show hold
     call is-equal
       call trace
@@ -338,9 +338,9 @@ rule measure-preserves-trace
 # action law above, the composite acts as the two in turn, each trace preserving, so probability is conserved across the
 # whole pipeline. Proved by simultaneous induction over the two channels and the state.
 rule trace-preservation-composes
-  mark f, like unitary
-  mark g, like unitary
-  mark s, like state
+  seat f, like unitary
+  seat g, like unitary
+  seat s, like state
   show hold
     call is-equal
       call trace
@@ -397,7 +397,7 @@ task at-least-zero
     make on
 
 rule entropy-is-non-negative
-  mark s, like state
+  seat s, like state
   show hold
     call is-equal
       call at-least-zero
@@ -422,8 +422,8 @@ rule entropy-of-uniform-is-one
 # a ray to a ray, leaving the support size unchanged, so the entropy is invariant. This is S(U rho U dagger) = S(rho) read
 # on the surrogate. Proved by simultaneous induction over the channel and the state.
 rule unitary-preserves-entropy
-  mark u, like unitary
-  mark s, like state
+  seat u, like unitary
+  seat s, like state
   show hold
     call is-equal
       call entropy
@@ -438,8 +438,8 @@ rule unitary-preserves-entropy
 # and the uniform mixture to the uniform mixture, so purity is unchanged. Proved by simultaneous induction over the
 # channel and the state.
 rule unitary-preserves-purity
-  mark u, like unitary
-  mark s, like state
+  seat u, like unitary
+  seat s, like state
   show hold
     call is-equal
       call is-pure
@@ -516,7 +516,7 @@ rule measure-fixes-zero
 # computational basis it is fully decohered, so reading it again does nothing new. This is the projector property P P = P
 # of a measurement, the irreversible counterpart of the unitary involution above. Proved by induction over the state.
 rule measure-is-idempotent
-  mark s, like state
+  seat s, like state
   show hold
     call is-equal
       call measure

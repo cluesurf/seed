@@ -2,39 +2,39 @@
 
 # false: without the turning identity the angles say nothing about the area
 rule control-gauss-bonnet-without-the-turning
-  mark ar
+  seat ar
     like task
       take a0, like integer
       like integer
-  mark ps
+  seat ps
     like task
       take a0, like integer
       like integer
-  mark th
+  seat th
     like task
       take a0, like integer
       like integer
-  mark c
+  seat c
     like task
       take a0, like integer
       like integer
-  mark ia
+  seat ia
     like task
       take a0, like integer
       like integer
-  mark ip
+  seat ip
     like task
       take a0, like integer
       like integer
-  mark it
+  seat it
     like task
       take a0, like integer
       like integer
-  mark n, like integer
-  mark w, like integer
-  mark eps, like integer
+  seat n, like integer
+  seat w, like integer
+  seat eps, like integer
   have the-area-follows-its-increment
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -69,7 +69,7 @@ rule control-gauss-bonnet-without-the-turning
             read eps
             read w
   have psi-follows-its-increment
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -104,7 +104,7 @@ rule control-gauss-bonnet-without-the-turning
             read eps
             read w
   have theta-follows-its-increment
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -139,7 +139,7 @@ rule control-gauss-bonnet-without-the-turning
             read eps
             read w
   have the-area-element
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -226,20 +226,20 @@ rule control-gauss-bonnet-without-the-turning
 
 # false: big w^2 alone does not bound the step (cosh x = sinh x = big, cosh w - 1 = w^2, sinh w - w = w^3)
 rule control-cosh-without-the-cube
-  mark cc
+  seat cc
     like task
       take a0, like integer
       like integer
-  mark ss
+  seat ss
     like task
       take a0, like integer
       like integer
-  mark x, like integer
-  mark w, like integer
-  mark big, like integer
+  seat x, like integer
+  seat w, like integer
+  seat big, like integer
   have the-addition-formula
-    mark a, like integer
-    mark b, like integer
+    seat a, like integer
+    seat b, like integer
     call is-equal
       call cc
         call add
@@ -257,7 +257,7 @@ rule control-cosh-without-the-cube
           call ss
             read b
   have cosh-near-zero
-    mark u, like integer
+    seat u, like integer
     meet or
       call is-below
         read u
@@ -281,7 +281,7 @@ rule control-cosh-without-the-cube
             read u
             read u
   have sinh-near-zero
-    mark u, like integer
+    seat u, like integer
     meet or
       call is-below
         read u
@@ -361,27 +361,27 @@ rule control-cosh-without-the-cube
 
 # false: eps n w / 2 is not enough
 rule control-half-the-tolerance
-  mark bigf
+  seat bigf
     like task
       take a0, like integer
       like integer
-  mark f
+  seat f
     like task
       take a0, like integer
       like integer
-  mark pt
+  seat pt
     like task
       take a0, like integer
       like integer
-  mark sum
+  seat sum
     like task
       take a0, like integer
       like integer
-  mark n, like integer
-  mark w, like integer
-  mark eps, like integer
+  seat n, like integer
+  seat w, like integer
+  seat eps, like integer
   have the-points-are-evenly-spaced
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -396,7 +396,7 @@ rule control-half-the-tolerance
             read i
         read w
   have bigf-has-derivative-f-at-the-mesh
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -446,7 +446,7 @@ rule control-half-the-tolerance
         code 0
       code 0
   have the-riemann-sum-adds-a-strip
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -502,27 +502,27 @@ rule control-half-the-tolerance
 
 # false: without the derivative hypothesis the sum says nothing
 rule control-without-the-derivative
-  mark bigf
+  seat bigf
     like task
       take a0, like integer
       like integer
-  mark f
+  seat f
     like task
       take a0, like integer
       like integer
-  mark pt
+  seat pt
     like task
       take a0, like integer
       like integer
-  mark sum
+  seat sum
     like task
       take a0, like integer
       like integer
-  mark n, like integer
-  mark w, like integer
-  mark eps, like integer
+  seat n, like integer
+  seat w, like integer
+  seat eps, like integer
   have the-points-are-evenly-spaced
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -542,7 +542,7 @@ rule control-without-the-derivative
         code 0
       code 0
   have the-riemann-sum-adds-a-strip
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -595,13 +595,13 @@ rule control-without-the-derivative
 # false: from 0 <= x(t) y <= 1 for every t nothing gives x(0) y >= 7. (A prover that assumed a hypothesis's NEGATION
 # would hold x(0) y > 1 and x(0) y < 0 together, and prove this from the contradiction.)
 rule control-a-two-sided-nonlinear-hypothesis
-  mark x
+  seat x
     like task
       take a0, like integer
       like integer
-  mark y, like integer
+  seat y, like integer
   have bounded
-    mark t, like integer
+    seat t, like integer
     meet and
       call is-maximum
         call multiply
@@ -626,22 +626,22 @@ rule control-a-two-sided-nonlinear-hypothesis
 
 # false: the telescoped sum is cc(n) - cc(0), not cc(n)
 rule control-the-disk-sum-off-by-one
-  mark cc
+  seat cc
     like task
       take a0, like integer
       like integer
-  mark mid
+  seat mid
     like task
       take a0, like integer
       like integer
-  mark acc
+  seat acc
     like task
       take a0, like integer
       like integer
-  mark n, like integer
-  mark s, like integer
+  seat n, like integer
+  seat s, like integer
   have each-strip-is-a-difference
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -666,7 +666,7 @@ rule control-the-disk-sum-off-by-one
         code 0
       code 0
   have the-sum-adds-a-strip
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i

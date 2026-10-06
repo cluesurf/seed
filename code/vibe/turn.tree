@@ -252,8 +252,8 @@ task same-matrix
 
 # THE DETERMINANT IS MULTIPLICATIVE: det (m n) = det m det n.
 rule the-determinant-is-multiplicative
-  mark m, like turn-matrix
-  mark n, like turn-matrix
+  seat m, like turn-matrix
+  seat n, like turn-matrix
   show hold
     call is-equal
       call determinant
@@ -270,9 +270,9 @@ rule the-determinant-is-multiplicative
 # COMPOSITION IS THE COMPOSITION OF MOVES: (m n) u = m (n u). Since a matrix is fixed by where it sends (1, 0) and
 # (0, 1), this is also what makes composition associative.
 rule a-product-of-turns-moves-the-grid-as-one-move-after-the-other
-  mark m, like turn-matrix
-  mark n, like turn-matrix
-  mark u, like role
+  seat m, like turn-matrix
+  seat n, like turn-matrix
+  seat u, like role
   show hold
     call is-equal
       call apply-turn
@@ -290,9 +290,9 @@ rule a-product-of-turns-moves-the-grid-as-one-move-after-the-other
 # A TURN SCALES THE FORM BY ITS DETERMINANT: [m u, m v] = det m [u, v]. A determinant-1 turn keeps the form, and these
 # are exactly the symplectic moves of the grid.
 rule a-turn-scales-the-wedge-by-its-determinant
-  mark m, like turn-matrix
-  mark u, like role
-  mark v, like role
+  seat m, like turn-matrix
+  seat u, like role
+  seat v, like role
   show hold
     call is-equal
       call wedge
@@ -422,7 +422,7 @@ fuse homomorphism, rho, hurwitz-element, rho, hurwitz-product, turn-compose
 
 # INTO SL(2, 3): every image has determinant 1.
 rule every-image-has-determinant-one
-  mark g, like hurwitz-element
+  seat g, like hurwitz-element
   show hold
     call is-equal
       call determinant
@@ -433,8 +433,8 @@ rule every-image-has-determinant-one
 
 # INJECTIVE: distinct units have distinct matrices.
 rule rho-is-injective
-  mark g, like hurwitz-element
-  mark h, like hurwitz-element
+  seat g, like hurwitz-element
+  seat h, like hurwitz-element
   have same
     call is-equal
       call same-matrix
@@ -660,7 +660,7 @@ task unrho
 # EVERY DETERMINANT-1 MATRIX IS AN IMAGE: for all 81 matrices, det m = 1 implies rho (unrho m) = m. With injectivity,
 # SL(2, 3) has exactly the 24 elements of 2T and rho is an isomorphism.
 rule every-determinant-one-matrix-is-an-image
-  mark m, like turn-matrix
+  seat m, like turn-matrix
   show hold
     call is-equal
       call implies
@@ -709,9 +709,9 @@ task shift-weyl
 
 # A DETERMINANT-1 TURN IS AN AUTOMORPHISM OF THE WEYL-HEISENBERG GROUP.
 rule a-symplectic-turn-is-an-automorphism
-  mark m, like turn-matrix
-  mark g, like weyl
-  mark h, like weyl
+  seat m, like turn-matrix
+  seat g, like weyl
+  seat h, like weyl
   have unimodular
     call is-equal
       call determinant
@@ -735,9 +735,9 @@ rule a-symplectic-turn-is-an-automorphism
 
 # A GRID SHIFT IS AN AUTOMORPHISM, for every shift t.
 rule a-grid-shift-is-an-automorphism
-  mark t, like role
-  mark g, like weyl
-  mark h, like weyl
+  seat t, like role
+  seat g, like weyl
+  seat h, like weyl
   show hold
     call is-equal
       call shift-weyl

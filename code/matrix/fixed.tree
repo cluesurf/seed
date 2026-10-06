@@ -84,57 +84,57 @@ task apply
   back make vector-two(add(multiply(m/xx, v/x), multiply(m/xy, v/y)), add(multiply(m/yx, v/x), multiply(m/yy, v/y)))
 
 rule product-associates-two
-  mark m, like matrix-two
-  mark n, like matrix-two
-  mark p, like matrix-two
+  seat m, like matrix-two
+  seat n, like matrix-two
+  seat p, like matrix-two
   show hold, is-equal product(product(m, n), p), product(m, product(n, p))
 
 rule unit-is-identity-two
-  mark m, like matrix-two
+  seat m, like matrix-two
   show hold, is-equal product(unit-two(), m), m
 
 rule unit-is-identity-on-the-right-two
-  mark m, like matrix-two
+  seat m, like matrix-two
   show hold, is-equal product(m, unit-two()), m
 
 rule product-distributes-two
-  mark m, like matrix-two
-  mark n, like matrix-two
-  mark p, like matrix-two
+  seat m, like matrix-two
+  seat n, like matrix-two
+  seat p, like matrix-two
   show hold, is-equal product(m, total(n, p)), total(product(m, n), product(m, p))
 
 rule transpose-twice-two
-  mark m, like matrix-two
+  seat m, like matrix-two
   show hold, is-equal transpose(transpose(m)), m
 
 rule transpose-of-a-product-two
-  mark m, like matrix-two
-  mark n, like matrix-two
+  seat m, like matrix-two
+  seat n, like matrix-two
   show hold, is-equal transpose(product(m, n)), product(transpose(n), transpose(m))
 
 rule determinant-of-a-product-two
-  mark m, like matrix-two
-  mark n, like matrix-two
+  seat m, like matrix-two
+  seat n, like matrix-two
   show hold, is-equal determinant(product(m, n)), multiply(determinant(m), determinant(n))
 
 rule determinant-of-the-transpose-two
-  mark m, like matrix-two
+  seat m, like matrix-two
   show hold, is-equal determinant(transpose(m)), determinant(m)
 
 rule trace-of-a-product-commutes-two
-  mark m, like matrix-two
-  mark n, like matrix-two
+  seat m, like matrix-two
+  seat n, like matrix-two
   show hold, is-equal trace(product(m, n)), trace(product(n, m))
 
 rule apply-a-product-two
-  mark m, like matrix-two
-  mark n, like matrix-two
-  mark v, like vector-two
+  seat m, like matrix-two
+  seat n, like matrix-two
+  seat v, like vector-two
   show hold, is-equal apply(product(m, n), v), apply(m, apply(n, v))
 
 # CAYLEY-HAMILTON for size two: m^2 - trace(m) m + det(m) I = 0, read entry by entry as m^2 + det(m) I = trace(m) m.
 rule cayley-hamilton-two
-  mark m, like matrix-two
+  seat m, like matrix-two
   show hold
     is-equal
       total(product(m, m), make matrix-two(determinant(m), 0, 0, determinant(m)))
@@ -205,44 +205,44 @@ task apply
       bind z, add(add(multiply(m/zx, v/x), multiply(m/zy, v/y)), multiply(m/zz, v/z))
 
 rule product-associates-three
-  mark m, like matrix-three
-  mark n, like matrix-three
-  mark p, like matrix-three
+  seat m, like matrix-three
+  seat n, like matrix-three
+  seat p, like matrix-three
   show hold, is-equal product(product(m, n), p), product(m, product(n, p))
 
 rule unit-is-identity-three
-  mark m, like matrix-three
+  seat m, like matrix-three
   show hold, is-equal product(unit-three(), m), m
 
 rule transpose-twice-three
-  mark m, like matrix-three
+  seat m, like matrix-three
   show hold, is-equal transpose(transpose(m)), m
 
 rule transpose-of-a-product-three
-  mark m, like matrix-three
-  mark n, like matrix-three
+  seat m, like matrix-three
+  seat n, like matrix-three
   show hold, is-equal transpose(product(m, n)), product(transpose(n), transpose(m))
 
 # THE DETERMINANT IS MULTIPLICATIVE, for every pair of 3-by-3 matrices.
 rule determinant-of-a-product-three
-  mark m, like matrix-three
-  mark n, like matrix-three
+  seat m, like matrix-three
+  seat n, like matrix-three
   show hold, is-equal determinant(product(m, n)), multiply(determinant(m), determinant(n))
 
 rule determinant-of-the-transpose-three
-  mark m, like matrix-three
+  seat m, like matrix-three
   show hold, is-equal determinant(transpose(m)), determinant(m)
 
 rule determinant-of-unit-three
   show hold, is-equal determinant(unit-three()), 1
 
 rule trace-of-a-product-commutes-three
-  mark m, like matrix-three
-  mark n, like matrix-three
+  seat m, like matrix-three
+  seat n, like matrix-three
   show hold, is-equal trace(product(m, n)), trace(product(n, m))
 
 rule apply-a-product-three
-  mark m, like matrix-three
-  mark n, like matrix-three
-  mark v, like vector-three
+  seat m, like matrix-three
+  seat n, like matrix-three
+  seat v, like vector-three
   show hold, is-equal apply(product(m, n), v), apply(m, apply(n, v))

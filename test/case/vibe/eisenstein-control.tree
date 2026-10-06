@@ -44,10 +44,10 @@ task indefinite
 
 # 1. the Eisenstein norm is NOT multiplicative for the Gaussian product
 rule control-norm-with-gaussian-part
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
-  mark d, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
+  seat d, like integer
   show hold
     call is-equal
       call eisenstein-norm
@@ -71,8 +71,8 @@ rule control-norm-with-gaussian-part
 
 # 2. an indefinite form is not non-negative
 rule control-indefinite-is-not-non-negative
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   show hold
     call is-minimum
       call indefinite
@@ -82,10 +82,10 @@ rule control-indefinite-is-not-non-negative
 
 # 3. the residue law with the wrong sign
 rule control-residue-wrong-sign
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
-  mark d, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
+  seat d, like integer
   show hold
     call is-equal
       call residue

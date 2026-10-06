@@ -216,7 +216,7 @@ fuse product, kay-squared-is-minus-one, kay, kay, neg, one
 
 # THE IDENTITY: one times any quaternion is itself, over all eight elements.
 rule one-is-the-identity
-  mark q, like quat
+  seat q, like quat
   show hold
     call is-equal
       call mul
@@ -232,7 +232,7 @@ rule one-is-the-identity
 # EVERY ELEMENT HAS AN INVERSE: a unit quaternion times its conjugate is one, over all eight elements. This is the group
 # axiom that makes Q8 a group, proved, not asserted.
 rule every-element-has-an-inverse
-  mark q, like quat
+  seat q, like quat
   show hold
     call is-equal
       call mul

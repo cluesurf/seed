@@ -127,7 +127,7 @@ task error-three
 
 # NO ERROR: decoding a clean codeword returns the bit. decode (encode b) = b.
 rule decodes-clean-codeword
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call decode
@@ -138,7 +138,7 @@ rule decodes-clean-codeword
 
 # CORRECTS A FLIP AT POSITION ONE: decode (error-one (encode b)) = b, for both bit values.
 rule corrects-error-at-one
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call decode
@@ -150,7 +150,7 @@ rule corrects-error-at-one
 
 # CORRECTS A FLIP AT POSITION TWO.
 rule corrects-error-at-two
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call decode
@@ -163,7 +163,7 @@ rule corrects-error-at-two
 # CORRECTS A FLIP AT POSITION THREE. With the two cases above, EVERY single-bit error is corrected: the code distance is
 # three, so it fixes any one error.
 rule corrects-error-at-three
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call decode

@@ -96,24 +96,24 @@ task gram-determinant
             read gp
 
 rule control-side-angle-side-and-side-side-side
-  mark a0, like integer
-  mark a1, like integer
-  mark a2, like integer
-  mark b0, like integer
-  mark b1, like integer
-  mark b2, like integer
-  mark c0, like integer
-  mark c1, like integer
-  mark c2, like integer
-  mark p0, like integer
-  mark p1, like integer
-  mark p2, like integer
-  mark q0, like integer
-  mark q1, like integer
-  mark q2, like integer
-  mark r0, like integer
-  mark r1, like integer
-  mark r2, like integer
+  seat a0, like integer
+  seat a1, like integer
+  seat a2, like integer
+  seat b0, like integer
+  seat b1, like integer
+  seat b2, like integer
+  seat c0, like integer
+  seat c1, like integer
+  seat c2, like integer
+  seat p0, like integer
+  seat p1, like integer
+  seat p2, like integer
+  seat q0, like integer
+  seat q1, like integer
+  seat q2, like integer
+  seat r0, like integer
+  seat r1, like integer
+  seat r2, like integer
   show hold
     call is-equal
       call subtract
@@ -368,15 +368,15 @@ rule control-side-angle-side-and-side-side-side
             code 1
 
 rule control-the-gram-determinant-is-the-square-of-the-determinant
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark y0, like integer
-  mark y1, like integer
-  mark y2, like integer
-  mark z0, like integer
-  mark z1, like integer
-  mark z2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat y0, like integer
+  seat y1, like integer
+  seat y2, like integer
+  seat z0, like integer
+  seat z1, like integer
+  seat z2, like integer
   show hold
     call is-equal
       call gram-determinant
@@ -445,15 +445,15 @@ rule control-the-gram-determinant-is-the-square-of-the-determinant
           read z2
 
 rule control-the-triangle-inequality
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark y0, like integer
-  mark y1, like integer
-  mark y2, like integer
-  mark z0, like integer
-  mark z1, like integer
-  mark z2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat y0, like integer
+  seat y1, like integer
+  seat y2, like integer
+  seat z0, like integer
+  seat z1, like integer
+  seat z2, like integer
   have x-point
     call is-equal
       call lorentz-form
@@ -592,14 +592,14 @@ rule control-the-triangle-inequality
           read z2
 
 rule control-between-is-additive
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark z0, like integer
-  mark z1, like integer
-  mark z2, like integer
-  mark lam, like integer
-  mark mu, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat z0, like integer
+  seat z1, like integer
+  seat z2, like integer
+  seat lam, like integer
+  seat mu, like integer
   show hold
     call is-equal
       call subtract
@@ -742,10 +742,10 @@ rule control-between-is-additive
               read z2
 
 rule control-the-fixed-point-discriminant-is-the-trace-squared-minus-four
-  mark ma, like integer
-  mark mb, like integer
-  mark mc, like integer
-  mark md, like integer
+  seat ma, like integer
+  seat mb, like integer
+  seat mc, like integer
+  seat md, like integer
   show hold
     call is-equal
       call add
@@ -780,9 +780,9 @@ rule control-the-fixed-point-discriminant-is-the-trace-squared-minus-four
               read mc
 
 rule control-the-cayley-map-scales-differences
-  mark z1, like integer
-  mark z2, like integer
-  mark i, like integer
+  seat z1, like integer
+  seat z2, like integer
+  seat i, like integer
   show hold
     call is-equal
       call subtract
@@ -809,10 +809,10 @@ rule control-the-cayley-map-scales-differences
           read z2
 
 rule control-lobachevsky-cos-of-the-angle-of-parallelism-is-tanh-d
-  mark ch, like integer
-  mark sh, like integer
-  mark co, like integer
-  mark si, like integer
+  seat ch, like integer
+  seat sh, like integer
+  seat co, like integer
+  seat si, like integer
   show hold
     call is-equal
       call subtract
@@ -861,9 +861,9 @@ rule control-lobachevsky-cos-of-the-angle-of-parallelism-is-tanh-d
           code 1
 
 rule control-a-circle-is-traced-at-speed-sinh-r
-  mark sr, like integer
-  mark co, like integer
-  mark si, like integer
+  seat sr, like integer
+  seat co, like integer
+  seat si, like integer
   have unit-direction
     call is-equal
       call add

@@ -29,7 +29,7 @@ task swap
 # monogamy bound, the sum of the two squared CHSH values, does not depend on which partner is named first. Proved by
 # induction over the two partners.
 rule the-partner-swap-is-an-involution
-  mark p, like partner
+  seat p, like partner
   show hold
     call is-equal
       call swap

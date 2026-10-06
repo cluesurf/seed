@@ -63,7 +63,7 @@ task same-way
 
 # THE OPPOSITE MAP IS AN INVOLUTION: opposite (opposite w) = w. The other end of the line points back.
 rule opposite-is-an-involution
-  mark w, like way
+  seat w, like way
   show hold
     call is-equal
       call opposite
@@ -75,7 +75,7 @@ rule opposite-is-an-involution
 # THE OPPOSITE IS FIXED-POINT-FREE: no direction is its own opposite, same-way w (opposite w) = no, because the opposite
 # flips both signs and a flipped sign always differs. This makes the twenty-four sites pair into twelve genuine lines.
 rule opposite-has-no-fixed-point
-  mark w, like way
+  seat w, like way
   show hold
     call is-equal
       call same-way

@@ -27,7 +27,7 @@ task hadamard
 # THE HADAMARD DUALITY IS AN INVOLUTION: applying it twice returns each sector, hadamard (hadamard s) = s, for every
 # sector, so the X and Z halves of a CSS code are symmetric duals. Proved by induction over the two sectors.
 rule hadamard-duality-is-an-involution
-  mark s, like sector
+  seat s, like sector
   show hold
     call is-equal
       call hadamard

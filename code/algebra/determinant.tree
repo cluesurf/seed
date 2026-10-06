@@ -10,14 +10,14 @@
 # (a f + b h)(c e + d g), and this equals (a d - b c)(e h - f g), the product of the two determinants. A universal law
 # over all eight entries.
 rule determinant-of-product-is-product-of-determinants
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
-  mark d, like integer
-  mark e, like integer
-  mark f, like integer
-  mark g, like integer
-  mark h, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
+  seat d, like integer
+  seat e, like integer
+  seat f, like integer
+  seat g, like integer
+  seat h, like integer
   show hold
     call is-equal
       call subtract

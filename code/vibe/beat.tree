@@ -39,7 +39,7 @@ task before
 
 # IRREFLEXIVE: no beat is before itself, before n n = no. Time does not precede itself.
 rule before-is-irreflexive
-  mark n, like time
+  seat n, like time
   show hold
     call is-equal
       call before
@@ -50,7 +50,7 @@ rule before-is-irreflexive
 
 # EACH TICK ADVANCES: every beat is before its own next tick, before n (tick n) = yes.
 rule tick-advances
-  mark n, like time
+  seat n, like time
   show hold
     call is-equal
       call before
@@ -63,8 +63,8 @@ rule tick-advances
 
 # ASYMMETRIC, the arrow itself: if a is before b then b is NOT before a. Time runs one way and cannot be reversed.
 rule before-is-asymmetric
-  mark a, like time
-  mark b, like time
+  seat a, like time
+  seat b, like time
   have hab
     call is-equal
       call before
@@ -81,9 +81,9 @@ rule before-is-asymmetric
 
 # TRANSITIVE: if a is before b and b is before c then a is before c. The order carries forward through the beats.
 rule before-is-transitive
-  mark a, like time
-  mark b, like time
-  mark c, like time
+  seat a, like time
+  seat b, like time
+  seat c, like time
   have hab
     call is-equal
       call before

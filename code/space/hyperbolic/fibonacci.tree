@@ -71,7 +71,7 @@ task fibsum
                 read m
 
 rule fib-recurrence
-  mark k, like natural
+  seat k, like natural
   show hold
     call is-equal
       call fib
@@ -90,7 +90,7 @@ rule fib-recurrence
   calm hold
 
 rule fibsum-succ-steps
-  mark m, like natural
+  seat m, like natural
   show hold
     call is-equal
       call fibsum
@@ -107,7 +107,7 @@ rule fibsum-succ-steps
   calm hold
 
 rule plus-zero-right-is-identity
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call plus
@@ -117,8 +117,8 @@ rule plus-zero-right-is-identity
   fold n
 
 rule plus-succ-right-steps-out
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call plus
@@ -134,8 +134,8 @@ rule plus-succ-right-steps-out
   fold a
 
 rule plus-is-commutative
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call plus
@@ -149,9 +149,9 @@ rule plus-is-commutative
     cite plus-succ-right-steps-out
 
 rule plus-is-associative
-  mark a, like natural
-  mark b, like natural
-  mark c, like natural
+  seat a, like natural
+  seat b, like natural
+  seat c, like natural
   show hold
     call is-equal
       call plus
@@ -167,7 +167,7 @@ rule plus-is-associative
   fold a
 
 rule fibsum-plus-one-is-fib
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call plus

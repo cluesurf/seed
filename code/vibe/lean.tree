@@ -35,8 +35,8 @@ fuse order, lean, tone, at-most
 # C REVERSES THE ORDER: a <= b exactly when C b <= C a. Conjugation is antitone, so the two poles are mirror images
 # about calm.
 rule conjugation-reverses-the-lean
-  mark a, like tone
-  mark b, like tone
+  seat a, like tone
+  seat b, like tone
   show hold
     call is-equal
       call at-most

@@ -43,7 +43,7 @@ task dual
 # a perfect pairing of the five solids, swapping the roles of vertices and faces while fixing edges. Proved by induction
 # over the five solids.
 rule duality-is-an-involution
-  mark s, like solid
+  seat s, like solid
   show hold
     call is-equal
       call dual

@@ -65,7 +65,7 @@ task lucas
 # n, the same recurrence the traces of the powers of the nonnegative companion matrix obey, whose dominant Perron root is
 # the golden ratio. Proved definitionally for every index.
 rule the-lucas-recurrence
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call lucas

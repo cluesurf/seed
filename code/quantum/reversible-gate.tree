@@ -67,8 +67,8 @@ task cnot
 # CNOT IS REVERSIBLE (its own inverse): cnot (cnot p) = p, over all four register states. Because xor by the same control
 # twice cancels. The gate runs backward, no information lost.
 rule cnot-is-reversible
-  mark c, like bit
-  mark t, like bit
+  seat c, like bit
+  seat t, like bit
   show hold
     call is-equal
       call cnot
@@ -118,9 +118,9 @@ task toffoli
 # TOFFOLI IS REVERSIBLE: toffoli (toffoli w) = w, over all eight input states. The universal reversible gate is its own
 # inverse, so a reversible (and quantum) computer built from it can always be run backward.
 rule toffoli-is-reversible
-  mark a, like bit
-  mark b, like bit
-  mark c, like bit
+  seat a, like bit
+  seat b, like bit
+  seat c, like bit
   show hold
     call is-equal
       call toffoli

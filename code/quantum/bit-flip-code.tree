@@ -212,7 +212,7 @@ task is-clean
 
 # NO ERROR: decoding a clean codeword returns the bit. decode (encode b) = b, for both bit values.
 rule decodes-clean-codeword
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call decode
@@ -223,7 +223,7 @@ rule decodes-clean-codeword
 
 # CORRECTS A FLIP AT POSITION ONE: decode (error-one (encode b)) = b, for both bit values.
 rule corrects-error-at-one
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call decode
@@ -235,7 +235,7 @@ rule corrects-error-at-one
 
 # CORRECTS A FLIP AT POSITION TWO.
 rule corrects-error-at-two
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call decode
@@ -248,7 +248,7 @@ rule corrects-error-at-two
 # CORRECTS A FLIP AT POSITION THREE. With the two above, EVERY single-bit error is corrected: the code distance is three,
 # so it repairs any one flip and the logical bit always survives.
 rule corrects-error-at-three
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call decode
@@ -262,7 +262,7 @@ rule corrects-error-at-three
 # pass, the signature no-yes, for both bit values. This is how a real decoder locates the fault from parity alone, never
 # touching the data. Proved by induction over the bit.
 rule syndrome-of-error-at-one
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call measure
@@ -278,7 +278,7 @@ rule syndrome-of-error-at-one
 
 # THE SYNDROME NAMES THE ERROR AT POSITION TWO: the middle bit touches both checks, so both fail, the signature no-no.
 rule syndrome-of-error-at-two
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call measure
@@ -294,7 +294,7 @@ rule syndrome-of-error-at-two
 
 # THE SYNDROME NAMES THE ERROR AT POSITION THREE: only the second check fails, the signature yes-no.
 rule syndrome-of-error-at-three
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call measure
@@ -310,7 +310,7 @@ rule syndrome-of-error-at-three
 
 # A CLEAN CODEWORD HAS THE TRIVIAL SYNDROME: encode b measures to yes-yes, both checks pass, so no error is reported.
 rule syndrome-of-clean-codeword
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call measure
@@ -327,7 +327,7 @@ rule syndrome-of-clean-codeword
 # not merely correctable. Shown for position two (its syndrome is no-no), the position touching both checks; the other two
 # error syndromes (no-yes and yes-no) are non-clean for the same reason. Proved by induction over the bit.
 rule error-at-two-is-detected
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call is-clean
@@ -341,7 +341,7 @@ rule error-at-two-is-detected
 # A CLEAN ENCODED CODEWORD READS AS CLEAN: is-clean (measure (encode b)) = yes, the no-error case of detection. The decoder
 # correctly reports nothing to fix when there is no fault.
 rule clean-codeword-reads-as-clean
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call is-clean

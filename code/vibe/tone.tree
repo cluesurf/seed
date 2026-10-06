@@ -150,7 +150,7 @@ fuse homomorphism, tone-conjugate, tone, tone-conjugate, tone-sum, tone-sum
 
 # C is NEGATION: tone-conjugate a = fear a. Charge conjugation is multiplication by -1.
 rule conjugate-is-multiplying-by-fear
-  mark a, like tone
+  seat a, like tone
   show hold
     call is-equal
       call tone-conjugate
@@ -162,8 +162,8 @@ rule conjugate-is-multiplying-by-fear
 
 # C passes through a product onto either factor: C (a b) = (C a) b. It is linear, not multiplicative.
 rule conjugate-passes-through-a-product
-  mark a, like tone
-  mark b, like tone
+  seat a, like tone
+  seat b, like tone
   show hold
     call is-equal
       call tone-conjugate
@@ -179,7 +179,7 @@ rule conjugate-passes-through-a-product
 # THE FIELD: every vibe is a unit, its own inverse, because it squares to love. A vibe times itself is love, whatever its
 # sign, which is why the charge of a pair of like vibes and of a love-fear pair differ only in sign.
 rule every-vibe-squares-to-love
-  mark a, like tone
+  seat a, like tone
   have vibe
     call is-equal
       call is-vibe
@@ -195,8 +195,8 @@ rule every-vibe-squares-to-love
 
 # NO ZERO DIVISORS: if a b = calm then a = calm or b = calm.
 rule a-product-is-calm-only-through-a-calm-factor
-  mark a, like tone
-  mark b, like tone
+  seat a, like tone
+  seat b, like tone
   have calm-product
     call is-equal
       call tone-product
@@ -217,7 +217,7 @@ rule a-product-is-calm-only-through-a-calm-factor
 
 # CHARACTERISTIC THREE: a + a + a = calm for every tone.
 rule three-of-a-tone-is-calm
-  mark a, like tone
+  seat a, like tone
   show hold
     call is-equal
       call tone-sum
@@ -230,7 +230,7 @@ rule three-of-a-tone-is-calm
 
 # FROBENIUS: every tone is its own cube, a a a = a, the identity x^3 = x that holds for every element of F3.
 rule every-tone-is-its-own-cube
-  mark a, like tone
+  seat a, like tone
   show hold
     call is-equal
       call tone-product
@@ -245,7 +245,7 @@ rule every-tone-is-its-own-cube
 # makes two inert in the Eisenstein integers and keeps the qutrit symplectic form nondegenerate (vibe/eisenstein,
 # vibe/role).
 rule no-square-is-fear
-  mark a, like tone
+  seat a, like tone
   show hold
     call is-equal
       call same-tone
@@ -258,8 +258,8 @@ rule no-square-is-fear
 
 # A SUM OF TWO SQUARES IS CALM ONLY AT CALM: a a + b b = calm forces a = b = calm, since -1 is not a square.
 rule two-squares-vanish-only-at-calm
-  mark a, like tone
-  mark b, like tone
+  seat a, like tone
+  seat b, like tone
   have calm-sum
     call is-equal
       call tone-sum
@@ -388,9 +388,9 @@ task full-carry
 # THE CARRY LAW: a + b + c = 3 carry + digit, as integers, for all twenty-seven triples of tones. Three times the carry
 # is the carry shifted three times, then the digit is added. Balanced ternary addition is exact with one-trit carries.
 rule the-full-adder-is-exact
-  mark a, like tone
-  mark b, like tone
-  mark c, like tone
+  seat a, like tone
+  seat b, like tone
+  seat c, like tone
   show hold
     call is-equal
       call total-of-three

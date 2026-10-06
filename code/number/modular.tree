@@ -6,7 +6,7 @@
 
 # Every remainder modulo two is at least zero: n mod 2 >= 0, for every n.
 rule remainder-modulo-two-is-at-least-zero
-  mark n, like integer
+  seat n, like integer
   show hold
     call is-minimum
       call modulo
@@ -16,7 +16,7 @@ rule remainder-modulo-two-is-at-least-zero
 
 # Every remainder modulo two is below two: n mod 2 < 2, for every n. So a parity is always zero or one.
 rule remainder-modulo-two-is-below-two
-  mark n, like integer
+  seat n, like integer
   show hold
     call is-below
       call modulo
@@ -26,7 +26,7 @@ rule remainder-modulo-two-is-below-two
 
 # Every remainder modulo three is at least zero: n mod 3 >= 0, for every n.
 rule remainder-modulo-three-is-at-least-zero
-  mark n, like integer
+  seat n, like integer
   show hold
     call is-minimum
       call modulo
@@ -36,7 +36,7 @@ rule remainder-modulo-three-is-at-least-zero
 
 # Every remainder modulo three is below three: n mod 3 < 3, for every n. The three residues are the ternary tone.
 rule remainder-modulo-three-is-below-three
-  mark n, like integer
+  seat n, like integer
   show hold
     call is-below
       call modulo
@@ -47,7 +47,7 @@ rule remainder-modulo-three-is-below-three
 # Every remainder modulo twenty-four is below twenty-four: n mod 24 < 24, for every n. The directions of the 24-cell
 # compose on this clock.
 rule remainder-modulo-twenty-four-is-below-twenty-four
-  mark n, like integer
+  seat n, like integer
   show hold
     call is-below
       call modulo

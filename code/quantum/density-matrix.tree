@@ -27,7 +27,7 @@ task antipode
 # THE ANTIPODAL MAP IS AN INVOLUTION: reflecting twice returns the state, antipode (antipode p) = p, for every pole, so
 # the two poles are a matched pair of orthogonal states. Proved by induction over the two poles.
 rule the-antipodal-map-is-an-involution
-  mark p, like pole
+  seat p, like pole
   show hold
     call is-equal
       call antipode

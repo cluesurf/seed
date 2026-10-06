@@ -290,7 +290,7 @@ fuse product, e3-times-e2-is-minus-e23, e3, e2, neg, e23
 
 # THE IDENTITY: the scalar one times any Clifford element is itself, over all signed blades.
 rule one-is-the-identity
-  mark x, like cliff
+  seat x, like cliff
   show hold
     call is-equal
       call mul

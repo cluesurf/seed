@@ -231,7 +231,7 @@ rule tunneling-is-the-difference-at-the-far-side
 # the way across the chain, with no gap at the barrier. Proved by induction over the five sites, every case computing to
 # yes. This is the monotone, unbroken support that distinguishes the quantum walker from the blocked classical one.
 rule quantum-walker-reaches-every-site
-  mark s, like site
+  seat s, like site
   show hold
     call is-equal
       call quantum-reach
@@ -244,7 +244,7 @@ rule quantum-walker-reaches-every-site
 # the hop never leaves the support, so the amplitude propagates step by step through the barrier without breaking. Proved
 # by induction over the sites.
 rule reachability-propagates-through-the-hop
-  mark s, like site
+  seat s, like site
   show hold
     call is-equal
       call both

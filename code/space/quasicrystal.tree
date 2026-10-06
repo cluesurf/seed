@@ -41,7 +41,7 @@ task turn-fifth
 # every direction. So the five-fold rotational symmetry is exact, the symmetry the Penrose quasicrystal realizes while the
 # crystallographic restriction forbids it to any periodic lattice. Proved by induction over the five directions.
 rule the-fifth-turn-has-order-five
-  mark r, like fivefold
+  seat r, like fivefold
   show hold
     call is-equal
       call turn-fifth

@@ -222,7 +222,7 @@ task reconstruct-from-region
 # boundary and reading it back by majority returns the original. This is the bulk-to-boundary isometry composed with the
 # global reconstruction map, the identity on the bulk. Proved by induction over the bulk bit.
 rule bulk-reconstructs-from-the-boundary
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call decode
@@ -235,7 +235,7 @@ rule bulk-reconstructs-from-the-boundary
 # first boundary site to the environment leaves the other two carrying the bulk value, a majority of two, so the bulk is
 # recovered untouched. This is the holographic erasure-correction property at the first site.
 rule single-erasure-correctable-at-one
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call decode
@@ -248,7 +248,7 @@ rule single-erasure-correctable-at-one
 
 # SINGLE ERASURE IS CORRECTABLE AT POSITION TWO.
 rule single-erasure-correctable-at-two
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call decode
@@ -263,7 +263,7 @@ rule single-erasure-correctable-at-two
 # of one physical qubit anywhere on the boundary leaves the bulk recoverable from the complement, the defining property of
 # a holographic code. The complementary region, a majority of two, contains the bulk in its entanglement wedge.
 rule single-erasure-correctable-at-three
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call decode
@@ -279,8 +279,8 @@ rule single-erasure-correctable-at-three
 # site. This is subregion duality: the bulk bit lies in the entanglement wedge of every majority region, so each such
 # region recovers it independently. Proved by induction over the bulk bit and over the four regions.
 rule reconstruction-from-a-majority-region
-  mark b, like bit
-  mark g, like region
+  seat b, like bit
+  seat g, like region
   show hold
     call is-equal
       call reconstruct-from-region
@@ -295,9 +295,9 @@ rule reconstruction-from-a-majority-region
 # subregion reconstruction is the global one. Tying the region-restricted map to `decode` mirrors the wedge of the center
 # in `code/space/holography.tree`, where the central bulk point governs the whole boundary. Proved over every boundary.
 rule full-region-reconstruction-is-global-decode
-  mark x, like bit
-  mark y, like bit
-  mark z, like bit
+  seat x, like bit
+  seat y, like bit
+  seat z, like bit
   show hold
     call is-equal
       call reconstruct-from-region
@@ -335,9 +335,9 @@ task site-one-of
 # every boundary. This confirms the erasure channel really removes the site (replaces it with the default off) rather than
 # leaving it in place, so the recovery proofs above are correcting a genuine loss. Proved over every boundary.
 rule erasure-resets-the-lost-site
-  mark x, like bit
-  mark y, like bit
-  mark z, like bit
+  seat x, like bit
+  seat y, like bit
+  seat z, like bit
   show hold
     call is-equal
       call site-one-of

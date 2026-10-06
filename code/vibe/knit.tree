@@ -262,8 +262,8 @@ fuse commutes, contact-and-conjugation, dock-line, contact, conjugate-line
 # ON TWO LIKE VIBES THE PASS AND THE BOUNCE DIFFER ONLY IN PHASE: the contact moves no tone (exchanging equal tones),
 # the pass gives +1 and the bounce -1.
 rule two-like-vibes-keep-their-tones-under-the-contact
-  mark t, like tone
-  mark s, like tone
+  seat t, like tone
+  seat s, like tone
   show hold
     call is-equal
       call contact
@@ -278,8 +278,8 @@ rule two-like-vibes-keep-their-tones-under-the-contact
   fold t, s
 
 rule the-pass-gives-two-like-vibes-phase-plus-one
-  mark t, like tone
-  mark s, like tone
+  seat t, like tone
+  seat s, like tone
   have vibe
     call is-equal
       call is-vibe
@@ -297,8 +297,8 @@ rule the-pass-gives-two-like-vibes-phase-plus-one
   fold t, s
 
 rule the-bounce-gives-two-like-vibes-phase-minus-one
-  mark t, like tone
-  mark s, like tone
+  seat t, like tone
+  seat s, like tone
   have vibe
     call is-equal
       call is-vibe
@@ -317,8 +317,8 @@ rule the-bounce-gives-two-like-vibes-phase-minus-one
 
 # A LONE VIBE GOES STRAIGHT THROUGH: a line with one vibe is unchanged, phase +1.
 rule a-lone-vibe-is-untouched-by-the-contact
-  mark t, like tone
-  mark s, like tone
+  seat t, like tone
+  seat s, like tone
   show hold
     call is-equal
       call contact
@@ -571,7 +571,7 @@ fuse conserves, pair-collide, dock-line, pair-collide, line-charge
 # C REVERSES IT: conjugating the pair collision gives its inverse, C P C = P^-1, because C runs the neutral 3-cycle
 # (calm, calm) -> (love, fear) -> (fear, love) backward. The earliest rule was not C-symmetric, only CP-like.
 rule conjugation-reverses-the-pair-collision
-  mark l, like dock-line
+  seat l, like dock-line
   show hold
     call is-equal
       call conjugate-line

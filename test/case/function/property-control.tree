@@ -7,33 +7,33 @@ load @term/seed/function/property
 # composition in the wrong order: g after f is not f's image under g's input
 rule control-compose-backwards
   head a
-  mark g
+  seat g
     like task
       take y, like a
       like a
-  mark f
+  seat f
     like task
       take x, like a
       like a
-  mark x, like a
+  seat x, like a
   show hold, is-equal apply(compose(g, f), x), f(g(x))
 
 # a SECTION does not make a function injective: f(s(v)) == v says nothing of f at two other points
 rule control-section-gives-injective
   head a
   head b
-  mark f
+  seat f
     like task
       take x, like a
       like b
-  mark s
+  seat s
     like task
       take y, like b
       like a
-  mark x, like a
-  mark y, like a
+  seat x, like a
+  seat y, like a
   have f-undoes-s
-    mark v, like b
+    seat v, like b
     is-equal f(s(v)), v
   have same-image, is-equal f(x), f(y)
   show hold, is-equal x, y
@@ -42,17 +42,17 @@ rule control-section-gives-injective
 rule control-left-inverse-gives-surjective
   head a
   head b
-  mark f
+  seat f
     like task
       take x, like a
       like b
-  mark g
+  seat g
     like task
       take y, like b
       like a
-  mark z, like b
+  seat z, like b
   have g-undoes-f
-    mark u, like a
+    seat u, like a
     is-equal g(f(u)), u
   find x, g(z)
   show hold, is-equal f(x), z
@@ -60,56 +60,56 @@ rule control-left-inverse-gives-surjective
 # left inverses compose in the OTHER order: q after r is not a left inverse of g after f
 rule control-left-inverses-same-order
   head a
-  mark f
+  seat f
     like task
       take x, like a
       like a
-  mark r
+  seat r
     like task
       take y, like a
       like a
-  mark g
+  seat g
     like task
       take y, like a
       like a
-  mark q
+  seat q
     like task
       take z, like a
       like a
-  mark x, like a
+  seat x, like a
   have r-undoes-f
-    mark u, like a
+    seat u, like a
     is-equal r(f(u)), u
   have q-undoes-g
-    mark v, like a
+    seat v, like a
     is-equal q(g(v)), v
   show hold, is-equal q(r(g(f(x)))), x
 
 # the composite of two surjections is not reached from the witness in the wrong order
 rule control-surjections-wrong-witness
   head a
-  mark f
+  seat f
     like task
       take x, like a
       like a
-  mark s
+  seat s
     like task
       take y, like a
       like a
-  mark g
+  seat g
     like task
       take y, like a
       like a
-  mark t
+  seat t
     like task
       take z, like a
       like a
-  mark z, like a
+  seat z, like a
   have f-undoes-s
-    mark v, like a
+    seat v, like a
     is-equal f(s(v)), v
   have g-undoes-t
-    mark w, like a
+    seat w, like a
     is-equal g(t(w)), w
   find x, t(s(z))
   show hold, is-equal g(f(x)), z
@@ -117,25 +117,25 @@ rule control-surjections-wrong-witness
 # cancellation on the wrong side: a left inverse of f does not cancel f on the right
 rule control-cancels-on-the-right
   head a
-  mark f
+  seat f
     like task
       take x, like a
       like a
-  mark e
+  seat e
     like task
       take z, like a
       like a
-  mark g
+  seat g
     like task
       take w, like a
       like a
-  mark h
+  seat h
     like task
       take w, like a
       like a
-  mark x, like a
+  seat x, like a
   have e-undoes-f
-    mark u, like a
+    seat u, like a
     is-equal e(f(u)), u
   have same-before-f, is-equal g(f(x)), h(f(x))
   show hold, is-equal g(x), h(x)
@@ -144,23 +144,23 @@ rule control-cancels-on-the-right
 rule control-left-inverses-agree
   head a
   head b
-  mark f
+  seat f
     like task
       take x, like a
       like b
-  mark g
+  seat g
     like task
       take y, like b
       like a
-  mark h
+  seat h
     like task
       take y, like b
       like a
-  mark y, like b
+  seat y, like b
   have g-undoes-f
-    mark u, like a
+    seat u, like a
     is-equal g(f(u)), u
   have h-undoes-f
-    mark u, like a
+    seat u, like a
     is-equal h(f(u)), u
   show hold, is-equal g(y), h(y)

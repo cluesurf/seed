@@ -56,7 +56,7 @@ task parity
             read p
 
 rule flip-flip-is-identity
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call flip
@@ -66,7 +66,7 @@ rule flip-flip-is-identity
   fold b
 
 rule parity-succ-steps
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call parity
@@ -79,8 +79,8 @@ rule parity-succ-steps
   calm hold
 
 rule plus-succ-left-steps
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call plus
@@ -96,8 +96,8 @@ rule plus-succ-left-steps
   calm hold
 
 rule plus-succ-right-steps
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call plus
@@ -114,7 +114,7 @@ rule plus-succ-right-steps
 
 # every double is EVEN: parity (n + n) = off, for every n. By induction on n.
 rule double-is-even
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call parity
@@ -130,7 +130,7 @@ rule double-is-even
 
 # every successor of a double is ODD: parity (succ (n + n)) = on, for every n.
 rule succ-double-is-odd
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call parity
@@ -168,7 +168,7 @@ task half
                   read k
 
 rule half-two-steps
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call half
@@ -186,7 +186,7 @@ rule half-two-steps
 # half undoes double: half (n + n) = n, for every n. By induction on n, citing the half and plus step lemmas. With
 # `double-is-even` this says every even number is exactly twice its half.
 rule half-of-double-is-self
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call half

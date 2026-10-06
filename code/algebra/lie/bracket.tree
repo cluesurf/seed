@@ -89,7 +89,7 @@ task bracket
 
 # ALTERNATING: a generator brackets to zero with itself, [a,a] = 0. A rotation generates no turn against its own axis.
 rule bracket-is-alternating
-  mark a, like axis
+  seat a, like axis
   show hold
     call is-equal
       call bracket
@@ -101,8 +101,8 @@ rule bracket-is-alternating
 # ANTISYMMETRIC: [a,b] = -[b,a], the skew-symmetry that defines a Lie bracket. Swapping the order flips the sign. Over all
 # nine generator pairs.
 rule bracket-is-antisymmetric
-  mark a, like axis
-  mark b, like axis
+  seat a, like axis
+  seat b, like axis
   show hold
     call is-equal
       call bracket

@@ -48,7 +48,7 @@ task plus
 
 # Right identity: n + 0 = n.
 rule plus-zero-right-is-identity
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call plus
@@ -59,8 +59,8 @@ rule plus-zero-right-is-identity
 
 # Successor steps out on the right: a + succ b = succ (a + b).
 rule plus-succ-right-steps-out
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call plus
@@ -77,8 +77,8 @@ rule plus-succ-right-steps-out
 
 # Commutativity: a + b = b + a, by induction citing the two lemmas above.
 rule plus-is-commutative
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call plus
@@ -423,7 +423,7 @@ task is-valid
 # generation, white or black, grows exactly one new strip, so the strip population obeys the Fibonacci recurrence. True
 # by the definition of black-count.
 rule black-count-recurrence
-  mark m, like natural
+  seat m, like natural
   show hold
     call is-equal
       call black-count
@@ -440,7 +440,7 @@ rule black-count-recurrence
 # THE WHITE COUNT RECURRENCE: white(n+1) = white(n) + black(n+1), for every generation. The quarter population carries
 # forward and gains the freshly grown strips. True by the definition of white-count.
 rule white-count-recurrence
-  mark m, like natural
+  seat m, like natural
   show hold
     call is-equal
       call white-count
@@ -460,7 +460,7 @@ rule white-count-recurrence
 # before it, node even (succ j) = node odd j + node even j, which is white(j+1) = black(j+1) + white(j). The white
 # population recurrence read across the interleaving. Holds by induction with the commutativity of addition.
 rule fibonacci-stream-even-step
-  mark j, like natural
+  seat j, like natural
   show hold
     call is-equal
       call node-count
@@ -482,7 +482,7 @@ rule fibonacci-stream-even-step
 # before it, node odd (succ j) = node even (succ j) + node odd j, which is black(j+2) = white(j+1) + black(j+1). The
 # black population recurrence read across the interleaving. Holds by computation.
 rule fibonacci-stream-odd-step
-  mark j, like natural
+  seat j, like natural
   show hold
     call is-equal
       call node-count
@@ -506,7 +506,7 @@ rule fibonacci-stream-odd-step
 # induction over the whole infinite space of addresses: the child that extends the parent by "00" matches the preferred
 # son, the children extending by "01" and "10" do not.
 rule white-node-has-exactly-one-preferred-son
-  mark parent, like address
+  seat parent, like address
   show hold
     call is-equal
       call white-preferred-count
@@ -520,7 +520,7 @@ rule white-node-has-exactly-one-preferred-son
 # address, black-preferred-count parent = one. The "00" child is the preferred son, the "01" child is not. Proved by
 # structural induction over all addresses.
 rule black-node-has-exactly-one-preferred-son
-  mark parent, like address
+  seat parent, like address
   show hold
     call is-equal
       call black-preferred-count

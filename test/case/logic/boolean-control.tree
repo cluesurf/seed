@@ -13,63 +13,63 @@ load @term/seed/logic/boolean
 
 # false at a = no, b = no: equivalence taken for conjunction
 rule control-iff-is-both
-  mark a, like flag
-  mark b, like flag
+  seat a, like flag
+  seat b, like flag
   show hold, is-equal iff(a, b), both(a, b)
 
 # false at a = yes, b = no: and turned into or on one side
 rule control-both-commutes-into-either
-  mark a, like flag
-  mark b, like flag
+  seat a, like flag
+  seat b, like flag
   show hold, is-equal both(a, b), either(b, a)
   fold a, b
 
 # false at a = yes, b = no, c = yes: the inner and turned into or
 rule control-both-associates-wrongly
-  mark a, like flag
-  mark b, like flag
-  mark c, like flag
+  seat a, like flag
+  seat b, like flag
+  seat c, like flag
   show hold, is-equal both(both(a, b), c), both(a, either(b, c))
   fold a, b, c
 
 # false at a = no, b = yes, c = no: distributing and over and
 rule control-both-distributes-over-itself-into-either
-  mark a, like flag
-  mark b, like flag
-  mark c, like flag
+  seat a, like flag
+  seat b, like flag
+  seat c, like flag
   show hold, is-equal both(a, either(b, c)), both(either(a, b), either(a, c))
   fold a, b, c
 
 # false at a = no, b = yes: absorption giving the other value
 rule control-absorption-keeps-the-wrong-value
-  mark a, like flag
-  mark b, like flag
+  seat a, like flag
+  seat b, like flag
   show hold, is-equal both(a, either(a, b)), b
   fold a, b
 
 # false everywhere: excluded middle with the wrong constant
 rule control-excluded-middle-is-no
-  mark a, like flag
+  seat a, like flag
   show hold, is-equal either(a, not-flag(a)), make no
   fold a
 
 # false at a = yes, b = no: De Morgan without swapping the connective
 rule control-de-morgan-without-the-swap
-  mark a, like flag
-  mark b, like flag
+  seat a, like flag
+  seat b, like flag
   show hold, is-equal not-flag(both(a, b)), both(not-flag(a), not-flag(b))
   fold a, b
 
 # false at a = no, b = yes: the converse in place of the contrapositive
 rule control-converse-is-not-contraposition
-  mark a, like flag
-  mark b, like flag
+  seat a, like flag
+  seat b, like flag
   show hold, is-equal implies(a, b), implies(b, a)
   fold a, b
 
 # false at a = yes, b = yes: implication as `a or not b`
 rule control-implies-with-the-negation-moved
-  mark a, like flag
-  mark b, like flag
+  seat a, like flag
+  seat b, like flag
   show hold, is-equal implies(a, b), either(a, not-flag(b))
   fold a, b

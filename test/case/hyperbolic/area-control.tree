@@ -2,14 +2,14 @@
 
 # false: the s^2 term with the wrong sign
 rule control-the-geodesic-off-by-a-sign
-  mark u0, like integer
-  mark u1, like integer
-  mark u2, like integer
-  mark v0, like integer
-  mark v1, like integer
-  mark v2, like integer
-  mark c, like integer
-  mark s, like integer
+  seat u0, like integer
+  seat u1, like integer
+  seat u2, like integer
+  seat v0, like integer
+  seat v1, like integer
+  seat v2, like integer
+  seat c, like integer
+  seat s, like integer
   show hold
     call is-equal
       call subtract
@@ -127,12 +127,12 @@ rule control-the-geodesic-off-by-a-sign
 
 # false: the B(x, d) part of the certificate dropped
 rule control-the-turning-without-h3
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark d0, like integer
-  mark d1, like integer
-  mark d2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat d0, like integer
+  seat d1, like integer
+  seat d2, like integer
   show hold
     call is-equal
       call subtract
@@ -216,14 +216,14 @@ rule control-the-turning-without-h3
 
 # false: (c^2 - s^2) where (c^2 + s^2) belongs
 rule control-the-tangent-with-c-squared-minus-s-squared
-  mark u0, like integer
-  mark u1, like integer
-  mark u2, like integer
-  mark v0, like integer
-  mark v1, like integer
-  mark v2, like integer
-  mark c, like integer
-  mark s, like integer
+  seat u0, like integer
+  seat u1, like integer
+  seat u2, like integer
+  seat v0, like integer
+  seat v1, like integer
+  seat v2, like integer
+  seat c, like integer
+  seat s, like integer
   show hold
     call is-equal
       call subtract

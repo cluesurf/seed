@@ -58,7 +58,7 @@ task fib
 # THE CONVERGENT RECURRENCE: the Fibonacci numerators grow by fib (n+2) = fib (n+1) + fib n, the same recurrence the
 # continued-fraction convergents of the golden ratio obey, for every n. Proved definitionally for every index.
 rule the-convergent-recurrence
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call fib

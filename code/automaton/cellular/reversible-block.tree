@@ -122,7 +122,7 @@ task charge
 # the forward rotation returns the original block, so the beat loses no information. Proved by exhaustive induction over the
 # block, all eight states resolving by computation. This is the discrete analogue of unitarity, the heart of the model.
 rule unstep-undoes-step
-  mark b, like block
+  seat b, like block
   show hold
     call is-equal
       call step, read b
@@ -133,7 +133,7 @@ rule unstep-undoes-step
 # THE RULE IS REVERSIBLE, backward then forward: step (unstep b) = b, for every block b. The inverse really is a two-sided
 # inverse, so the permutation is a genuine bijection of the eight block states in both directions.
 rule step-undoes-unstep
-  mark b, like block
+  seat b, like block
   show hold
     call is-equal
       call unstep, read b
@@ -145,7 +145,7 @@ rule step-undoes-unstep
 # particles between cells, it never creates or destroys one, so the number of on cells is the same before and after the
 # beat. This is the conservation law that makes the dynamics physical. Proved by induction over all eight block states.
 rule step-conserves-charge
-  mark b, like block
+  seat b, like block
   show hold
     call is-equal
       call charge
@@ -156,7 +156,7 @@ rule step-conserves-charge
 # THE INVERSE ALSO CONSERVES THE COUNT: charge (unstep b) = charge b. Both directions of time preserve the same charge,
 # as a reversible conservation law must.
 rule unstep-conserves-charge
-  mark b, like block
+  seat b, like block
   show hold
     call is-equal
       call charge

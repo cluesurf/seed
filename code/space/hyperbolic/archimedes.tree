@@ -53,8 +53,8 @@ task doubled-cosh
 # THE DOUBLING FORMULA. The origin, boosted twice by (c, s) with c^2 - s^2 = 1, is (c^2 + s^2, 2 c s, 0), and its
 # Lorentz product with the origin, the cosh of the doubled distance, is 2 c^2 - 1.
 rule boosting-twice-doubles-the-distance
-  mark c, like integer
-  mark s, like integer
+  seat c, like integer
+  seat s, like integer
   have c-and-s-are-a-cosh-and-sinh
     call is-equal
       call subtract
@@ -94,8 +94,8 @@ rule boosting-twice-doubles-the-distance
 
 # And the doubled point is still on the hyperboloid: B(y, y) = 1 for y = (c^2 + s^2, 2 c s, 0).
 rule the-doubled-point-is-a-point
-  mark c, like integer
-  mark s, like integer
+  seat c, like integer
+  seat s, like integer
   have c-and-s-are-a-cosh-and-sinh
     call is-equal
       call subtract
@@ -139,8 +139,8 @@ rule the-doubled-point-is-a-point
 
 # GROWTH, by induction on k: the distances 2^k a grow at least linearly, and stay cosh values (>= 1).
 rule doubling-grows-at-least-linearly
-  mark p, like integer
-  mark k, like integer
+  seat p, like integer
+  seat k, like integer
   have p-is-a-cosh
     call is-minimum
       read p
@@ -173,8 +173,8 @@ rule doubling-grows-at-least-linearly
 
 # PASSING A BOUND: a segment with cosh p >= 2 laid off 2^m times has cosh at least m + 2, for every m >= 0.
 rule doubling-passes-every-bound
-  mark p, like integer
-  mark m, like integer
+  seat p, like integer
+  seat m, like integer
   have p-is-at-least-two
     call is-minimum
       read p
@@ -200,8 +200,8 @@ rule doubling-passes-every-bound
 # y = c / d, n x > y is n (a d) > c b, this statement at A = a d and C = c b. With the growth rule above it completes
 # Archimedes' axiom for the model over the rationals: some 2^k-fold of any segment passes any distance.
 rule the-coordinates-are-archimedean
-  mark aa, like integer
-  mark cc, like integer
+  seat aa, like integer
+  seat cc, like integer
   have aa-is-positive
     call is-minimum
       read aa
@@ -228,16 +228,16 @@ rule the-coordinates-are-archimedean
 # B(u, v) = 0. Completeness itself holds for the reals and fails for the rationals, and is K4 in
 # note/term/port/kernel-prerequisites.md.)
 rule the-line-is-an-isometric-copy-of-its-parameter
-  mark u0, like integer
-  mark u1, like integer
-  mark u2, like integer
-  mark v0, like integer
-  mark v1, like integer
-  mark v2, like integer
-  mark ca, like integer
-  mark sa, like integer
-  mark cb, like integer
-  mark sb, like integer
+  seat u0, like integer
+  seat u1, like integer
+  seat u2, like integer
+  seat v0, like integer
+  seat v1, like integer
+  seat v2, like integer
+  seat ca, like integer
+  seat sa, like integer
+  seat cb, like integer
+  seat sb, like integer
   show hold
     call is-equal
       call subtract

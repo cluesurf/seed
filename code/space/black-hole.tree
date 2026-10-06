@@ -177,8 +177,8 @@ rule horizon-is-the-capture-threshold
 # Step lemma, the strict order peels a matched successor: below (more a) (more b) = below a b. Definitional, used to drive
 # the order inductions.
 rule below-succ-both
-  mark a, like mass
-  mark b, like mass
+  seat a, like mass
+  seat b, like mass
   show hold
     call is-equal
       call below
@@ -196,7 +196,7 @@ rule below-succ-both
 # Step lemma, doubling a successor: double (more a) = more (more (double a)). Definitional, the two layers a successor adds
 # under doubling, used to align the doubled magnitudes in the order inductions.
 rule double-succ
-  mark a, like mass
+  seat a, like mass
   show hold
     call is-equal
       call double
@@ -216,8 +216,8 @@ rule double-succ
 # reflecting). By simultaneous induction on a and b, peeling a matched successor each step. This is the engine behind the
 # radius, area, and entropy laws below.
 rule below-double-both
-  mark a, like mass
-  mark b, like mass
+  seat a, like mass
+  seat b, like mass
   show hold
     call is-equal
       call below
@@ -236,8 +236,8 @@ rule below-double-both
 # Comparing two black holes by their Schwarzschild radii gives the same verdict as comparing them by mass, so a strictly
 # heavier hole has a strictly larger horizon. Since the radius is the double of the mass, this is the doubling order law.
 rule heavier-mass-larger-horizon
-  mark a, like mass
-  mark b, like mass
+  seat a, like mass
+  seat b, like mass
   show hold
     call is-equal
       call below
@@ -257,8 +257,8 @@ rule heavier-mass-larger-horizon
 # so the area never decreases as the hole grows. Built from the radius by another doubling, so the doubling order law
 # carries through.
 rule area-grows-with-mass
-  mark a, like mass
-  mark b, like mass
+  seat a, like mass
+  seat b, like mass
   show hold
     call is-equal
       call below
@@ -279,8 +279,8 @@ rule area-grows-with-mass
 # grows exactly when the area grows, and the area grows with the mass. The horizon area, and so the entropy, never
 # decreases. This is the holographic content scaling with the boundary surface.
 rule entropy-grows-with-mass
-  mark a, like mass
-  mark b, like mass
+  seat a, like mass
+  seat b, like mass
   show hold
     call is-equal
       call below

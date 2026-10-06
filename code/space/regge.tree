@@ -220,7 +220,7 @@ rule saddle-is-hyperbolic
 
 # The curvature classification is TOTAL over the three vertex types, returning the same curve it returns, with no gap.
 rule curvature-of-is-total
-  mark v, like station
+  seat v, like station
   show hold
     call is-equal
       call curvature-of
@@ -231,7 +231,7 @@ rule curvature-of-is-total
 
 # triangle-count and deficit are likewise total over the three vertex types.
 rule triangle-count-is-total
-  mark v, like station
+  seat v, like station
   show hold
     call is-equal
       call triangle-count
@@ -241,7 +241,7 @@ rule triangle-count-is-total
   fold v
 
 rule deficit-is-total
-  mark v, like station
+  seat v, like station
   show hold
     call is-equal
       call deficit

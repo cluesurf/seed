@@ -239,7 +239,7 @@ task step-along
 # point: the strict descent of the depth-toward-infinity. Definitional: busemann unfolds one step to back of the rest's
 # value when the branches agree.
 rule a-step-along-left-is-the-predecessor
-  mark p, like spot
+  seat p, like spot
   show hold
     call is-equal
       call busemann
@@ -263,7 +263,7 @@ rule a-step-along-left-is-the-predecessor
 # value by the integer predecessor. b_xi(turn right p) = back (b_xi(p)). The descent toward the boundary is the same on
 # either branch of the tree.
 rule a-step-along-right-is-the-predecessor
-  mark p, like spot
+  seat p, like spot
   show hold
     call is-equal
       call busemann
@@ -287,7 +287,7 @@ rule a-step-along-right-is-the-predecessor
 # the Busemann value by the integer successor. b_xi(turn right p) = next (b_xi(p)) when xi aims left. Moving against the
 # direction of the ideal point climbs one notch away from it. The away step is the genuine inverse of the toward step.
 rule a-step-against-is-the-successor
-  mark p, like spot
+  seat p, like spot
   show hold
     call is-equal
       call busemann
@@ -314,7 +314,7 @@ rule a-step-against-is-the-successor
 # THE WATERLINE IS THE CENTER'S BUSEMANN VALUE: b_xi(core) = zero-int, for every direction xi. The center sits exactly on
 # the waterline, the level-zero horosphere through the center, the seam where the toward-xi descent meets the away ascent.
 rule center-is-the-waterline
-  mark xi, like end
+  seat xi, like end
   show hold
     call is-equal
       call busemann
@@ -331,7 +331,7 @@ rule center-is-the-waterline
 # THE DECIDABLE TEST AGREES WITH KERNEL EQUALITY ON EQUAL MAGNITUDES: same-natural n n = yes, by induction. This certifies
 # the computational `same-depth` answers yes exactly on the reflexive (equal-depth) horosphere pairs.
 rule same-natural-is-reflexive
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call same-natural
@@ -343,8 +343,8 @@ rule same-natural-is-reflexive
 # THE DECIDABLE TEST IS ORDER-FREE: same-natural a b = same-natural b a, by simultaneous induction. The computational
 # horosphere test does not depend on which of the two bulk points is named first.
 rule same-natural-is-symmetric
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call same-natural
@@ -358,8 +358,8 @@ rule same-natural-is-symmetric
 # THE HOROSPHERE RELATION IS REFLEXIVE: every bulk point lies on its own horosphere of xi, since its Busemann value equals
 # itself. The level-zero fact that the level sets cover the bulk.
 rule horosphere-is-reflexive
-  mark a, like spot
-  mark xi, like end
+  seat a, like spot
+  seat xi, like end
   show hold
     call is-equal
       call busemann
@@ -373,9 +373,9 @@ rule horosphere-is-reflexive
 # THE HOROSPHERE RELATION IS SYMMETRIC: if a and b lie on one horosphere of xi (equal Busemann values) then so do b and a.
 # The hypothesis is discharged and the conclusion follows by reflexivity of Busemann equality.
 rule horosphere-is-symmetric
-  mark a, like spot
-  mark b, like spot
-  mark xi, like end
+  seat a, like spot
+  seat b, like spot
+  seat xi, like end
   have h
     call is-equal
       call busemann
@@ -398,10 +398,10 @@ rule horosphere-is-symmetric
 # Equal Busemann values chain. With reflexivity and symmetry this makes the horosphere relation a genuine EQUIVALENCE, and
 # its classes are exactly the discrete horospheres of xi.
 rule horosphere-is-transitive
-  mark a, like spot
-  mark b, like spot
-  mark c, like spot
-  mark xi, like end
+  seat a, like spot
+  seat b, like spot
+  seat c, like spot
+  seat xi, like end
   have h1
     call is-equal
       call busemann
@@ -434,7 +434,7 @@ rule horosphere-is-transitive
 # boundary point followed by one step toward it returns the Busemann value exactly, so the toward and away moves are
 # genuine inverses. This is the integer cancellation, restated here on the Busemann value it governs.
 rule away-step-undoes-toward-step
-  mark d, like rung
+  seat d, like rung
   show hold
     call is-equal
       call back
@@ -445,7 +445,7 @@ rule away-step-undoes-toward-step
 
 # THE TOWARD STEP UNDOES THE AWAY STEP: next (back d) = d. The mirror, the step toward the boundary undone by the step away.
 rule toward-step-undoes-away-step
-  mark d, like rung
+  seat d, like rung
   show hold
     call is-equal
       call next
@@ -471,7 +471,7 @@ rule toward-step-from-waterline-is-below
 # negsucc (succ p). Each move toward xi adds a notch of depth, so the Busemann value runs off to minus infinity along the
 # ray: the depth-toward-infinity is unbounded below, the geodesic genuinely reaches the boundary point in the limit.
 rule descent-toward-the-boundary-deepens
-  mark p, like natural
+  seat p, like natural
   show hold
     call is-equal
       call back
@@ -491,7 +491,7 @@ rule descent-toward-the-boundary-deepens
 # (a deeper prefix sits inside the wedge of the shallower one) and the Busemann descent point the same way down the radial
 # direction. Deeper on the spine is lower on the Busemann function.
 rule spine-depth-agrees-with-busemann
-  mark p, like spot
+  seat p, like spot
   show hold
     call is-equal
       call busemann

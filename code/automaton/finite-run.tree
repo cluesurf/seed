@@ -83,9 +83,9 @@ task append
 
 # Definitional step law of run on a cons, cited by the homomorphism proof.
 rule run-cons-steps
-  mark s, like phase
-  mark g, like glyph
-  mark w, like word
+  seat s, like phase
+  seat g, like glyph
+  seat w, like word
   show hold
     call is-equal
       call run
@@ -104,9 +104,9 @@ rule run-cons-steps
 
 # Definitional step law of append on a cons.
 rule append-cons-steps
-  mark g, like glyph
-  mark u, like word
-  mark v, like word
+  seat g, like glyph
+  seat u, like word
+  seat v, like word
   show hold
     call is-equal
       call append
@@ -129,7 +129,7 @@ rule append-cons-steps
 # involution, so the parity rule is locally reversible, the automaton can be run backward over its input. This is the
 # discrete reversibility that the knit collision also has, here on a finite-state machine.
 rule reading-one-twice-returns
-  mark s, like phase
+  seat s, like phase
   show hold
     call is-equal
       call step
@@ -142,7 +142,7 @@ rule reading-one-twice-returns
 
 # Reading a zero never changes the state, step s o = s. The identity transition.
 rule reading-zero-keeps-state
-  mark s, like phase
+  seat s, like phase
   show hold
     call is-equal
       call step
@@ -153,7 +153,7 @@ rule reading-zero-keeps-state
 
 # Empty input leaves the state, run s nil = s. The run identity.
 rule run-empty-is-identity
-  mark s, like phase
+  seat s, like phase
   show hold
     call is-equal
       call run
@@ -199,9 +199,9 @@ rule even-then-one-one-is-odd
 # second. The determinism of the automaton as an algebraic law, the foundation regular-language theory is built on. Proved
 # by induction on u; the threaded state changes along the recursion, so this uses the GENERALIZED induction hypothesis.
 rule run-distributes-over-append
-  mark s, like phase
-  mark u, like word
-  mark v, like word
+  seat s, like phase
+  seat u, like word
+  seat v, like word
   show hold
     call is-equal
       call run

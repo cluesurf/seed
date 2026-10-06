@@ -60,7 +60,7 @@ task fib
 # n. This one law generates the whole sequence and is the integer face of the golden ratio's defining relation phi squared
 # equals phi plus one, so the Perron growth rate is pinned exactly. Proved definitionally for every index.
 rule the-golden-recurrence
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call fib

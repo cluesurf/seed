@@ -49,7 +49,7 @@ task shift
 # point. So the Fano plane has a seven-fold cyclic symmetry permuting its points in one orbit. Proved by induction over
 # the seven points.
 rule the-singer-cycle-has-order-seven
-  mark p, like point
+  seat p, like point
   show hold
     call is-equal
       call shift

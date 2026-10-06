@@ -90,7 +90,7 @@ task number
 # CREATION RAISES THE NUMBER BY ONE: number (raise s) = successor (number s), for every state. This is the commutator
 # [N, a-dagger] = a-dagger written on occupation numbers: counting after a raise is exactly one more than counting before.
 rule creation-raises-the-number
-  mark s, like state
+  seat s, like state
   show hold
     call is-equal
       call number
@@ -105,7 +105,7 @@ rule creation-raises-the-number
 # a lower brings the count back where it started. This is the integer face of [N, a] = -a together with the left inverse:
 # lowering undoes the unit that raising added, so the cycle conserves the occupation.
 rule annihilation-lowers-the-number
-  mark s, like state
+  seat s, like state
   show hold
     call is-equal
       call number
@@ -119,7 +119,7 @@ rule annihilation-lowers-the-number
 # ANNIHILATION UNDOES CREATION: lower (raise s) = s, for every state. Adding a quantum and immediately removing it leaves
 # the state exactly as it was. The annihilation operator is the clean LEFT INVERSE of the creation operator on the ladder.
 rule annihilation-undoes-creation
-  mark s, like state
+  seat s, like state
   show hold
     call is-equal
       call lower
@@ -165,7 +165,7 @@ rule creation-leaves-the-vacuum
 # round trip up and back down the ladder returns the exact basis vector, for every state including the vacuum (raise lifts
 # |0> to |1>, lower returns it to |0>). Together with the floor it pins down the full action of a a-dagger on the ladder.
 rule raise-then-lower-is-identity
-  mark s, like state
+  seat s, like state
   show hold
     call is-equal
       call lower

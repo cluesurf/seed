@@ -297,8 +297,8 @@ task chain-5
 
 # THE DETERMINANT OF A CHAIN OF 3 MIRRORS IS ITS CONTINUANT, for every set of off-diagonal entries.
 rule the-determinant-of-a-chain-of-3-is-its-continuant
-  mark u1, like integer
-  mark u2, like integer
+  seat u1, like integer
+  seat u2, like integer
   show hold
     call is-equal
       call determinant-three
@@ -329,9 +329,9 @@ rule the-determinant-of-a-chain-of-3-is-its-continuant
 
 # THE DETERMINANT OF A CHAIN OF 4 MIRRORS IS ITS CONTINUANT, for every set of off-diagonal entries.
 rule the-determinant-of-a-chain-of-4-is-its-continuant
-  mark u1, like integer
-  mark u2, like integer
-  mark u3, like integer
+  seat u1, like integer
+  seat u2, like integer
+  seat u3, like integer
   show hold
     call is-equal
       call determinant-four
@@ -376,10 +376,10 @@ rule the-determinant-of-a-chain-of-4-is-its-continuant
 
 # THE DETERMINANT OF A CHAIN OF 5 MIRRORS IS ITS CONTINUANT, for every set of off-diagonal entries.
 rule the-determinant-of-a-chain-of-5-is-its-continuant
-  mark u1, like integer
-  mark u2, like integer
-  mark u3, like integer
-  mark u4, like integer
+  seat u1, like integer
+  seat u2, like integer
+  seat u3, like integer
+  seat u4, like integer
   show hold
     call is-equal
       call determinant-five
@@ -541,8 +541,8 @@ rule the-distance-between-adjacent-cells-has-cosh-three
 # THE PLANE CRITERION: 2pq (1/p + 1/q - 1/2) = 2q + 2p - pq = 4 - (p - 2)(q - 2). So {p, q} tiles the sphere,
 # the plane or the hyperbolic plane as (p - 2)(q - 2) is below, at or above 4: {7,3} gives 5, hyperbolic.
 rule the-plane-criterion
-  mark p, like integer
-  mark q, like integer
+  seat p, like integer
+  seat q, like integer
   show hold
     call is-equal
       call subtract

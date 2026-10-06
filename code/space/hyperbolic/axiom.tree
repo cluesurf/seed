@@ -27,12 +27,12 @@ load @term/seed/space/hyperbolic/hyperboloid
 
 # I.1: the line through two points x, y is the normal x * y, and both points lie on it.
 rule incidence-the-first-point-lies-on-the-line
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark y0, like integer
-  mark y1, like integer
-  mark y2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat y0, like integer
+  seat y1, like integer
+  seat y2, like integer
   show hold
     call is-equal
       call lorentz-form
@@ -63,12 +63,12 @@ rule incidence-the-first-point-lies-on-the-line
       code 0
 
 rule incidence-the-second-point-lies-on-the-line
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark y0, like integer
-  mark y1, like integer
-  mark y2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat y0, like integer
+  seat y1, like integer
+  seat y2, like integer
   show hold
     call is-equal
       call lorentz-form
@@ -100,12 +100,12 @@ rule incidence-the-second-point-lies-on-the-line
 
 # I.2: and that line is a genuine line exactly when the points differ: its normal has norm 1 - cosh^2 d.
 rule incidence-two-distinct-points-span-a-genuine-line
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark y0, like integer
-  mark y1, like integer
-  mark y2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat y0, like integer
+  seat y1, like integer
+  seat y2, like integer
   have x-point
     call is-equal
       call lorentz-form
@@ -223,12 +223,12 @@ rule incidence-three-points-not-on-a-line
 # III: segment congruence is B-equality, symmetric in the two ends (B(x, y) = B(y, x)), so congruence of segments does
 # not depend on the order of the endpoints.
 rule congruence-ignores-the-order-of-the-ends
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark y0, like integer
-  mark y1, like integer
-  mark y2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat y0, like integer
+  seat y1, like integer
+  seat y2, like integer
   show hold
     call is-equal
       call lorentz-form

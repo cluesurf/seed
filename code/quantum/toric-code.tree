@@ -339,7 +339,7 @@ rule disjoint-star-and-plaquette-commute
 # commutes with itself, and an all-agreeing walk yields yes. This is why each stabilizer generator is consistent with
 # itself, proved by structural induction on the support.
 rule self-overlap-commutes
-  mark s, like support
+  seat s, like support
   show hold
     call is-equal
       call overlap-commutes
@@ -352,7 +352,7 @@ rule self-overlap-commutes
 # commute. With the support law above this gives that every stabilizer, a product of commuting self-overlapping
 # generators, squares to the identity. Proved over all four operators.
 rule stabilizer-squares-to-identity
-  mark p, like pauli
+  seat p, like pauli
   show hold
     call is-equal
       call commutes
@@ -364,8 +364,8 @@ rule stabilizer-squares-to-identity
 # SINGLE-EDGE COMMUTATION IS SYMMETRIC: commutes a b = commutes b a, the four-by-four table is symmetric across its
 # diagonal, so the order of two operators on one edge never matters. Proved over all sixteen Pauli pairs.
 rule commutes-is-symmetric
-  mark a, like pauli
-  mark b, like pauli
+  seat a, like pauli
+  seat b, like pauli
   show hold
     call is-equal
       call commutes
@@ -379,8 +379,8 @@ rule commutes-is-symmetric
 # AGREEMENT IS SYMMETRIC: agree a b = agree b a, flag equality does not depend on order. With single-edge symmetry this
 # is why an overlap commutation reading is the same whichever operator we name first. Proved over all four flag pairs.
 rule agree-is-symmetric
-  mark a, like flag
-  mark b, like flag
+  seat a, like flag
+  seat b, like flag
   show hold
     call is-equal
       call agree
@@ -407,7 +407,7 @@ rule minimal-string-makes-a-pair
 # endpoints apart but never changes the EVEN count of e-particles, so charge parity is conserved at any length. Proved by
 # computation against the grow step.
 rule grow-preserves-total-charge
-  mark ln, like line
+  seat ln, like line
   show hold
     call is-equal
       call total-charge
@@ -433,9 +433,9 @@ rule grown-string-keeps-even-charge
 # charge. This is the structural law that lets us merge string segments at shared vertices without ambiguity. Proved over
 # all charge triples.
 rule add-charge-is-associative
-  mark a, like charge
-  mark b, like charge
-  mark c, like charge
+  seat a, like charge
+  seat b, like charge
+  seat c, like charge
   show hold
     call is-equal
       call add-charge
@@ -453,7 +453,7 @@ rule add-charge-is-associative
 # OFF IS THE IDENTITY OF CHARGE COMBINATION: add-charge off c = c. A vertex hit zero extra times keeps its charge. This
 # and associativity make the charge line a clean parity accumulator. Proved over both charges.
 rule off-is-charge-identity
-  mark c, like charge
+  seat c, like charge
   show hold
     call is-equal
       call add-charge
@@ -494,8 +494,8 @@ rule parallel-loops-commute
 # anticommuting pairs are the two logical qubits, the fourfold ground-state degeneracy. Proved over all handle pairs by
 # induction: crossing parity is symmetric.
 rule cross-parity-is-symmetric
-  mark a, like handle
-  mark b, like handle
+  seat a, like handle
+  seat b, like handle
   show hold
     call is-equal
       call cross-parity

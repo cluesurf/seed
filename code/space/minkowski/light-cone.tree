@@ -349,7 +349,7 @@ hold squared-interval-one-two-space-excess-is-three
 
 # The comparison is reflexive: compare n n = same, for every magnitude. Proved by induction on n.
 rule compare-self-is-same
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call compare
@@ -361,7 +361,7 @@ rule compare-self-is-same
 # THE LIGHT CONE IS THE BOUNDARY: equal gaps are lightlike. sort n n = lightlike, for every n, because t = x makes
 # t^2 = x^2 exactly, the null surface separating the timelike interior (t^2 > x^2) from the spacelike exterior (t^2 < x^2).
 rule equal-gaps-are-lightlike
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call sort
@@ -373,8 +373,8 @@ rule equal-gaps-are-lightlike
 
 # THE SEPARATION IS SYMMETRIC IN THE COORDINATE: |a - b| = |b - a|, the gap does not depend on which event is first.
 rule gap-apart-is-symmetric
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call gap-apart
@@ -582,7 +582,7 @@ rule the-causal-order-is-one-way
 # to itself has zero gaps (lightlike, the cone's apex) and time is trivially non-decreasing. Proved by induction over the
 # two coordinates, citing the gap collapsing to zero and the time order holding on the diagonal.
 rule at-most-self-is-yes
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call at-most
@@ -592,7 +592,7 @@ rule at-most-self-is-yes
   fold n
 
 rule gap-apart-self-is-zero
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call gap-apart
@@ -602,8 +602,8 @@ rule gap-apart-self-is-zero
   fold n
 
 rule causal-precedence-is-reflexive
-  mark tick, like natural
-  mark spot, like natural
+  seat tick, like natural
+  seat spot, like natural
   show hold
     call is-equal
       call precedes

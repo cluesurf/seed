@@ -251,7 +251,7 @@ task reflect-two
 # ADDITION HAS ZERO AS RIGHT IDENTITY: add-coordinate a zero = a. The lattice is an additive group, and this is the unit
 # law it rests on. Proved over every coordinate.
 rule add-coordinate-zero-right
-  mark a, like coordinate
+  seat a, like coordinate
   show hold
     call is-equal
       call add-coordinate
@@ -262,7 +262,7 @@ rule add-coordinate-zero-right
 
 # ADDITION HAS ZERO AS LEFT IDENTITY: add-coordinate zero a = a.
 rule add-coordinate-zero-left
-  mark a, like coordinate
+  seat a, like coordinate
   show hold
     call is-equal
       call add-coordinate
@@ -273,7 +273,7 @@ rule add-coordinate-zero-left
 
 # NEGATION IS AN INVOLUTION ON COORDINATES: negate (negate a) = a, the additive inverse undoes itself.
 rule negate-coordinate-is-an-involution
-  mark a, like coordinate
+  seat a, like coordinate
   show hold
     call is-equal
       call negate-coordinate
@@ -393,7 +393,7 @@ rule root-two-is-minus-weight-one-plus-two-weight-two
 # below on the concrete A2 points: the second coordinate uses an addition that would clamp outside the small range, so the
 # two-coordinate involution is true exactly on the lattice points that stay in range, not on the padded enum boundary.)
 rule reflect-one-first-coordinate-is-an-involution
-  mark first, like coordinate
+  seat first, like coordinate
   show hold
     call is-equal
       call reflect-one-first
@@ -406,7 +406,7 @@ rule reflect-one-first-coordinate-is-an-involution
 
 # THE SECOND REFLECTION ON THE SECOND COORDINATE IS AN INVOLUTION over the whole range, the mirror, through -(-c2) = c2.
 rule reflect-two-second-coordinate-is-an-involution
-  mark second, like coordinate
+  seat second, like coordinate
   show hold
     call is-equal
       call reflect-two-second

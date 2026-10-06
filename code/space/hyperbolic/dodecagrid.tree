@@ -192,7 +192,7 @@ hold cells-around-edge-is-four
 # the identity, for each of the four cells. This is the four-fold meeting of dodecahedra at every edge, the final 4 of
 # the Schlafli symbol {5, 3, 4}, proved as the order-four cycle of the local patch. Proved over all four cells by `fold`.
 rule four-cells-around-an-edge
-  mark c, like edge-cell
+  seat c, like edge-cell
   show hold
     call is-equal
       call around-edge
@@ -207,7 +207,7 @@ rule four-cells-around-an-edge
 # cycle of the three faces sharing a dodecahedron vertex. This is the {3} of the cell {5, 3}, the vertex figure of the
 # dodecahedron, proved as a constructed local patch over all three faces by `fold`.
 rule three-faces-around-a-vertex
-  mark f, like vertex-face
+  seat f, like vertex-face
   show hold
     call is-equal
       call around-vertex

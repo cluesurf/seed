@@ -38,7 +38,7 @@ task next
 # So the exceptional series is four algebras tall and stops at E8, the largest exceptional Lie algebra. Proved by
 # induction over the four members.
 rule climbing-three-steps-reaches-e-eight
-  mark g, like exceptional
+  seat g, like exceptional
   show hold
     call is-equal
       call next

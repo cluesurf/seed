@@ -52,7 +52,7 @@ task neg3
 
 # IDENTITY (left): zero added on the left is the identity, add3 z0 a = a. Definitional.
 rule add3-zero-left
-  mark a, like zmod3
+  seat a, like zmod3
   show hold
     call is-equal
       call add3
@@ -63,7 +63,7 @@ rule add3-zero-left
 
 # IDENTITY (right): zero added on the right is the identity, add3 a z0 = a. By case on a.
 rule add3-zero-right
-  mark a, like zmod3
+  seat a, like zmod3
   show hold
     call is-equal
       call add3
@@ -74,8 +74,8 @@ rule add3-zero-right
 
 # COMMUTATIVE (abelian): add3 a b = add3 b a, for all residues. By the nine cases.
 rule add3-is-commutative
-  mark a, like zmod3
-  mark b, like zmod3
+  seat a, like zmod3
+  seat b, like zmod3
   show hold
     call is-equal
       call add3
@@ -88,9 +88,9 @@ rule add3-is-commutative
 
 # ASSOCIATIVE: add3 (add3 a b) c = add3 a (add3 b c), for all residues. By the twenty-seven cases.
 rule add3-is-associative
-  mark a, like zmod3
-  mark b, like zmod3
-  mark c, like zmod3
+  seat a, like zmod3
+  seat b, like zmod3
+  seat c, like zmod3
   show hold
     call is-equal
       call add3
@@ -107,7 +107,7 @@ rule add3-is-associative
 
 # INVERSE: each residue plus its negation is zero, add3 a (neg3 a) = z0. By case on a.
 rule add3-inverse
-  mark a, like zmod3
+  seat a, like zmod3
   show hold
     call is-equal
       call add3
@@ -119,9 +119,9 @@ rule add3-inverse
 
 # DERIVED: left cancellation, if add3 a b = add3 a c then b = c. The group structure lets the common summand be removed.
 rule add3-left-cancellation
-  mark a, like zmod3
-  mark b, like zmod3
-  mark c, like zmod3
+  seat a, like zmod3
+  seat b, like zmod3
+  seat c, like zmod3
   have h
     call is-equal
       call add3

@@ -260,7 +260,7 @@ task q8-turn-by
 fuse homomorphism, q8-turn, q8, q8-turn, q8-product, q8-product
 
 rule the-turn-has-order-three
-  mark q, like q8
+  seat q, like q8
   show hold
     call is-equal
       call q8-turn
@@ -272,9 +272,9 @@ rule the-turn-has-order-three
 
 # Turning by s then by t is turning by s + t: the turns are an action of Z3 on Q8.
 rule turns-compose-by-adding
-  mark s, like tone
-  mark t, like tone
-  mark q, like q8
+  seat s, like tone
+  seat t, like tone
+  seat q, like q8
   show hold
     call is-equal
       call q8-turn-by
@@ -524,7 +524,7 @@ rule omega-cubed-is-the-identity
 
 # -1 IS CENTRAL: it commutes with every unit.
 rule minus-one-is-central
-  mark g, like hurwitz-element
+  seat g, like hurwitz-element
   show hold
     call is-equal
       call hurwitz-product
@@ -537,7 +537,7 @@ rule minus-one-is-central
 
 # THE CENTER IS EXACTLY {1, -1}: a unit that commutes with i and with w is +-1.
 rule the-center-is-plus-or-minus-one
-  mark g, like hurwitz-element
+  seat g, like hurwitz-element
   have with-i
     call is-equal
       call hurwitz-product
@@ -564,7 +564,7 @@ rule the-center-is-plus-or-minus-one
 # THE 2 PI TURN: the only units that square to 1 are 1 and -1. So -1 is the unique element of order two, the image of
 # a full turn of space, and a vibe that is a doublet of 2T changes sign under it.
 rule only-plus-or-minus-one-square-to-one
-  mark g, like hurwitz-element
+  seat g, like hurwitz-element
   have square
     call is-equal
       call same-hurwitz
@@ -611,7 +611,7 @@ task hurwitz-cube
       read g
 
 rule a-unit-of-the-first-frame-has-order-dividing-four
-  mark q, like q8
+  seat q, like q8
   show hold
     call is-equal
       call hurwitz-square
@@ -623,8 +623,8 @@ rule a-unit-of-the-first-frame-has-order-dividing-four
   fold q
 
 rule a-turned-unit-has-order-dividing-six
-  mark q, like q8
-  mark t, like tone
+  seat q, like q8
+  seat t, like tone
   have turned
     call is-equal
       call same-tone
@@ -647,8 +647,8 @@ fuse homomorphism, hurwitz-turn, hurwitz-element, hurwitz-turn, hurwitz-product,
 
 # Q8 IS NORMAL: conjugating a unit with no turn gives a unit with no turn.
 rule the-first-frame-is-a-normal-subgroup
-  mark g, like hurwitz-element
-  mark q, like q8
+  seat g, like hurwitz-element
+  seat q, like q8
   show hold
     call is-equal
       call hurwitz-turn
@@ -665,7 +665,7 @@ rule the-first-frame-is-a-normal-subgroup
 
 # LEFT MULTIPLICATION BY w CYCLES THE FRAMES: the frame of w g is the frame of g advanced by one.
 rule omega-cycles-the-frames
-  mark g, like hurwitz-element
+  seat g, like hurwitz-element
   show hold
     call is-equal
       call hurwitz-turn
@@ -962,8 +962,8 @@ task same-point
 
 # THE 24 COORDINATE VECTORS ARE DISTINCT: two units with the same coordinates are the same unit.
 rule distinct-units-have-distinct-coordinates
-  mark g, like hurwitz-element
-  mark h, like hurwitz-element
+  seat g, like hurwitz-element
+  seat h, like hurwitz-element
   have same
     call is-equal
       call same-point
@@ -1110,7 +1110,7 @@ task is-unit-point
 
 # EVERY ELEMENT IS A UNIT QUATERNION of the Hurwitz shape (so its norm is 1 + 0 + 0 + 0 or 4 x 1/4).
 rule every-element-is-a-hurwitz-unit-vector
-  mark g, like hurwitz-element
+  seat g, like hurwitz-element
   show hold
     call is-equal
       call is-unit-point
@@ -1256,18 +1256,18 @@ task quaternion-norm
 # THE HAMILTON PRODUCT IS ASSOCIATIVE, for all integer quaternions, coordinate by coordinate.
 
 rule the-hamilton-product-is-associative-real
-  mark a0, like integer
-  mark a1, like integer
-  mark a2, like integer
-  mark a3, like integer
-  mark b0, like integer
-  mark b1, like integer
-  mark b2, like integer
-  mark b3, like integer
-  mark c0, like integer
-  mark c1, like integer
-  mark c2, like integer
-  mark c3, like integer
+  seat a0, like integer
+  seat a1, like integer
+  seat a2, like integer
+  seat a3, like integer
+  seat b0, like integer
+  seat b1, like integer
+  seat b2, like integer
+  seat b3, like integer
+  seat c0, like integer
+  seat c1, like integer
+  seat c2, like integer
+  seat c3, like integer
   show hold
     call is-equal
       call hamilton-real
@@ -1354,18 +1354,18 @@ rule the-hamilton-product-is-associative-real
           read c3
 
 rule the-hamilton-product-is-associative-i
-  mark a0, like integer
-  mark a1, like integer
-  mark a2, like integer
-  mark a3, like integer
-  mark b0, like integer
-  mark b1, like integer
-  mark b2, like integer
-  mark b3, like integer
-  mark c0, like integer
-  mark c1, like integer
-  mark c2, like integer
-  mark c3, like integer
+  seat a0, like integer
+  seat a1, like integer
+  seat a2, like integer
+  seat a3, like integer
+  seat b0, like integer
+  seat b1, like integer
+  seat b2, like integer
+  seat b3, like integer
+  seat c0, like integer
+  seat c1, like integer
+  seat c2, like integer
+  seat c3, like integer
   show hold
     call is-equal
       call hamilton-i
@@ -1452,18 +1452,18 @@ rule the-hamilton-product-is-associative-i
           read c3
 
 rule the-hamilton-product-is-associative-j
-  mark a0, like integer
-  mark a1, like integer
-  mark a2, like integer
-  mark a3, like integer
-  mark b0, like integer
-  mark b1, like integer
-  mark b2, like integer
-  mark b3, like integer
-  mark c0, like integer
-  mark c1, like integer
-  mark c2, like integer
-  mark c3, like integer
+  seat a0, like integer
+  seat a1, like integer
+  seat a2, like integer
+  seat a3, like integer
+  seat b0, like integer
+  seat b1, like integer
+  seat b2, like integer
+  seat b3, like integer
+  seat c0, like integer
+  seat c1, like integer
+  seat c2, like integer
+  seat c3, like integer
   show hold
     call is-equal
       call hamilton-j
@@ -1550,18 +1550,18 @@ rule the-hamilton-product-is-associative-j
           read c3
 
 rule the-hamilton-product-is-associative-k
-  mark a0, like integer
-  mark a1, like integer
-  mark a2, like integer
-  mark a3, like integer
-  mark b0, like integer
-  mark b1, like integer
-  mark b2, like integer
-  mark b3, like integer
-  mark c0, like integer
-  mark c1, like integer
-  mark c2, like integer
-  mark c3, like integer
+  seat a0, like integer
+  seat a1, like integer
+  seat a2, like integer
+  seat a3, like integer
+  seat b0, like integer
+  seat b1, like integer
+  seat b2, like integer
+  seat b3, like integer
+  seat c0, like integer
+  seat c1, like integer
+  seat c2, like integer
+  seat c3, like integer
   show hold
     call is-equal
       call hamilton-k
@@ -1650,14 +1650,14 @@ rule the-hamilton-product-is-associative-k
 # THE NORM IS MULTIPLICATIVE (Euler's four-square identity), so a product of unit quaternions is a unit.
 
 rule the-quaternion-norm-is-multiplicative
-  mark a0, like integer
-  mark a1, like integer
-  mark a2, like integer
-  mark a3, like integer
-  mark b0, like integer
-  mark b1, like integer
-  mark b2, like integer
-  mark b3, like integer
+  seat a0, like integer
+  seat a1, like integer
+  seat a2, like integer
+  seat a3, like integer
+  seat b0, like integer
+  seat b1, like integer
+  seat b2, like integer
+  seat b3, like integer
   show hold
     call is-equal
       call quaternion-norm

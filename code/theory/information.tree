@@ -42,7 +42,7 @@ task xor
 # ZERO IS THE IDENTITY: combining any bit with the zero bit leaves it unchanged, xor(off, a) = a, for every a. Proved by
 # induction over the bit.
 rule zero-is-the-identity
-  mark a, like bit
+  seat a, like bit
   show hold
     call is-equal
       call xor
@@ -54,7 +54,7 @@ rule zero-is-the-identity
 # EVERY BIT IS ITS OWN INVERSE: a bit combined with itself gives zero, xor(a, a) = off, for every a. So the group has
 # exponent two, the defining property of parity. Proved by induction over the bit.
 rule every-bit-is-its-own-inverse
-  mark a, like bit
+  seat a, like bit
   show hold
     call is-equal
       call xor
@@ -66,8 +66,8 @@ rule every-bit-is-its-own-inverse
 # EXCLUSIVE-OR IS COMMUTATIVE: the order of the two bits does not matter, xor(a, b) = xor(b, a), for all a and b. Proved
 # by simultaneous induction over the two bits.
 rule exclusive-or-is-commutative
-  mark a, like bit
-  mark b, like bit
+  seat a, like bit
+  seat b, like bit
   show hold
     call is-equal
       call xor
@@ -81,9 +81,9 @@ rule exclusive-or-is-commutative
 # EXCLUSIVE-OR IS ASSOCIATIVE: regrouping does not matter, xor(xor(a, b), c) = xor(a, xor(b, c)), for all a, b and c, so
 # a string of bits has a well-defined parity. Proved by simultaneous induction over the three bits.
 rule exclusive-or-is-associative
-  mark a, like bit
-  mark b, like bit
-  mark c, like bit
+  seat a, like bit
+  seat b, like bit
+  seat c, like bit
   show hold
     call is-equal
       call xor

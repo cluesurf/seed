@@ -126,9 +126,9 @@ form derivation
 
 # SOUNDNESS: what the system derives is true, under every assignment.
 rule derivable-is-true
-  mark v, like assignment
-  mark p, like proposition
-  mark d, like derivation
+  seat v, like assignment
+  seat p, like proposition
+  seat d, like derivation
     head
       read p
   show hold, is-equal evaluate(v, p), make yes

@@ -170,7 +170,7 @@ task raised-state
 # state is an eigenstate of N and its eigenvalue is its own level, the defining property of the Fock basis. Proved by
 # induction over the level.
 rule number-operator-eigenvalue
-  mark n, like level
+  seat n, like level
   show hold
     call is-equal
       call number
@@ -206,7 +206,7 @@ rule ground-state-annihilation
 # and above it climbs as sqrt(n). Proved by induction over the level: the two branches of `lower` reassemble n from its
 # predecessor.
 rule lowering-radicand-is-the-level
-  mark n, like level
+  seat n, like level
   show hold
     call is-equal
       call radicand-of-lower
@@ -230,7 +230,7 @@ task radicand-of-raise
 # raising |n> is exactly n+1, so the creation amplitude is sqrt(n+1). It never vanishes: even on the vacuum the radicand
 # is one (sqrt(1) = 1), lifting |0> to |1>. Definitional.
 rule raising-radicand-is-the-next-level
-  mark n, like level
+  seat n, like level
   show hold
     call is-equal
       call radicand-of-raise
@@ -246,7 +246,7 @@ rule raising-radicand-is-the-next-level
 # (including the vacuum: |0> raises to |1>, lower returns it to |0>). This is the clean left inverse of creation. Proved
 # by reading the level off the composed state.
 rule raise-then-lower-returns-level
-  mark n, like level
+  seat n, like level
   show hold
     call is-equal
       call number
@@ -291,7 +291,7 @@ task adagger-a-level
 # short at the vacuum: their difference is the +1 that is the zero-point of the ladder. Here we prove the a a-dagger side
 # returns the level for every n, by induction.
 rule commutator-is-identity
-  mark n, like level
+  seat n, like level
   show hold
     call is-equal
       call a-adagger-level
@@ -353,7 +353,7 @@ rule zero-point-energy-is-one-half
 # quantum of energy, the constant gap, for every level. This is the recurrence of `energy-doubled`, definitionally true:
 # the successor case prepends two to the energy of the prior level.
 rule energy-steps-by-the-quantum
-  mark n, like level
+  seat n, like level
   show hold
     call is-equal
       call energy-doubled
@@ -374,7 +374,7 @@ rule energy-steps-by-the-quantum
 # matching the fixed step. This is what EQUALLY SPACED means: the spectrum is an arithmetic ladder, E(n) = (n + 1/2)
 # quanta, with one fixed spacing the same at every step. Proved by induction over the level.
 rule spectrum-is-evenly-spaced
-  mark n, like level
+  seat n, like level
   show hold
     call is-equal
       call energy-doubled
@@ -436,7 +436,7 @@ rule second-level-energy-is-five-halves
 # THE GROUND LEVEL IS A LEFT IDENTITY FOR LEVEL ADDITION, ground + m = m, definitionally (the ground branch of `plus`
 # returns its second level directly). The bottom of the ladder adds nothing, the additive zero of the level arithmetic.
 rule ground-is-left-identity
-  mark m, like level
+  seat m, like level
   show hold
     call is-equal
       call plus
@@ -450,7 +450,7 @@ rule ground-is-left-identity
 # successor case closes through the induction hypothesis. This makes the levels a commutative monoid under the ladder
 # addition the spectrum is built on.
 rule ground-is-right-identity
-  mark n, like level
+  seat n, like level
   show hold
     call is-equal
       call plus

@@ -79,8 +79,8 @@ task knit
 # COLLIDE is an INVOLUTION (its own inverse): collide (collide l) = l. The mirror is order two, so colliding twice undoes
 # itself. Proved over the nine line states.
 rule collide-is-reversible
-  mark a, like tone
-  mark b, like tone
+  seat a, like tone
+  seat b, like tone
   show hold
     call is-equal
       call collide
@@ -99,8 +99,8 @@ rule collide-is-reversible
 
 # STREAM is an INVOLUTION: stream (stream l) = l. Exchanging twice returns the original. Proved over the nine line states.
 rule stream-is-reversible
-  mark a, like tone
-  mark b, like tone
+  seat a, like tone
+  seat b, like tone
   show hold
     call is-equal
       call stream
@@ -121,8 +121,8 @@ rule stream-is-reversible
 # invertible and runs the same forward and backward. This is the knit's defining property: a closed reversible bulk, with
 # no built-in arrow of time. Proved over all nine line states, the composition of the two reversible steps.
 rule knit-is-reversible
-  mark a, like tone
-  mark b, like tone
+  seat a, like tone
+  seat b, like tone
   show hold
     call is-equal
       call knit

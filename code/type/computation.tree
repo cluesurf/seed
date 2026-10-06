@@ -76,7 +76,7 @@ task some
 
 # UNIVERSAL law: off is the absorber of and. and off b = off, for every b. Definitional, proved by the kernel.
 rule both-off-absorbs
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call both
@@ -87,7 +87,7 @@ rule both-off-absorbs
 
 # UNIVERSAL law: on is the identity of and. and on b = b, for every b.
 rule both-on-is-identity
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call both
@@ -98,7 +98,7 @@ rule both-on-is-identity
 
 # UNIVERSAL law: on is the absorber of or. or on b = on, for every b.
 rule some-on-absorbs
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call some
@@ -109,7 +109,7 @@ rule some-on-absorbs
 
 # UNIVERSAL law: off is the identity of or. or off b = b, for every b.
 rule some-off-is-identity
-  mark b, like bit
+  seat b, like bit
   show hold
     call is-equal
       call some

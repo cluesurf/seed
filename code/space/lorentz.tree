@@ -86,8 +86,8 @@ task compose
 # boosts to integers carries composition to addition, so it is a group homomorphism. This is the bridge every group law
 # below crosses to reach the proven integer addition group.
 rule compose-rapidity-adds
-  mark a, like boost
-  mark b, like boost
+  seat a, like boost
+  seat b, like boost
   show hold
     call is-equal
       call rapidity-of
@@ -113,7 +113,7 @@ rule rapidity-of-identity-is-zero
 # THE INVERSE BOOST NEGATES THE RAPIDITY: rapidity-of (inverse-boost b) = negate (rapidity-of b). Inversion in the boost
 # group is negation in the integers.
 rule inverse-rapidity-negates
-  mark b, like boost
+  seat b, like boost
   show hold
     call is-equal
       call rapidity-of
@@ -130,7 +130,7 @@ rule inverse-rapidity-negates
 # leaves the rapidity unchanged. This one reduces by pure computation, since integer addition is defined by recursion on
 # its right argument and the zero case returns the left boost directly.
 rule compose-identity-right-is-self
-  mark b, like boost
+  seat b, like boost
   show hold
     call is-equal
       call compose
@@ -142,7 +142,7 @@ rule compose-identity-right-is-self
 # COMPOSING WITH THE IDENTITY ON THE LEFT IS THE BOOST ITSELF: rapidity-of (compose identity b) = rapidity-of b. The mirror,
 # adding zero rapidity on the left, which needs the proven zero-left law of integer addition.
 rule compose-identity-left-is-self
-  mark b, like boost
+  seat b, like boost
   show hold
     call is-equal
       call rapidity-of
@@ -160,9 +160,9 @@ rule compose-identity-left-is-self
 # three successive boosts does not matter. Crossing the bridge turns both sides into nested integer additions, which the
 # proven associativity of the integers identifies.
 rule compose-is-associative
-  mark a, like boost
-  mark b, like boost
-  mark c, like boost
+  seat a, like boost
+  seat b, like boost
+  seat c, like boost
   show hold
     call is-equal
       call rapidity-of
@@ -187,8 +187,8 @@ rule compose-is-associative
 # across the bridge to the proven commutativity of the integers. (Boosts in DIFFERENT directions do not commute; their
 # failure to commute is the Thomas rotation. This file models the single direction, the abelian line.)
 rule compose-is-commutative
-  mark a, like boost
-  mark b, like boost
+  seat a, like boost
+  seat b, like boost
   show hold
     call is-equal
       call rapidity-of
@@ -209,7 +209,7 @@ rule compose-is-commutative
 # boosts are an ABELIAN GROUP under composition, the one-parameter group of Lorentz boosts in a fixed direction. Crossing
 # the bridge, this is a rapidity added to its negation, which the integers prove is zero.
 rule compose-inverse-right-is-identity
-  mark b, like boost
+  seat b, like boost
   show hold
     call is-equal
       call rapidity-of
@@ -339,7 +339,7 @@ task boost-on-class
 # timelike, lightlike to lightlike, and spacelike to spacelike. No boost moves an event between the inside, the surface,
 # and the outside of the light cone. Proved over every class.
 rule classification-is-lorentz-invariant
-  mark c, like interval-class
+  seat c, like interval-class
   show hold
     call is-equal
       call boost-on-class

@@ -7,10 +7,10 @@ load @term/seed/vibe/boost
 
 # the Euclidean norm is not kept by a boost
 rule control-a-boost-keeps-t-squared-plus-x-squared
-  mark d, like integer
-  mark n, like integer
-  mark t, like integer
-  mark x, like integer
+  seat d, like integer
+  seat n, like integer
+  seat t, like integer
+  seat x, like integer
   show hold
     call is-equal
       call add

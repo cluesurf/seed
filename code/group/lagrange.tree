@@ -136,7 +136,7 @@ task coset-of
 
 # IDENTITY (left): zero added on the left is the identity, combine n0 a = a. Definitional from the first row of the table.
 rule combine-zero-left-is-identity
-  mark a, like zmod6
+  seat a, like zmod6
   show hold
     call is-equal
       call combine
@@ -147,7 +147,7 @@ rule combine-zero-left-is-identity
 
 # IDENTITY (right): zero added on the right is the identity, combine a n0 = a. By case on a over all six residues.
 rule combine-zero-right-is-identity
-  mark a, like zmod6
+  seat a, like zmod6
   show hold
     call is-equal
       call combine
@@ -158,8 +158,8 @@ rule combine-zero-right-is-identity
 
 # COMMUTATIVE (abelian): combine a b = combine b a, over all thirty-six cases.
 rule combine-is-commutative
-  mark a, like zmod6
-  mark b, like zmod6
+  seat a, like zmod6
+  seat b, like zmod6
   show hold
     call is-equal
       call combine
@@ -173,9 +173,9 @@ rule combine-is-commutative
 # ASSOCIATIVE: combine (combine a b) c = combine a (combine b c), over all two hundred sixteen cases. This is the group axiom that makes
 # the coset partition well defined.
 rule combine-is-associative
-  mark a, like zmod6
-  mark b, like zmod6
-  mark c, like zmod6
+  seat a, like zmod6
+  seat b, like zmod6
+  seat c, like zmod6
   show hold
     call is-equal
       call combine
@@ -193,7 +193,7 @@ rule combine-is-associative
 # INVERSE: each residue plus its negation is zero, combine a (negate a) = n0. By case on a. With identity and associativity
 # this completes the proof that Z/6 is a genuine group.
 rule combine-inverse-is-zero
-  mark a, like zmod6
+  seat a, like zmod6
   show hold
     call is-equal
       call combine
@@ -206,9 +206,9 @@ rule combine-inverse-is-zero
 # DERIVED: left cancellation, if combine a b = combine a c then b = c. The group structure lets the common summand be removed,
 # which is what makes each coset have exactly the size of the subgroup.
 rule combine-left-cancellation
-  mark a, like zmod6
-  mark b, like zmod6
-  mark c, like zmod6
+  seat a, like zmod6
+  seat b, like zmod6
+  seat c, like zmod6
   have h
     call is-equal
       call combine
@@ -227,8 +227,8 @@ rule combine-left-cancellation
 # being yes forces in-subgroup (combine a b) to be yes. Proved over all thirty-six cases. Together with the identity zero and
 # the inverse (negate maps {zero, three} into itself), this proves H = {zero, three} is a genuine subgroup of Z/6.
 rule subgroup-is-closed-under-combine
-  mark a, like zmod6
-  mark b, like zmod6
+  seat a, like zmod6
+  seat b, like zmod6
   have h
     call is-equal
       call both
@@ -249,7 +249,7 @@ rule subgroup-is-closed-under-combine
 # THE SUBGROUP IS CLOSED UNDER INVERSES: if a is in H then negate a is in H. The inverse of zero is zero and the inverse
 # of three is three, so H is stable under negation, the remaining subgroup axiom.
 rule subgroup-is-closed-under-negate
-  mark a, like zmod6
+  seat a, like zmod6
   have h
     call is-equal
       call in-subgroup
@@ -268,7 +268,7 @@ rule subgroup-is-closed-under-negate
 # exactly the statement that translating by any member of H maps a coset onto itself. Proved over all six elements: this
 # is what forces the fibers of coset-of to be precisely the left cosets a + H.
 rule cosets-are-invariant-under-subgroup
-  mark a, like zmod6
+  seat a, like zmod6
   show hold
     call is-equal
       call coset-of
@@ -283,8 +283,8 @@ rule cosets-are-invariant-under-subgroup
 # coset label then b minus a (that is, combine (negate a) b) lies in H. Proved over all thirty-six cases. This says the coset
 # labeling is the quotient by H, the equivalence whose classes are the cosets.
 rule same-coset-means-difference-in-subgroup
-  mark a, like zmod6
-  mark b, like zmod6
+  seat a, like zmod6
+  seat b, like zmod6
   have h
     call is-equal
       call coset-of
@@ -305,8 +305,8 @@ rule same-coset-means-difference-in-subgroup
 # coset-of identifies exactly the elements that differ by a member of H, so its three fibers are the three cosets, each a
 # translate of H of size two. Proved over all thirty-six cases.
 rule difference-in-subgroup-means-same-coset
-  mark a, like zmod6
-  mark b, like zmod6
+  seat a, like zmod6
+  seat b, like zmod6
   have h
     call is-equal
       call in-subgroup

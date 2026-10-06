@@ -264,7 +264,7 @@ task group-order
 # Dynkin type to its binary polyhedral group and back returns the type. Half of the proof that `mckay-group` is a
 # bijection. Proved by induction over the ade types.
 rule group-map-round-trips-from-ade
-  mark t, like ade-type
+  seat t, like ade-type
   show hold
     call is-equal
       call mckay-group-inverse
@@ -278,7 +278,7 @@ rule group-map-round-trips-from-ade
 # `mckay-group` is a genuine bijection between the five ADE types and the five binary polyhedral groups. Proved by
 # induction over the binary groups.
 rule group-map-round-trips-from-group
-  mark g, like binary-group
+  seat g, like binary-group
   show hold
     call is-equal
       call mckay-group
@@ -291,7 +291,7 @@ rule group-map-round-trips-from-group
 # A solid to its exceptional Dynkin type and back returns the solid. Half of the proof that the exceptional-to-Platonic
 # map is a bijection. Proved by induction over the Platonic solids.
 rule solid-map-round-trips-from-platonic
-  mark p, like platonic
+  seat p, like platonic
   show hold
     call is-equal
       call mckay-solid

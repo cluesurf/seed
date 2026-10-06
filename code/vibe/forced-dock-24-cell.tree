@@ -73,7 +73,7 @@ task power-of-x
 
 # THE SHELLS OF THE TONE: four slots of (1 + 2x) expand to 1 + 8x + 24x^2 + 32x^3 + 16x^4.
 rule the-tetrads-split-into-shells-of-one-eight-twenty-four-thirty-two-sixteen
-  mark x, like integer
+  seat x, like integer
   show hold
     call is-equal
       call fourth-power
@@ -99,7 +99,7 @@ rule the-shells-total-three-to-the-fourth
 
 # THE BLADES OF Cl(4) BY GRADE: 1, 4, 6, 4, 1, sixteen in all, the even ones 1 + 6 + 1 = 8.
 rule the-blades-split-by-grade-into-one-four-six-four-one
-  mark x, like integer
+  seat x, like integer
   show hold
     call is-equal
       call fourth-power

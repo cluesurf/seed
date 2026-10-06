@@ -384,7 +384,7 @@ fuse product, e1-times-e6-is-minus-e7, e1, e6, neg, e7
 
 # e0 IS THE IDENTITY: mul e0 q = q, for every octonion.
 rule e0-is-the-identity
-  mark q, like octo
+  seat q, like octo
   show hold
     call is-equal
       call mul

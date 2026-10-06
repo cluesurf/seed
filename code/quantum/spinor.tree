@@ -23,7 +23,7 @@ rule full-turn-flips-the-sign
 # A 4 pi (double) turn returns the spinor to itself: flipping the sign twice is the identity, for every sign. Only after
 # two full turns is a spinor back where it started, the hallmark of spin one-half.
 rule double-turn-returns
-  mark s, like sign
+  seat s, like sign
   show hold
     call is-equal
       call flip-sign

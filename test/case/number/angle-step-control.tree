@@ -3,20 +3,20 @@
 
 # false: the sums differ by the fall of f times w
 rule control-the-upper-sum-equals-the-lower-sum-at-every-n
-  mark fl
+  seat fl
     like task
       take a0, like integer
       like integer
-  mark up
+  seat up
     like task
       take a0, like integer
       like integer
-  mark lo
+  seat lo
     like task
       take a0, like integer
       like integer
-  mark n, like integer
-  mark w, like integer
+  seat n, like integer
+  seat w, like integer
   have up-starts-at-zero
     call is-equal
       call up
@@ -28,7 +28,7 @@ rule control-the-upper-sum-equals-the-lower-sum-at-every-n
         code 0
       code 0
   have up-adds-a-left-strip
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -46,7 +46,7 @@ rule control-the-upper-sum-equals-the-lower-sum-at-every-n
               read i
             read w
   have lo-adds-a-right-strip
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -80,26 +80,26 @@ rule control-the-upper-sum-equals-the-lower-sum-at-every-n
 
 # false: refining raises the lower sum
 rule control-halving-the-mesh-lowers-the-lower-sum-at-every-n
-  mark fp
+  seat fp
     like task
       take a0, like integer
       like integer
-  mark fo
+  seat fo
     like task
       take a0, like integer
       like integer
-  mark ll
+  seat ll
     like task
       take a0, like integer
       like integer
-  mark mm
+  seat mm
     like task
       take a0, like integer
       like integer
-  mark n, like integer
-  mark w, like integer
+  seat n, like integer
+  seat w, like integer
   have ll-adds-a-strip
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -119,7 +119,7 @@ rule control-halving-the-mesh-lowers-the-lower-sum-at-every-n
                 code 1
             read w
   have mm-adds-two-half-strips
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -148,7 +148,7 @@ rule control-halving-the-mesh-lowers-the-lower-sum-at-every-n
                 code 1
             read w
   have the-odd-strip-is-at-least-the-right-end
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i

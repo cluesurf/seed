@@ -66,7 +66,7 @@ rule i-squared-is-minus-one
 # So multiplying by i has order four and the four roots form the cyclic group of order four. Proved by induction over the
 # four elements.
 rule multiplying-by-i-has-order-four
-  mark a, like iterant
+  seat a, like iterant
   show hold
     call is-equal
       call times-i
@@ -82,7 +82,7 @@ rule multiplying-by-i-has-order-four
 # (times-i (flip a))), for every a. So conjugation sends i to minus i not by rotating but by reversing the direction of
 # the shift, the iterant read backward. Proved by induction over the four elements.
 rule conjugation-reverses-the-shift
-  mark a, like iterant
+  seat a, like iterant
   show hold
     call is-equal
       call flip
@@ -98,7 +98,7 @@ rule conjugation-reverses-the-shift
 # CONJUGATION IS AN INVOLUTION: conjugating twice returns the value, flip (flip a) = a, for every a, so conjugation is its
 # own inverse, the reflection that squares to the identity.
 rule conjugation-is-an-involution
-  mark a, like iterant
+  seat a, like iterant
   show hold
     call is-equal
       call flip

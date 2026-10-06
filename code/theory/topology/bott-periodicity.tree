@@ -53,7 +53,7 @@ task add-generator
 # identity, for every class. So the type of the real Clifford algebras has period eight. Proved by induction over the
 # eight classes.
 rule adding-eight-generators-returns-to-the-same-class
-  mark c, like clifford-class
+  seat c, like clifford-class
   show hold
     call is-equal
       call add-generator

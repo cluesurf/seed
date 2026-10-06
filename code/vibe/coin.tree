@@ -60,10 +60,10 @@ task cross-part
 # THE PARALLELOGRAM LAW: N(a + b) + N(a - b) = 2 N(a) + 2 N(b). So the circulant's two eigenvalues have total weight
 # twice the weight of one row: a I + b X keeps the norm exactly when its eigenvalues are unimodular.
 rule the-parallelogram-law
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
-  mark d, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
+  seat d, like integer
   show hold
     call is-equal
       call add
@@ -95,10 +95,10 @@ rule the-parallelogram-law
 # the basis 1, w (Re(u + v w) = u - v / 2, so 4 Re = 4 u - 2 v). The two rows of a I + b X are orthogonal exactly when
 # the eigenvalues have equal weight.
 rule the-polarization-law
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
-  mark d, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
+  seat d, like integer
   show hold
     call is-equal
       call subtract
@@ -182,12 +182,12 @@ task circulant-part
 
 # THE EIGENVECTORS OF EVERY CIRCULANT: on (v, v) it multiplies by a + b, on (v, -v) by a - b, for all Eisenstein a, b, v.
 rule a-circulant-scales-the-symmetric-pair-by-a-plus-b-real
-  mark a1, like integer
-  mark a2, like integer
-  mark b1, like integer
-  mark b2, like integer
-  mark x1, like integer
-  mark x2, like integer
+  seat a1, like integer
+  seat a2, like integer
+  seat b1, like integer
+  seat b2, like integer
+  seat x1, like integer
+  seat x2, like integer
   show hold
     call is-equal
       call circulant-real
@@ -210,12 +210,12 @@ rule a-circulant-scales-the-symmetric-pair-by-a-plus-b-real
         read x2
 
 rule a-circulant-scales-the-symmetric-pair-by-a-plus-b-part
-  mark a1, like integer
-  mark a2, like integer
-  mark b1, like integer
-  mark b2, like integer
-  mark x1, like integer
-  mark x2, like integer
+  seat a1, like integer
+  seat a2, like integer
+  seat b1, like integer
+  seat b2, like integer
+  seat x1, like integer
+  seat x2, like integer
   show hold
     call is-equal
       call circulant-part
@@ -238,12 +238,12 @@ rule a-circulant-scales-the-symmetric-pair-by-a-plus-b-part
         read x2
 
 rule a-circulant-scales-the-antisymmetric-pair-by-a-minus-b-real
-  mark a1, like integer
-  mark a2, like integer
-  mark b1, like integer
-  mark b2, like integer
-  mark x1, like integer
-  mark x2, like integer
+  seat a1, like integer
+  seat a2, like integer
+  seat b1, like integer
+  seat b2, like integer
+  seat x1, like integer
+  seat x2, like integer
   show hold
     call is-equal
       call circulant-real
@@ -270,12 +270,12 @@ rule a-circulant-scales-the-antisymmetric-pair-by-a-minus-b-real
         read x2
 
 rule a-circulant-scales-the-antisymmetric-pair-by-a-minus-b-part
-  mark a1, like integer
-  mark a2, like integer
-  mark b1, like integer
-  mark b2, like integer
-  mark x1, like integer
-  mark x2, like integer
+  seat a1, like integer
+  seat a2, like integer
+  seat b1, like integer
+  seat b2, like integer
+  seat x1, like integer
+  seat x2, like integer
   show hold
     call is-equal
       call circulant-part
@@ -303,8 +303,8 @@ rule a-circulant-scales-the-antisymmetric-pair-by-a-minus-b-part
 
 # THE COIN, 2C = (1 + w) I + (1 - w) X, FIXES EVERY SYMMETRIC PAIR: 2C (v, v) = 2 (v, v), for every Eisenstein v.
 rule the-coin-fixes-every-symmetric-pair-real
-  mark x1, like integer
-  mark x2, like integer
+  seat x1, like integer
+  seat x2, like integer
   show hold
     call is-equal
       call circulant-real
@@ -321,8 +321,8 @@ rule the-coin-fixes-every-symmetric-pair-real
         read x1
 
 rule the-coin-fixes-every-symmetric-pair-part
-  mark x1, like integer
-  mark x2, like integer
+  seat x1, like integer
+  seat x2, like integer
   show hold
     call is-equal
       call circulant-part
@@ -340,8 +340,8 @@ rule the-coin-fixes-every-symmetric-pair-part
 
 # and TURNS EVERY ANTISYMMETRIC PAIR BY w: 2C (v, -v) = 2 w (v, -v).
 rule the-coin-turns-every-antisymmetric-pair-by-omega-real
-  mark x1, like integer
-  mark x2, like integer
+  seat x1, like integer
+  seat x2, like integer
   show hold
     call is-equal
       call circulant-real
@@ -364,8 +364,8 @@ rule the-coin-turns-every-antisymmetric-pair-by-omega-real
         read x2
 
 rule the-coin-turns-every-antisymmetric-pair-by-omega-part
-  mark x1, like integer
-  mark x2, like integer
+  seat x1, like integer
+  seat x2, like integer
   show hold
     call is-equal
       call circulant-part
@@ -476,7 +476,7 @@ rule the-coin-determinant-is-four-omega-part
 # 3 c^2 >= 0. The certificate is a sum of squares, so it holds over the reals and not only the integers the kernel
 # quantifies over. Equality at c = 0, k = pi / 2: the top speed is exactly 1/2.
 rule the-coined-walk-is-at-most-half-light-speed
-  mark c, like integer
+  seat c, like integer
   show hold
     call is-maximum
       call multiply
@@ -512,8 +512,8 @@ rule the-meeting-exchanges-with-weight-three-quarters
 # THE MEETING, 2U = (1 + w) I - (1 - w) X, TURNS EVERY SYMMETRIC PAIR BY w and FIXES EVERY ANTISYMMETRIC PAIR:
 # U = w P_sym + P_anti. Two like vibes on equal points (a symmetric pair) pick up the phase w.
 rule the-meeting-turns-every-symmetric-pair-by-omega-real
-  mark x1, like integer
-  mark x2, like integer
+  seat x1, like integer
+  seat x2, like integer
   show hold
     call is-equal
       call circulant-real
@@ -532,8 +532,8 @@ rule the-meeting-turns-every-symmetric-pair-by-omega-real
         read x2
 
 rule the-meeting-turns-every-symmetric-pair-by-omega-part
-  mark x1, like integer
-  mark x2, like integer
+  seat x1, like integer
+  seat x2, like integer
   show hold
     call is-equal
       call circulant-part
@@ -552,8 +552,8 @@ rule the-meeting-turns-every-symmetric-pair-by-omega-part
         read x2
 
 rule the-meeting-fixes-every-antisymmetric-pair-real
-  mark x1, like integer
-  mark x2, like integer
+  seat x1, like integer
+  seat x2, like integer
   show hold
     call is-equal
       call circulant-real
@@ -574,8 +574,8 @@ rule the-meeting-fixes-every-antisymmetric-pair-real
         read x1
 
 rule the-meeting-fixes-every-antisymmetric-pair-part
-  mark x1, like integer
-  mark x2, like integer
+  seat x1, like integer
+  seat x2, like integer
   show hold
     call is-equal
       call circulant-part

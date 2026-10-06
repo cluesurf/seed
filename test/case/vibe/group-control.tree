@@ -48,8 +48,8 @@ load @term/seed/vibe/hopf
 
 # 2T is not commutative
 rule control-hurwitz-product-commutes
-  mark g, like hurwitz-element
-  mark h, like hurwitz-element
+  seat g, like hurwitz-element
+  seat h, like hurwitz-element
   show hold
     call is-equal
       call hurwitz-product
@@ -62,7 +62,7 @@ rule control-hurwitz-product-commutes
 
 # every unit cubed is the identity (false: i cubed is -i)
 rule control-every-unit-cubes-to-one
-  mark g, like hurwitz-element
+  seat g, like hurwitz-element
   show hold
     call is-equal
       call hurwitz-product
@@ -91,8 +91,8 @@ task permanent
           read m
 
 rule control-the-permanent-is-multiplicative
-  mark m, like turn-matrix
-  mark n, like turn-matrix
+  seat m, like turn-matrix
+  seat n, like turn-matrix
   show hold
     call is-equal
       call permanent
@@ -108,8 +108,8 @@ rule control-the-permanent-is-multiplicative
 
 # slots of the same frame meet at odd products (the negation of the frame theorem)
 rule control-same-frame-means-odd
-  mark v, like tetrad
-  mark w, like tetrad
+  seat v, like tetrad
+  seat w, like tetrad
   have v-slot
     call is-equal
       call is-slot
@@ -135,7 +135,7 @@ rule control-same-frame-means-odd
 
 # triality is not an involution
 rule control-triality-is-an-involution
-  mark v, like tetrad
+  seat v, like tetrad
   have slot
     call is-equal
       call is-slot
@@ -151,7 +151,7 @@ rule control-triality-is-an-involution
 
 # the Hopf map is not constant along w
 rule control-hopf-is-constant-along-omega
-  mark g, like hurwitz-element
+  seat g, like hurwitz-element
   show hold
     call is-equal
       call hopf
@@ -164,7 +164,7 @@ rule control-hopf-is-constant-along-omega
 
 # rho with the frames read the wrong way round is not the slot's frame
 rule control-turn-is-not-the-frame-shifted
-  mark g, like hurwitz-element
+  seat g, like hurwitz-element
   show hold
     call is-equal
       call frame-of

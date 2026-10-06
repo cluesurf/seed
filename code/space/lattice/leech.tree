@@ -83,7 +83,7 @@ task is-nonzero-weight
 # twenty-four twice returns the weight, so the self-dual pairing is a genuine pairing of the weights into themselves.
 # Proved over all five weight classes.
 rule complement-weight-is-an-involution
-  mark w, like weight-class
+  seat w, like weight-class
   show hold
     call is-equal
       call complement-weight
@@ -97,7 +97,7 @@ rule complement-weight-is-an-involution
 # with itself), which is the self-duality of the binary Golay code read at the level of weights. Both sides are yes on all
 # five weights, so the equation holds over the whole enum. Proved over all five weight classes.
 rule golay-weights-are-symmetric-under-complement
-  mark w, like weight-class
+  seat w, like weight-class
   show hold
     call is-equal
       call is-golay-weight
@@ -202,7 +202,7 @@ task small-is-forbidden-gap
 # eight. Proved over all nine small weights. This minimum distance eight is exactly why the Leech lattice, built from this
 # code, has no vectors of squared length two and therefore NO ROOTS.
 rule minimum-nonzero-golay-weight-is-eight
-  mark w, like small-weight
+  seat w, like small-weight
   show hold
     call is-equal
       call both
@@ -218,7 +218,7 @@ rule minimum-nonzero-golay-weight-is-eight
 # in the forbidden gap (one through seven), with nothing left over. Proved over all nine small weights. Together with the
 # disjointness above this pins the allowed set within zero through eight down to exactly the endpoints zero and eight.
 rule small-weights-split-into-gap-and-allowed
-  mark w, like small-weight
+  seat w, like small-weight
   show hold
     call is-equal
       call either

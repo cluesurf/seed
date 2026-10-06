@@ -81,7 +81,7 @@ rule machine-computes-zero-plus-two
 # THE MACHINE HALTS at the vacuum: with the second counter already zero, it returns the first counter unchanged,
 # run a 0 = a.
 rule machine-halts-on-empty-counter
-  mark a, like natural
+  seat a, like natural
   show hold
     call is-equal
       call run
@@ -110,8 +110,8 @@ task plus
 
 # definitional step of run on a successor counter, cited by the universal proof.
 rule run-succ-steps
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call run
@@ -128,8 +128,8 @@ rule run-succ-steps
 
 # helper: plus absorbs a successor on the right into the first argument (plus a (succ b) = succ (plus a b)).
 rule plus-succ-right
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call plus
@@ -146,7 +146,7 @@ rule plus-succ-right
 
 # helper: zero on the right is the identity for plus (plus a zero = a), by induction on a.
 rule plus-zero-right
-  mark a, like natural
+  seat a, like natural
   show hold
     call is-equal
       call plus
@@ -159,8 +159,8 @@ rule plus-zero-right
 # is exactly addition. Proved by induction on the second counter b; the first counter accumulates and CHANGES along the
 # recursion, so this uses the generalized induction hypothesis.
 rule machine-computes-addition
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call run

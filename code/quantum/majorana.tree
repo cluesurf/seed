@@ -117,8 +117,8 @@ task combine
 # THE VACUUM IS A UNIT: fusing the vacuum with any anyon b returns exactly b, combine(vacuum, b, c) = same-ising(b, c),
 # for all b and c. Proved by induction over the anyon labels.
 rule vacuum-is-the-fusion-unit
-  mark b, like ising
-  mark c, like ising
+  seat b, like ising
+  seat c, like ising
   show hold
     call is-equal
       call combine
@@ -133,9 +133,9 @@ rule vacuum-is-the-fusion-unit
 # FUSION IS COMMUTATIVE: the multiplicity is unchanged when the two factors are swapped, combine(a, b, c) = combine(b, a,
 # c), for all a, b and c. Proved by simultaneous induction over the three anyon labels, the full twenty-seven-case grid.
 rule fusion-is-commutative
-  mark a, like ising
-  mark b, like ising
-  mark c, like ising
+  seat a, like ising
+  seat b, like ising
+  seat c, like ising
   show hold
     call is-equal
       call combine
@@ -152,7 +152,7 @@ rule fusion-is-commutative
 # same-ising(vacuum, c), for all c, so psi times psi is one. This is the defining property of a Majorana, that it is its
 # own antiparticle. Proved by induction over the third label.
 rule the-majorana-is-its-own-antiparticle
-  mark c, like ising
+  seat c, like ising
   show hold
     call is-equal
       call combine

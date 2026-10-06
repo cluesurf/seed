@@ -7,7 +7,7 @@
 # Every square is non-negative: a^2 >= 0, for every a. The floor of the order, the reason the integers carry a
 # square-respecting order while no higher rung in the tower can.
 rule every-square-is-at-least-zero
-  mark a, like integer
+  seat a, like integer
   show hold
     call is-minimum
       call multiply
@@ -18,8 +18,8 @@ rule every-square-is-at-least-zero
 # The arithmetic-mean / geometric-mean inequality for two terms: a^2 + b^2 >= 2 a b, for every a and b. The difference
 # is (a - b)^2.
 rule sum-of-two-squares-is-at-least-twice-their-product
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   show hold
     call is-minimum
       call add
@@ -38,9 +38,9 @@ rule sum-of-two-squares-is-at-least-twice-their-product
 # The sum of three squares dominates the cyclic sum of products: a^2 + b^2 + c^2 >= a b + b c + c a, for every a, b, c.
 # The difference is one half the sum of the three squared differences.
 rule sum-of-three-squares-is-at-least-their-cyclic-product-sum
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
   show hold
     call is-minimum
       call add
@@ -69,8 +69,8 @@ rule sum-of-three-squares-is-at-least-their-cyclic-product-sum
 # The power-mean step for two terms: 2 a^2 + 2 b^2 >= (a + b)^2, for every a and b. The difference is (a - b)^2. This is
 # why the mean of squares is at least the square of the mean.
 rule twice-sum-of-two-squares-is-at-least-square-of-their-sum
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   show hold
     call is-minimum
       call add
@@ -95,10 +95,10 @@ rule twice-sum-of-two-squares-is-at-least-square-of-their-sum
 # A four-term sum of squares dominates two cross products: a^2 + b^2 + c^2 + d^2 >= 2 a b + 2 c d, for every a, b, c, d.
 # The difference is (a - b)^2 + (c - d)^2.
 rule four-squares-dominate-twice-two-paired-products
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
-  mark d, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
+  seat d, like integer
   show hold
     call is-minimum
       call add
@@ -131,10 +131,10 @@ rule four-squares-dominate-twice-two-paired-products
 # A four-term sum of squares dominates the cyclic sum of adjacent products: a^2 + b^2 + c^2 + d^2 >= a b + b c + c d + d a,
 # for every a, b, c, d. The difference is one half the sum of the four squared adjacent differences.
 rule four-squares-dominate-cyclic-adjacent-product-sum
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
-  mark d, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
+  seat d, like integer
   show hold
     call is-minimum
       call add
@@ -172,9 +172,9 @@ rule four-squares-dominate-cyclic-adjacent-product-sum
 # three squared differences (a - b)^2 + (b - c)^2 + (c - a)^2, so the square of a sum never exceeds the count times the
 # sum of squares. This is the power-mean inequality for three terms.
 rule square-of-three-term-sum-is-at-most-three-times-sum-of-squares
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
   show hold
     call is-minimum
       call multiply
@@ -205,8 +205,8 @@ rule square-of-three-term-sum-is-at-most-three-times-sum-of-squares
 # The sum of two non-negatives is non-negative: if a >= 0 and b >= 0 then a + b >= 0, for every a and b. A conditional
 # law, proved under its assumptions by the linear prover.
 rule sum-of-non-negatives-is-non-negative
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   have h1
     call is-minimum
       read a

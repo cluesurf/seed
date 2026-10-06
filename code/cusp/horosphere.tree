@@ -119,7 +119,7 @@ task tally
 # ASCEND IS THE LEFT INVERSE OF DEEPER: ascend (deeper l) = l, for every level. Stepping one cell into the bulk and then
 # one cell back toward the cusp returns exactly where you were. The cusp direction and the bulk direction cancel.
 rule ascend-undoes-deeper
-  mark l, like level
+  seat l, like level
   show hold
     call is-equal
       call ascend
@@ -131,7 +131,7 @@ rule ascend-undoes-deeper
 # THE CUSP IS THE UNIQUE MINIMUM: nothing is strictly shallower than the cusp, below l cusp = no, for every level. The
 # cusp is the floor of the horocyclic order, the ideal point the levels bottom out at.
 rule nothing-is-below-the-cusp
-  mark l, like level
+  seat l, like level
   show hold
     call is-equal
       call below
@@ -143,7 +143,7 @@ rule nothing-is-below-the-cusp
 # DESCENT STRICTLY INCREASES THE LEVEL: below l (deeper l) = yes, for every level. Going one cell into the bulk always
 # lands on a strictly deeper horosphere. The bulk grows away from the cusp.
 rule deeper-is-strictly-deeper
-  mark l, like level
+  seat l, like level
   show hold
     call is-equal
       call below
@@ -156,7 +156,7 @@ rule deeper-is-strictly-deeper
 # DESCENT NEVER RETURNS: the deeper level is never shallower than the level before it, below (deeper l) l = no, for every
 # level. Growth into the bulk is one-way, the open horocyclic edge only moves outward. This is the arrow of the substrate.
 rule deeper-never-returns
-  mark l, like level
+  seat l, like level
   show hold
     call is-equal
       call below
@@ -171,7 +171,7 @@ rule deeper-never-returns
 # hyperbolic shells: each horocyclic row is the sum of its two predecessors, so the bulk multiplies cells away from the
 # cusp the way the Margenstern pentagrid splitting does.
 rule row-grows-by-fibonacci
-  mark l, like level
+  seat l, like level
   show hold
     call is-equal
       call row

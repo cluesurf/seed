@@ -70,8 +70,8 @@ task grow
 # The mesh ALWAYS GROWS: the count after a growth step is strictly greater than before, below d (grow d e) = yes, for
 # every starting count and edge. New docks are added and none removed.
 rule grow-strictly-increases
-  mark d, like count
-  mark e, like count
+  seat d, like count
+  seat e, like count
   show hold
     call is-equal
       call below-count
@@ -85,8 +85,8 @@ rule grow-strictly-increases
 # The mesh NEVER SHRINKS: the grown count is never below the count before it, below (grow d e) d = no. Growth is one-way,
 # the open edge only moves outward, which is the seed of the arrow of time.
 rule grow-never-returns
-  mark d, like count
-  mark e, like count
+  seat d, like count
+  seat e, like count
   show hold
     call is-equal
       call below-count

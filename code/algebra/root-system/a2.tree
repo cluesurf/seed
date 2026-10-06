@@ -83,7 +83,7 @@ task is-positive
 # THE ANTIPODE IS AN INVOLUTION: negate (negate r) = r. Reflecting through the origin twice returns the root, so the root
 # set is symmetric about the origin. Proved over all six roots.
 rule negate-is-an-involution
-  mark r, like root
+  seat r, like root
   show hold
     call is-equal
       call negate
@@ -95,7 +95,7 @@ rule negate-is-an-involution
 # EACH SIMPLE REFLECTION IS AN INVOLUTION: reflect-a (reflect-a r) = r, and likewise for reflect-b. A reflection done twice
 # is the identity, the defining property of a Weyl generator.
 rule reflect-a-is-an-involution
-  mark r, like root
+  seat r, like root
   show hold
     call is-equal
       call reflect-a
@@ -105,7 +105,7 @@ rule reflect-a-is-an-involution
   fold r
 
 rule reflect-b-is-an-involution
-  mark r, like root
+  seat r, like root
   show hold
     call is-equal
       call reflect-b
@@ -118,7 +118,7 @@ rule reflect-b-is-an-involution
 # identity written out. With the two involutions it presents the Weyl group of A2, which is therefore the symmetric group
 # S3, the full symmetry of the triangle. Proved over all six roots: the reflections permuting the roots ARE that group.
 rule braid-relation-of-the-weyl-group
-  mark r, like root
+  seat r, like root
   show hold
     call is-equal
       call reflect-a
@@ -135,7 +135,7 @@ rule braid-relation-of-the-weyl-group
 # r) (is-positive (negate r)) = yes, for every root. This is what it means for the antipode to split the roots into the
 # positive system and its mirror.
 rule every-root-or-its-antipode-is-positive
-  mark r, like root
+  seat r, like root
   show hold
     call is-equal
       call either

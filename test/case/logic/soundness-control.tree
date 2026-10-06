@@ -20,9 +20,9 @@ form adds-a-conjunct
       make implication(a, make conjunction(a, b))
 
 rule control-a-conjunct-from-nothing
-  mark v, like assignment
-  mark p, like proposition
-  mark d, like adds-a-conjunct
+  seat v, like assignment
+  seat p, like proposition
+  seat d, like adds-a-conjunct
     head
       read p
   show hold, is-equal evaluate(v, p), make yes
@@ -40,9 +40,9 @@ form keeps-the-left
         a
 
 rule control-a-disjunct-is-not-the-left
-  mark v, like assignment
-  mark p, like proposition
-  mark d, like keeps-the-left
+  seat v, like assignment
+  seat p, like proposition
+  seat d, like keeps-the-left
     head
       read p
   show hold, is-equal evaluate(v, p), make yes
@@ -62,9 +62,9 @@ form converse-contraposition
         make implication(a, b)
 
 rule control-contraposition-the-wrong-way
-  mark v, like assignment
-  mark p, like proposition
-  mark d, like converse-contraposition
+  seat v, like assignment
+  seat p, like proposition
+  seat d, like converse-contraposition
     head
       read p
   show hold, is-equal evaluate(v, p), make yes
@@ -79,9 +79,9 @@ form anything-goes
       read a
 
 rule control-every-formula-is-an-axiom
-  mark v, like assignment
-  mark p, like proposition
-  mark d, like anything-goes
+  seat v, like assignment
+  seat p, like proposition
+  seat d, like anything-goes
     head
       read p
   show hold, is-equal evaluate(v, p), make yes
@@ -111,9 +111,9 @@ form backwards-ponens
       read a
 
 rule control-affirming-the-consequent
-  mark v, like assignment
-  mark p, like proposition
-  mark d, like backwards-ponens
+  seat v, like assignment
+  seat p, like proposition
+  seat d, like backwards-ponens
     head
       read p
   show hold, is-equal evaluate(v, p), make yes

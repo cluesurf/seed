@@ -54,7 +54,7 @@ task quarter
 # quarter applied eight times is the identity, for all a. So the spinor has period four pi, not two pi. Proved by
 # induction over the eight phases.
 rule spinor-returns-after-two-full-rotations
-  mark a, like spinor
+  seat a, like spinor
   show hold
     call is-equal
       call quarter

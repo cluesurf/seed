@@ -198,7 +198,7 @@ task fixes-v0
 
 # ACTION AXIOM ONE, the identity acts trivially: act g-0 p = p for every vertex. The do-nothing rotation moves no point.
 rule action-identity-is-trivial
-  mark p, like vertex
+  seat p, like vertex
   show hold
     call is-equal
       call act
@@ -211,9 +211,9 @@ rule action-identity-is-trivial
 # cases. Acting by the product g times h equals acting by h and then by g. These two axioms are the whole definition of a
 # group action, and both hold for `act`, so Z/4 genuinely acts on the four vertices.
 rule action-respects-product
-  mark g, like rotation
-  mark h, like rotation
-  mark p, like vertex
+  seat g, like rotation
+  seat h, like rotation
+  seat p, like vertex
   show hold
     call is-equal
       call act
@@ -260,8 +260,8 @@ rule stabilizer-contains-identity
 # combine g h. Stated as both (fixes-v0 g) (fixes-v0 h) being yes forces fixes-v0 (combine g h) to be yes, over all
 # sixteen pairs.
 rule stabilizer-is-closed-under-combine
-  mark g, like rotation
-  mark h, like rotation
+  seat g, like rotation
+  seat h, like rotation
   have a
     call is-equal
       call both
@@ -282,7 +282,7 @@ rule stabilizer-is-closed-under-combine
 # THE STABILIZER IS A SUBGROUP, part three, closed under inverses: if g fixes v-0 then its inverse fixes v-0 too. The
 # three parts together prove the stabilizer of v-0 is a genuine subgroup of Z/4.
 rule stabilizer-is-closed-under-invert
-  mark g, like rotation
+  seat g, like rotation
   have a
     call is-equal
       call fixes-v0
@@ -303,7 +303,7 @@ rule stabilizer-is-closed-under-invert
 # REFLEXIVE: every point is reachable from itself, reachable p p = yes, because the identity g-0 carries p to p. So each
 # point lies in its own orbit.
 rule reachable-is-reflexive
-  mark p, like vertex
+  seat p, like vertex
   show hold
     call is-equal
       call reachable
@@ -315,8 +315,8 @@ rule reachable-is-reflexive
 # SYMMETRIC: if q is reachable from p then p is reachable from q. The element that carries p to q has an inverse carrying
 # q back to p. Proved over all sixteen pairs from the reachability hypothesis.
 rule reachable-is-symmetric
-  mark p, like vertex
-  mark q, like vertex
+  seat p, like vertex
+  seat q, like vertex
   have h
     call is-equal
       call reachable
@@ -335,9 +335,9 @@ rule reachable-is-symmetric
 # elements carries p straight to s. Proved over all sixty-four triples. Reflexive, symmetric, and transitive together make
 # reachability an EQUIVALENCE RELATION, so its classes, the orbits, PARTITION the set of vertices into disjoint blocks.
 rule reachable-is-transitive
-  mark p, like vertex
-  mark q, like vertex
-  mark s, like vertex
+  seat p, like vertex
+  seat q, like vertex
+  seat s, like vertex
   have hpq
     call is-equal
       call reachable
@@ -539,7 +539,7 @@ task conjugate
 # CONJUGATION IS A GROUP ACTION, the identity acts trivially: conjugate e x = x. Conjugating by the identity changes
 # nothing.
 rule conjugation-identity-is-trivial
-  mark x, like perm
+  seat x, like perm
   show hold
     call is-equal
       call conjugate
@@ -552,9 +552,9 @@ rule conjugation-identity-is-trivial
 # all two hundred sixteen cases. So conjugation is a genuine action of S3 on itself, and its orbits are well defined
 # conjugacy classes.
 rule conjugation-respects-product
-  mark g, like perm
-  mark h, like perm
-  mark x, like perm
+  seat g, like perm
+  seat h, like perm
+  seat x, like perm
   show hold
     call is-equal
       call conjugate
@@ -572,7 +572,7 @@ rule conjugation-respects-product
 # THE CENTER, the orbit of the identity is a single point: conjugate g e = e for every g. The identity is fixed by all
 # conjugation, so its conjugacy class is just itself, the size-one block of the class equation.
 rule identity-is-central
-  mark g, like perm
+  seat g, like perm
   show hold
     call is-equal
       call conjugate

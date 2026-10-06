@@ -55,7 +55,7 @@ task swap
 # THE CYCLE HAS ORDER THREE: cycle (cycle (cycle r)) = r, for every representation. Applying the triality rotation three
 # times returns each piece to itself. This is the threefold triality, the order-three relation of the three-cycle generator.
 rule cycle-has-order-three
-  mark r, like rep
+  seat r, like rep
   show hold
     call is-equal
       call cycle, read r
@@ -67,7 +67,7 @@ rule cycle-has-order-three
 # THE SWAP IS AN INVOLUTION: swap (swap r) = r, for every representation. Exchanging the spinor and the cospinor twice is the
 # identity, the defining property of the reflection generator.
 rule swap-is-an-involution
-  mark r, like rep
+  seat r, like rep
   show hold
     call is-equal
       call swap, read r
@@ -100,7 +100,7 @@ rule spinor-and-cospinor-are-exchanged-by-the-swap
 # inverse, which together with the order-three cycle and the involution swap presents the symmetric group S3 of order six.
 # It shows the triality group is NOT the cyclic group of order three: the swap genuinely reverses the rotation.
 rule triality-group-is-the-symmetric-group
-  mark r, like rep
+  seat r, like rep
   show hold
     call is-equal
       call swap
@@ -115,7 +115,7 @@ rule triality-group-is-the-symmetric-group
 # transposition and the three-cycle is itself a transposition, so it squares to the identity. This is a second reflection of
 # S3, confirming the group has the three transpositions and two rotations of the symmetric group, six elements in all.
 rule cycle-swap-product-has-order-two
-  mark r, like rep
+  seat r, like rep
   show hold
     call is-equal
       call swap

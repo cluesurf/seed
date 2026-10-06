@@ -389,7 +389,7 @@ task frame-of
 
 # EVERY SLOT HAS NORM TWO.
 rule every-slot-has-norm-two
-  mark v, like tetrad
+  seat v, like tetrad
   have slot
     call is-equal
       call is-slot
@@ -405,8 +405,8 @@ rule every-slot-has-norm-two
 
 # THE INNER PRODUCT IS SYMMETRIC.
 rule the-inner-product-is-symmetric
-  mark v, like tetrad
-  mark w, like tetrad
+  seat v, like tetrad
+  seat w, like tetrad
   show hold
     call is-equal
       call dot
@@ -420,8 +420,8 @@ rule the-inner-product-is-symmetric
 # NEGATING ONE SIDE NEGATES THE INNER PRODUCT. So the slots at +1 to a given slot and those at -1 are exchanged by
 # taking opposites: there are as many of one as of the other.
 rule negating-a-slot-negates-the-inner-product
-  mark v, like tetrad
-  mark w, like tetrad
+  seat v, like tetrad
+  seat w, like tetrad
   show hold
     call is-equal
       call dot
@@ -436,7 +436,7 @@ rule negating-a-slot-negates-the-inner-product
 
 # THE TWELVE LINES: the opposite of a slot is a slot, at inner product -2, and never the slot itself.
 rule the-opposite-of-a-slot-is-a-slot
-  mark v, like tetrad
+  seat v, like tetrad
   have slot
     call is-equal
       call is-slot
@@ -451,7 +451,7 @@ rule the-opposite-of-a-slot-is-a-slot
   fold v
 
 rule a-slot-and-its-opposite-meet-at-minus-two
-  mark v, like tetrad
+  seat v, like tetrad
   have slot
     call is-equal
       call is-slot
@@ -467,7 +467,7 @@ rule a-slot-and-its-opposite-meet-at-minus-two
   fold v
 
 rule no-slot-is-its-own-opposite
-  mark v, like tetrad
+  seat v, like tetrad
   have slot
     call is-equal
       call is-slot
@@ -485,8 +485,8 @@ rule no-slot-is-its-own-opposite
 # THE THREE FRAMES: two slots meet at an odd inner product (+-1) exactly when they lie in different frames. In one
 # frame they meet at 0 (orthogonal lines) or +-2 (one line).
 rule slots-of-different-frames-meet-at-plus-or-minus-one
-  mark v, like tetrad
-  mark w, like tetrad
+  seat v, like tetrad
+  seat w, like tetrad
   have v-slot
     call is-equal
       call is-slot
@@ -513,7 +513,7 @@ rule slots-of-different-frames-meet-at-plus-or-minus-one
 
 # A slot's frame is the frame of its opposite: a line lies in one frame.
 rule a-line-lies-in-one-frame
-  mark v, like tetrad
+  seat v, like tetrad
   show hold
     call is-equal
       call frame-of
@@ -693,7 +693,7 @@ task swap-calm-fear
         make love
 
 rule reflection-a-swaps-the-second-and-third-frames
-  mark v, like tetrad
+  seat v, like tetrad
   have slot
     call is-equal
       call is-slot
@@ -710,7 +710,7 @@ rule reflection-a-swaps-the-second-and-third-frames
   fold v
 
 rule reflection-b-swaps-the-first-and-third-frames
-  mark v, like tetrad
+  seat v, like tetrad
   have slot
     call is-equal
       call is-slot
@@ -839,7 +839,7 @@ task shift-by-h
 # THE F4 DIAGRAM {3, 4, 3} on the slots. Written out: (b c)^3 = 1, (c e4)^4 = 1, (e4 h)^3 = 1, and b, e4 commute,
 # b, h commute, c, h commute; each reflection an involution that keeps the slots and the inner product.
 rule e4-reflection-is-an-involution
-  mark v, like tetrad
+  seat v, like tetrad
   show hold
     call is-equal
       call reflect-e4
@@ -849,7 +849,7 @@ rule e4-reflection-is-an-involution
   fold v
 
 rule h-reflection-is-an-involution-on-the-slots
-  mark v, like tetrad
+  seat v, like tetrad
   have slot
     call is-equal
       call is-slot
@@ -864,7 +864,7 @@ rule h-reflection-is-an-involution-on-the-slots
   fold v
 
 rule h-reflection-keeps-the-slots
-  mark v, like tetrad
+  seat v, like tetrad
   have slot
     call is-equal
       call is-slot
@@ -879,8 +879,8 @@ rule h-reflection-keeps-the-slots
   fold v
 
 rule h-reflection-keeps-the-inner-product
-  mark v, like tetrad
-  mark w, like tetrad
+  seat v, like tetrad
+  seat w, like tetrad
   have v-slot
     call is-equal
       call is-slot
@@ -904,8 +904,8 @@ rule h-reflection-keeps-the-inner-product
   fold v, w
 
 rule e4-reflection-keeps-the-inner-product
-  mark v, like tetrad
-  mark w, like tetrad
+  seat v, like tetrad
+  seat w, like tetrad
   show hold
     call is-equal
       call dot
@@ -919,7 +919,7 @@ rule e4-reflection-keeps-the-inner-product
   fold v, w
 
 rule c-and-e4-make-a-quarter-turn
-  mark v, like tetrad
+  seat v, like tetrad
   show hold
     call is-equal
       call slot-reflect-c
@@ -935,7 +935,7 @@ rule c-and-e4-make-a-quarter-turn
   fold v
 
 rule e4-and-h-make-a-third-turn-on-the-slots
-  mark v, like tetrad
+  seat v, like tetrad
   have slot
     call is-equal
       call is-slot
@@ -954,7 +954,7 @@ rule e4-and-h-make-a-third-turn-on-the-slots
   fold v
 
 rule b-and-e4-commute
-  mark v, like tetrad
+  seat v, like tetrad
   show hold
     call is-equal
       call slot-reflect-b
@@ -966,7 +966,7 @@ rule b-and-e4-commute
   fold v
 
 rule b-and-h-commute-on-the-slots
-  mark v, like tetrad
+  seat v, like tetrad
   have slot
     call is-equal
       call is-slot
@@ -983,7 +983,7 @@ rule b-and-h-commute-on-the-slots
   fold v
 
 rule c-and-h-commute-on-the-slots
-  mark v, like tetrad
+  seat v, like tetrad
   have slot
     call is-equal
       call is-slot
@@ -1050,7 +1050,7 @@ task triality
 
 # TRIALITY KEEPS THE SLOTS AND THE INNER PRODUCT, so it is a symmetry of the dock.
 rule triality-keeps-the-slots
-  mark v, like tetrad
+  seat v, like tetrad
   have slot
     call is-equal
       call is-slot
@@ -1065,8 +1065,8 @@ rule triality-keeps-the-slots
   fold v
 
 rule triality-keeps-the-inner-product
-  mark v, like tetrad
-  mark w, like tetrad
+  seat v, like tetrad
+  seat w, like tetrad
   have v-slot
     call is-equal
       call is-slot
@@ -1091,7 +1091,7 @@ rule triality-keeps-the-inner-product
 
 # IT HAS ORDER THREE on the slots.
 rule triality-has-order-three
-  mark v, like tetrad
+  seat v, like tetrad
   have slot
     call is-equal
       call is-slot
@@ -1137,7 +1137,7 @@ fuse conjugates, triality-fixes-b, slot-reflect-b, slot-reflect-b
 
 # AND FIXES EVERY FRAME.
 rule triality-keeps-every-frame
-  mark v, like tetrad
+  seat v, like tetrad
   have slot
     call is-equal
       call is-slot
@@ -1285,7 +1285,7 @@ task unit-slot
 
 # EVERY UNIT LANDS ON A SLOT.
 rule every-unit-is-a-slot
-  mark g, like hurwitz-element
+  seat g, like hurwitz-element
   show hold
     call is-equal
       call is-slot
@@ -1296,8 +1296,8 @@ rule every-unit-is-a-slot
 
 # DISTINCT UNITS LAND ON DISTINCT SLOTS.
 rule distinct-units-are-distinct-slots
-  mark g, like hurwitz-element
-  mark h, like hurwitz-element
+  seat g, like hurwitz-element
+  seat h, like hurwitz-element
   have same
     call is-equal
       call same-tetrad
@@ -1316,7 +1316,7 @@ rule distinct-units-are-distinct-slots
 
 # THE TURN OF A UNIT IS THE FRAME OF ITS SLOT, so the frames are the cosets of Q8.
 rule the-turn-of-a-unit-is-the-frame-of-its-slot
-  mark g, like hurwitz-element
+  seat g, like hurwitz-element
   show hold
     call is-equal
       call frame-of
@@ -1328,7 +1328,7 @@ rule the-turn-of-a-unit-is-the-frame-of-its-slot
 
 # -g IS THE OPPOSITE SLOT: the center {1, -1} of 2T is the line.
 rule minus-a-unit-is-the-opposite-slot
-  mark g, like hurwitz-element
+  seat g, like hurwitz-element
   show hold
     call is-equal
       call unit-slot
@@ -1352,8 +1352,8 @@ task point-real
 # THE METRIC IS THE GROUP: the inner product of the slots of g and h is twice the real part of g h^-1. It is 2 when
 # g = h, -2 when g h^-1 = -1, 0 when g h^-1 has order four, +1 at order six and -1 at order three.
 rule the-inner-product-of-two-slots-is-twice-the-real-part-of-their-quotient
-  mark g, like hurwitz-element
-  mark h, like hurwitz-element
+  seat g, like hurwitz-element
+  seat h, like hurwitz-element
   show hold
     call is-equal
       call dot
@@ -1488,7 +1488,7 @@ task slot-unit
 # EVERY SLOT IS THE IMAGE OF ITS UNIT. With injectivity the map is a bijection: THERE ARE EXACTLY 24 SLOTS, one per
 # Hurwitz unit.
 rule every-slot-is-a-unit
-  mark r, like tetrad
+  seat r, like tetrad
   show hold
     call is-equal
       call implies

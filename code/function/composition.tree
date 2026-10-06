@@ -51,7 +51,7 @@ task mirror-after-ident
 
 # POINTWISE: applying mirror twice returns the input, twice-mirror x = ident x at every tone.
 rule twice-mirror-pointwise
-  mark x, like tone
+  seat x, like tone
   show hold
     call is-equal
       call twice-mirror
@@ -71,7 +71,7 @@ rule twice-mirror-is-identity-function
 
 # POINTWISE: composing with the identity first changes nothing, mirror-after-ident x = mirror x at every tone.
 rule mirror-after-ident-pointwise
-  mark x, like tone
+  seat x, like tone
   show hold
     call is-equal
       call mirror-after-ident

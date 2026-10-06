@@ -102,7 +102,7 @@ task max
 
 # 0 <= n, always. Definitional.
 rule at-most-zero-left-is-on
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call at-most
@@ -113,8 +113,8 @@ rule at-most-zero-left-is-on
 
 # (succ a) <= (succ b) iff a <= b. Definitional.
 rule at-most-succ-both
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call at-most
@@ -131,7 +131,7 @@ rule at-most-succ-both
 
 # n <= n, always (reflexivity). By induction on n.
 rule at-most-reflexive
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call at-most
@@ -145,9 +145,9 @@ rule at-most-reflexive
 # impossible (constructors are disjoint), so those cases are vacuously discharged. The all-successor case closes through
 # the induction hypothesis. With reflexivity, this makes `at-most` a PREORDER on the naturals.
 rule at-most-is-transitive
-  mark a, like natural
-  mark b, like natural
-  mark c, like natural
+  seat a, like natural
+  seat b, like natural
+  seat c, like natural
   have h1
     call is-equal
       call at-most
@@ -172,8 +172,8 @@ rule at-most-is-transitive
 # impossible (off = on) cases by constructor disjointness. With transitivity and reflexivity this makes `at-most` a
 # PARTIAL ORDER, the arrow-of-time order the type-systems plan names.
 rule at-most-is-antisymmetric
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   have h1
     call is-equal
       call at-most
@@ -196,8 +196,8 @@ rule at-most-is-antisymmetric
 # some (a <= b) (b <= a) = on. Proved by simultaneous induction on a and b. With reflexivity, transitivity, and
 # antisymmetry, this makes `at-most` a kernel-checked TOTAL ORDER on the naturals.
 rule at-most-is-total
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call some
@@ -212,8 +212,8 @@ rule at-most-is-total
 
 # min is a lower bound of its first argument: min a b <= a, for every a and b. By simultaneous induction.
 rule at-most-min-left
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call at-most
@@ -246,7 +246,7 @@ fuse binary-idempotent, max-self-is-self, max
 
 # min 0 n = 0. Definitional.
 rule min-zero-left-is-zero
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call min
@@ -257,7 +257,7 @@ rule min-zero-left-is-zero
 
 # max 0 n = n. Definitional.
 rule max-zero-left-is-self
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call max
@@ -341,7 +341,7 @@ task plus
               read b
 
 rule plus-zero-right-is-identity
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call plus
@@ -351,8 +351,8 @@ rule plus-zero-right-is-identity
   fold n
 
 rule plus-succ-right-steps-out
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call plus
@@ -370,9 +370,9 @@ rule plus-succ-right-steps-out
 # Monotonicity of addition over the order: a <= b implies (a + c) <= (b + c), for every c. Proved by induction on c,
 # using the hypothesis a <= b and the addition step lemmas. This is the bridge from the order to the arithmetic.
 rule at-most-plus-monotone
-  mark a, like natural
-  mark b, like natural
-  mark c, like natural
+  seat a, like natural
+  seat b, like natural
+  seat c, like natural
   have h
     call is-equal
       call at-most
@@ -397,8 +397,8 @@ rule at-most-plus-monotone
 # simultaneous induction on a and b, citing the successor step lemmas of max, min, and plus. The step lemmas (all
 # definitional) are stated here so the induction can rewrite the recurrences into view.
 rule plus-succ-left-steps
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call plus
@@ -443,8 +443,8 @@ fuse succ-both-steps, max-succ-both-steps, max
 fuse succ-both-steps, min-succ-both-steps, min
 
 rule max-plus-min-is-plus
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call plus

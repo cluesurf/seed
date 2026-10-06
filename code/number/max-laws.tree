@@ -35,7 +35,7 @@ task max
 
 # idempotent: max a a = a. The join of a with itself is a.
 rule max-idempotent
-  mark a, like natural
+  seat a, like natural
   show hold
     call is-equal
       call max
@@ -47,7 +47,7 @@ rule max-idempotent
 
 # right identity: max a 0 = a. Zero is the bottom of the order.
 rule max-zero-right
-  mark a, like natural
+  seat a, like natural
   show hold
     call is-equal
       call max
@@ -58,7 +58,7 @@ rule max-zero-right
 
 # left identity: max 0 a = a (definitional).
 rule max-zero-left
-  mark a, like natural
+  seat a, like natural
   show hold
     call is-equal
       call max
@@ -69,8 +69,8 @@ rule max-zero-left
 
 # commutative: max a b = max b a. The join is independent of argument order.
 rule max-commutes
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call max

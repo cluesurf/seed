@@ -60,7 +60,7 @@ load @term/seed/atom/flag
 # THE FRAME OF A SLOT IS THE AXIS OF ITS HOPF CIRCLE: the coordinate pair a slot occupies decides which pair of
 # octahedron corners its circle lies over.
 rule the-frame-of-a-slot-is-the-axis-of-its-hopf-circle
-  mark g, like hurwitz-element
+  seat g, like hurwitz-element
   show hold
     call is-equal
       call q8-axis

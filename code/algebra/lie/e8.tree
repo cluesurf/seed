@@ -293,8 +293,8 @@ task cartan-entry
 # THE DIAGRAM IS UNDIRECTED: adjacent a b = adjacent b a, over all sixty-four node pairs. The edges have no direction, so
 # the adjacency table must be symmetric. Proved by induction over both nodes.
 rule adjacent-is-symmetric
-  mark a, like node
-  mark b, like node
+  seat a, like node
+  seat b, like node
   show hold
     call is-equal
       call adjacent
@@ -308,7 +308,7 @@ rule adjacent-is-symmetric
 # THE DIAGRAM IS SIMPLE, NO SELF-LOOPS: adjacent a a = no, for every node. A node is never joined to itself, so the
 # diagram is a simple graph. Proved over all eight nodes.
 rule no-node-is-adjacent-to-itself
-  mark a, like node
+  seat a, like node
   show hold
     call is-equal
       call adjacent
@@ -321,8 +321,8 @@ rule no-node-is-adjacent-to-itself
 # that E8 is SIMPLY LACED. It follows from the symmetry of both the equality test and the adjacency table. Proved by
 # induction over both nodes.
 rule cartan-is-symmetric
-  mark a, like node
-  mark b, like node
+  seat a, like node
+  seat b, like node
   show hold
     call is-equal
       call cartan-entry
@@ -336,7 +336,7 @@ rule cartan-is-symmetric
 # THE CARTAN DIAGONAL IS TWO: cartan-entry a a = two-on-diagonal, for every node. Every simple root has squared length
 # two in the normalization that makes the matrix integral, so the whole diagonal is two. Proved over all eight nodes.
 rule cartan-diagonal-is-two
-  mark a, like node
+  seat a, like node
   show hold
     call is-equal
       call cartan-entry
@@ -349,8 +349,8 @@ rule cartan-diagonal-is-two
 # minus-one-off-diagonal if and only if they are joined by an edge. This ties the matrix to the diagram in both
 # directions and confirms there are no two-or-three-fold bonds (E8 has only single edges). Proved over all pairs.
 rule off-diagonal-cartan-tracks-adjacency
-  mark a, like node
-  mark b, like node
+  seat a, like node
+  seat b, like node
   show hold
     call is-equal
       call adjacent

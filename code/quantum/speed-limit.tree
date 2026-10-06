@@ -33,7 +33,7 @@ task cone-width
 # beat count n, the interval of radius n. So the front, growing two cells per beat, one on each side, advances at a fixed
 # one cell per beat, the ballistic speed limit. Proved for all n by the commutative-ring normalizer.
 rule the-cone-is-two-n-plus-one-cells-wide
-  mark n, like natural-number
+  seat n, like natural-number
   show hold
     call is-equal
       call cone-width

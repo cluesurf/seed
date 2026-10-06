@@ -183,8 +183,8 @@ task active-pair
 # on which agent of the active pair is read first, the first sign that the pair is unordered. Proved by simultaneous case
 # analysis on both agents.
 rule same-type-is-symmetric
-  mark a, like agent
-  mark b, like agent
+  seat a, like agent
+  seat b, like agent
   show hold
     call is-equal
       call same-type
@@ -199,8 +199,8 @@ rule same-type-is-symmetric
 # active pair leaves its rewrite class unchanged, so the active pair is genuinely unordered, exactly as principal-to-
 # principal wiring is. Proved by simultaneous case analysis on both agents.
 rule interaction-is-symmetric
-  mark a, like agent
-  mark b, like agent
+  seat a, like agent
+  seat b, like agent
   show hold
     call is-equal
       call interact
@@ -216,7 +216,7 @@ rule interaction-is-symmetric
 # EQUAL AGENTS ANNIHILATE: an active pair of two agents of the same kind is classified annihilate, over all three kinds.
 # This is the annihilation rule, that like meets like and cancels, proved for every agent against itself.
 rule same-agents-annihilate
-  mark a, like agent
+  seat a, like agent
   show hold
     call is-equal
       call interact
@@ -243,7 +243,7 @@ rule distinct-agents-commute
 # started with. is-below-two (agent-count-after (pair a a)) = yes, over all three kinds. Annihilation strictly reduces the
 # agent count, the progress toward a normal form. Proved by case analysis on the agent.
 rule annihilation-shrinks-the-pair
-  mark a, like agent
+  seat a, like agent
   show hold
     call is-equal
       call is-below-two

@@ -3,8 +3,8 @@
 
 # false: n = C fails at C = 1, A = 1
 rule control-the-witness-c-alone
-  mark aa, like integer
-  mark cc, like integer
+  seat aa, like integer
+  seat cc, like integer
   have aa-is-positive
     call is-minimum
       read aa
@@ -21,16 +21,16 @@ rule control-the-witness-c-alone
 
 # false: a minus sign in the B(u, v) term
 rule control-the-line-with-a-wrong-sign
-  mark u0, like integer
-  mark u1, like integer
-  mark u2, like integer
-  mark v0, like integer
-  mark v1, like integer
-  mark v2, like integer
-  mark ca, like integer
-  mark sa, like integer
-  mark cb, like integer
-  mark sb, like integer
+  seat u0, like integer
+  seat u1, like integer
+  seat u2, like integer
+  seat v0, like integer
+  seat v1, like integer
+  seat v2, like integer
+  seat ca, like integer
+  seat sa, like integer
+  seat cb, like integer
+  seat sb, like integer
   show hold
     call is-equal
       call subtract

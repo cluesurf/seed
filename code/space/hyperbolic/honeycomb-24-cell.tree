@@ -82,7 +82,7 @@ task around-ridge
 # double dual. This is the proof that vertex count and cell count are the same twenty-four, the defining property of the
 # unique self-dual regular 4-polytope. Reuses the proved involutivity of the root antipode.
 rule dual-is-an-involution
-  mark r, like d4-root
+  seat r, like d4-root
   show hold
     call is-equal
       call dual
@@ -94,7 +94,7 @@ rule dual-is-an-involution
 # EVERY VERTEX IS A VERTEX: is-vertex r = yes, for every one of the twenty-four D4 roots. The constructed witness that the
 # vertex set of the 24-cell is exactly the twenty-four roots, ranged over by `fold`, not asserted as a numeral.
 rule every-root-is-a-vertex
-  mark r, like d4-root
+  seat r, like d4-root
   show hold
     call is-equal
       call is-vertex
@@ -107,7 +107,7 @@ rule every-root-is-a-vertex
 # twelve lines. The dual is the antipode, so this ties the honeycomb cell directly to the dock. Reuses the proved root
 # positivity and antipode.
 rule vertices-pair-into-twelve-lines
-  mark r, like d4-root
+  seat r, like d4-root
   show hold
     call is-equal
       call either
@@ -123,7 +123,7 @@ rule vertices-pair-into-twelve-lines
 # the identity, for each of the four cells. This is the four-fold meeting of 24-cells at every ridge, the final 4 of the
 # Schlafli symbol {3,4,3,4}, proved as the order-four cycle of the local patch.
 rule four-cells-around-a-ridge
-  mark c, like ridge-cell
+  seat c, like ridge-cell
   show hold
     call is-equal
       call around-ridge

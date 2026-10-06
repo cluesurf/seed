@@ -119,7 +119,7 @@ task around-edge
 # DUAL-RANK IS AN INVOLUTION: dual-rank (dual-rank r) = r, for every rank. Reversing the face lattice twice returns the
 # original rank, so duality is a polarity of order two. Proved over all four ranks.
 rule dual-rank-is-an-involution
-  mark r, like element-kind
+  seat r, like element-kind
   show hold
     call is-equal
       call dual-rank
@@ -133,7 +133,7 @@ rule dual-rank-is-an-involution
 # duality: reversing the f-vector of one gives the other. At rank vertex it says the 120-cell's cell count (120) equals
 # the 600-cell's vertex count (120), and so on through every rank. Proved over all four ranks.
 rule the-two-polytopes-are-dual
-  mark r, like element-kind
+  seat r, like element-kind
   show hold
     call is-equal
       call count-120-cell
@@ -147,7 +147,7 @@ rule the-two-polytopes-are-dual
 # times is the identity, for each of the five tetrahedra. This is the five-fold meeting of tetrahedral cells around
 # every edge, the final 5 of the Schlafli symbol {3,3,5}, proved as the order-five cycle of the local patch.
 rule five-tetrahedra-around-an-edge
-  mark t, like edge-tetrahedron
+  seat t, like edge-tetrahedron
   show hold
     call is-equal
       call around-edge

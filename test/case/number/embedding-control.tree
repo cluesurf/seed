@@ -13,41 +13,41 @@ load @term/seed/number/embedding
 
 # false everywhere: a successor counted as two more
 rule control-succ-counts-two
-  mark n, like natural
+  seat n, like natural
   show hold, is-equal count(make succ(n)), add(count(n), 2)
 
 # false at n = 0: a count at least one
 rule control-count-is-positive
-  mark n, like natural
+  seat n, like natural
   show hold, is-minimum count(n), 1
   fold n
 
 # false at a = 1, b = 1: a sum counted as a product
 rule control-plus-counts-as-times
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold, is-equal count(plus(a, b)), multiply(count(a), count(b))
   fold a
 
 # false at a = 0, b = 1: a sum counting b twice
 rule control-plus-counts-b-twice
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold, is-equal count(plus(a, b)), add(count(a), multiply(2, count(b)))
   fold a
 
 # false at a = 2, b = 2: a product counted as a sum
 rule control-times-counts-as-plus
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold, is-equal count(times(a, b)), add(count(a), count(b))
   fold a
     cite count-of-plus
 
 # false wherever b is not zero: a sum counting no more than its left side
 rule control-plus-is-at-most-the-left
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   find n, b
   show hold, is-maximum count(plus(a, b)), count(a)
   cite count-of-plus

@@ -73,7 +73,7 @@ task chain-return
 # RIGHT IDENTITY: bind m return = m. Binding a context with return leaves it unchanged, for every option. Proved by
 # induction over the two shapes (absent stays absent, present rewraps to the same present value).
 rule monad-right-identity
-  mark m, like opt
+  seat m, like opt
   show hold
     call is-equal
       call chain-return
@@ -100,7 +100,7 @@ task chain-flip
 # LEFT IDENTITY (instance): bind (return a) k = k a, here for the continuation k = flip-opt. Wrapping a value with return
 # then binding is the same as applying the step directly, for every value a. Holds by computation.
 rule monad-left-identity-instance
-  mark a, like bit
+  seat a, like bit
   show hold
     call is-equal
       call chain-flip

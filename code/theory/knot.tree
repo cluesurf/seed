@@ -139,7 +139,7 @@ task cross
 # every color h. This is the trivial coloring, always available, which is why every knot including the unknot is at least
 # one-colorable. Proved by induction over the three colors.
 rule a-monochromatic-crossing-is-legal
-  mark h, like hue
+  seat h, like hue
   show hold
     call is-equal
       call cross
@@ -179,9 +179,9 @@ rule a-two-color-crossing-is-illegal
 # b, a), for all colors. So the crossing rule does not depend on which under-strand is named first, as an invariant must
 # not. Proved by simultaneous induction over the three colors.
 rule the-crossing-rule-is-symmetric
-  mark over, like hue
-  mark under-a, like hue
-  mark under-b, like hue
+  seat over, like hue
+  seat under-a, like hue
+  seat under-b, like hue
   show hold
     call is-equal
       call cross

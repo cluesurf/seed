@@ -51,8 +51,8 @@ task adjacent
 
 # ADJACENCY IS SYMMETRIC: adjacent a b = adjacent b a, the graph is UNDIRECTED. Over all nine node pairs.
 rule adjacent-is-symmetric
-  mark a, like node
-  mark b, like node
+  seat a, like node
+  seat b, like node
   show hold
     call is-equal
       call adjacent
@@ -65,7 +65,7 @@ rule adjacent-is-symmetric
 
 # ADJACENCY IS IRREFLEXIVE: adjacent a a = no, no node is adjacent to itself (no self-loops). Over the three nodes.
 rule adjacent-is-irreflexive
-  mark a, like node
+  seat a, like node
   show hold
     call is-equal
       call adjacent

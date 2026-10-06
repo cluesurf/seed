@@ -16,43 +16,43 @@ load @term/seed/relation/closure
 # the empty path does not fail to follow r
 rule control-stop-does-not-follow
   head a
-  mark r, like relation a
-  mark x, like a
+  seat r, like relation a
+  seat x, like a
   show hold, is-equal follows(r, x, make stop), make no
 
 # one step from x to y follows r from x to y, not from y to x
 rule control-one-step-follows-the-converse
   head a
-  mark r, like relation a
-  mark x, like a
-  mark y, like a
+  seat r, like relation a
+  seat x, like a
+  seat y, like a
   show hold, is-equal follows(r, x, make through(y, make stop)), r(y, x)
 
 # a joined path does not end where the second part ends from the START
 rule control-join-finishes-from-the-start
   head a
-  mark x, like a
-  mark p, like path a
-  mark q, like path a
+  seat x, like a
+  seat p, like path a
+  seat q, like path a
   show hold, is-equal finish(x, join(p, q)), finish(x, q)
   fold p
 
 # a joined path follows r only when the second part does too
 rule control-join-follows-the-first-part
   head a
-  mark r, like relation a
-  mark x, like a
-  mark p, like path a
-  mark q, like path a
+  seat r, like relation a
+  seat x, like a
+  seat p, like path a
+  seat q, like path a
   show hold, is-equal follows(r, x, join(p, q)), follows(r, x, p)
   fold p
 
 # the second part starts where the first ends, not at x
 rule control-second-part-from-the-start
   head a
-  mark r, like relation a
-  mark x, like a
-  mark p, like path a
-  mark q, like path a
+  seat r, like relation a
+  seat x, like a
+  seat p, like path a
+  seat q, like path a
   show hold, is-equal follows(r, x, join(p, q)), both(follows(r, x, p), follows(r, x, q))
   fold p

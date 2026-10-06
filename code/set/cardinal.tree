@@ -33,9 +33,9 @@ task diagonal
 # THE DIAGONAL DIFFERS FROM f(x) AT x, for every f and every x, so no f(x) is the diagonal.
 rule diagonal-differs-from-every-image
   head a
-  mark f
+  seat f
     like task
       take y, like a
       like set a
-  mark x, like a
+  seat x, like a
   show hold, is-equal iff(has(diagonal(f), x), has(f(x), x)), make no

@@ -80,7 +80,7 @@ task is-even-sum
 
 # EVERY SLOT HAS AN EVEN COORDINATE SUM, so stepping along it keeps a site in the D4 lattice.
 rule every-slot-is-a-step-of-the-d4-lattice
-  mark v, like tetrad
+  seat v, like tetrad
   show hold
     call is-equal
       call implies
@@ -94,7 +94,7 @@ rule every-slot-is-a-step-of-the-d4-lattice
 
 # NO SLOT IS THE ZERO STEP, so all 24 neighbours of a dock are other docks.
 rule no-slot-is-the-zero-step
-  mark v, like tetrad
+  seat v, like tetrad
   show hold
     call is-equal
       call implies
@@ -145,7 +145,7 @@ task is-small-even
         make no
 
 rule a-step-changes-the-height-by-at-most-two
-  mark v, like tetrad
+  seat v, like tetrad
   show hold
     call is-equal
       call implies

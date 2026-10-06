@@ -33,7 +33,7 @@ task either
 
 # YES IS THE IDENTITY OF CONJUNCTION: both yes a = a.
 rule both-yes-left-is-identity
-  mark a, like flag
+  seat a, like flag
   show hold
     call is-equal
       call both
@@ -44,7 +44,7 @@ rule both-yes-left-is-identity
 
 # NO IS THE IDENTITY OF DISJUNCTION: either no a = a.
 rule either-no-left-is-identity
-  mark a, like flag
+  seat a, like flag
   show hold
     call is-equal
       call either
@@ -81,7 +81,7 @@ task implies
 
 # NEGATION IS AN INVOLUTION.
 rule not-flag-is-an-involution
-  mark a, like flag
+  seat a, like flag
   show hold
     call is-equal
       call not-flag
@@ -92,8 +92,8 @@ rule not-flag-is-an-involution
 
 # MODUS PONENS, as a table: if a holds and a implies b, then b holds.
 rule implication-carries-truth
-  mark a, like flag
-  mark b, like flag
+  seat a, like flag
+  seat b, like flag
   have premise
     call is-equal
       read a

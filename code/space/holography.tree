@@ -93,7 +93,7 @@ task within
 # governs the entire boundary, its entanglement wedge is everything. This is the deepest infrared point seeing all of the
 # ultraviolet.
 rule center-governs-the-whole-boundary
-  mark b, like spot
+  seat b, like spot
   show hold
     call is-equal
       call within
@@ -105,7 +105,7 @@ rule center-governs-the-whole-boundary
 # THE WEDGE IS REFLEXIVE: within a a = yes, for every bulk point. A region governs itself, its entanglement wedge contains
 # its own bulk point. Proved by induction over the path.
 rule wedge-is-reflexive
-  mark a, like spot
+  seat a, like spot
   show hold
     call is-equal
       call within
@@ -117,8 +117,8 @@ rule wedge-is-reflexive
 # A DEEP POINT CANNOT RECONSTRUCT THE CENTER: within (turn s r) core = no. A bulk point nearer the boundary does not
 # govern the center, the ultraviolet cannot see the full infrared. This is the one-way nature of the radial direction.
 rule boundary-point-does-not-govern-the-center
-  mark s, like way
-  mark r, like spot
+  seat s, like way
+  seat r, like spot
   show hold
     call is-equal
       call within
@@ -134,8 +134,8 @@ rule boundary-point-does-not-govern-the-center
 # STEPPING TOWARD THE BOUNDARY DEEPENS THE SCALE: depth (turn s r) = more (depth r), one quantum deeper in the radial
 # renormalization direction for each step out. The bulk grows one scale at a time toward the boundary.
 rule a-step-out-deepens-the-scale
-  mark s, like way
-  mark r, like spot
+  seat s, like way
+  seat r, like spot
   show hold
     call is-equal
       call depth

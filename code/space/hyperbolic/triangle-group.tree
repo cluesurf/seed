@@ -77,7 +77,7 @@ task reflect-b
 # REFLECT-A IS AN INVOLUTION: reflect-a (reflect-a x) = x. A reflection done twice returns every chamber to itself, the
 # defining property of a Coxeter generator. Proved over all four chambers.
 rule reflect-a-is-an-involution
-  mark x, like chamber
+  seat x, like chamber
   show hold
     call is-equal
       call reflect-a
@@ -88,7 +88,7 @@ rule reflect-a-is-an-involution
 
 # REFLECT-B IS AN INVOLUTION: reflect-b (reflect-b x) = x.
 rule reflect-b-is-an-involution
-  mark x, like chamber
+  seat x, like chamber
   show hold
     call is-equal
       call reflect-b
@@ -99,7 +99,7 @@ rule reflect-b-is-an-involution
 
 # REFLECT-C IS AN INVOLUTION: reflect-c (reflect-c x) = x.
 rule reflect-c-is-an-involution
-  mark x, like chamber
+  seat x, like chamber
   show hold
     call is-equal
       call reflect-c
@@ -113,7 +113,7 @@ rule reflect-c-is-an-involution
 # reflect-a (reflect-c (reflect-a (reflect-c x))) = x. This is the third Coxeter relation of [p, q], the one that holds
 # in every regular tiling because one triangle angle is always a right angle. Proved over all four chambers.
 rule reflect-a-then-c-has-order-two
-  mark x, like chamber
+  seat x, like chamber
   show hold
     call is-equal
       call reflect-a
@@ -127,7 +127,7 @@ rule reflect-a-then-c-has-order-two
 # THE PERPENDICULAR PAIR COMMUTES: reflect-a (reflect-c x) = reflect-c (reflect-a x). Equivalent to the order-2 relation
 # given the involutions, and the cleanest witness that mirrors a and c are independent. Proved over all four chambers.
 rule perpendicular-reflections-commute
-  mark x, like chamber
+  seat x, like chamber
   show hold
     call is-equal
       call reflect-a

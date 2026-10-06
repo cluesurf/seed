@@ -81,9 +81,9 @@ task then
 
 # definitional step laws, cited by the composition proof.
 rule run-step-unfolds
-  mark c, like command
-  mark p, like program
-  mark s, like bit
+  seat c, like command
+  seat p, like program
+  seat s, like bit
   show hold
     call is-equal
       call run
@@ -101,9 +101,9 @@ rule run-step-unfolds
   calm hold
 
 rule then-step-unfolds
-  mark c, like command
-  mark p, like program
-  mark q, like program
+  seat c, like command
+  seat p, like program
+  seat q, like program
   show hold
     call is-equal
       call then
@@ -124,7 +124,7 @@ rule then-step-unfolds
 
 # THE EMPTY PROGRAM IS A NO-OP: run done s = s, the handler of an empty program returns the state unchanged.
 rule empty-program-is-identity
-  mark s, like bit
+  seat s, like bit
   show hold
     call is-equal
       call run
@@ -137,9 +137,9 @@ rule empty-program-is-identity
 # is running the first, then running the second from the state it left. The state accumulates and changes along the
 # recursion, so this is proved by induction on p with the GENERALIZED induction hypothesis.
 rule handler-composes
-  mark p, like program
-  mark q, like program
-  mark s, like bit
+  seat p, like program
+  seat q, like program
+  seat s, like bit
   show hold
     call is-equal
       call run

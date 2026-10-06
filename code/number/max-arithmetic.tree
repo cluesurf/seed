@@ -76,8 +76,8 @@ task max
                   read bp
 
 rule monus-succ-right-steps
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call monus
@@ -92,7 +92,7 @@ rule monus-succ-right-steps
   calm hold
 
 rule pred-succ-is-prior
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call pred
@@ -103,7 +103,7 @@ rule pred-succ-is-prior
   calm hold
 
 rule monus-zero-left
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call monus
@@ -114,8 +114,8 @@ rule monus-zero-left
     cite monus-succ-right-steps
 
 rule monus-succ-succ-cancels
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call monus
@@ -133,7 +133,7 @@ rule monus-succ-succ-cancels
     cite pred-succ-is-prior
 
 rule monus-zero-right
-  mark a, like natural
+  seat a, like natural
   show hold
     call is-equal
       call monus
@@ -143,8 +143,8 @@ rule monus-zero-right
   calm hold
 
 rule plus-succ-left-steps
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call plus
@@ -160,8 +160,8 @@ rule plus-succ-left-steps
   calm hold
 
 rule max-succ-both-steps
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call max
@@ -179,7 +179,7 @@ rule max-succ-both-steps
   calm hold
 
 rule plus-zero-right
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call plus
@@ -191,8 +191,8 @@ rule plus-zero-right
 # max via arithmetic: max a b = a + (b - a). When a <= b the difference fills the gap; when a > b it is zero and max is
 # a. Proved by simultaneous induction on a and b.
 rule max-is-plus-monus
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call max
@@ -212,8 +212,8 @@ rule max-is-plus-monus
     cite plus-zero-right
 
 rule plus-succ-right-steps
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call plus
@@ -232,8 +232,8 @@ rule plus-succ-right-steps
 # difference is zero and the sum is b. Together with `max a b = a + (b - a)` this gives both arithmetic readings of the
 # join. Proved by simultaneous induction on a and b.
 rule monus-plus-is-max
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call plus

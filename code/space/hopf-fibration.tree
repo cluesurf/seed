@@ -39,7 +39,7 @@ task next
 # octonion, for every x. So the tower is four floors tall and stops at the octonions, which is why there are exactly four
 # Hopf fibrations and no more. Proved by induction over the four algebras.
 rule doubling-three-times-reaches-the-octonions
-  mark x, like division
+  seat x, like division
   show hold
     call is-equal
       call next

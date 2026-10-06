@@ -274,7 +274,7 @@ fuse identity, blade-product, cl4-blade, blade-product, scalar-one
 # EVERY BLADE SQUARES TO PLUS OR MINUS ONE: e_A e_A = (-1)^(k(k-1)/2) for grade k, a scalar. Stated as: the square of a
 # blade has no bits left.
 rule every-blade-squares-to-a-scalar
-  mark x, like cl4-blade
+  seat x, like cl4-blade
   show hold
     call is-equal
       call either
@@ -365,7 +365,7 @@ rule the-volume-element-squares-to-one
 
 # IT COMMUTES WITH THE EVEN BLADES AND ANTICOMMUTES WITH THE ODD: vol x = (-1)^grade x vol.
 rule the-volume-element-commutes-with-even-and-anticommutes-with-odd
-  mark x, like cl4-blade
+  seat x, like cl4-blade
   show hold
     call is-equal
       call blade-product
@@ -400,8 +400,8 @@ rule the-volume-element-commutes-with-even-and-anticommutes-with-odd
 # THE EVEN BLADES ARE CLOSED: the grade parity of a product is the sum of the grade parities, so even times even is
 # even and Cl+(4) is a subalgebra.
 rule grade-parity-adds-under-the-product
-  mark x, like cl4-blade
-  mark y, like cl4-blade
+  seat x, like cl4-blade
+  seat y, like cl4-blade
   show hold
     call is-equal
       call odd-grade
@@ -425,7 +425,7 @@ task right-volume
       call volume
 
 rule right-volume-is-an-involution
-  mark x, like cl4-blade
+  seat x, like cl4-blade
   show hold
     call is-equal
       call right-volume
@@ -435,7 +435,7 @@ rule right-volume-is-an-involution
   fold x
 
 rule right-volume-complements-every-bit
-  mark x, like cl4-blade
+  seat x, like cl4-blade
   show hold
     call is-equal
       call both

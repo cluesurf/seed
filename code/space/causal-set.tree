@@ -298,7 +298,7 @@ task between-count
 # PRECEDENCE IS REFLEXIVE: precedes e e = yes, for every event e. Every event lies in its own causal past in the reflexive
 # convention, the trivial self-influence and the diagonal of the order. Proved by structural induction over the events.
 rule precedes-is-reflexive
-  mark e, like event
+  seat e, like event
   show hold
     call is-equal
       call precedes
@@ -311,9 +311,9 @@ rule precedes-is-reflexive
 # composes along a chain. Stated as the closed flag fact then(both(precedes x y)(precedes y z))(precedes x z) = yes, and
 # discharged by exhaustive structural induction over all four-by-four-by-four event triples.
 rule precedes-is-transitive
-  mark x, like event
-  mark y, like event
-  mark z, like event
+  seat x, like event
+  seat y, like event
+  seat z, like event
   show hold
     call is-equal
       call then
@@ -334,8 +334,8 @@ rule precedes-is-transitive
 # is the no-causal-loop law, the statement that the causet has no closed causal curves and no event strictly in its own
 # past. Stated as then(both(precedes x y)(precedes y x))(is-same x y) = yes and proved by induction over all event pairs.
 rule precedes-is-antisymmetric
-  mark x, like event
-  mark y, like event
+  seat x, like event
+  seat y, like event
   show hold
     call is-equal
       call then

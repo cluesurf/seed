@@ -191,7 +191,7 @@ fuse inverse, role-sum, role, role-sum, role-negate, role-zero
 
 # THE FORM IS ALTERNATING: [u, u] = 0.
 rule the-wedge-is-alternating
-  mark u, like role
+  seat u, like role
   show hold
     call is-equal
       call wedge
@@ -202,8 +202,8 @@ rule the-wedge-is-alternating
 
 # ANTISYMMETRIC: [u, v] = -[v, u].
 rule the-wedge-is-antisymmetric
-  mark u, like role
-  mark v, like role
+  seat u, like role
+  seat v, like role
   show hold
     call is-equal
       call wedge
@@ -218,9 +218,9 @@ rule the-wedge-is-antisymmetric
 # BILINEAR: [u + v, w] = [u, w] + [v, w] and [t u, v] = t [u, v]. (Linearity in the second slot follows by
 # antisymmetry.)
 rule the-wedge-is-additive
-  mark u, like role
-  mark v, like role
-  mark w, like role
+  seat u, like role
+  seat v, like role
+  seat w, like role
   show hold
     call is-equal
       call wedge
@@ -238,9 +238,9 @@ rule the-wedge-is-additive
   fold u, v, w
 
 rule the-wedge-is-homogeneous
-  mark t, like tone
-  mark u, like role
-  mark v, like role
+  seat t, like tone
+  seat u, like role
+  seat v, like role
   show hold
     call is-equal
       call wedge
@@ -257,7 +257,7 @@ rule the-wedge-is-homogeneous
 
 # NONDEGENERATE: every nonzero point pairs to a nonzero tone with its quarter turn.
 rule the-wedge-is-nondegenerate
-  mark u, like role
+  seat u, like role
   have nonzero
     call is-equal
       call role-is-zero
@@ -368,7 +368,7 @@ task coefficient-of
 
 # EVERY NONZERO POINT IS A MULTIPLE OF ITS DIRECTION: u = c v with c = coefficient-of u and v its direction's vector.
 rule every-nonzero-point-is-a-multiple-of-its-direction
-  mark u, like role
+  seat u, like role
   have nonzero
     call is-equal
       call role-is-zero
@@ -387,10 +387,10 @@ rule every-nonzero-point-is-a-multiple-of-its-direction
 
 # ... OF EXACTLY ONE: if two nonzero multiples of two directions are equal, the directions are equal.
 rule a-point-has-only-one-direction
-  mark s, like tone
-  mark t, like tone
-  mark d, like direction
-  mark e, like direction
+  seat s, like tone
+  seat t, like tone
+  seat d, like direction
+  seat e, like direction
   have s-nonzero
     call is-equal
       call is-vibe
@@ -419,8 +419,8 @@ rule a-point-has-only-one-direction
 
 # DISTINCT DIRECTIONS ARE TRANSVERSE: their vectors pair to a nonzero tone.
 rule distinct-directions-are-transverse
-  mark d, like direction
-  mark e, like direction
+  seat d, like direction
+  seat e, like direction
   have distinct
     call is-equal
       call same-direction
@@ -460,8 +460,8 @@ task on-line
 
 # A POINT LIES ON EXACTLY ONE LINE OF EACH DIRECTION: the line with offset [v, u] holds u, and no other offset does.
 rule a-point-lies-on-its-line-of-each-direction
-  mark d, like direction
-  mark u, like role
+  seat d, like direction
+  seat u, like role
   show hold
     call is-equal
       call on-line
@@ -478,9 +478,9 @@ rule a-point-lies-on-its-line-of-each-direction
   fold d, u
 
 rule a-point-lies-on-no-other-parallel-line
-  mark d, like direction
-  mark c, like tone
-  mark u, like role
+  seat d, like direction
+  seat c, like tone
+  seat u, like role
   have on
     call is-equal
       call on-line
@@ -528,10 +528,10 @@ task meeting-point
 
 # TWO LINES OF DIFFERENT DIRECTIONS MEET: the meeting point lies on both.
 rule transverse-lines-meet
-  mark d, like direction
-  mark c, like tone
-  mark e, like direction
-  mark k, like tone
+  seat d, like direction
+  seat c, like tone
+  seat e, like direction
+  seat k, like tone
   have distinct
     call is-equal
       call same-direction
@@ -568,11 +568,11 @@ rule transverse-lines-meet
 
 # ... IN EXACTLY ONE POINT: any point on both lines is the meeting point.
 rule transverse-lines-meet-once
-  mark d, like direction
-  mark c, like tone
-  mark e, like direction
-  mark k, like tone
-  mark u, like role
+  seat d, like direction
+  seat c, like tone
+  seat e, like direction
+  seat k, like tone
+  seat u, like role
   have distinct
     call is-equal
       call same-direction
@@ -662,9 +662,9 @@ task line-parameter
 
 # Every line-point is on its line,
 rule every-line-point-is-on-its-line
-  mark d, like direction
-  mark c, like tone
-  mark t, like tone
+  seat d, like direction
+  seat c, like tone
+  seat t, like tone
   show hold
     call is-equal
       call on-line
@@ -682,9 +682,9 @@ rule every-line-point-is-on-its-line
 
 # distinct parameters give distinct points (the parameter reads the point back),
 rule the-line-parameter-reads-a-line-point-back
-  mark d, like direction
-  mark c, like tone
-  mark t, like tone
+  seat d, like direction
+  seat c, like tone
+  seat t, like tone
   show hold
     call is-equal
       call line-parameter
@@ -699,9 +699,9 @@ rule the-line-parameter-reads-a-line-point-back
 
 # and every point on the line is one of them: A LINE HAS EXACTLY THREE POINTS.
 rule every-point-on-a-line-is-a-line-point
-  mark d, like direction
-  mark c, like tone
-  mark u, like role
+  seat d, like direction
+  seat c, like tone
+  seat u, like role
   have on
     call is-equal
       call on-line
@@ -726,8 +726,8 @@ rule every-point-on-a-line-is-a-line-point
 
 # TWO DISTINCT POINTS SPAN A LINE: the line through u in the direction of v - u holds v as well.
 rule two-distinct-points-span-a-line
-  mark u, like role
-  mark v, like role
+  seat u, like role
+  seat v, like role
   have distinct
     call is-equal
       call same-role

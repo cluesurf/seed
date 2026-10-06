@@ -5,8 +5,8 @@
 
 # The square of a sum: (a + b)^2 = a^2 + 2 a b + b^2.
 rule square-of-sum-expands
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   show hold
     call is-equal
       call multiply
@@ -32,8 +32,8 @@ rule square-of-sum-expands
 
 # The square of a difference: (a - b)^2 = a^2 - 2 a b + b^2.
 rule square-of-difference-expands
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   show hold
     call is-equal
       call multiply
@@ -59,8 +59,8 @@ rule square-of-difference-expands
 
 # The difference of squares: (a - b)(a + b) = a^2 - b^2.
 rule difference-of-squares-factors
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   show hold
     call is-equal
       call multiply
@@ -80,8 +80,8 @@ rule difference-of-squares-factors
 
 # The cube of a sum: (a + b)^3 = a^3 + 3 a^2 b + 3 a b^2 + b^3.
 rule cube-of-sum-expands
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   show hold
     call is-equal
       call multiply
@@ -125,8 +125,8 @@ rule cube-of-sum-expands
 
 # The sum of two cubes: a^3 + b^3 = (a + b)(a^2 - a b + b^2).
 rule sum-of-cubes-factors
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   show hold
     call is-equal
       call add
@@ -158,8 +158,8 @@ rule sum-of-cubes-factors
 
 # The difference of two cubes: a^3 - b^3 = (a - b)(a^2 + a b + b^2).
 rule difference-of-cubes-factors
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   show hold
     call is-equal
       call subtract
@@ -192,8 +192,8 @@ rule difference-of-cubes-factors
 # The Sophie Germain identity: a^4 + 4 b^4 = (a^2 + 2 a b + 2 b^2)(a^2 - 2 a b + 2 b^2). The factorization of a sum of a
 # fourth power and four times a fourth power, the classic example that a^4 + 4 is composite for every a above one.
 rule sophie-germain-identity-factors-fourth-power-sum
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   show hold
     call is-equal
       call add
@@ -247,9 +247,9 @@ rule sophie-germain-identity-factors-fourth-power-sum
 
 # The square of a three-term sum: (a + b + c)^2 = a^2 + b^2 + c^2 + 2 a b + 2 b c + 2 c a.
 rule square-of-three-term-sum-expands
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
   show hold
     call is-equal
       call multiply
@@ -296,9 +296,9 @@ rule square-of-three-term-sum-expands
 # Euler's factorization: a^3 + b^3 + c^3 - 3 a b c = (a + b + c)(a^2 + b^2 + c^2 - a b - b c - c a), for every a, b, c.
 # The identity behind the fact that a sum of three cubes minus thrice their product factors through the cyclic sum.
 rule three-cube-sum-minus-thrice-product-factors
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
   show hold
     call is-equal
       call subtract
@@ -359,10 +359,10 @@ rule three-cube-sum-minus-thrice-product-factors
 # The square of a four-term sum: (a + b + c + d)^2 expands to the four squares plus twice each of the six pairwise
 # products. A universal ring identity over the integers.
 rule square-of-four-term-sum-expands
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
-  mark d, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
+  seat d, like integer
   show hold
     call is-equal
       call multiply

@@ -35,14 +35,14 @@
 # THE GEODESIC. B(x, x) - 1, for x = c u + s v, is a combination of the hypotheses' differences: it is 0 whenever u is
 # a point (B(u, u) = 1), v a unit tangent (B(v, v) = -1, B(u, v) = 0) and c^2 - s^2 = 1.
 rule the-geodesic-stays-on-the-hyperboloid
-  mark u0, like integer
-  mark u1, like integer
-  mark u2, like integer
-  mark v0, like integer
-  mark v1, like integer
-  mark v2, like integer
-  mark c, like integer
-  mark s, like integer
+  seat u0, like integer
+  seat u1, like integer
+  seat u2, like integer
+  seat v0, like integer
+  seat v1, like integer
+  seat v2, like integer
+  seat c, like integer
+  seat s, like integer
   show hold
     call is-equal
       call subtract
@@ -160,14 +160,14 @@ rule the-geodesic-stays-on-the-hyperboloid
 
 # Its velocity d = D x = s u + c v has B(d, d) = -1: the geodesic is traced at unit speed.
 rule the-geodesic-velocity-is-a-unit-vector
-  mark u0, like integer
-  mark u1, like integer
-  mark u2, like integer
-  mark v0, like integer
-  mark v1, like integer
-  mark v2, like integer
-  mark c, like integer
-  mark s, like integer
+  seat u0, like integer
+  seat u1, like integer
+  seat u2, like integer
+  seat v0, like integer
+  seat v1, like integer
+  seat v2, like integer
+  seat c, like integer
+  seat s, like integer
   show hold
     call is-equal
       call add
@@ -285,14 +285,14 @@ rule the-geodesic-velocity-is-a-unit-vector
 
 # And B(x, d) = 0: the velocity is tangent to the hyperboloid at x.
 rule the-geodesic-velocity-is-tangent
-  mark u0, like integer
-  mark u1, like integer
-  mark u2, like integer
-  mark v0, like integer
-  mark v1, like integer
-  mark v2, like integer
-  mark c, like integer
-  mark s, like integer
+  seat u0, like integer
+  seat u1, like integer
+  seat u2, like integer
+  seat v0, like integer
+  seat v1, like integer
+  seat v2, like integer
+  seat c, like integer
+  seat s, like integer
   show hold
     call is-equal
       call subtract
@@ -401,14 +401,14 @@ rule the-geodesic-velocity-is-tangent
 # ANGULAR MOMENTUM. D N for N = x1 d2 - x2 d1, by the product rule with D x = d and D d = x, is
 # (d1 d2 + x1 x2) - (d2 d1 + x2 x1) = 0.
 rule angular-momentum-is-conserved
-  mark u0, like integer
-  mark u1, like integer
-  mark u2, like integer
-  mark v0, like integer
-  mark v1, like integer
-  mark v2, like integer
-  mark c, like integer
-  mark s, like integer
+  seat u0, like integer
+  seat u1, like integer
+  seat u2, like integer
+  seat v0, like integer
+  seat v1, like integer
+  seat v2, like integer
+  seat c, like integer
+  seat s, like integer
   show hold
     call is-equal
       call subtract
@@ -480,12 +480,12 @@ rule angular-momentum-is-conserved
 # N = x1 d2 - x2 d1, is the certificate below in h1 = B(x, x) - 1, h2 = B(d, d) + 1 and h3 = B(x, d). So where x is a
 # point and d a unit tangent at it, M^2 + N^2 = x1^2 + x2^2 = sinh^2 r and D psi = -cosh r D theta.
 rule the-gauss-bonnet-turning-identity
-  mark x0, like integer
-  mark x1, like integer
-  mark x2, like integer
-  mark d0, like integer
-  mark d1, like integer
-  mark d2, like integer
+  seat x0, like integer
+  seat x1, like integer
+  seat x2, like integer
+  seat d0, like integer
+  seat d1, like integer
+  seat d2, like integer
   show hold
     call is-equal
       call subtract

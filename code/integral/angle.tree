@@ -18,10 +18,10 @@
 
 # THE INTEGRAND FALLS: with f1 (1 + s^2) = 1 and f2 (1 + (s + h)^2) = 1, f1 - f2 = f1 f2 (2 s h + h^2).
 rule the-integrand-difference
-  mark s, like integer
-  mark h, like integer
-  mark f1, like integer
-  mark f2, like integer
+  seat s, like integer
+  seat h, like integer
+  seat f1, like integer
+  seat f2, like integer
   have f1-inverts
     call is-equal
       call multiply
@@ -68,9 +68,9 @@ rule the-integrand-difference
 
 # The factor 2 s h + h^2 is not negative on s, h >= 0.
 rule the-growth-is-not-negative
-  mark s, like integer
-  mark h, like integer
-  mark g, like integer
+  seat s, like integer
+  seat h, like integer
+  seat g, like integer
   have g-is-the-growth
     call is-equal
       read g
@@ -99,10 +99,10 @@ rule the-growth-is-not-negative
 
 # So, with pp = f1 f2 > 0 and g = 2 s h + h^2 >= 0, f2 <= f1.
 rule the-integrand-falls
-  mark f1, like integer
-  mark f2, like integer
-  mark pp, like integer
-  mark g, like integer
+  seat f1, like integer
+  seat f2, like integer
+  seat pp, like integer
+  seat g, like integer
   have the-integrand-difference
     call is-equal
       call subtract
@@ -127,8 +127,8 @@ rule the-integrand-falls
 
 # and 0 < f <= 1.
 rule the-integrand-is-at-most-one
-  mark s, like integer
-  mark f1, like integer
+  seat s, like integer
+  seat f1, like integer
   have f1-inverts
     call is-equal
       call multiply
@@ -151,9 +151,9 @@ rule the-integrand-is-at-most-one
 
 # and their product pp = f1 f2 is in (0, 1].
 rule the-product-of-two-integrands-is-at-most-one
-  mark f1, like integer
-  mark f2, like integer
-  mark pp, like integer
+  seat f1, like integer
+  seat f2, like integer
+  seat pp, like integer
   have pp-is-the-product
     call is-equal
       read pp
@@ -188,10 +188,10 @@ rule the-product-of-two-integrands-is-at-most-one
 
 # so it falls slowly: f1 - f2 = pp g <= g = (2 s + h) h.
 rule the-integrand-falls-slowly
-  mark f1, like integer
-  mark f2, like integer
-  mark pp, like integer
-  mark g, like integer
+  seat f1, like integer
+  seat f2, like integer
+  seat pp, like integer
+  seat g, like integer
   have the-integrand-difference
     call is-equal
       call subtract
@@ -223,20 +223,20 @@ rule the-integrand-falls-slowly
 # THE SUMS SQUEEZE: with fl(i) = f(pt(i)), up(i + 1) = up(i) + fl(i) w and lo(i + 1) = lo(i) + fl(i + 1) w, from 0,
 # differ by (fl(0) - fl(n)) w, by induction on n.
 rule the-upper-sum-minus-the-lower-sum-telescopes
-  mark fl
+  seat fl
     like task
       take a0, like integer
       like integer
-  mark up
+  seat up
     like task
       take a0, like integer
       like integer
-  mark lo
+  seat lo
     like task
       take a0, like integer
       like integer
-  mark n, like integer
-  mark w, like integer
+  seat n, like integer
+  seat w, like integer
   have up-starts-at-zero
     call is-equal
       call up
@@ -248,7 +248,7 @@ rule the-upper-sum-minus-the-lower-sum-telescopes
         code 0
       code 0
   have up-adds-a-left-strip
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -266,7 +266,7 @@ rule the-upper-sum-minus-the-lower-sum-telescopes
               read i
             read w
   have lo-adds-a-right-strip
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -309,22 +309,22 @@ rule the-upper-sum-minus-the-lower-sum-telescopes
 # REFINEMENT. At mesh w / 2 a sum adds f(q(j + 1)) w / 2 per strip (written doubled), so two half strips add
 # (f(q(2 i + 1)) + f(q(2 i + 2))) w / 2.
 rule two-half-strips-make-a-strip
-  mark f
+  seat f
     like task
       take a0, like integer
       like integer
-  mark q
+  seat q
     like task
       take a0, like integer
       like integer
-  mark mm
+  seat mm
     like task
       take a0, like integer
       like integer
-  mark i, like integer
-  mark w, like integer
+  seat i, like integer
+  seat w, like integer
   have mm-adds-a-half-strip
-    mark j, like integer
+    seat j, like integer
     meet or
       call is-below
         read j
@@ -390,9 +390,9 @@ rule two-half-strips-make-a-strip
 
 # A value of f at least another stays so times the width w >= 0.
 rule a-falling-strip-scales
-  mark fo, like integer
-  mark fp, like integer
-  mark w, like integer
+  seat fo, like integer
+  seat fp, like integer
+  seat w, like integer
   have fo-is-at-least-fp
     call is-minimum
       read fo
@@ -417,26 +417,26 @@ rule a-falling-strip-scales
 # ll(n) <= mm(n), by induction on n. The fall enters as fo(i) w >= fp(i + 1) w (a-falling-strip-scales), so each step
 # is linear.
 rule halving-the-mesh-raises-the-lower-sum
-  mark fp
+  seat fp
     like task
       take a0, like integer
       like integer
-  mark fo
+  seat fo
     like task
       take a0, like integer
       like integer
-  mark ll
+  seat ll
     like task
       take a0, like integer
       like integer
-  mark mm
+  seat mm
     like task
       take a0, like integer
       like integer
-  mark n, like integer
-  mark w, like integer
+  seat n, like integer
+  seat w, like integer
   have ll-adds-a-strip
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -456,7 +456,7 @@ rule halving-the-mesh-raises-the-lower-sum
                 code 1
             read w
   have mm-adds-two-half-strips
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -485,7 +485,7 @@ rule halving-the-mesh-raises-the-lower-sum
                 code 1
             read w
   have the-odd-strip-is-at-least-the-right-end
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -531,26 +531,26 @@ rule halving-the-mesh-raises-the-lower-sum
 # and the upper sum uu (left points, fp(i)) is at least the refined upper sum vv, which adds (fp(i) + fo(i)) w / 2, as
 # f(q(2 i)) = fp(i), with fo(i) w <= fp(i) w as f falls. By induction on n.
 rule halving-the-mesh-lowers-the-upper-sum
-  mark fp
+  seat fp
     like task
       take a0, like integer
       like integer
-  mark fo
+  seat fo
     like task
       take a0, like integer
       like integer
-  mark uu
+  seat uu
     like task
       take a0, like integer
       like integer
-  mark vv
+  seat vv
     like task
       take a0, like integer
       like integer
-  mark n, like integer
-  mark w, like integer
+  seat n, like integer
+  seat w, like integer
   have uu-adds-a-strip
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -568,7 +568,7 @@ rule halving-the-mesh-lowers-the-upper-sum
               read i
             read w
   have vv-adds-two-half-strips
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -595,7 +595,7 @@ rule halving-the-mesh-lowers-the-upper-sum
               read i
             read w
   have the-odd-strip-is-at-most-the-left-end
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -641,18 +641,18 @@ rule halving-the-mesh-lowers-the-upper-sum
 # up(n) - lo(n) = (f(t) - f(t + h)) h / 2^n of each other, a regular sequence, and number/completeness gives its
 # limit, theta(t + h) - theta(t).
 rule the-refined-sums-are-nested
-  mark lo
+  seat lo
     like task
       take a0, like integer
       like integer
-  mark up
+  seat up
     like task
       take a0, like integer
       like integer
-  mark n, like integer
-  mark j, like integer
+  seat n, like integer
+  seat j, like integer
   have lo-rises
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -665,7 +665,7 @@ rule the-refined-sums-are-nested
             read k
             code 1
   have up-falls
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -678,7 +678,7 @@ rule the-refined-sums-are-nested
         call up
           read k
   have lo-is-below-up
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -727,12 +727,12 @@ rule the-refined-sums-are-nested
 # and REGULAR: with the gap (up(n) - lo(n)) p(n) = G, p(n) = 2^n >= n + 1, any later lower sum lo(m) is within G / n
 # of lo(n). That is completeness.tree's regular sequence with modulus G / n, so its limit is a real.
 rule the-refined-sums-are-regular
-  mark n, like integer
-  mark lon, like integer
-  mark lom, like integer
-  mark upn, like integer
-  mark pn, like integer
-  mark gg, like integer
+  seat n, like integer
+  seat lon, like integer
+  seat lom, like integer
+  seat upn, like integer
+  seat pn, like integer
+  seat gg, like integer
   have the-sums-are-nested
     meet and
       call is-maximum
@@ -780,25 +780,25 @@ rule the-refined-sums-are-regular
 # THE INCREMENT: a Riemann sum of a falling f over the first n of m strips of [t, t + h], at any points q(i) in the
 # strips, lies between n w f(t + h) and n w f(t), written fb and fa, by induction on n. At n = m, n w = h.
 rule a-riemann-sum-lies-between-its-ends
-  mark f
+  seat f
     like task
       take a0, like integer
       like integer
-  mark q
+  seat q
     like task
       take a0, like integer
       like integer
-  mark sum
+  seat sum
     like task
       take a0, like integer
       like integer
-  mark n, like integer
-  mark m, like integer
-  mark w, like integer
-  mark fa, like integer
-  mark fb, like integer
+  seat n, like integer
+  seat m, like integer
+  seat w, like integer
+  seat fa, like integer
+  seat fb, like integer
   have f-at-a-strip-point-is-within-the-ends
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -823,7 +823,7 @@ rule a-riemann-sum-lies-between-its-ends
         code 0
       code 0
   have the-sum-adds-a-strip
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -877,11 +877,11 @@ rule a-riemann-sum-lies-between-its-ends
 # THE DERIVATIVE: an increment dt of theta over [t, t + h] within [h f2, h f1], with f1 - f2 <= (2 t + h) h, is
 # f1 h up to (2 t + h) h^2.
 rule the-angle-has-derivative-the-integrand
-  mark t, like integer
-  mark h, like integer
-  mark f1, like integer
-  mark f2, like integer
-  mark dt, like integer
+  seat t, like integer
+  seat h, like integer
+  seat f1, like integer
+  seat f2, like integer
+  seat dt, like integer
   have the-increment-is-squeezed
     meet and
       call is-maximum

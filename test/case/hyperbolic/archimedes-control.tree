@@ -32,8 +32,8 @@ task doubled-cosh
 
 # the BASE holds (p <= p) and the STEP fails (2 p^2 - 1 > p for p > 1): an induction that skipped the step accepts it
 rule control-a-step-that-fails
-  mark p, like integer
-  mark k, like integer
+  seat p, like integer
+  seat k, like integer
   have p-is-a-cosh
     call is-minimum
       read p
@@ -52,8 +52,8 @@ rule control-a-step-that-fails
 
 # the BASE fails: p - 1 >= 2 (p - 1) is false for p > 1
 rule control-a-base-that-fails
-  mark p, like integer
-  mark k, like integer
+  seat p, like integer
+  seat k, like integer
   have p-is-a-cosh
     call is-minimum
       read p
@@ -82,8 +82,8 @@ rule control-a-base-that-fails
 
 # without p >= 1 the claim is false (p = 0 gives doubled-cosh 0)
 rule control-growth-without-a-cosh
-  mark p, like integer
-  mark k, like integer
+  seat p, like integer
+  seat k, like integer
   have k-is-a-count
     call is-minimum
       read k
@@ -112,8 +112,8 @@ rule control-growth-without-a-cosh
 
 # one past the witness: p = 2, m = 0 gives 2, not 3
 rule control-passing-one-more
-  mark p, like integer
-  mark m, like integer
+  seat p, like integer
+  seat m, like integer
   have p-is-at-least-two
     call is-minimum
       read p
@@ -135,8 +135,8 @@ rule control-passing-one-more
 # a hypothesis about the induction variable other than its range is REFUSED (it would change from case to case), even
 # though this statement is true
 rule control-a-hypothesis-about-the-counter
-  mark p, like integer
-  mark k, like integer
+  seat p, like integer
+  seat k, like integer
   have p-is-a-cosh
     call is-minimum
       read p

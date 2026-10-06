@@ -18,40 +18,40 @@ load @term/seed/set/base
 # false where x is in s and not in t
 rule control-union-is-intersection
   head a
-  mark s, like set a
-  mark t, like set a
-  mark x, like a
+  seat s, like set a
+  seat t, like set a
+  seat x, like a
   show hold, is-equal has(union(s, t), x), has(intersection(t, s), x)
 
 # false where x is in s and not in t: De Morgan without swapping the operation
 rule control-de-morgan-without-the-swap
   head a
-  mark s, like set a
-  mark t, like set a
-  mark x, like a
+  seat s, like set a
+  seat t, like set a
+  seat x, like a
   show hold, is-equal has(complement(union(s, t)), x), has(union(complement(s), complement(t)), x)
 
 # false everywhere: one complement taken for two
 rule control-complement-is-the-set
   head a
-  mark s, like set a
-  mark x, like a
+  seat s, like set a
+  seat x, like a
   show hold, is-equal has(complement(s), x), has(s, x)
 
 # false where x is in s and not in t: the difference turned around
 rule control-difference-the-wrong-way
   head a
-  mark s, like set a
-  mark t, like set a
-  mark x, like a
+  seat s, like set a
+  seat t, like set a
+  seat x, like a
   show hold, is-equal has(difference(s, t), x), has(intersection(complement(s), t), x)
 
 # false where x is in t and not in s: subset is not symmetric
 rule control-within-is-symmetric
   head a
-  mark s, like set a
-  mark t, like set a
-  mark x, like a
+  seat s, like set a
+  seat t, like set a
+  seat x, like a
   have s-within-t, is-equal within(s, t, x), make yes
   show hold, is-equal within(t, s, x), make yes
 
@@ -59,25 +59,25 @@ rule control-within-is-symmetric
 rule control-preimage-of-union-is-intersection
   head a
   head b
-  mark f
+  seat f
     like task
       take y, like a
       like b
-  mark s, like set b
-  mark t, like set b
-  mark x, like a
+  seat s, like set b
+  seat t, like set b
+  seat x, like a
   show hold, is-equal has(preimage(f, union(s, t)), x), has(intersection(preimage(f, s), preimage(f, t)), x)
 
 # false where x is in s and not in t: absorption keeping the other set
 rule control-absorption-keeps-t
   head a
-  mark s, like set a
-  mark t, like set a
-  mark x, like a
+  seat s, like set a
+  seat t, like set a
+  seat x, like a
   show hold, is-equal has(intersection(s, union(s, t)), x), has(t, x)
 
 # false everywhere: something in the empty set
 rule control-empty-has-everything
   head a
-  mark x, like a
+  seat x, like a
   show hold, is-equal has(empty(), x), make yes

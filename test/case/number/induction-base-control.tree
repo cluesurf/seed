@@ -3,13 +3,13 @@
 
 # false: x is constant (x(t + 1) = x(t)) and starts at 0, so x(n) is 0, never 1
 rule control-a-step-without-its-base
-  mark x
+  seat x
     like task
       take t, like integer
       like integer
-  mark n, like integer
+  seat n, like integer
   have x-is-constant
-    mark t, like integer
+    seat t, like integer
     meet or
       call is-below
         read t

@@ -95,10 +95,10 @@ task residue
 
 # THE PRODUCT IS COMMUTATIVE.
 rule eisenstein-product-commutes-real
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
-  mark d, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
+  seat d, like integer
   show hold
     call is-equal
       call omega-real
@@ -113,10 +113,10 @@ rule eisenstein-product-commutes-real
         read b
 
 rule eisenstein-product-commutes-part
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
-  mark d, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
+  seat d, like integer
   show hold
     call is-equal
       call omega-part
@@ -132,12 +132,12 @@ rule eisenstein-product-commutes-part
 
 # THE PRODUCT IS ASSOCIATIVE: ((a + b w)(c + d w))(e + f w) = (a + b w)((c + d w)(e + f w)), both coordinates.
 rule eisenstein-product-associates-real
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
-  mark d, like integer
-  mark e, like integer
-  mark f, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
+  seat d, like integer
+  seat e, like integer
+  seat f, like integer
   show hold
     call is-equal
       call omega-real
@@ -168,12 +168,12 @@ rule eisenstein-product-associates-real
           read f
 
 rule eisenstein-product-associates-part
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
-  mark d, like integer
-  mark e, like integer
-  mark f, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
+  seat d, like integer
+  seat e, like integer
+  seat f, like integer
   show hold
     call is-equal
       call omega-part
@@ -205,12 +205,12 @@ rule eisenstein-product-associates-part
 
 # THE PRODUCT DISTRIBUTES over coordinate addition: x (y + z) = x y + x z.
 rule eisenstein-product-distributes-real
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
-  mark d, like integer
-  mark e, like integer
-  mark f, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
+  seat d, like integer
+  seat e, like integer
+  seat f, like integer
   show hold
     call is-equal
       call omega-real
@@ -235,12 +235,12 @@ rule eisenstein-product-distributes-real
           read f
 
 rule eisenstein-product-distributes-part
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
-  mark d, like integer
-  mark e, like integer
-  mark f, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
+  seat d, like integer
+  seat e, like integer
+  seat f, like integer
   show hold
     call is-equal
       call omega-part
@@ -266,8 +266,8 @@ rule eisenstein-product-distributes-part
 
 # ONE IS THE UNIT: (1 + 0 w)(c + d w) = c + d w.
 rule one-is-the-eisenstein-unit-real
-  mark c, like integer
-  mark d, like integer
+  seat c, like integer
+  seat d, like integer
   show hold
     call is-equal
       call omega-real
@@ -278,8 +278,8 @@ rule one-is-the-eisenstein-unit-real
       read c
 
 rule one-is-the-eisenstein-unit-part
-  mark c, like integer
-  mark d, like integer
+  seat c, like integer
+  seat d, like integer
   show hold
     call is-equal
       call omega-part
@@ -333,10 +333,10 @@ rule omega-cubed-part
 
 # THE NORM IS MULTIPLICATIVE: N(x y) = N(x) N(y), for all integers.
 rule eisenstein-norm-is-multiplicative
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
-  mark d, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
+  seat d, like integer
   show hold
     call is-equal
       call eisenstein-norm
@@ -360,8 +360,8 @@ rule eisenstein-norm-is-multiplicative
 
 # THE NORM IS z TIMES ITS CONJUGATE: (a + b w)(a + b w^2) = N, with no w part left.
 rule a-number-times-its-conjugate-is-its-norm
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   show hold
     call is-equal
       call omega-real
@@ -378,8 +378,8 @@ rule a-number-times-its-conjugate-is-its-norm
         read b
 
 rule a-number-times-its-conjugate-is-real
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   show hold
     call is-equal
       call omega-part
@@ -395,10 +395,10 @@ rule a-number-times-its-conjugate-is-real
 
 # CONJUGATION IS A RING AUTOMORPHISM: conj(x y) = conj(x) conj(y), and conjugating twice returns x.
 rule conjugation-is-multiplicative-real
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
-  mark d, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
+  seat d, like integer
   show hold
     call is-equal
       call bar-real
@@ -427,10 +427,10 @@ rule conjugation-is-multiplicative-real
           read d
 
 rule conjugation-is-multiplicative-part
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
-  mark d, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
+  seat d, like integer
   show hold
     call is-equal
       call bar-part
@@ -459,8 +459,8 @@ rule conjugation-is-multiplicative-part
           read d
 
 rule conjugation-is-an-involution-real
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   show hold
     call is-equal
       call bar-real
@@ -473,8 +473,8 @@ rule conjugation-is-an-involution-real
       read a
 
 rule conjugation-is-an-involution-part
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   show hold
     call is-equal
       call bar-part
@@ -488,8 +488,8 @@ rule conjugation-is-an-involution-part
 
 # THE NORM IS POSITIVE DEFINITE: 4 N(a + b w) = (2a - b)^2 + 3 b^2, a sum of squares, so N >= 0 and N = 0 only at 0.
 rule four-norms-are-a-sum-of-squares
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   show hold
     call is-equal
       call multiply
@@ -516,8 +516,8 @@ rule four-norms-are-a-sum-of-squares
             read b
 
 rule the-eisenstein-norm-is-never-negative
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   show hold
     call is-minimum
       call eisenstein-norm
@@ -528,10 +528,10 @@ rule the-eisenstein-norm-is-never-negative
 # REDUCTION MODULO 1 - W IS A RING MAP ONTO F3. The residue of a product is the product of the residues up to a multiple
 # of three: res(x y) = res(x) res(y) - 3 b d. Sums reduce coordinate-wise, so the residue is additive on the nose.
 rule the-residue-of-a-product-is-the-product-of-residues
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
-  mark d, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
+  seat d, like integer
   show hold
     call is-equal
       call residue
@@ -562,8 +562,8 @@ rule the-residue-of-a-product-is-the-product-of-residues
 # The norm reduces to the square of the residue: N = (a + b)^2 - 3 a b. With vibe/tone `no-square-is-fear`, a norm is
 # never 2 modulo 3, so no Eisenstein integer has norm 2: TWO IS INERT, it stays prime in Z[w].
 rule the-norm-is-the-square-of-the-residue-modulo-three
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   show hold
     call is-equal
       call eisenstein-norm

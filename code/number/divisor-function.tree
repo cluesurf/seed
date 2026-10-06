@@ -38,7 +38,7 @@ task square
 # square is determined by its gnomon, the odd numbers, the discrete derivative of n squared. Proved for all n by the
 # commutative-ring normalizer.
 rule the-odd-gnomons-accumulate-to-the-square
-  mark n, like natural-number
+  seat n, like natural-number
   show hold
     call is-equal
       call square

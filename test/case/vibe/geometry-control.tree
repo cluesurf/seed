@@ -28,10 +28,10 @@ load @term/seed/vibe/forced-dock-24-cell
   find power-of-x
 
 rule control-fourth-moment-eleven
-  mark k1, like integer
-  mark k2, like integer
-  mark k3, like integer
-  mark k4, like integer
+  seat k1, like integer
+  seat k2, like integer
+  seat k3, like integer
+  seat k4, like integer
   show hold
     call is-equal
       call root-moment-4
@@ -54,10 +54,10 @@ rule control-fourth-moment-eleven
             read k4
 
 rule control-the-roots-are-a-six-design
-  mark k1, like integer
-  mark k2, like integer
-  mark k3, like integer
-  mark k4, like integer
+  seat k1, like integer
+  seat k2, like integer
+  seat k3, like integer
+  seat k4, like integer
   show hold
     call is-equal
       call root-moment-6
@@ -96,7 +96,7 @@ rule control-the-mesh-chain-is-minus-one
       code -1
 
 rule control-characteristic-polynomial-fifty-two
-  mark x, like integer
+  seat x, like integer
   show hold
     call is-equal
       call determinant-three
@@ -130,9 +130,9 @@ rule control-shell-four-off-by-one
       code 153193
 
 rule control-shell-recurrence-with-twenty-two
-  mark x, like integer
-  mark y, like integer
-  mark z, like integer
+  seat x, like integer
+  seat y, like integer
+  seat z, like integer
   show hold
     call is-equal
       call total-three
@@ -161,8 +161,8 @@ rule control-shell-recurrence-with-twenty-two
             read z
 
 rule control-splitting-recurrence-with-four
-  mark w, like integer
-  mark b, like integer
+  seat w, like integer
+  seat b, like integer
   show hold
     call is-equal
       call total-after-two
@@ -179,7 +179,7 @@ rule control-splitting-recurrence-with-four
           read b
 
 rule control-shells-with-twenty-five
-  mark x, like integer
+  seat x, like integer
   show hold
     call is-equal
       call fourth-power

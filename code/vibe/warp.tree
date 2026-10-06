@@ -151,7 +151,7 @@ task warp-polynomial
 
 # THE CHARACTERISTIC POLYNOMIAL: det(x I - M) = x^3 - 21 x^2 + 51 x - 23, for every x.
 rule the-characteristic-polynomial-of-the-transfer-matrix
-  mark x, like integer
+  seat x, like integer
   show hold
     call is-equal
       call determinant-three
@@ -346,9 +346,9 @@ fuse cayley-hamilton, the-transfer-matrix-satisfies-its-cubic-third-row, c, z
 # EVERY SHELL TOTAL OBEYS THE RECURRENCE: for any type vector v, total(M^3 v) = 21 total(M^2 v) - 51 total(M v)
 # + 23 total(v). Applied at v = v(n - 3) it is s(n) = 21 s(n-1) - 51 s(n-2) + 23 s(n-3).
 rule every-shell-obeys-the-warp-recurrence
-  mark x, like integer
-  mark y, like integer
-  mark z, like integer
+  seat x, like integer
+  seat y, like integer
+  seat z, like integer
   show hold
     call is-equal
       call total-three

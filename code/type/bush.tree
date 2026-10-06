@@ -93,7 +93,7 @@ rule size-leaf-is-zero
 # UNIVERSAL: mirror is an involution. mirror (mirror t) = t, for every tree t. Proved by induction on t: the leaf case
 # computes, and the node case closes using the induction hypothesis on BOTH the left and the right subtree.
 rule mirror-mirror-is-identity
-  mark t, like bush
+  seat t, like bush
   show hold
     call is-equal
       call mirror, read t
@@ -103,7 +103,7 @@ rule mirror-mirror-is-identity
 
 # helper plus laws (commutativity, for the swapped subtree sizes under mirror).
 rule plus-zero-right-on-size
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call plus
@@ -113,8 +113,8 @@ rule plus-zero-right-on-size
   fold n
 
 rule plus-succ-right-on-size
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call plus
@@ -130,8 +130,8 @@ rule plus-succ-right-on-size
   fold a
 
 rule plus-is-commutative-on-size
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call plus
@@ -146,9 +146,9 @@ rule plus-is-commutative-on-size
 
 # definitional step laws of mirror and size on a node.
 rule mirror-node-steps
-  mark l, like bush
-  mark v, like natural
-  mark r, like bush
+  seat l, like bush
+  seat v, like natural
+  seat r, like bush
   show hold
     call is-equal
       call mirror
@@ -171,9 +171,9 @@ rule mirror-node-steps
   calm hold
 
 rule size-node-steps
-  mark l, like bush
-  mark v, like natural
-  mark r, like bush
+  seat l, like bush
+  seat v, like natural
+  seat r, like bush
   show hold
     call is-equal
       call size
@@ -196,7 +196,7 @@ rule size-node-steps
 # mirror preserves size: size (mirror t) = size t, for every tree. By induction on t; the node case swaps the two
 # subtree sizes, which agree by commutativity of addition (handled by AC normalization).
 rule size-of-mirror-is-size
-  mark t, like bush
+  seat t, like bush
   show hold
     call is-equal
       call mirror, read t

@@ -462,10 +462,10 @@ task norm-squared
 
 # THE SECOND MOMENT IS ISOTROPIC: sum (k . r)^2 = 12 |k|^2.
 rule the-second-moment-of-the-roots-is-isotropic
-  mark k1, like integer
-  mark k2, like integer
-  mark k3, like integer
-  mark k4, like integer
+  seat k1, like integer
+  seat k2, like integer
+  seat k3, like integer
+  seat k4, like integer
   show hold
     call is-equal
       call root-moment-2
@@ -483,10 +483,10 @@ rule the-second-moment-of-the-roots-is-isotropic
 
 # THE FOURTH MOMENT IS ISOTROPIC: sum (k . r)^4 = 12 |k|^4. With the vanishing odd moments, a 5-design.
 rule the-fourth-moment-of-the-roots-is-isotropic
-  mark k1, like integer
-  mark k2, like integer
-  mark k3, like integer
-  mark k4, like integer
+  seat k1, like integer
+  seat k2, like integer
+  seat k3, like integer
+  seat k4, like integer
   show hold
     call is-equal
       call root-moment-4
@@ -510,10 +510,10 @@ rule the-fourth-moment-of-the-roots-is-isotropic
 
 # THE ODD MOMENTS VANISH (the roots come in opposite pairs).
 rule the-third-moment-of-the-roots-vanishes
-  mark k1, like integer
-  mark k2, like integer
-  mark k3, like integer
-  mark k4, like integer
+  seat k1, like integer
+  seat k2, like integer
+  seat k3, like integer
+  seat k4, like integer
   show hold
     call is-equal
       call root-moment-3
@@ -524,10 +524,10 @@ rule the-third-moment-of-the-roots-vanishes
       code 0
 
 rule the-fifth-moment-of-the-roots-vanishes
-  mark k1, like integer
-  mark k2, like integer
-  mark k3, like integer
-  mark k4, like integer
+  seat k1, like integer
+  seat k2, like integer
+  seat k3, like integer
+  seat k4, like integer
   show hold
     call is-equal
       call root-moment-5
@@ -561,10 +561,10 @@ rule the-sixth-moment-along-a-root-is-one-hundred-forty-four
 # ONE FRAME IS ONLY A 3-DESIGN: its second moment is 4 |k|^2, but its fourth is 4 along e1 and 32 = 8 |k|^4
 # along e1 + e2.
 rule one-frame-has-an-isotropic-second-moment
-  mark k1, like integer
-  mark k2, like integer
-  mark k3, like integer
-  mark k4, like integer
+  seat k1, like integer
+  seat k2, like integer
+  seat k3, like integer
+  seat k4, like integer
   show hold
     call is-equal
       call frame-moment-2
@@ -746,9 +746,9 @@ task husk-moment-6
 
 # THE HUSK: sum g (k . u)^2 = 6 |k|^2, the coefficient that sets the potential 1/(24 pi r).
 rule the-husk-second-moment-is-six-k-squared
-  mark k1, like integer
-  mark k2, like integer
-  mark k3, like integer
+  seat k1, like integer
+  seat k2, like integer
+  seat k3, like integer
   show hold
     call is-equal
       call husk-moment-2
@@ -768,9 +768,9 @@ rule the-husk-second-moment-is-six-k-squared
 
 # sum g (k . u)^4 = 6 |k|^4: the quartic correction is isotropic, so no 1/r^3 term.
 rule the-husk-fourth-moment-is-isotropic
-  mark k1, like integer
-  mark k2, like integer
-  mark k3, like integer
+  seat k1, like integer
+  seat k2, like integer
+  seat k3, like integer
   show hold
     call is-equal
       call husk-moment-4
@@ -799,9 +799,9 @@ rule the-husk-fourth-moment-is-isotropic
 
 # sum g (k . u)^6 = 30 p4 p2 - 24 p6: the first anisotropic term, the 1/r^5 correction.
 rule the-husk-sixth-moment
-  mark k1, like integer
-  mark k2, like integer
-  mark k3, like integer
+  seat k1, like integer
+  seat k2, like integer
+  seat k3, like integer
   show hold
     call is-equal
       call husk-moment-6

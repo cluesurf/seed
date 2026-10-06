@@ -66,8 +66,8 @@ task pure-right
 # elements. so4-bracket (pure-left a) (pure-right b) = the zero rotor. This is the heart of so(4) = su(2) + su(2): the
 # self-dual and anti-self-dual rotations are independent, which is why four-space carries two separate spins.
 rule left-and-right-commute
-  mark a, like elem
-  mark b, like elem
+  seat a, like elem
+  seat b, like elem
   show hold
     call is-equal
       call so4-bracket
@@ -89,8 +89,8 @@ rule left-and-right-commute
 # its right part at rest. so4-bracket (pure-left a) (pure-left b) has right part zero, for every a and b. The left su(2)
 # is a genuine subalgebra, never leaking into the right factor.
 rule left-factor-is-closed
-  mark a, like elem
-  mark b, like elem
+  seat a, like elem
+  seat b, like elem
   show hold
     call is-equal
       call so4-bracket

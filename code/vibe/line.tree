@@ -187,7 +187,7 @@ task unbeat-ring
 
 # REVERSIBILITY.
 rule the-unbeat-undoes-the-beat
-  mark w, like line-ring
+  seat w, like line-ring
   show hold
     call is-equal
       call unbeat-ring
@@ -197,7 +197,7 @@ rule the-unbeat-undoes-the-beat
   fold w
 
 rule the-beat-undoes-the-unbeat
-  mark w, like line-ring
+  seat w, like line-ring
   show hold
     call is-equal
       call beat-ring
@@ -313,7 +313,7 @@ task ring-count
 
 # THE LINE LAW: the loves and the fears on the line are counted the same after every beat.
 rule the-beat-keeps-the-loves-on-the-line
-  mark w, like line-ring
+  seat w, like line-ring
   show hold
     call is-equal
       call ring-count
@@ -326,7 +326,7 @@ rule the-beat-keeps-the-loves-on-the-line
   fold w
 
 rule the-beat-keeps-the-fears-on-the-line
-  mark w, like line-ring
+  seat w, like line-ring
   show hold
     call is-equal
       call ring-count
@@ -364,7 +364,7 @@ task conjugate-ring
             read b3
 
 rule the-beat-commutes-with-charge-conjugation
-  mark w, like line-ring
+  seat w, like line-ring
   show hold
     call is-equal
       call beat-ring
@@ -394,7 +394,7 @@ task flip-velocities
           read f3
 
 rule the-velocity-flip-turns-the-stream-around
-  mark w, like line-ring
+  seat w, like line-ring
   show hold
     call is-equal
       call flip-velocities
@@ -406,7 +406,7 @@ rule the-velocity-flip-turns-the-stream-around
   fold w
 
 rule the-velocity-flip-commutes-with-the-contact
-  mark w, like line-ring
+  seat w, like line-ring
   show hold
     call is-equal
       call flip-velocities
@@ -437,7 +437,7 @@ task unreverse-time
         read w
 
 rule time-reversal-turns-the-beat-into-the-unbeat
-  mark w, like line-ring
+  seat w, like line-ring
   show hold
     call is-equal
       call reverse-time
@@ -466,7 +466,7 @@ task mirror-ring
           read f1
 
 rule the-mirror-is-a-symmetry-of-the-beat
-  mark w, like line-ring
+  seat w, like line-ring
   show hold
     call is-equal
       call mirror-ring

@@ -54,7 +54,7 @@ task invert
 # So inversion is a perfect pairing of the eight intervals, each with the interval that completes it to the octave. Proved
 # by induction over the eight intervals.
 rule inversion-is-an-involution
-  mark i, like interval
+  seat i, like interval
   show hold
     call is-equal
       call invert

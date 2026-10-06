@@ -71,7 +71,7 @@ task dis
 
 # NEGATION IS AN INVOLUTION: neg (neg a) = a.
 rule neg-is-an-involution
-  mark a, like trit
+  seat a, like trit
   show hold
     call is-equal
       call neg
@@ -82,8 +82,8 @@ rule neg-is-an-involution
 
 # CONJUNCTION IS COMMUTATIVE: con a b = con b a, over all nine pairs.
 rule con-is-commutative
-  mark a, like trit
-  mark b, like trit
+  seat a, like trit
+  seat b, like trit
   show hold
     call is-equal
       call con
@@ -96,8 +96,8 @@ rule con-is-commutative
 
 # DISJUNCTION IS COMMUTATIVE: dis a b = dis b a.
 rule dis-is-commutative
-  mark a, like trit
-  mark b, like trit
+  seat a, like trit
+  seat b, like trit
   show hold
     call is-equal
       call dis
@@ -110,7 +110,7 @@ rule dis-is-commutative
 
 # CONJUNCTION IS IDEMPOTENT: con a a = a (a value met with itself is unchanged).
 rule con-is-idempotent
-  mark a, like trit
+  seat a, like trit
   show hold
     call is-equal
       call con
@@ -122,8 +122,8 @@ rule con-is-idempotent
 # DE MORGAN: the negation of a conjunction is the disjunction of the negations, neg (con a b) = dis (neg a) (neg b), over
 # all nine pairs. The duality survives the third value.
 rule de-morgan-ternary
-  mark a, like trit
-  mark b, like trit
+  seat a, like trit
+  seat b, like trit
   show hold
     call is-equal
       call neg

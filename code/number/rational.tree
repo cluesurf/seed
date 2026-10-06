@@ -86,8 +86,8 @@ task times
 
 # REFLEXIVE: every pair is related to itself, a*b = a*b. Immediate.
 rule relation-is-reflexive
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   show hold
     call is-equal
       call multiply
@@ -100,10 +100,10 @@ rule relation-is-reflexive
 # SYMMETRIC: if (a, b) ~ (c, d) then (c, d) ~ (a, b). From a*d = c*b conclude c*b = a*d, the same equation reversed.
 # Proved by assuming the antecedent and rewriting, the hypothesis-discharge path.
 rule relation-is-symmetric
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
-  mark d, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
+  seat d, like integer
   have h
     call is-equal
       call multiply
@@ -129,12 +129,12 @@ rule relation-is-symmetric
 # proves the cancellation-free product identity that transitivity rests on and leaves the final cancellation to the
 # integer order. With reflexivity and symmetry this establishes the relation as an EQUIVALENCE.
 rule relation-is-transitive-product
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
-  mark d, like integer
-  mark e, like integer
-  mark f, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
+  seat d, like integer
+  seat e, like integer
+  seat f, like integer
   have h1
     call is-equal
       call multiply
@@ -219,11 +219,11 @@ rule one-half-is-not-one-third
 
 # The left cross-product expands: (a*d + b*c)*(b'*d) = (a*b')*(d*d) + (b*b')*(c*d). A ring identity.
 rule add-respects-expand-left
-  mark a, like integer
-  mark b, like integer
-  mark b-prime, like integer
-  mark c, like integer
-  mark d, like integer
+  seat a, like integer
+  seat b, like integer
+  seat b-prime, like integer
+  seat c, like integer
+  seat d, like integer
   show hold
     call is-equal
       call multiply
@@ -255,11 +255,11 @@ rule add-respects-expand-left
 
 # The right cross-product expands: (a'*d + b'*c)*(b*d) = (a'*b)*(d*d) + (b*b')*(c*d). A ring identity.
 rule add-respects-expand-right
-  mark a-prime, like integer
-  mark b, like integer
-  mark b-prime, like integer
-  mark c, like integer
-  mark d, like integer
+  seat a-prime, like integer
+  seat b, like integer
+  seat b-prime, like integer
+  seat c, like integer
+  seat d, like integer
   show hold
     call is-equal
       call multiply
@@ -296,12 +296,12 @@ rule add-respects-expand-right
 # hypothesis) needs the hypothesis threaded through the ring rearrangement, a congruence-closure step the present tactics
 # do not orchestrate, so well-definedness is proved here as this expansion-and-congruence pair.
 rule add-respects-relation-core
-  mark a, like integer
-  mark a-prime, like integer
-  mark b, like integer
-  mark b-prime, like integer
-  mark c, like integer
-  mark d, like integer
+  seat a, like integer
+  seat a-prime, like integer
+  seat b, like integer
+  seat b-prime, like integer
+  seat c, like integer
+  seat d, like integer
   have h
     call is-equal
       call multiply
@@ -350,10 +350,10 @@ rule add-respects-relation-core
 
 # The left product expands: (a*c)*(b'*d) = (a*b')*(c*d). A ring identity.
 rule multiply-respects-expand-left
-  mark a, like integer
-  mark b-prime, like integer
-  mark c, like integer
-  mark d, like integer
+  seat a, like integer
+  seat b-prime, like integer
+  seat c, like integer
+  seat d, like integer
   show hold
     call is-equal
       call multiply
@@ -373,10 +373,10 @@ rule multiply-respects-expand-left
 
 # The right product expands: (a'*c)*(b*d) = (a'*b)*(c*d). A ring identity.
 rule multiply-respects-expand-right
-  mark a-prime, like integer
-  mark b, like integer
-  mark c, like integer
-  mark d, like integer
+  seat a-prime, like integer
+  seat b, like integer
+  seat c, like integer
+  seat d, like integer
   show hold
     call is-equal
       call multiply
@@ -397,12 +397,12 @@ rule multiply-respects-expand-right
 # The congruence step for multiplication: under a*b' = a'*b, (a*b')*(c*d) = (a'*b)*(c*d). With the two expansion lemmas
 # this proves multiplication respects the relation.
 rule multiply-respects-relation-core
-  mark a, like integer
-  mark a-prime, like integer
-  mark b, like integer
-  mark b-prime, like integer
-  mark c, like integer
-  mark d, like integer
+  seat a, like integer
+  seat a-prime, like integer
+  seat b, like integer
+  seat b-prime, like integer
+  seat c, like integer
+  seat d, like integer
   have h
     call is-equal
       call multiply
@@ -436,10 +436,10 @@ rule multiply-respects-relation-core
 # cross-product (a*d + b*c)*(d*b) = (c*b + d*a)*(b*d) holds by the commutative-ring normalizer. So the two orders land in
 # the same class, descending integer commutativity to the rationals.
 rule add-is-commutative
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
-  mark d, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
+  seat d, like integer
   show hold
     call is-equal
       call multiply
@@ -468,10 +468,10 @@ rule add-is-commutative
 # Rational multiplication is commutative: (a, b) * (c, d) and (c, d) * (a, b) cross-multiply equal,
 # (a*c)*(d*b) = (c*a)*(b*d), a ring identity. The product class does not depend on the order.
 rule multiply-is-commutative
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
-  mark d, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
+  seat d, like integer
   show hold
     call is-equal
       call multiply
@@ -495,8 +495,8 @@ rule multiply-is-commutative
 # (a*1 + b*0)*b = a*(b*1) holds for all integers (it reduces to a*b = a*b). So 0/1 is the additive identity on classes,
 # the neutral element of rational addition.
 rule zero-is-additive-identity
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   show hold
     call is-equal
       call multiply

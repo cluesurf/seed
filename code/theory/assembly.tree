@@ -41,7 +41,7 @@ task reflect
 # does not affect the object built, which is why the assembly index counts unordered joins. Proved by structural induction
 # over the assembly tree, using the induction hypothesis on both subtrees.
 rule reflection-is-an-involution
-  mark b, like build
+  seat b, like build
   show hold
     call is-equal
       call reflect

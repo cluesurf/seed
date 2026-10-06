@@ -5,7 +5,7 @@
 
 # FALSE: 2^53 + 1 is not 2^53. A ring normalizer on doubles rounds the left coefficient onto the right one.
 rule probe-coefficient-beyond-two-to-the-fifty-three
-  mark x, like integer
+  seat x, like integer
   show hold
     call is-equal
       call multiply
@@ -17,7 +17,7 @@ rule probe-coefficient-beyond-two-to-the-fifty-three
 
 # FALSE, the same after a product: (2^27 + 1)^2 = 2^54 + 2^28 + 1, and 2^54 + 2^28 differs from it by 1.
 rule probe-coefficient-from-a-product
-  mark x, like integer
+  seat x, like integer
   show hold
     call is-equal
       call multiply

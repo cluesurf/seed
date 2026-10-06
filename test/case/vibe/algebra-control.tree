@@ -56,7 +56,7 @@ task symmetric-form
           read v
 
 rule control-a-symmetric-form-is-alternating
-  mark u, like role
+  seat u, like role
   show hold
     call is-equal
       call symmetric-form
@@ -67,10 +67,10 @@ rule control-a-symmetric-form-is-alternating
 
 # two lines of the SAME direction do not meet (claimed here for all pairs of directions)
 rule control-all-lines-meet
-  mark d, like direction
-  mark c, like tone
-  mark e, like direction
-  mark k, like tone
+  seat d, like direction
+  seat c, like tone
+  seat e, like direction
+  seat k, like tone
   show hold
     call is-equal
       call on-line
@@ -89,8 +89,8 @@ rule control-all-lines-meet
 
 # the commutator without its sign flip
 rule control-commutator-with-the-wrong-sign
-  mark g, like weyl
-  mark k, like weyl
+  seat g, like weyl
+  seat k, like weyl
   show hold
     call is-equal
       call weyl-product
@@ -110,8 +110,8 @@ rule control-commutator-with-the-wrong-sign
 
 # the Weyl operators do not commute
 rule control-weyl-operators-commute
-  mark g, like weyl
-  mark k, like weyl
+  seat g, like weyl
+  seat k, like weyl
   show hold
     call is-equal
       call weyl-product

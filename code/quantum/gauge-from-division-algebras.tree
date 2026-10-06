@@ -284,7 +284,7 @@ rule commutator-kay-eye-is-jay
 # THE COMMUTATOR IS ALTERNATING: [a, a] = still (zero), every unit brackets to nothing with itself, over all elements.
 # This is half of antisymmetry and confirms the diagonal of the table.
 rule commutator-is-alternating
-  mark a, like turn
+  seat a, like turn
   show hold
     call is-equal
       call commutator
@@ -297,10 +297,10 @@ rule commutator-is-alternating
 # signs and any two of the three quaternion units by exhaustive induction. With the cyclic relations above this is the
 # full su(2) Lie structure.
 rule commutator-is-antisymmetric
-  mark sign-a, like sign
-  mark unit-a, like imaginary-h
-  mark sign-b, like sign
-  mark unit-b, like imaginary-h
+  seat sign-a, like sign
+  seat unit-a, like imaginary-h
+  seat sign-b, like sign
+  seat unit-b, like imaginary-h
   show hold
     call is-equal
       call commutator
@@ -332,7 +332,7 @@ rule commutator-is-antisymmetric
 # units i, j, k by induction over the constructed set. multiply-unit u u = real-minus-one. This is what makes them
 # IMAGINARY, and it holds by computation on the constructed product table.
 rule each-quaternion-unit-squares-to-minus-one
-  mark u, like imaginary-h
+  seat u, like imaginary-h
   show hold
     call is-equal
       call multiply-unit
@@ -379,7 +379,7 @@ task count-unit
 # the whole form imaginary-h. This is the content behind the count: each of the three constructed units contributes
 # exactly one generator to su(2). The dimension three then follows by adding three ones.
 rule each-quaternion-unit-is-one-generator
-  mark u, like imaginary-h
+  seat u, like imaginary-h
   show hold
     call is-equal
       call count-unit
@@ -448,7 +448,7 @@ task count-o
 # EVERY OCTONION IMAGINARY UNIT IS COUNTED ONCE: count-o u = 1 for every constructed unit e1..e7, proved by induction
 # over the whole form imaginary-o. Each of the seven constructed units contributes one.
 rule each-octonion-unit-is-counted-once
-  mark u, like imaginary-o
+  seat u, like imaginary-o
   show hold
     call is-equal
       call count-o

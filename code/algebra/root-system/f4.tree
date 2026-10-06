@@ -252,7 +252,7 @@ task is-positive
 # THE ANTIPODE IS AN INVOLUTION: negate (negate r) = r. The root set is symmetric about the origin, so the forty-eight roots
 # really do split into twenty-four opposite lines. Proved over all forty-eight roots.
 rule negate-is-an-involution
-  mark r, like f4-root
+  seat r, like f4-root
   show hold
     call is-equal
       call negate, read r
@@ -264,7 +264,7 @@ rule negate-is-an-involution
 # antipode of a short root is short, so the long orbit and the short orbit, each of twenty-four roots, are each CLOSED under
 # negation. This is what lets the two orbits be the 24-cell and its dual 24-cell, swapped into themselves by the antipode.
 rule negate-preserves-length
-  mark r, like f4-root
+  seat r, like f4-root
   show hold
     call is-equal
       call negate, read r
@@ -276,7 +276,7 @@ rule negate-preserves-length
 # EVERY ROOT OR ITS ANTIPODE IS POSITIVE: either (is-positive r) (is-positive (negate r)) = yes, for every root. This is what
 # splits the forty-eight roots into the twenty-four positive roots and their twenty-four antipodes, the twenty-four lines.
 rule every-root-or-its-antipode-is-positive
-  mark r, like f4-root
+  seat r, like f4-root
   show hold
     call is-equal
       call either

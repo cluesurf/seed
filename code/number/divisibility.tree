@@ -46,7 +46,7 @@ task times
 
 # addition's monoid laws, needed to rearrange the sums in the distributive proof.
 rule plus-zero-right
-  mark a, like natural
+  seat a, like natural
   show hold
     call is-equal
       call plus
@@ -56,8 +56,8 @@ rule plus-zero-right
   fold a
 
 rule plus-succ-right
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call plus
@@ -73,8 +73,8 @@ rule plus-succ-right
   fold a
 
 rule plus-is-commutative
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call plus
@@ -88,9 +88,9 @@ rule plus-is-commutative
     cite plus-succ-right
 
 rule plus-is-associative
-  mark a, like natural
-  mark b, like natural
-  mark c, like natural
+  seat a, like natural
+  seat b, like natural
+  seat c, like natural
   show hold
     call is-equal
       call plus
@@ -107,8 +107,8 @@ rule plus-is-associative
 
 # definitional step exposing the multiplication recurrence, cited by the distributive proof.
 rule times-succ-left-steps-out
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold
     call is-equal
       call times
@@ -127,9 +127,9 @@ rule times-succ-left-steps-out
 # distributive law d (j + k) = d j + d k. Proved by induction on d; the successor case rearranges the four-term sum, which
 # the associativity and commutativity of addition handle. So the multiples of d are closed under addition, a subgroup.
 rule divisors-closed-under-sum
-  mark d, like natural
-  mark j, like natural
-  mark k, like natural
+  seat d, like natural
+  seat j, like natural
+  seat k, like natural
   show hold
     call is-equal
       call times
@@ -152,7 +152,7 @@ rule divisors-closed-under-sum
 # times distributes ALSO from the other side and zero is absorbing: d times 0 = 0, so every number divides zero (witness
 # quotient zero). By induction on d.
 rule times-zero-right
-  mark d, like natural
+  seat d, like natural
   show hold
     call is-equal
       call times

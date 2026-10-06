@@ -49,7 +49,7 @@ task cube
 # cube(n) = n * n * n, for every n. So the cube function is determined by its shell increments, the discrete derivative of
 # the cube. This is the cube arithmetic the theta series inherits. Proved for all n by the commutative-ring normalizer.
 rule the-gnomons-accumulate-to-the-cube
-  mark n, like natural-number
+  seat n, like natural-number
   show hold
     call is-equal
       call cube

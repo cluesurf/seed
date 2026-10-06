@@ -316,7 +316,7 @@ task irreducible
 # The difference of eigenvalues is exactly 2, the structure constant. We witness the engine of that relation: H read off
 # the raised vector is the raised weight, cartan (raise m) = raise m, the eigenvalue E hands to H is m + 2, for every m.
 rule cartan-after-raise-is-the-raised-weight
-  mark m, like weight
+  seat m, like weight
   show hold
     call is-equal
       call cartan
@@ -330,7 +330,7 @@ rule cartan-after-raise-is-the-raised-weight
 # lower m, the eigenvalue F hands to H is m - 2, for every m. With the raise law this is the diagonal action of H on the
 # whole ladder.
 rule cartan-after-lower-is-the-lowered-weight
-  mark m, like weight
+  seat m, like weight
   show hold
     call is-equal
       call cartan
@@ -344,7 +344,7 @@ rule cartan-after-lower-is-the-lowered-weight
 # steps are exact inverses on the weight, the [E,F] = H bookkeeping that keeps a vector on its rung after an up-down round
 # trip. Proved by induction over the weight.
 rule lower-after-raise-returns
-  mark m, like weight
+  seat m, like weight
   show hold
     call is-equal
       call lower
@@ -355,7 +355,7 @@ rule lower-after-raise-returns
 
 # LOWERING THEN RAISING RETURNS THE WEIGHT: E F |m> sits at weight m again, raise (lower m) = m, the mirror round trip.
 rule raise-after-lower-returns
-  mark m, like weight
+  seat m, like weight
   show hold
     call is-equal
       call raise
@@ -367,7 +367,7 @@ rule raise-after-lower-returns
 # next and back are inverse on a single weight, back (next m) = m, the one-step ladder identity the two-step operator
 # round trips rest on. Proved by induction over the weight (with the field split inside each sign).
 rule back-after-next-returns
-  mark m, like weight
+  seat m, like weight
   show hold
     call is-equal
       call back-weight
@@ -378,7 +378,7 @@ rule back-after-next-returns
 
 # next undoes back, next (back m) = m, the mirror.
 rule next-after-back-returns
-  mark m, like weight
+  seat m, like weight
   show hold
     call is-equal
       call next-weight
@@ -389,7 +389,7 @@ rule next-after-back-returns
 
 # NEGATION OF A WEIGHT IS AN INVOLUTION, negate (negate m) = m, the Weyl Z/2 squares to the identity on a single weight.
 rule negate-weight-is-an-involution
-  mark m, like weight
+  seat m, like weight
   show hold
     call is-equal
       call negate-weight
@@ -402,7 +402,7 @@ rule negate-weight-is-an-involution
 # every up-step into a down-step. This is the Weyl symmetry of the operators E and F (the reflection swaps them), the
 # structural reason the weight string comes out sign-symmetric.
 rule raise-is-the-mirror-of-lower
-  mark m, like weight
+  seat m, like weight
   show hold
     call is-equal
       call raise
@@ -454,7 +454,7 @@ rule raising-the-top-leaves-the-module
 # DEFINITIONAL STEP of the ladder at zero counter: ladder-down zero m is the single rung at m, so its length is one. The
 # base case of the ladder-length induction, holding for every start weight m. Definitional.
 rule ladder-down-zero-length-is-one
-  mark m, like weight
+  seat m, like weight
   show hold
     call is-equal
       call length
@@ -470,8 +470,8 @@ rule ladder-down-zero-length-is-one
 # (lower m))). The step lays one rung at m over the tail laid from the lowered weight, for every counter c and start m.
 # This is the recursion equation that carries the induction over the second argument's change from m to lower m.
 rule ladder-down-succ-length-steps
-  mark c, like natural
-  mark m, like weight
+  seat c, like natural
+  seat m, like weight
   show hold
     call is-equal
       call length
@@ -495,8 +495,8 @@ rule ladder-down-succ-length-steps
 # step. We discharge it by induction on c, citing the two definitional step lemmas so the recursion peels one rung at a
 # time and the hypothesis closes the gap. The base lays a single rung (length 1 = succ zero), the step adds one rung.
 rule ladder-length-is-counter-plus-one
-  mark c, like natural
-  mark m, like weight
+  seat c, like natural
+  seat m, like weight
   show hold
     call is-equal
       call length
@@ -513,7 +513,7 @@ rule ladder-length-is-counter-plus-one
 # DEFINITIONAL: the irreducible of label n is the ladder laid from its top weight, irreducible n = ladder-down n
 # (top-weight n). The unfolding that bridges the named module to the general ladder law. Definitional.
 rule irreducible-is-the-ladder-from-the-top
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call irreducible
@@ -528,7 +528,7 @@ rule irreducible-is-the-ladder-from-the-top
 # n + 1 states. This follows from the ladder-length law at counter n with start weight top-weight n (the start is irrelevant
 # to the count), bridged by the unfolding lemma. The central counting theorem of su(2) representation theory.
 rule irreducible-dimension-is-n-plus-one
-  mark n, like natural
+  seat n, like natural
   show hold
     call is-equal
       call length
@@ -604,7 +604,7 @@ rule weight-string-of-triplet-is-sign-symmetric
 # string xs. The Weyl Z/2 squares to the identity on the whole module, proved by induction on the string and the per-weight
 # involution. This is the structural form of the sign symmetry, holding for every weight string, irreducible or not.
 rule negate-string-is-an-involution
-  mark xs, like string
+  seat xs, like string
   show hold
     call is-equal
       call negate-string
@@ -728,8 +728,8 @@ rule casimir-is-scalar-on-top-and-bottom-of-triplet
 # the value does not vary with the weight vector. This is Schur's lemma in the cleanest form, proved for every weight by
 # induction. The same scalar on every rung of the ladder.
 rule casimir-at-is-constant-across-the-string
-  mark n, like natural
-  mark m, like weight
+  seat n, like natural
+  seat m, like weight
   show hold
     call is-equal
       call casimir-at

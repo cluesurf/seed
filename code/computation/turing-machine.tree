@@ -123,7 +123,7 @@ rule reads-blank-halts
 
 # THE STOP STATE IS FINAL: once halted, every symbol leaves the machine halted and unchanged, for every symbol read.
 rule stop-state-is-final
-  mark r, like symbol
+  seat r, like symbol
   show hold
     call is-equal
       call transition

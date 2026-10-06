@@ -34,25 +34,25 @@ rule count-of-one
   show hold, is-equal count(one()), 1
 
 rule count-of-succ
-  mark n, like natural
+  seat n, like natural
   show hold, is-equal count(make succ(n)), add(count(n), 1)
 
 # A COUNT IS NEVER NEGATIVE.
 rule count-is-not-negative
-  mark n, like natural
+  seat n, like natural
   show hold, is-minimum count(n), 0
   fold n
 
 # ADDITION AND MULTIPLICATION go over to the integers' own.
 rule count-of-plus
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold, is-equal count(plus(a, b)), add(count(a), count(b))
   fold a
 
 rule count-of-times
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   show hold, is-equal count(times(a, b)), multiply(count(a), count(b))
   fold a
     cite count-of-plus
@@ -60,8 +60,8 @@ rule count-of-times
 # MONOTONE ALONG ADDITION: a natural counts to no more than itself plus another. The sum law and the count of b, which
 # is never negative (`find n, b` names the instance of that rule's mark n)
 rule count-of-plus-is-at-least-the-left
-  mark a, like natural
-  mark b, like natural
+  seat a, like natural
+  seat b, like natural
   find n, b
   show hold, is-minimum count(plus(a, b)), count(a)
   cite count-of-plus

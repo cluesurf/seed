@@ -146,7 +146,7 @@ task reduce
 
 # UNIVERSAL: zero fuel reduces nothing. reduce zero t = t, for every term t. The base of the normalizer.
 rule reduce-zero-is-identity
-  mark t, like term
+  seat t, like term
   show hold
     call is-equal
       call reduce
@@ -158,7 +158,7 @@ rule reduce-zero-is-identity
 # UNIVERSAL: the I-redex fires for any argument. step (app i x) = x, for every term x. This is the identity rule stated
 # over an arbitrary argument, not just a concrete one, so it is the law I x = x in full generality.
 rule i-redex-steps
-  mark x, like term
+  seat x, like term
   show hold
     call is-equal
       call step

@@ -23,12 +23,12 @@
 
 # THE TERMS HALVE: (k + 1) t(k + 1) = x t(k) with k + 1 >= 2 x gives 2 t(k + 1) <= t(k).
 rule a-term-past-twice-x-is-at-most-half-the-last
-  mark t
+  seat t
     like task
       take a0, like integer
       like integer
-  mark k, like integer
-  mark x, like integer
+  seat k, like integer
+  seat x, like integer
   have the-term-from-the-last
     call is-equal
       call multiply
@@ -78,18 +78,18 @@ rule a-term-past-twice-x-is-at-most-half-the-last
 
 # 2^j >= j + 1, for the powers p(0) = 1, p(j + 1) = 2 p(j), by induction on j.
 rule the-powers-of-two-pass-the-counts
-  mark p
+  seat p
     like task
       take a0, like integer
       like integer
-  mark j, like integer
+  seat j, like integer
   have p-starts-at-one
     call is-equal
       call p
         code 0
       code 1
   have p-doubles
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -119,18 +119,18 @@ rule the-powers-of-two-pass-the-counts
 
 # SO THEY FALL like 2^-j from a start n0 past twice x: p(j) t(n0 + j) <= t(n0), by induction on j.
 rule the-terms-fall-like-powers-of-two
-  mark t
+  seat t
     like task
       take a0, like integer
       like integer
-  mark p
+  seat p
     like task
       take a0, like integer
       like integer
-  mark n0, like integer
-  mark j, like integer
+  seat n0, like integer
+  seat j, like integer
   have each-term-past-n0-halves
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -150,7 +150,7 @@ rule the-terms-fall-like-powers-of-two
         code 0
       code 1
   have p-doubles
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -165,7 +165,7 @@ rule the-terms-fall-like-powers-of-two
           call p
             read k
   have p-is-not-negative
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -198,11 +198,11 @@ rule the-terms-fall-like-powers-of-two
 
 # SO THEY TEND TO 0: a term t with p t <= t0 and p >= j + 1, for j with (j + 1) eps >= t0, is at most eps.
 rule a-term-is-below-any-tolerance
-  mark tt, like integer
-  mark t0, like integer
-  mark pp, like integer
-  mark j, like integer
-  mark eps, like integer
+  seat tt, like integer
+  seat t0, like integer
+  seat pp, like integer
+  seat j, like integer
+  seat eps, like integer
   have it-falls-like-a-power-of-two
     call is-maximum
       call multiply
@@ -241,18 +241,18 @@ rule a-term-is-below-any-tolerance
 # s(n0 + j) + 2 t(n0 + j + 1) <= s(n0) + 2 t(n0 + 1), by induction on j: the sum so far plus twice the next term
 # never grows, as the next term plus twice the one after is at most twice the next.
 rule the-partial-sums-past-n0-are-bounded
-  mark t
+  seat t
     like task
       take a0, like integer
       like integer
-  mark s
+  seat s
     like task
       take a0, like integer
       like integer
-  mark n0, like integer
-  mark j, like integer
+  seat n0, like integer
+  seat j, like integer
   have each-term-past-n0-halves
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -267,7 +267,7 @@ rule the-partial-sums-past-n0-are-bounded
         call t
           read k
   have each-sum-adds-a-term
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -322,13 +322,13 @@ rule the-partial-sums-past-n0-are-bounded
 # MONOTONE IN x: on 0 <= x <= R, a term of e^x at most the same term of e^R stays so at the next step (u for x, t
 # for R): (k + 1) u1 = x u0 <= R t0 = (k + 1) t1.
 rule a-term-step-keeps-the-order
-  mark k, like integer
-  mark x, like integer
-  mark r, like integer
-  mark u0, like integer
-  mark u1, like integer
-  mark t0, like integer
-  mark t1, like integer
+  seat k, like integer
+  seat x, like integer
+  seat r, like integer
+  seat u0, like integer
+  seat u1, like integer
+  seat t0, like integer
+  seat t1, like integer
   have u-steps
     call is-equal
       call multiply
@@ -377,15 +377,15 @@ rule a-term-step-keeps-the-order
 
 # so every term of e^x is at most the same term of e^R, by induction on k.
 rule the-terms-grow-with-x
-  mark u
+  seat u
     like task
       take a0, like integer
       like integer
-  mark t
+  seat t
     like task
       take a0, like integer
       like integer
-  mark k, like integer
+  seat k, like integer
   have u-starts-at-one
     call is-equal
       call u
@@ -397,7 +397,7 @@ rule the-terms-grow-with-x
         code 0
       code 1
   have each-step-keeps-the-order
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -431,25 +431,25 @@ rule the-terms-grow-with-x
 
 # so each partial sum of e^x is at most the same partial sum of e^R, by induction on n.
 rule the-partial-sums-grow-with-x
-  mark u
+  seat u
     like task
       take a0, like integer
       like integer
-  mark t
+  seat t
     like task
       take a0, like integer
       like integer
-  mark su
+  seat su
     like task
       take a0, like integer
       like integer
-  mark s
+  seat s
     like task
       take a0, like integer
       like integer
-  mark n, like integer
+  seat n, like integer
   have the-terms-grow-with-x
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -472,7 +472,7 @@ rule the-partial-sums-grow-with-x
       call t
         code 0
   have su-adds-a-term
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -490,7 +490,7 @@ rule the-partial-sums-grow-with-x
               read i
               code 1
   have s-adds-a-term
-    mark i, like integer
+    seat i, like integer
     meet or
       call is-below
         read i
@@ -522,8 +522,8 @@ rule the-partial-sums-grow-with-x
 
 # COSH AND SINH: with E >= 1 and R = 1/E, both 2 cosh = E + R and 2 sinh = E - R lie in [0, 2 E].
 rule cosh-and-sinh-are-at-most-e
-  mark ee, like integer
-  mark rr, like integer
+  seat ee, like integer
+  seat rr, like integer
   have ee-is-at-least-one
     call is-minimum
       read ee
@@ -571,18 +571,18 @@ rule cosh-and-sinh-are-at-most-e
 # Bishop's criterion for x = y. This is the last step of "zero derivative means constant" (the fundamental theorem
 # with f = 0 puts F(b) within every eps (b - a) of F(a)).
 rule within-every-tolerance-is-equal
-  mark x
+  seat x
     like task
       take a0, like integer
       like integer
-  mark y
+  seat y
     like task
       take a0, like integer
       like integer
-  mark n, like integer
+  seat n, like integer
   have x-is-within-every-tolerance-of-y
-    mark k, like integer
-    mark m, like integer
+    seat k, like integer
+    seat m, like integer
     meet or
       call is-below
         read k

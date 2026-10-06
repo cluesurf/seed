@@ -148,7 +148,7 @@ task swap-one-two
 # THE ANTIPODE IS AN INVOLUTION: negate (negate r) = r. The root set is symmetric about the origin, so it really does
 # split into twelve opposite lines. Proved over all twenty-four roots.
 rule negate-is-an-involution
-  mark r, like d4-root
+  seat r, like d4-root
   show hold
     call is-equal
       call negate, read r
@@ -159,7 +159,7 @@ rule negate-is-an-involution
 # THE SIMPLE REFLECTION IS AN INVOLUTION: swap-one-two (swap-one-two r) = r. A reflection done twice is the identity, the
 # defining property of a Weyl generator, and every value it returns is again one of the twenty-four roots (closure).
 rule swap-one-two-is-an-involution
-  mark r, like d4-root
+  seat r, like d4-root
   show hold
     call is-equal
       call swap-one-two, read r
@@ -170,7 +170,7 @@ rule swap-one-two-is-an-involution
 # EVERY ROOT OR ITS ANTIPODE IS POSITIVE: either (is-positive r) (is-positive (negate r)) = yes, for every root. This is
 # what splits the twenty-four roots into the twelve positive roots and their twelve antipodes, the twelve lines.
 rule every-root-or-its-antipode-is-positive
-  mark r, like d4-root
+  seat r, like d4-root
   show hold
     call is-equal
       call either

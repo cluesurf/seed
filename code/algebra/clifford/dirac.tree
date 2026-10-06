@@ -582,7 +582,7 @@ fuse product, gamma5-times-gamma3-is-minus-g012, g0123, g3, neg, g012
 # THE IDENTITY: the scalar one times any Clifford element is itself, over all sixteen signed blades. Proven by
 # structural induction with `fold` rather than a single literal.
 rule one-is-the-identity
-  mark x, like cliff
+  seat x, like cliff
   show hold
     call is-equal
       call mul

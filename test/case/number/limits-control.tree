@@ -2,12 +2,12 @@
 
 # false: before k + 1 reaches 2 x the terms may grow
 rule control-a-term-before-twice-x-halves
-  mark t
+  seat t
     like task
       take a0, like integer
       like integer
-  mark k, like integer
-  mark x, like integer
+  seat k, like integer
+  seat x, like integer
   have the-term-from-the-last
     call is-equal
       call multiply
@@ -49,18 +49,18 @@ rule control-a-term-before-twice-x-halves
 
 # false: 2^1 = 2 is below 2 (1 + 1) = 4
 rule control-the-powers-of-two-pass-twice-the-counts
-  mark p
+  seat p
     like task
       take a0, like integer
       like integer
-  mark j, like integer
+  seat j, like integer
   have p-starts-at-one
     call is-equal
       call p
         code 0
       code 1
   have p-doubles
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -92,11 +92,11 @@ rule control-the-powers-of-two-pass-twice-the-counts
 
 # false: the bound reaches eps, not eps / 2
 rule control-a-term-below-half-the-tolerance
-  mark tt, like integer
-  mark t0, like integer
-  mark pp, like integer
-  mark j, like integer
-  mark eps, like integer
+  seat tt, like integer
+  seat t0, like integer
+  seat pp, like integer
+  seat j, like integer
+  seat eps, like integer
   have it-falls-like-a-power-of-two
     call is-maximum
       call multiply
@@ -135,18 +135,18 @@ rule control-a-term-below-half-the-tolerance
 
 # false: the sum grows past its value at n0
 rule control-the-sums-past-n0-without-the-tail
-  mark t
+  seat t
     like task
       take a0, like integer
       like integer
-  mark s
+  seat s
     like task
       take a0, like integer
       like integer
-  mark n0, like integer
-  mark j, like integer
+  seat n0, like integer
+  seat j, like integer
   have each-term-past-n0-halves
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -161,7 +161,7 @@ rule control-the-sums-past-n0-without-the-tail
         call t
           read k
   have each-sum-adds-a-term
-    mark k, like integer
+    seat k, like integer
     meet or
       call is-below
         read k
@@ -199,18 +199,18 @@ rule control-the-sums-past-n0-without-the-tail
 
 # false: the sequences carry their own 2/n
 rule control-within-every-tolerance-is-within-one-over-n
-  mark x
+  seat x
     like task
       take a0, like integer
       like integer
-  mark y
+  seat y
     like task
       take a0, like integer
       like integer
-  mark n, like integer
+  seat n, like integer
   have x-is-within-every-tolerance-of-y
-    mark k, like integer
-    mark m, like integer
+    seat k, like integer
+    seat m, like integer
     meet or
       call is-below
         read k

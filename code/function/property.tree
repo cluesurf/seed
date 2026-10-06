@@ -3,7 +3,7 @@
 #
 # A property that holds "for every u" is a `have` with a `mark` of its own: `have g-undoes-f / mark u, like a /
 # is-equal g(f(u)), u` holds for every u, and the kernel uses it at each term of type `a` the goal names. A conclusion
-# that holds for every x is a rule over `mark x`, so the rule is the property itself.
+# that holds for every x is a rule over `seat x`, so the rule is the property itself.
 #
 # A LEFT INVERSE g of f undoes it: g(f(u)) == u for every u. Every function with one is injective. A SECTION s of f is
 # undone by it: f(s(v)) == v for every v. Every function with one is surjective, with s(v) the element that reaches v.
@@ -55,15 +55,15 @@ rule compose-applies-in-turn
   head a
   head b
   head c
-  mark g
+  seat g
     like task
       take y, like b
       like c
-  mark f
+  seat f
     like task
       take x, like a
       like b
-  mark x, like a
+  seat x, like a
   show hold, is-equal apply(compose(g, f), x), g(f(x))
 
 rule compose-associates
@@ -71,37 +71,37 @@ rule compose-associates
   head b
   head c
   head d
-  mark h
+  seat h
     like task
       take z, like c
       like d
-  mark g
+  seat g
     like task
       take y, like b
       like c
-  mark f
+  seat f
     like task
       take x, like a
       like b
-  mark x, like a
+  seat x, like a
   show hold, is-equal apply(compose(h, compose(g, f)), x), apply(compose(compose(h, g), f), x)
 
 # A LEFT INVERSE MAKES IT INJECTIVE: two elements with one image are one element.
 rule left-inverse-gives-injective
   head a
   head b
-  mark f
+  seat f
     like task
       take x, like a
       like b
-  mark g
+  seat g
     like task
       take y, like b
       like a
-  mark x, like a
-  mark y, like a
+  seat x, like a
+  seat y, like a
   have g-undoes-f
-    mark u, like a
+    seat u, like a
     is-equal g(f(u)), u
   have same-image, is-equal f(x), f(y)
   show hold, is-equal x, y
@@ -111,25 +111,25 @@ rule left-inverse-cancels
   head a
   head b
   head c
-  mark f
+  seat f
     like task
       take x, like b
       like c
-  mark e
+  seat e
     like task
       take z, like c
       like b
-  mark g
+  seat g
     like task
       take w, like a
       like b
-  mark h
+  seat h
     like task
       take w, like a
       like b
-  mark x, like a
+  seat x, like a
   have e-undoes-f
-    mark u, like b
+    seat u, like b
     is-equal e(f(u)), u
   have same-after-f, is-equal f(g(x)), f(h(x))
   show hold, is-equal g(x), h(x)
@@ -139,28 +139,28 @@ rule left-inverses-compose
   head a
   head b
   head c
-  mark f
+  seat f
     like task
       take x, like a
       like b
-  mark r
+  seat r
     like task
       take y, like b
       like a
-  mark g
+  seat g
     like task
       take y, like b
       like c
-  mark q
+  seat q
     like task
       take z, like c
       like b
-  mark x, like a
+  seat x, like a
   have r-undoes-f
-    mark u, like a
+    seat u, like a
     is-equal r(f(u)), u
   have q-undoes-g
-    mark v, like b
+    seat v, like b
     is-equal q(g(v)), v
   show hold, is-equal r(q(g(f(x)))), x
 
@@ -168,29 +168,29 @@ rule injections-compose
   head a
   head b
   head c
-  mark f
+  seat f
     like task
       take x, like a
       like b
-  mark r
+  seat r
     like task
       take y, like b
       like a
-  mark g
+  seat g
     like task
       take y, like b
       like c
-  mark q
+  seat q
     like task
       take z, like c
       like b
-  mark x, like a
-  mark y, like a
+  seat x, like a
+  seat y, like a
   have r-undoes-f
-    mark u, like a
+    seat u, like a
     is-equal r(f(u)), u
   have q-undoes-g
-    mark v, like b
+    seat v, like b
     is-equal q(g(v)), v
   have same-image, is-equal g(f(x)), g(f(y))
   show hold, is-equal x, y
@@ -199,17 +199,17 @@ rule injections-compose
 rule section-gives-surjective
   head a
   head b
-  mark f
+  seat f
     like task
       take x, like a
       like b
-  mark s
+  seat s
     like task
       take y, like b
       like a
-  mark z, like b
+  seat z, like b
   have f-undoes-s
-    mark v, like b
+    seat v, like b
     is-equal f(s(v)), v
   find x, s(z)
   show hold, is-equal f(x), z
@@ -219,28 +219,28 @@ rule sections-compose
   head a
   head b
   head c
-  mark f
+  seat f
     like task
       take x, like a
       like b
-  mark s
+  seat s
     like task
       take y, like b
       like a
-  mark g
+  seat g
     like task
       take y, like b
       like c
-  mark t
+  seat t
     like task
       take z, like c
       like b
-  mark z, like c
+  seat z, like c
   have f-undoes-s
-    mark v, like b
+    seat v, like b
     is-equal f(s(v)), v
   have g-undoes-t
-    mark w, like c
+    seat w, like c
     is-equal g(t(w)), w
   show hold, is-equal g(f(s(t(z)))), z
 
@@ -248,28 +248,28 @@ rule surjections-compose
   head a
   head b
   head c
-  mark f
+  seat f
     like task
       take x, like a
       like b
-  mark s
+  seat s
     like task
       take y, like b
       like a
-  mark g
+  seat g
     like task
       take y, like b
       like c
-  mark t
+  seat t
     like task
       take z, like c
       like b
-  mark z, like c
+  seat z, like c
   have f-undoes-s
-    mark v, like b
+    seat v, like b
     is-equal f(s(v)), v
   have g-undoes-t
-    mark w, like c
+    seat w, like c
     is-equal g(t(w)), w
   find x, s(t(z))
   show hold, is-equal g(f(x)), z
@@ -278,18 +278,18 @@ rule surjections-compose
 rule section-is-injective
   head a
   head b
-  mark f
+  seat f
     like task
       take x, like a
       like b
-  mark s
+  seat s
     like task
       take y, like b
       like a
-  mark v, like b
-  mark w, like b
+  seat v, like b
+  seat w, like b
   have f-undoes-s
-    mark y, like b
+    seat y, like b
     is-equal f(s(y)), y
   have same-image, is-equal s(v), s(w)
   show hold, is-equal v, w
@@ -299,23 +299,23 @@ rule section-is-injective
 rule left-inverse-is-the-section
   head a
   head b
-  mark f
+  seat f
     like task
       take x, like a
       like b
-  mark g
+  seat g
     like task
       take y, like b
       like a
-  mark s
+  seat s
     like task
       take y, like b
       like a
-  mark y, like b
+  seat y, like b
   have g-undoes-f
-    mark u, like a
+    seat u, like a
     is-equal g(f(u)), u
   have f-undoes-s
-    mark v, like b
+    seat v, like b
     is-equal f(s(v)), v
   show hold, is-equal g(y), s(y)

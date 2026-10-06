@@ -42,7 +42,7 @@ task complement
 # class. So the weight enumerator is symmetric, the classes pairing zero with full and eight with sixteen. Proved by
 # induction over the five weight classes.
 rule complementation-is-an-involution
-  mark w, like weight-class
+  seat w, like weight-class
   show hold
     call is-equal
       call complement

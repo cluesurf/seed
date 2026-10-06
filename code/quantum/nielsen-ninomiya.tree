@@ -27,7 +27,7 @@ task mirror
 # INVOLUTION: mirroring twice returns the original handedness, mirror (mirror a) = a, for every a. So the pairing is
 # symmetric, each mode paired with exactly one partner and paired back, a perfect matching of the doublers.
 rule mirror-is-an-involution
-  mark a, like hand
+  seat a, like hand
   show hold
     call is-equal
       call mirror

@@ -329,7 +329,7 @@ task vertex-count
 # reflect-if-active leaves any seed unchanged: reflect-if-active degenerate node-a s = s, for every seed s. This is the
 # proof that the seed lies ON every unringed mirror and is held in place by it. Proved over all seed positions.
 rule inactive-reflection-fixes-the-seed
-  mark s, like seed
+  seat s, like seed
   show hold
     call is-equal
       call reflect-if-active
@@ -343,7 +343,7 @@ rule inactive-reflection-fixes-the-seed
 # reflect-if-active degenerate node-b s = s, for every seed s. Both unringed mirrors hold the seed. Proved over all seed
 # positions.
 rule inactive-reflection-fixes-the-seed-on-b
-  mark s, like seed
+  seat s, like seed
   show hold
     call is-equal
       call reflect-if-active
@@ -469,7 +469,7 @@ rule the-two-regular-markings-agree
 # ring pattern is not a polytope, it is the seed alone. Shown on [3] and [6] and as a law over all scales. Proved by
 # induction over the scale.
 rule all-unringed-is-a-single-point
-  mark p, like scale
+  seat p, like scale
   show hold
     call is-equal
       call vertex-count

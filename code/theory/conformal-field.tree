@@ -259,7 +259,7 @@ task mass-from-gap
 
 # THE LEVEL ORDER IS REFLEXIVE: within-level d d = on, for every level. The dimension order is reflexive. By induction.
 rule within-level-reflexive
-  mark d, like level
+  seat d, like level
   show hold
     call is-equal
       call within-level
@@ -271,7 +271,7 @@ rule within-level-reflexive
 # A LEVEL IS WITHIN ITS LIFT: within-level d (raise d) = on, for every level. The order respects the successor, climbing
 # one rung never escapes the order. By induction.
 rule within-level-under-lift
-  mark d, like level
+  seat d, like level
   show hold
     call is-equal
       call within-level
@@ -285,8 +285,8 @@ rule within-level-under-lift
 # THE DILATATION EIGENVALUE IS THE SCALING DIMENSION: dilatation-eigenvalue O = dimension(O), for every operator. The
 # dilatation acts as multiplication by the dimension, so reading its eigenvalue returns exactly the dimension label.
 rule dilatation-eigenvalue-is-the-dimension
-  mark d, like level
-  mark s, like level
+  seat d, like level
+  seat s, like level
   show hold
     call is-equal
       call dilatation-eigenvalue
@@ -301,7 +301,7 @@ rule dilatation-eigenvalue-is-the-dimension
 # TRANSLATION RAISES THE DIMENSION: stepping by P lifts the level, step translation d = raise d, for every level. This is
 # [D, P] = +P read as an action: a translation descendant is one unit heavier.
 rule translation-raises-dimension
-  mark d, like level
+  seat d, like level
   show hold
     call is-equal
       call step
@@ -344,7 +344,7 @@ rule special-conformal-is-not-raising
 # SPECIAL CONFORMAL ON A RAISED LEVEL DROPS ONE: step K (raise d) = d, for every level. Acting with K peels one unit of
 # dimension off a descendant, walking back down the multiplet toward the primary.
 rule special-conformal-lowers-dimension
-  mark d, like level
+  seat d, like level
   show hold
     call is-equal
       call step
@@ -357,7 +357,7 @@ rule special-conformal-lowers-dimension
 
 # THE DILATATION FIXES ITS OWN BRACKET: step D d = d, [D, D] = 0. The dilatation commutes with itself.
 rule dilatation-fixes-dimension
-  mark d, like level
+  seat d, like level
   show hold
     call is-equal
       call step
@@ -369,7 +369,7 @@ rule dilatation-fixes-dimension
 # ROTATIONS FIX THE DIMENSION: step M d = d, [D, M] = 0. The Lorentz/rotation generators commute with the dilatation,
 # they change spin orientation but not the scaling dimension.
 rule rotation-fixes-dimension
-  mark d, like level
+  seat d, like level
   show hold
     call is-equal
       call step
@@ -395,9 +395,9 @@ rule primary-annihilated-by-special-conformal
 # by induction on the derivative count: the empty tower is the base, each extra derivative adds one. This is the Verma
 # tower of a conformal multiplet.
 rule descendant-tower-dimensions-increase-by-derivative-count
-  mark d, like level
-  mark s, like level
-  mark count, like level
+  seat d, like level
+  seat s, like level
+  seat count, like level
   show hold
     call is-equal
       call dilatation-eigenvalue
@@ -416,8 +416,8 @@ rule descendant-tower-dimensions-increase-by-derivative-count
 # THE ONE-DERIVATIVE DESCENDANT IS ONE UNIT HEAVIER: dimension(descendant base 1) = lift(dimension(base)). The first
 # descendant of a primary sits exactly one rung up, the action of a single translation.
 rule first-descendant-is-one-heavier
-  mark d, like level
-  mark s, like level
+  seat d, like level
+  seat s, like level
   show hold
     call is-equal
       call dilatation-eigenvalue
@@ -449,8 +449,8 @@ task state-dimension
 # quantization sends an operator to a state of the same definite dimension. Each operator gives one state, the dimension
 # is the conserved label.
 rule state-operator-preserves-dimension
-  mark d, like level
-  mark s, like level
+  seat d, like level
+  seat s, like level
   show hold
     call is-equal
       call state-dimension
@@ -466,7 +466,7 @@ rule state-operator-preserves-dimension
 # THE TWO-POINT SELECTION RULE: only equal dimensions correlate. We state it as the diagonal of `same-level`: an operator
 # has nonzero two-point function with itself, same-level d d = on, for every dimension. Proved by induction on d.
 rule two-point-self-correlation-on
-  mark d, like level
+  seat d, like level
   show hold
     call is-equal
       call same-level
@@ -479,7 +479,7 @@ rule two-point-self-correlation-on
 # has zero two-point function with one of dimension d. The selection rule that only operators of EQUAL dimension can
 # correlate, here the smallest mismatch. By induction on d, peeling one rung of the mismatch each step.
 rule two-point-selection-rule
-  mark d, like level
+  seat d, like level
   show hold
     call is-equal
       call same-level
@@ -494,7 +494,7 @@ rule two-point-selection-rule
 # distinct dimensions genuinely cannot have a nonzero two-point function. Refuted by constructor disjointness for the
 # ground case, and held inductively.
 rule two-point-mismatch-not-on
-  mark d, like level
+  seat d, like level
   show miss
     call is-equal
       call same-level
@@ -521,7 +521,7 @@ rule mass-vanishes-at-zero-gap
 # gap) (mass-from-gap (raise gap)) = on, for every gap. A heavier bulk field maps to a higher boundary dimension and back.
 # The map is order-preserving, hence invertible on the allowed branch. By induction on the gap.
 rule mass-map-is-order-preserving
-  mark gap, like level
+  seat gap, like level
   show hold
     call is-equal
       call within-level
@@ -538,7 +538,7 @@ rule mass-map-is-order-preserving
 # THE MASS SURROGATE IS REFLEXIVELY WITHIN ITSELF: within-level (mass-from-gap gap) (mass-from-gap gap) = on. The order
 # is reflexive on the image of the map, the floor of monotonicity. By induction on the gap.
 rule mass-map-reflexive
-  mark gap, like level
+  seat gap, like level
   show hold
     call is-equal
       call within-level

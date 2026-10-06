@@ -11,8 +11,8 @@ load @term/seed/vibe/coin
 
 # the coin does NOT fix the antisymmetric pair (it turns it by w)
 rule control-coin-fixes-the-antisymmetric-pair
-  mark x1, like integer
-  mark x2, like integer
+  seat x1, like integer
+  seat x2, like integer
   show hold
     call is-equal
       call circulant-real
@@ -34,10 +34,10 @@ rule control-coin-fixes-the-antisymmetric-pair
 
 # the parallelogram law with the wrong factor
 rule control-parallelogram-factor-three
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
-  mark d, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
+  seat d, like integer
   show hold
     call is-equal
       call add

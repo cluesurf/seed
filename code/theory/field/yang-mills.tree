@@ -345,9 +345,9 @@ task plaquette
 # of parallel transports may be regrouped, the algebraic fact behind path composition. Proved by simultaneous induction
 # over the three links, the full five-hundred-twelve-case table reducing by computation.
 rule gauge-product-is-associative
-  mark a, like rotor
-  mark b, like rotor
-  mark c, like rotor
+  seat a, like rotor
+  seat b, like rotor
+  seat c, like rotor
   show hold
     call is-equal
       call compose
@@ -365,7 +365,7 @@ rule gauge-product-is-associative
 # THE IDENTITY IS A UNIT: plus one times any link is that link (left) and any link times plus one is that link (right),
 # over all eight links. The flat edge transports nothing.
 rule identity-is-left-unit
-  mark a, like rotor
+  seat a, like rotor
   show hold
     call is-equal
       call compose
@@ -375,7 +375,7 @@ rule identity-is-left-unit
   fold a
 
 rule identity-is-right-unit
-  mark a, like rotor
+  seat a, like rotor
   show hold
     call is-equal
       call compose
@@ -387,7 +387,7 @@ rule identity-is-right-unit
 # EVERY LINK HAS AN INVERSE: a link times its inverse is the identity, a . a-inverse = one, over all eight links. Back
 # transport undoes forward transport. This is the group inverse axiom, proved not asserted.
 rule link-times-inverse-is-identity
-  mark a, like rotor
+  seat a, like rotor
   show hold
     call is-equal
       call compose
@@ -409,8 +409,8 @@ rule holonomy-of-stay-is-identity
 # HOLONOMY PEELS A LINK. holonomy (step u p) = u . holonomy p, for every link u and path p. Definitional, the ordered
 # product picks up the new link on the left.
 rule holonomy-of-step-multiplies
-  mark u, like rotor
-  mark p, like path
+  seat u, like rotor
+  seat p, like path
   show hold
     call is-equal
       call holonomy
@@ -476,8 +476,8 @@ rule holonomy-composes-on-a-pair
 # trace (conjugate g w) = trace w, for every group element g and every holonomy w. The trace is a class function, the
 # algebraic fact behind gauge invariance. Proved by exhaustive computation over all g and all w.
 rule trace-is-conjugation-invariant
-  mark g, like rotor
-  mark w, like rotor
+  seat g, like rotor
+  seat w, like rotor
   show hold
     call is-equal
       call trace
@@ -495,8 +495,8 @@ rule trace-is-conjugation-invariant
 # gauge-invariant observable of lattice gauge theory, proved by the conjugation-invariance of the character over the whole
 # group.
 rule wilson-loop-is-gauge-invariant
-  mark g, like rotor
-  mark h, like rotor
+  seat g, like rotor
+  seat h, like rotor
   show hold
     call is-equal
       call trace
@@ -513,7 +513,7 @@ rule wilson-loop-is-gauge-invariant
 # Parallel transport along a flat connection is trivial. Proved by induction on the length: the identity link leaves the
 # running product unchanged at every step.
 rule flat-connection-has-trivial-holonomy
-  mark n, like tally
+  seat n, like tally
   show hold
     call is-equal
       call holonomy
@@ -525,7 +525,7 @@ rule flat-connection-has-trivial-holonomy
 # A FLAT WILSON LOOP IS TRIVIAL: the character of any flat closed loop is plus two, the trace of the identity, for every
 # loop length. The flat connection has trivial Wilson loops. Follows from the flat holonomy law.
 rule flat-wilson-loop-is-plus-two
-  mark n, like tally
+  seat n, like tally
   show hold
     call is-equal
       call wilson
@@ -600,8 +600,8 @@ task bianchi-cube
 # times its inverse), so the closed surface bounds and the curvature is source-free. Proved over all edge links by the
 # inverse law of the gauge group.
 rule discrete-bianchi-cube-is-trivial
-  mark u, like rotor
-  mark v, like rotor
+  seat u, like rotor
+  seat v, like rotor
   show hold
     call is-equal
       call bianchi-cube

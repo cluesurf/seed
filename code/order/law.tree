@@ -5,7 +5,7 @@
 
 # Reflexivity: every value is at most itself, a <= a, for every a.
 rule order-is-reflexive
-  mark a, like integer
+  seat a, like integer
   show hold
     call is-maximum
       read a
@@ -13,8 +13,8 @@ rule order-is-reflexive
 
 # Antisymmetry: if a is at most b and b is at most a, then a equals b, for every a and b.
 rule order-is-antisymmetric
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   have h1
     call is-maximum
       read a
@@ -30,7 +30,7 @@ rule order-is-antisymmetric
 
 # The strict order is irreflexive: no value is strictly below itself, a < a never holds, for every a.
 rule strict-order-is-irreflexive
-  mark a, like integer
+  seat a, like integer
   show miss
     call is-below
       read a
@@ -38,8 +38,8 @@ rule strict-order-is-irreflexive
 
 # A strict order implies the weak order: if a is strictly below b then a is at most b, for every a and b.
 rule strict-below-implies-at-most
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   have h
     call is-below
       read a
@@ -52,8 +52,8 @@ rule strict-below-implies-at-most
 # The order separates strict from equal: if a is at most b and b is at most a, then a is NOT strictly below b (they are
 # equal), for every a and b.
 rule at-most-both-ways-is-not-strict
-  mark a, like integer
-  mark b, like integer
+  seat a, like integer
+  seat b, like integer
   have h1
     call is-maximum
       read a
@@ -70,9 +70,9 @@ rule at-most-both-ways-is-not-strict
 # Translation invariance of the strict order: if a is strictly below b then a + c is strictly below b + c, for every
 # a, b, c. The engine of the arrow, lifted to the strict order.
 rule strict-order-is-translation-invariant
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
   have h
     call is-below
       read a
@@ -88,9 +88,9 @@ rule strict-order-is-translation-invariant
 
 # Transitivity of the strict order: if a is strictly below b and b is strictly below c, then a is strictly below c.
 rule strict-order-is-transitive
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
   have h1
     call is-below
       read a
@@ -106,9 +106,9 @@ rule strict-order-is-transitive
 
 # Mixed transitivity: if a is at most b and b is strictly below c, then a is strictly below c.
 rule weak-then-strict-is-strict
-  mark a, like integer
-  mark b, like integer
-  mark c, like integer
+  seat a, like integer
+  seat b, like integer
+  seat c, like integer
   have h1
     call is-maximum
       read a

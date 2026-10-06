@@ -107,10 +107,10 @@ task correct
 # exactly, so the recovered frame equals the input. correct o (corrupt o f) = f. The unknown qubit crosses faithfully on
 # two classical bits and a shared entangled pair, proved over all four outcomes and all four input frames.
 rule teleportation-recovers-the-input
-  mark flip-bit, like bit
-  mark phase-bit, like bit
-  mark value, like bit
-  mark phase, like bit
+  seat flip-bit, like bit
+  seat phase-bit, like bit
+  seat value, like bit
+  seat phase, like bit
   show hold
     call is-equal
       call correct

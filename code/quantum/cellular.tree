@@ -66,10 +66,10 @@ task step
 # its own inverse, because each block's controlled-NOT is, so the QCA can be run backward. Proved by simultaneous case
 # analysis on all four cells.
 rule global-step-is-reversible
-  mark a, like bit
-  mark b, like bit
-  mark c, like bit
-  mark d, like bit
+  seat a, like bit
+  seat b, like bit
+  seat c, like bit
+  seat d, like bit
   show hold
     call is-equal
       call step

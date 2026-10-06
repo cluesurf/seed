@@ -152,8 +152,8 @@ task run
 # Definitional law of run on a successor: run (succ m) s = step (run m s). The single time-unfold the trajectory induction
 # peels each step.
 rule run-succ-steps
-  mark m, like natural
-  mark s, like state
+  seat m, like natural
+  seat s, like state
   show hold
     call is-equal
       call run
@@ -169,7 +169,7 @@ rule run-succ-steps
 
 # Empty evolution is the identity: run zero s = s. The trajectory base case.
 rule run-zero-is-identity
-  mark s, like state
+  seat s, like state
   show hold
     call is-equal
       call run
@@ -184,7 +184,7 @@ rule run-zero-is-identity
 # no force, so the momentum (the energy of the free particle, the generator of motion) is unchanged across one step. This
 # is the local conservation law, the discrete current whose vanishing divergence the trajectory law integrates.
 rule energy-conserved-step
-  mark s, like state
+  seat s, like state
   show hold
     call is-equal
       call momentum-of
@@ -200,8 +200,8 @@ rule energy-conserved-step
 # single-step conservation law. The base case is the identity run, the step case applies the step law under the induction
 # hypothesis.
 rule energy-conserved-trajectory
-  mark n, like natural
-  mark s, like state
+  seat n, like natural
+  seat s, like state
   show hold
     call is-equal
       call momentum-of
@@ -241,9 +241,9 @@ task shift
 # A pure rearrangement of integer addition: (x + c) + p = (x + p) + c. The translated, then evolved, position equals the
 # evolved, then translated, position. By induction on p, citing the proven associativity and commutativity of the integers.
 rule combine-swap-mid
-  mark x, like rung
-  mark c, like rung
-  mark p, like rung
+  seat x, like rung
+  seat c, like rung
+  seat p, like rung
   show hold
     call is-equal
       call combine
@@ -263,7 +263,7 @@ rule combine-swap-mid
 # Step law of the position observable: position-of (step s) = (position-of s) + (momentum-of s). The step advances the
 # position by the momentum. A definitional bridge for the commutation proof.
 rule position-of-step
-  mark s, like state
+  seat s, like state
   show hold
     call is-equal
       call position-of
@@ -278,8 +278,8 @@ rule position-of-step
 
 # Shift law of the position observable: position-of (shift c s) = (position-of s) + c. The displacement adds to position.
 rule position-of-shift
-  mark c, like rung
-  mark s, like state
+  seat c, like rung
+  seat s, like state
   show hold
     call is-equal
       call position-of
@@ -295,8 +295,8 @@ rule position-of-shift
 # The shift leaves the momentum observable unchanged: momentum-of (shift c s) = momentum-of s. The translation acts only
 # on position, so it commutes through the part of the step that reads the momentum.
 rule momentum-of-shift
-  mark c, like rung
-  mark s, like state
+  seat c, like rung
+  seat s, like state
   show hold
     call is-equal
       call momentum-of
@@ -313,8 +313,8 @@ rule momentum-of-shift
 # of the dynamics to another solution. The translated position differs from the untranslated one only by the constant c,
 # and that constant survives the step untouched, which the swap-mid rearrangement of integer addition discharges.
 rule shift-commutes-with-step
-  mark c, like rung
-  mark s, like state
+  seat c, like rung
+  seat s, like state
   show hold
     call is-equal
       call position-of
@@ -340,8 +340,8 @@ rule shift-commutes-with-step
 # conservation law to make the second instance explicit: a continuous symmetry, here translation, gives a charge constant
 # in time.
 rule momentum-conserved-trajectory
-  mark n, like natural
-  mark s, like state
+  seat n, like natural
+  seat s, like state
   show hold
     call is-equal
       call momentum-of
@@ -398,7 +398,7 @@ task rotate-state
 # is a symmetry of the law of motion as seen by the charge. (The phases themselves agree too, since both the step and the
 # rotation advance the phase by the same group, an abelian one-parameter subgroup, so they commute outright.)
 rule phase-commutes-with-step
-  mark s, like state
+  seat s, like state
   show hold
     call is-equal
       call number-of
@@ -413,7 +413,7 @@ rule phase-commutes-with-step
 # THE STEP PRESERVES THE NUMBER: number-of (step s) = number-of s. One step leaves the charge unchanged, the local
 # conservation law for the phase symmetry.
 rule number-conserved-step
-  mark s, like state
+  seat s, like state
   show hold
     call is-equal
       call number-of
@@ -428,8 +428,8 @@ rule number-conserved-step
 # evolution step, the conserved U(1) charge. Proved by the same induction on time, peeling one step with run-succ-steps and
 # discharging it with the single-step number-conservation law.
 rule number-conserved-trajectory
-  mark n, like natural
-  mark s, like state
+  seat n, like natural
+  seat s, like state
   show hold
     call is-equal
       call number-of
@@ -445,7 +445,7 @@ rule number-conserved-trajectory
 # THE PHASE ROTATION FIXES THE NUMBER OUTRIGHT: number-of (rotate-state s) = number-of s. The symmetry transformation
 # itself leaves the charge invariant, the defining property that makes the number the Noether charge of this symmetry.
 rule rotation-fixes-number
-  mark s, like state
+  seat s, like state
   show hold
     call is-equal
       call number-of
@@ -534,8 +534,8 @@ task total-energy
 # conserved charges of the parts, the additivity of Noether charges over independent systems. Proved by simultaneous case
 # on both states, citing the single-step energy law for each part.
 rule total-energy-conserved-step
-  mark a, like state
-  mark b, like state
+  seat a, like state
+  seat b, like state
   show hold
     call is-equal
       call total-energy

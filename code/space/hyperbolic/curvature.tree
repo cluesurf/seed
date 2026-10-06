@@ -426,7 +426,7 @@ hold a-spherical-triangle-exceeds-a-straight-angle
 # reflexivity that forces the kernel to check geometry-of covers all seven cases with no gap, the totality the table
 # relies on.
 rule geometry-of-is-total
-  mark t, like tiling
+  seat t, like tiling
   show hold
     call is-equal
       call geometry-of
@@ -437,7 +437,7 @@ rule geometry-of-is-total
 
 # polygon-sides and vertex-degree are likewise total over the table.
 rule polygon-sides-is-total
-  mark t, like tiling
+  seat t, like tiling
   show hold
     call is-equal
       call polygon-sides
@@ -447,7 +447,7 @@ rule polygon-sides-is-total
   fold t
 
 rule vertex-degree-is-total
-  mark t, like tiling
+  seat t, like tiling
   show hold
     call is-equal
       call vertex-degree

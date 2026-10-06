@@ -1194,9 +1194,9 @@ task f-row-t8
 # root-three-half negates exactly like the rational magnitudes, so the law holds uniformly across the rational and the
 # irrational entries. Proved by exhaustive induction over all three indices.
 rule structure-constant-is-antisymmetric
-  mark a, like gen
-  mark b, like gen
-  mark c, like gen
+  seat a, like gen
+  seat b, like gen
+  seat c, like gen
   show hold
     call is-equal
       call f-constant
@@ -1400,7 +1400,7 @@ task bracket
 
 # THE BRACKET IS ALTERNATING: an element brackets to zero with itself, [a,a] = 0. Proved over every element.
 rule bracket-is-alternating
-  mark a, like elem
+  seat a, like elem
   show hold
     call is-equal
       call bracket
@@ -1412,10 +1412,10 @@ rule bracket-is-alternating
 # THE BRACKET IS ANTISYMMETRIC on the isospin block: [a,b] = -[b,a]. Stated over the signed generators t1, t2, t3 and proved
 # by induction over both signs and both generators, each case concrete, so the bracket table reduces on both sides.
 rule bracket-is-antisymmetric
-  mark sign-a, like sign
-  mark gen-a, like gen
-  mark sign-b, like sign
-  mark gen-b, like gen
+  seat sign-a, like sign
+  seat gen-a, like gen
+  seat sign-b, like sign
+  seat gen-b, like gen
   show hold
     call is-equal
       call bracket
@@ -1586,7 +1586,7 @@ rule jacobi-identity-on-the-isospin-generators
 # what gives su(3) its two simple roots and the A2 root system (cite `algebra/lie/root-a2`). Proved by checking the
 # structure constant f_{38c} vanishes for all c.
 rule cartan-generators-commute
-  mark c, like gen
+  seat c, like gen
   show hold
     call is-equal
       call f-constant

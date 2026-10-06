@@ -122,7 +122,7 @@ task is-kept
 # equals applying it once, P0 P0 = P0. Measuring the zero outcome a second time changes nothing. Proved by induction
 # over the basis state.
 rule project-zero-is-idempotent
-  mark s, like basis
+  seat s, like basis
   show hold
     call is-equal
       call project-zero
@@ -135,7 +135,7 @@ rule project-zero-is-idempotent
 # IDEMPOTENCE OF P1: project-one-on-result (project-one s) = project-one s, for every basis state. P1 P1 = P1, the same
 # involution-free stability for the one outcome. Proved by induction over the basis state.
 rule project-one-is-idempotent
-  mark s, like basis
+  seat s, like basis
   show hold
     call is-equal
       call project-one
@@ -149,7 +149,7 @@ rule project-one-is-idempotent
 # P0 keeps lies entirely along the zero state, which P1 annihilates, so the composition always reaches the null vector.
 # Distinct outcomes exclude each other. Proved by induction over the basis state.
 rule project-zero-then-one-vanishes
-  mark s, like basis
+  seat s, like basis
   show hold
     call is-equal
       call project-zero
@@ -162,7 +162,7 @@ rule project-zero-then-one-vanishes
 # order. Orthogonality is symmetric: either composition of the two projectors annihilates. Proved by induction over the
 # basis state.
 rule project-one-then-zero-vanishes
-  mark s, like basis
+  seat s, like basis
   show hold
     call is-equal
       call project-one
@@ -176,7 +176,7 @@ rule project-one-then-zero-vanishes
 # is kept by exactly one of the two projectors, never both and never neither, which is P0 + P1 = identity read on basis
 # vectors. Proved by induction over the basis state.
 rule p-zero-keeps-exactly-the-zero-outcome
-  mark s, like basis
+  seat s, like basis
   show hold
     call is-equal
       call project-zero
@@ -204,7 +204,7 @@ task other-outcome
 # the negation of the zero outcome. Read with the rule above, the two projectors keep complementary sets whose union is
 # every basis state, the partition that is completeness. Proved by induction over the basis state.
 rule p-one-keeps-exactly-the-one-outcome
-  mark s, like basis
+  seat s, like basis
   show hold
     call is-equal
       call project-one

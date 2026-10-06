@@ -252,8 +252,8 @@ task edge-count
 # ADJACENCY IS SYMMETRIC: adjacent a b = adjacent b a, the graph is UNDIRECTED. Proved over all sixteen vertex pairs by
 # exhaustive induction, both sides reducing through the adjacency table to the same flag.
 rule adjacent-is-symmetric
-  mark a, like vertex
-  mark b, like vertex
+  seat a, like vertex
+  seat b, like vertex
   show hold
     call is-equal
       call adjacent
@@ -266,7 +266,7 @@ rule adjacent-is-symmetric
 
 # NO SELF-LOOPS: adjacent v v = no, the graph is SIMPLE, no vertex is joined to itself. Proved over all four vertices.
 rule no-self-loops
-  mark v, like vertex
+  seat v, like vertex
   show hold
     call is-equal
       call adjacent
@@ -278,7 +278,7 @@ rule no-self-loops
 # EACH DEGREE IS TWO: every vertex of the four-cycle has exactly two neighbors. The degree is COMPUTED from the
 # adjacency table and reduces to the successor tower for two, for every vertex, by exhaustive induction.
 rule every-degree-is-two
-  mark v, like vertex
+  seat v, like vertex
   show hold
     call is-equal
       call degree
